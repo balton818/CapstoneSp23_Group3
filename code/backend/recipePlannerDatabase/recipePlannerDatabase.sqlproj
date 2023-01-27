@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <Name>recipePlannerDatabase</Name>
+    <Name>RecipePlannerDatabase</Name>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectVersion>4.1</ProjectVersion>
     <ProjectGuid>{06102982-13d5-41ca-9be9-dc93fdf1a4c2}</ProjectGuid>
@@ -11,8 +11,8 @@
     <OutputType>Database</OutputType>
     <RootPath>
     </RootPath>
-    <RootNamespace>recipePlannerDatabase</RootNamespace>
-    <AssemblyName>recipePlannerDatabase</AssemblyName>
+    <RootNamespace>RecipePlannerDatabase</RootNamespace>
+    <AssemblyName>RecipePlannerDatabase</AssemblyName>
     <ModelCollation>1033,CI</ModelCollation>
     <DefaultFileStructure>BySchemaAndSchemaType</DefaultFileStructure>
     <DeployToDatabase>True</DeployToDatabase>
