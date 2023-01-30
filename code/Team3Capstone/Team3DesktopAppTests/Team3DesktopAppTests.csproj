@@ -6,6 +6,8 @@
 		<Nullable>enable</Nullable>
 
 		<IsPackable>false</IsPackable>
+
+		<RunSettingsFilePath>C:\Users\jorda\OneDrive\Desktop\Capstone\code\Team3Capstone\Team3DesktopAppTests\bin\Debug\net6.0-windows\fine-code-coverage\coverage-tool-output\Team3DesktopAppTests-fcc-mscodecoverage-generated.runsettings</RunSettingsFilePath>
 	</PropertyGroup>
 
 	<ItemGroup>
