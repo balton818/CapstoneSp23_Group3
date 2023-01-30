@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Team3;
+using Team3DesktopApp.Dal;
 using Team3DesktopApp.Model;
 using Team3DesktopApp.ViewModel;
 
@@ -28,11 +29,11 @@ namespace Team3DesktopApp.View
         {
             this.InitializeComponent();
         }
-        private void LoginButton_Click(object sender, RoutedEventArgs e)
+        private async void LoginButton_Click(object sender, RoutedEventArgs e)
         {
-            if (this.viewModel.Login(this.UsernameTextBox.Text, this.PasswordTextBox.Text))
+            if (await this.viewModel.LoginAsync(this.UsernameTextBox.Text, this.PasswordTextBox.Text))
             {
-                //this.Frame.Navigate(typeof(RegistrationPage));
+                //NavigationService.Navigate(this.LoginButton.NavUri);
             }
             else
             {

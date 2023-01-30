@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Team3DesktopApp.ViewModel;
+using Team3DesktopApp.Dal;
 
 namespace Team3DesktopApp
 {

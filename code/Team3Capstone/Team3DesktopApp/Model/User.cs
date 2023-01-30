@@ -4,6 +4,8 @@ namespace Team3DesktopApp.Model
 {
     public class User
     {
+        public string username;
+
         /// <summary>Gets the first name.</summary>
         /// <value>The first name.</value>
         public string FirstName { get; private set; }
@@ -43,9 +45,10 @@ namespace Team3DesktopApp.Model
         /// <param name="city">The city.</param>
         /// <param name="state">The state.</param>
         /// <param name="zipcode">The zipcode.</param>
-        public User(string firstName, string lastName, string email, string password, string address, string addressTwo,
+        public User(string username, string firstName, string lastName, string email, string password, string address, string addressTwo,
             string city, string state, string zipcode)
         {
+            this.username = username;
             this.FirstName = firstName;
             this.LastName = lastName;
             this.Email = email;
@@ -68,7 +71,7 @@ namespace Team3DesktopApp.Model
         /// <param name="city">The city.</param>
         /// <param name="state">The state.</param>
         /// <param name="zipcode">The zipcode.</param>
-        public void updateUserInfo(string firstName, string lastName, string email, string password, string address,
+        public void UpdateUserInfo(string firstName, string lastName, string email, string password, string address,
             string addressTwo, string city, string state, string zipcode)
         {
             this.FirstName = firstName;
@@ -84,7 +87,7 @@ namespace Team3DesktopApp.Model
 
         /// <summary>Updates the user pantry.</summary>
         /// <param name="pantry">The new pantry.</param>
-        public void updateUserPantry(ArrayList pantry)
+        public void UpdateUserPantry(ArrayList pantry)
         {
             this.Pantry = pantry;
 

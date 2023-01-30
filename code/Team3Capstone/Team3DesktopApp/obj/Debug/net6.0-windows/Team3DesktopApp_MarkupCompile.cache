@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Users\jorda\Source\Repos\CapstoneSp23_Group3\code\Team3Capstone\Team3DesktopApp\obj\Debug\net6.0-windows\
+C:\Users\jorda\source\repos\CapstoneSp23_Group3\code\Team3Capstone\Team3DesktopApp\obj\Debug\net6.0-windows\
 Team3DesktopApp
 none
 false
 TRACE;DEBUG;NET;NET6_0;NETCOREAPP
-C:\Users\jorda\Source\Repos\CapstoneSp23_Group3\code\Team3Capstone\Team3DesktopApp\App.xaml
-4601790581
+C:\Users\jorda\source\repos\CapstoneSp23_Group3\code\Team3Capstone\Team3DesktopApp\App.xaml
+5-2104599514
 
-91649276829
-194237474483
-MainWindow.xaml;Themes\Generic.xaml;View\Login.xaml;View\RegistrationPage.xaml;
+112089000295
+197-1077672316
+MainWindow.xaml;Themes\Generic.xaml;View\LoggedIn.xaml;View\Login.xaml;View\RegistrationPage.xaml;
 
 True
 
