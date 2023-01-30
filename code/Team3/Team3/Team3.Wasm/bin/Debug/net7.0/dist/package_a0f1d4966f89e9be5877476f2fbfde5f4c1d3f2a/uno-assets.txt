@@ -1,6 +1,0 @@
-obj/uno-bootstrap.d.ts
-obj/uno-bootstrap.js
-Assets/SplashScreen.png
-Uno.Fonts.Fluent/Fonts/uno-fluentui-assets.ttf
-Team3.Wasm.staticwebassets.runtime.json
-Team3.Wasm.exe

@@ -1,7 +1,0 @@
-{
-  "profiles": {
-    "Team3.Windows": {
-      "commandName": "MsixPackage"
-    }
-  }
-}
