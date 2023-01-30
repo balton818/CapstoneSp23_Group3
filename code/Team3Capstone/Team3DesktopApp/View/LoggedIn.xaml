@@ -9,6 +9,28 @@
       Title="LoggedIn">
 
     <Grid>
-        
+          <StackPanel Orientation="Vertical">
+            <TextBlock
+                    Margin="4"
+                    FontSize="36"
+                    Text="Success"
+                    TextAlignment="Center" />
+            <TextBlock
+                    x:Name="ErrorMessage"
+                    Margin="4"
+                    FontSize="20"
+                    Foreground="Red"
+                    Text=""
+                    TextAlignment="Center" />
+            <TextBlock
+                    Width="300"
+                    Margin="0,0,0,20"
+                    VerticalAlignment="Center"
+                    FontSize="16"
+                    Text="Logged In Successfully"
+                    TextAlignment="Center"
+                    TextWrapping="Wrap" />
+
+        </StackPanel>
     </Grid>
 </Page>

@@ -10,35 +10,35 @@ namespace Team3DesktopApp.Dal;
 
 public class HttpClientConnection
 {
-    public static HttpClient client = new HttpClient();
+
+    
 
     public HttpClientConnection()
     {
-        RunAsync().GetAwaiter().GetResult();
     }
 
-    static async Task RunAsync()
-    {
-        // Update port # in the following line.
-        client.BaseAddress = new Uri("http://localhost:7278/");
-        client.DefaultRequestHeaders.Accept.Clear();
-        client.DefaultRequestHeaders.Accept.Add(
-            new MediaTypeWithQualityHeaderValue("application/json"));
-    }
 
-    public async Task<User> ValidateUser(string username, string password)
+    public async Task<bool> ValidateUser(string username, string password)
     {
-        User user = null;
-        Uri query = new Uri(string.Format("api/User/{0}/{1}", username, password), UriKind.Relative);
-        HttpResponseMessage response = await client.GetAsync(query);
-        if (response.IsSuccessStatusCode)
-        {
-            user = await response.Content.ReadAsAsync<User>();
-            Console.WriteLine(user.username);
-        }
+        using (var client = new HttpClient())
 
-        Console.WriteLine(response.StatusCode);
-        return user;
+            {
+                client.BaseAddress = new Uri("https://localhost:7278/api/");
+                Uri query = new Uri(string.Format("User/{0}, {1}", username, password), UriKind.Relative);
+                Console.WriteLine(query);
+                HttpResponseMessage response = await client.GetAsync(query);
+                Console.WriteLine(response);
+                if (response.IsSuccessStatusCode)
+                {
+                var readTask = response.Content.ReadAsAsync<bool>();
+                    readTask.Wait();
+
+                    var result = readTask.Result;
+                return result;
+                }
+            }
+    
+        return false;
     }
 
 

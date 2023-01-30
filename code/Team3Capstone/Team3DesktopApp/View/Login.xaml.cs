@@ -33,7 +33,7 @@ namespace Team3DesktopApp.View
         {
             if (await this.viewModel.LoginAsync(this.UsernameTextBox.Text, this.PasswordTextBox.Text))
             {
-                //NavigationService.Navigate(this.LoginButton.NavUri);
+                NavigationService.Navigate(this.LoginButton.NavUri);
             }
             else
             {

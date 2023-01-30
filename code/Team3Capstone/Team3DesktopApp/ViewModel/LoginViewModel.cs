@@ -19,14 +19,10 @@ public class LoginViewModel
         }
 
         HttpClientConnection connection = new HttpClientConnection();
-        User user = await connection.ValidateUser(userName, password);
+        bool result = await connection.ValidateUser(userName, password);
+        Console.WriteLine(result);
+        return result;
 
-        if (user != null)
-        {
-            return true;
-        }
-
-        return false;
     }
 
 }
