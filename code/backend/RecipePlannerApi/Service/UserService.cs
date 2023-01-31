@@ -10,5 +10,9 @@ namespace RecipePlannerApi.Service {
         public static bool ValidateUser(User user) {
             return UserDao.ValidateUser(user) != null;
         }
+
+        public static int? CreateUser(User user) {
+            return UserDao.CreateUser(user);
+        }
     }
 }
