@@ -132,7 +132,7 @@ namespace Team3 {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/Team3DesktopApp;V1.0.0.0;component/view/registrationpage.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/Team3DesktopApp;component/view/registrationpage.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\View\RegistrationPage.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);
