@@ -5406,23 +5406,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\jorda\\.nuget\\packages\\": {},
+    "C:\\Users\\csuser\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\jorda\\repo2\\CapstoneSp23_Group3\\code\\Team3Capstone\\Team3DesktopApp\\Team3DesktopApp.csproj",
+      "projectUniqueName": "C:\\Users\\csuser\\Desktop\\CapstoneSp23_Group3\\code\\Team3Capstone\\Team3DesktopApp\\Team3DesktopApp.csproj",
       "projectName": "Team3DesktopApp",
-      "projectPath": "C:\\Users\\jorda\\repo2\\CapstoneSp23_Group3\\code\\Team3Capstone\\Team3DesktopApp\\Team3DesktopApp.csproj",
-      "packagesPath": "C:\\Users\\jorda\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\jorda\\repo2\\CapstoneSp23_Group3\\code\\Team3Capstone\\Team3DesktopApp\\obj\\",
+      "projectPath": "C:\\Users\\csuser\\Desktop\\CapstoneSp23_Group3\\code\\Team3Capstone\\Team3DesktopApp\\Team3DesktopApp.csproj",
+      "packagesPath": "C:\\Users\\csuser\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\csuser\\Desktop\\CapstoneSp23_Group3\\code\\Team3Capstone\\Team3DesktopApp\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\jorda\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\csuser\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -5430,7 +5430,7 @@
         "net6.0-windows"
       ],
       "sources": {
-        "C:\\Program Files\\dotnet\\library-packs": {},
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -5473,7 +5473,7 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.102\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.101\\RuntimeIdentifierGraph.json"
       }
     }
   }

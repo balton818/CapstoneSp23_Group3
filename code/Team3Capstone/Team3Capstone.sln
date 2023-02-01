@@ -12,6 +12,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Team3DesktopAppTests", "Tea
 		{A07F762A-3E39-43F8-9C83-9A285EB38B67} = {A07F762A-3E39-43F8-9C83-9A285EB38B67}
 	EndProjectSection
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecipePlannerApi", "..\backend\RecipePlannerApi\RecipePlannerApi.csproj", "{195C7360-E38F-4086-B325-CD64C1EBEF17}"
+EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "recipePlannerDatabase", "..\backend\recipePlannerDatabase\recipePlannerDatabase.sqlproj", "{06102982-13D5-41CA-9BE9-DC93FDF1A4C2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,6 +34,16 @@ Global
 		{3183BBF7-DD5B-40B7-B28F-ABD0F6973A5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3183BBF7-DD5B-40B7-B28F-ABD0F6973A5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3183BBF7-DD5B-40B7-B28F-ABD0F6973A5E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{195C7360-E38F-4086-B325-CD64C1EBEF17}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{195C7360-E38F-4086-B325-CD64C1EBEF17}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{195C7360-E38F-4086-B325-CD64C1EBEF17}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{195C7360-E38F-4086-B325-CD64C1EBEF17}.Release|Any CPU.Build.0 = Release|Any CPU
+		{06102982-13D5-41CA-9BE9-DC93FDF1A4C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{06102982-13D5-41CA-9BE9-DC93FDF1A4C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{06102982-13D5-41CA-9BE9-DC93FDF1A4C2}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{06102982-13D5-41CA-9BE9-DC93FDF1A4C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{06102982-13D5-41CA-9BE9-DC93FDF1A4C2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{06102982-13D5-41CA-9BE9-DC93FDF1A4C2}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
