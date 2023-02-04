@@ -13,4 +13,4 @@ AS
 	INSERT INTO [user] ([username], [password], [first_name], [last_name], [email], [address], [address_two], [city], [state], [zipcode]) 
     VALUES (@username, @password, @first_name, @last_name, @email, @address, @address_two, @city, @state, @zipcode)
 
-    SELECT SCOPE_IDENTITY()
+    SELECT user_id as Id from [user] where user_id = SCOPE_IDENTITY()
