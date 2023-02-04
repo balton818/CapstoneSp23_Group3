@@ -1,12 +1,13 @@
 ﻿<Router AppAssembly="@typeof(App).Assembly">
     <Found Context="routeData">
         <RouteView RouteData="@routeData" DefaultLayout="@typeof(LoginLayout)" />
-        <FocusOnNavigate RouteData="@routeData" Selector="h1" />
     </Found>
     <NotFound>
         <PageTitle>Not found</PageTitle>
         <LayoutView Layout="@typeof(MainLayout)">
-            <p role="alert">Sorry, there's nothing at this address.</p>
+            <PageTitle>Not Kansas</PageTitle>
+            <p style="color: #fff">Dunno how you did it, but you're not supposed to be here...</p>
+            <p style="color: #fff">It's probably our fault though. Just head on back to localhost:7211/home and enjoy yourself.</p>
         </LayoutView>
     </NotFound>
 </Router>
