@@ -10,27 +10,25 @@
 	<div>
 		<h3 style="font-weight: bold; color: purple">ReciPlanner Login</h3>
 		<br/>
-		<input class="form-control col-12" @bind="user.Username" placeholder="Enter username"/>
+		<input class="form-control col-12" id="usernameField" @bind="user.Username" placeholder="Enter username"/>
 		<br />
-		<input class="form-control col-12" @bind="user.Password" placeholder="Enter password" />
+		<input class="form-control col-12" id="passwordField" @bind="user.Password" placeholder="Enter password" />
 		<br />
-		<button type="submit" class="form-control btn-primary" style="position:center">Login</button>
+		<button type="submit" id="loginButton" class="form-control btn-primary" style="position:center">Login</button>
 		<br />
-		<span class="col-12" style="color:red">@LoginValidationResultMessage</span>
+		<span class="col-12" id="loginResultMessage" style="color:red">@LoginValidationResultMessage</span>
 	</div>
 </EditForm>
 
 @code
 {
-	private User user;
-	private string? LoginValidationResultMessage { get; set; }
-	private bool ValidFields { get; set; } 
+	[Parameter]
+	public User user { get; set; } = new User();
 
-	protected async override Task OnInitializedAsync()
-	{
-		user = new User();
-		ValidFields = false;
-	}
+	[Parameter]
+	public bool ValidFields { get; set; } = false;
+
+	private string? LoginValidationResultMessage { get; set; }
 
 	private void ValidateUser()
 	{
@@ -41,10 +39,12 @@
 			LoginValidationResultMessage = "";
 			if (result)
 			{
+				this.ValidFields = true;
 				Nav.NavigateTo("/index");
 			}
 			else
 			{
+				this.ValidFields = false;
 				LoginValidationResultMessage = "Invalid Credentials";
 			}
 		}

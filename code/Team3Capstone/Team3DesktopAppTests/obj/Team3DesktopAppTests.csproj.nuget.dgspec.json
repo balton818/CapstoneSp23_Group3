@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\csuser\\Desktop\\CapstoneSp23_Group3\\code\\Team3Capstone\\Team3DesktopAppTests\\Team3DesktopAppTests.csproj": {}
+    "C:\\Users\\Ben\\Source\\Repos\\balton818\\CapstoneSp23_Group3\\code\\Team3Capstone\\Team3DesktopAppTests\\Team3DesktopAppTests.csproj": {}
   },
   "projects": {
-    "C:\\Users\\csuser\\Desktop\\CapstoneSp23_Group3\\code\\Team3Capstone\\Team3DesktopAppTests\\Team3DesktopAppTests.csproj": {
+    "C:\\Users\\Ben\\Source\\Repos\\balton818\\CapstoneSp23_Group3\\code\\Team3Capstone\\Team3DesktopAppTests\\Team3DesktopAppTests.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\csuser\\Desktop\\CapstoneSp23_Group3\\code\\Team3Capstone\\Team3DesktopAppTests\\Team3DesktopAppTests.csproj",
+        "projectUniqueName": "C:\\Users\\Ben\\Source\\Repos\\balton818\\CapstoneSp23_Group3\\code\\Team3Capstone\\Team3DesktopAppTests\\Team3DesktopAppTests.csproj",
         "projectName": "Team3DesktopAppTests",
-        "projectPath": "C:\\Users\\csuser\\Desktop\\CapstoneSp23_Group3\\code\\Team3Capstone\\Team3DesktopAppTests\\Team3DesktopAppTests.csproj",
-        "packagesPath": "C:\\Users\\csuser\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\csuser\\Desktop\\CapstoneSp23_Group3\\code\\Team3Capstone\\Team3DesktopAppTests\\obj\\",
+        "projectPath": "C:\\Users\\Ben\\Source\\Repos\\balton818\\CapstoneSp23_Group3\\code\\Team3Capstone\\Team3DesktopAppTests\\Team3DesktopAppTests.csproj",
+        "packagesPath": "C:\\Users\\Ben\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Ben\\Source\\Repos\\balton818\\CapstoneSp23_Group3\\code\\Team3Capstone\\Team3DesktopAppTests\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\csuser\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Ben\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -26,14 +26,15 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {}
+          "https://api.nuget.org/v3/index.json": {},
+          "https://nuget.org/api/v2": {}
         },
         "frameworks": {
           "net6.0-windows7.0": {
             "targetAlias": "net6.0-windows",
             "projectReferences": {
-              "C:\\Users\\csuser\\Desktop\\CapstoneSp23_Group3\\code\\Team3Capstone\\Team3DesktopApp\\Team3DesktopApp.csproj": {
-                "projectPath": "C:\\Users\\csuser\\Desktop\\CapstoneSp23_Group3\\code\\Team3Capstone\\Team3DesktopApp\\Team3DesktopApp.csproj"
+              "C:\\Users\\Ben\\Source\\Repos\\balton818\\CapstoneSp23_Group3\\code\\Team3Capstone\\Team3DesktopApp\\Team3DesktopApp.csproj": {
+                "projectPath": "C:\\Users\\Ben\\Source\\Repos\\balton818\\CapstoneSp23_Group3\\code\\Team3Capstone\\Team3DesktopApp\\Team3DesktopApp.csproj"
               }
             }
           }
@@ -81,24 +82,24 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.101\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.102\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\csuser\\Desktop\\CapstoneSp23_Group3\\code\\Team3Capstone\\Team3DesktopApp\\Team3DesktopApp.csproj": {
+    "C:\\Users\\Ben\\Source\\Repos\\balton818\\CapstoneSp23_Group3\\code\\Team3Capstone\\Team3DesktopApp\\Team3DesktopApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\csuser\\Desktop\\CapstoneSp23_Group3\\code\\Team3Capstone\\Team3DesktopApp\\Team3DesktopApp.csproj",
+        "projectUniqueName": "C:\\Users\\Ben\\Source\\Repos\\balton818\\CapstoneSp23_Group3\\code\\Team3Capstone\\Team3DesktopApp\\Team3DesktopApp.csproj",
         "projectName": "Team3DesktopApp",
-        "projectPath": "C:\\Users\\csuser\\Desktop\\CapstoneSp23_Group3\\code\\Team3Capstone\\Team3DesktopApp\\Team3DesktopApp.csproj",
-        "packagesPath": "C:\\Users\\csuser\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\csuser\\Desktop\\CapstoneSp23_Group3\\code\\Team3Capstone\\Team3DesktopApp\\obj\\",
+        "projectPath": "C:\\Users\\Ben\\Source\\Repos\\balton818\\CapstoneSp23_Group3\\code\\Team3Capstone\\Team3DesktopApp\\Team3DesktopApp.csproj",
+        "packagesPath": "C:\\Users\\Ben\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Ben\\Source\\Repos\\balton818\\CapstoneSp23_Group3\\code\\Team3Capstone\\Team3DesktopApp\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\csuser\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Ben\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -107,7 +108,8 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {}
+          "https://api.nuget.org/v3/index.json": {},
+          "https://nuget.org/api/v2": {}
         },
         "frameworks": {
           "net6.0-windows7.0": {
@@ -149,7 +151,7 @@
               "privateAssets": "none"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.101\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.102\\RuntimeIdentifierGraph.json"
         }
       }
     }
