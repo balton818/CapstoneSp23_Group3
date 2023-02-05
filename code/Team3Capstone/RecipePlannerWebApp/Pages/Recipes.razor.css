@@ -1,4 +1,11 @@
-﻿
+﻿.right .header {
+    font-size: 60pt;
+    font-family: jsMath-cmbx10;
+    width: 280px;
+    margin-left: 60px;
+    padding-top: 16px;
+}
+
 .split {
     height: 100%;
     position: fixed;
@@ -23,15 +30,3 @@
     transform: translate(-50%, -50%);
     text-align: center;
 }
-
-/* Style the image inside the centered container, if needed */
-.centered img {
-    width: 150px;
-    border-radius: 50%;
-}
-
-#nav-menu {
-    color: #e8c547;
-    font-family: jsMath-cmbx10;
-}
-

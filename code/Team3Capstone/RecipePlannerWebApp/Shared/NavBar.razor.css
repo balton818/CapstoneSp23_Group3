@@ -1,4 +1,5 @@
-﻿.split {
+﻿
+.split {
     height: 100%;
     position: fixed;
     z-index: 1;
@@ -55,4 +56,8 @@
 
 ::deep .nav-item a {
     text-decoration: none;
+}
+
+nav {
+    padding-top: 33%;
 }
