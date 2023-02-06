@@ -1,0 +1,27 @@
+Context - User has opened app mobile/web.
+
+Primary Flow
+1 - user enters their username
+2 - user enters their password
+3 - user selects login
+4 - User name and password are authenticated by server
+5 - System displays the main user page, where the user can navigate to their pantry page, search recipes. 
+
+Alternative Flow
+a4 - user name or password not authenticated by server
+a5 - user is informed that incorrect information was entered
+return to step 1
+
+NO INPUT
+a1 - user does not enter credentials
+a2 - user is informed that incorrect information was entered
+return to step 1
+
+WRONG PASSWORD
+a3 - user is informed that the password is incorrect
+return to step 1
+
+BAD CONNECTION
+a4 - system fails to connect to server
+a5 - system informs user of error and prompts to retry later.
+return to step 1

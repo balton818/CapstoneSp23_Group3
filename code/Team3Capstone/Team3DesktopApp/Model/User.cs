@@ -4,7 +4,9 @@ namespace Team3DesktopApp.Model
 {
     public class User
     {
-        public string username;
+        /// <summary>Gets the username.</summary>
+        /// <value>The username.</value>
+        public string Username { get; }
 
         /// <summary>Gets the first name.</summary>
         /// <value>The first name.</value>
@@ -48,7 +50,7 @@ namespace Team3DesktopApp.Model
         public User(string username, string firstName, string lastName, string email, string password, string address, string addressTwo,
             string city, string state, string zipcode)
         {
-            this.username = username;
+            this.Username = username;
             this.FirstName = firstName;
             this.LastName = lastName;
             this.Email = email;

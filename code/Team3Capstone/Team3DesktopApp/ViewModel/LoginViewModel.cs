@@ -1,10 +1,6 @@
 ﻿using System;
-using System.ComponentModel.Design;
 using System.Threading.Tasks;
-using System.Windows.Controls;
-using Team3;
 using Team3DesktopApp.Dal;
-using Team3DesktopApp.Model;
 
 namespace Team3DesktopApp.ViewModel;
 
