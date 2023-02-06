@@ -1,0 +1,57 @@
+﻿@page "/"
+@using RecipePlannerApi.Model;
+@using RecipePlannerApi.Service;
+@inject NavigationManager Nav;
+
+<EditForm Model="@user" OnValidSubmit="@ValidateUser" style="width: 350px; text-align: center ; margin: auto;">
+	<div>
+		<br /><br /><br /><br/>
+	</div>
+	<div>
+		<h3 style="font-weight: bold; color: purple">ReciPlanner Login</h3>
+		<br/>
+		<input class="form-control col-12" @bind="user.Username" placeholder="Enter username"/>
+		<br />
+		<input class="form-control col-12" @bind="user.Password" placeholder="Enter password" />
+		<br />
+		<button type="submit" class="form-control btn-primary" style="position:center">Login</button>
+		<br />
+		<span class="col-12" style="color:red">@LoginValidationResultMessage</span>
+	</div>
+</EditForm>
+
+@code
+{
+	private User user;
+	private string? LoginValidationResultMessage { get; set; }
+	private bool ValidFields { get; set; } 
+
+	protected async override Task OnInitializedAsync()
+	{
+		user = new User();
+		ValidFields = false;
+	}
+
+	private void ValidateUser()
+	{
+		LoginValidationResultMessage = "";
+		if (!String.IsNullOrEmpty(user.Username) && !String.IsNullOrEmpty(user.Password))
+		{
+			bool result = UserService.ValidateUser(user);
+			LoginValidationResultMessage = "";
+			if (result)
+			{
+				Nav.NavigateTo("/index");
+			}
+			else
+			{
+				LoginValidationResultMessage = "Invalid Credentials";
+			}
+		}
+		else
+		{
+			LoginValidationResultMessage = "Please enter a username and password";
+		}
+		
+	}
+}
