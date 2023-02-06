@@ -1,0 +1,35 @@
+﻿<Page x:Class="Team3DesktopApp.View.LoggedIn"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="LoggedIn">
+
+    <Grid>
+        <StackPanel Orientation="Vertical">
+            <TextBlock
+                    Margin="4"
+                    FontSize="36"
+                    Text="Success"
+                    TextAlignment="Center" />
+            <TextBlock
+                    x:Name="ErrorMessage"
+                    Margin="4"
+                    FontSize="20"
+                    Foreground="Red"
+                    Text=""
+                    TextAlignment="Center" />
+            <TextBlock
+                    Width="300"
+                    Margin="0,0,0,20"
+                    VerticalAlignment="Center"
+                    FontSize="16"
+                    Text="Logged In Successfully"
+                    TextAlignment="Center"
+                    TextWrapping="Wrap" />
+
+        </StackPanel>
+    </Grid>
+</Page>
