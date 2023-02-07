@@ -4,6 +4,7 @@
     width: 280px;
     margin-left: 60px;
     padding-top: 16px;
+    color: #30323d;
 }
 
 .split {
@@ -29,4 +30,32 @@
     left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
+}
+
+.pantry {
+    overflow-y: auto;
+    margin-left: 60px;
+    bottom: 0;
+    height: 65%;
+}
+
+.ingredient {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #30323d;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #e8c547;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #ba9717;
 }

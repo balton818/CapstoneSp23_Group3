@@ -1,11 +1,15 @@
 ﻿@page "/home"
 @layout MainLayout;
+@using RecipePlannerWebApp.LocalServices;
+@inject UserSessionData currentUser;
 
 <PageTitle>foodie - home</PageTitle>
 
+<link href="RecipePlannerWebApp.styles.css" rel="stylesheet">
+
 <div class="split right">
     <div class="centered">
-        <h2>Welcome back!</h2>
+        <h2>Welcome back, @currentUser.CurrentUser.Username!</h2>
         <p>Click one of the links in the navigation menu on the left to get started.</p>
     </div>
 </div>

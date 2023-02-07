@@ -19,7 +19,7 @@
 		
 		<input id="lnameField" @bind="user.LastName" placeholder="Enter Last Name" required />
 		
-		<input id="emailField" @bind="user.Email" placeholder="Enter Email Address" required/>
+		<input id="emailField" type="email" @bind="user.Email" placeholder="Enter Email Address" required/>
 		
 		<input id="addrField" @bind="user.Address" placeholder="Enter Street Address" required />
 		
@@ -41,11 +41,11 @@
 
 	private void RegisterUser()
 	{
-		this.user.Id = -2;
+		//this.user.Id = -2;
 		Console.WriteLine("REGISTER -- SUCCESS");
 		Console.WriteLine("REGISTER -- " + this.user);
-		var regResult = UserService.CreateUser(this.user);
-		Console.WriteLine("REGISTER -- REG_RESULT " + regResult);
-		
+		//var regResult = UserService.CreateUser(this.user);
+		//Console.WriteLine("REGISTER -- REG_RESULT " + regResult);
+		Nav.NavigateTo("/");
 	}
 }
