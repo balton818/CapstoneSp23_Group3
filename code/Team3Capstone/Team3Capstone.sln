@@ -16,7 +16,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecipePlannerApi", "..\back
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "recipePlannerDatabase", "..\backend\recipePlannerDatabase\recipePlannerDatabase.sqlproj", "{06102982-13D5-41CA-9BE9-DC93FDF1A4C2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecipePlannerWebApp", "RecipePlannerWebApp\RecipePlannerWebApp.csproj", "{69825E75-8886-4248-88B4-9138C304A4A7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecipePlannerWebApp", "RecipePlannerWebApp\RecipePlannerWebApp.csproj", "{69825E75-8886-4248-88B4-9138C304A4A7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecipePlannerWebAppTESTS", "RecipePlannerWebAppTESTS\RecipePlannerWebAppTESTS.csproj", "{C7C56710-985E-4A84-BA59-D84783E063E2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -50,6 +52,10 @@ Global
 		{69825E75-8886-4248-88B4-9138C304A4A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{69825E75-8886-4248-88B4-9138C304A4A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{69825E75-8886-4248-88B4-9138C304A4A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C7C56710-985E-4A84-BA59-D84783E063E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C7C56710-985E-4A84-BA59-D84783E063E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C7C56710-985E-4A84-BA59-D84783E063E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C7C56710-985E-4A84-BA59-D84783E063E2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

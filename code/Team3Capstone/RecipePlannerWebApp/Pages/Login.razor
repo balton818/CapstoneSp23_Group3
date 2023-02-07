@@ -3,34 +3,31 @@
 @using RecipePlannerApi.Service;
 @inject NavigationManager Nav;
 
-<EditForm Model="@user" OnValidSubmit="@ValidateUser" style="width: 350px; text-align: center ; margin: auto;">
-	<div>
-		<br /><br /><br /><br/>
-	</div>
-	<div>
-		<h3 style="font-weight: bold; color: purple">ReciPlanner Login</h3>
+<link href="RecipePlannerWebApp.styles.css" rel="stylesheet">
+<PageTitle>foodie - login</PageTitle>
+<EditForm Model="@user" OnValidSubmit="@ValidateUser">
+	<div id="login-widget">
+		<span class="header">Login to Foodie</span>
 		<br/>
-		<input class="form-control col-12" @bind="user.Username" placeholder="Enter username"/>
+		<input id="usernameField" @bind="user.Username" placeholder="Enter username"/>
 		<br />
-		<input class="form-control col-12" @bind="user.Password" placeholder="Enter password" />
+		<input id="passwordField" @bind="user.Password" placeholder="Enter password" />
 		<br />
-		<button type="submit" class="form-control btn-primary" style="position:center">Login</button>
+		<button type="submit" id="loginButton" style="position:center">Login</button>
 		<br />
-		<span class="col-12" style="color:red">@LoginValidationResultMessage</span>
+		<span id="loginResultMessage">@LoginValidationResultMessage</span>
 	</div>
 </EditForm>
 
 @code
 {
-	private User user;
-	private string? LoginValidationResultMessage { get; set; }
-	private bool ValidFields { get; set; } 
+	[Parameter]
+	public User user { get; set; } = new User();
 
-	protected async override Task OnInitializedAsync()
-	{
-		user = new User();
-		ValidFields = false;
-	}
+	[Parameter]
+	public bool ValidFields { get; set; } = false;
+
+	private string? LoginValidationResultMessage { get; set; }
 
 	private void ValidateUser()
 	{
@@ -41,10 +38,12 @@
 			LoginValidationResultMessage = "";
 			if (result)
 			{
-				Nav.NavigateTo("/index");
+				this.ValidFields = true;
+				Nav.NavigateTo("/home");
 			}
 			else
 			{
+				this.ValidFields = false;
 				LoginValidationResultMessage = "Invalid Credentials";
 			}
 		}

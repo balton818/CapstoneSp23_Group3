@@ -1,0 +1,43 @@
+﻿.header {
+    color: #e8c547;
+}
+
+#login-widget {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    width: 350px;
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+input {
+    width: 200px;
+    height: 25px;
+    border: 2px solid #e8c547;
+    border-radius: 4px;
+    background-color: #30323d;
+    color: #e8c547;
+}
+
+button {
+    width: 200px;
+    height: 35px;
+    color: #e8c547;
+    background-color: #30323d
+}
+
+span {
+    font-weight: bold;
+    font-size: medium;
+    color: darkblue;
+}
+
+#loginResultMessage {
+    color: red;
+}
