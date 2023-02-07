@@ -1,0 +1,21 @@
+Registration Use Case Scenario
+
+Context - User has launched App and clicked Register on the login screen.
+
+Primary flow:
+1 - User enters desired username and password, then, first name, last name, address, phone, and email.
+2 - User clicks "Register".
+3 - Server checks whether user exists.
+4 - Server creates new user with specified credentials.
+5 - User is taken to the Main Page.
+
+Alternate flow(s):
+
+USERNAME TAKEN
+a3 - Server determines that the specified username already exists in the system.
+a4 - User is informed that the username is already in use.
+return to step 1.
+
+BAD CONNECTION:
+a3 - system fails to connect to the server
+a4 - system informs the user of a connection issue

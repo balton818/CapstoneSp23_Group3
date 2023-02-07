@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Team3DesktopApp.Model;
 
 namespace Team3DesktopAppTests.ModelTests
