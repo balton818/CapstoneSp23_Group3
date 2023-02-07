@@ -2,20 +2,21 @@
 @using RecipePlannerApi.Model;
 @using RecipePlannerApi.Service;
 @inject NavigationManager Nav;
+@layout LoginLayout;
 
 <link href="RecipePlannerWebApp.styles.css" rel="stylesheet">
 <PageTitle>foodie - login</PageTitle>
 <EditForm Model="@user" OnValidSubmit="@ValidateUser">
     <div id="login-widget">
         <span class="header">Login to Foodie</span>
-        <br />
+       
         <input id="usernameField" @bind="user.Username" placeholder="Enter username" required />
-        <br />
+      
         <input id="passwordField" @bind="user.Password" placeholder="Enter password" required />
-        <br />
+       
         <button type="submit" id="loginButton" style="position:center">Login</button>
         <button type="submit" id="registerButton" style="position:center" @onclick="RegisterUser">Register</button>
-        <br />
+        
         <span id="loginResultMessage">@LoginValidationResultMessage</span>
     </div>
 </EditForm>

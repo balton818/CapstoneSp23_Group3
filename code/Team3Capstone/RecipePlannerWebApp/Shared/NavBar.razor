@@ -1,8 +1,10 @@
-﻿<link href="RecipePlannerWebApp.styles.css" rel="stylesheet">
+﻿@inject NavigationManager Nav;
+
+<link href="RecipePlannerWebApp.styles.css" rel="stylesheet">
 
 <div class="split left">
     <div class="top-centered header" id="nav-menu">
-        <span>foodie</span>
+        <span style="color: #e8c547">foodie</span>
         <hr style="height: 2px; opacity: 100%"/>
     </div>
     <nav class="centered menu" id="nav-menu" style="flex-direction:column; justify-content:space-evenly">
@@ -22,8 +24,95 @@
             </NavLink>
         </div>
     </nav>
+    <div class="bottom-centered footer" id="nav-menu">
+        <button id="logoutButton" @onclick="LogoutUser">Log Out</button>
+        <br />
+        <span>&copy 2023 - Alton, Irie, Wagner</span>
+    </div>
 </div>
 
-@code {
+<style>
+    .split {
+        height: 100%;
+        position: fixed;
+        z-index: 1;
+        top: 0;
+        overflow-x: hidden;
+        padding-top: 20px;
+    }
 
+    /* Control the left side */
+    .left {
+        left: 0;
+        width: 25%;
+        background-color: #30323d;
+    }
+
+
+    /* If you want the content centered horizontally and vertically */
+    .centered {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+    }
+
+    .top-centered {
+        position: absolute;
+        top: 20%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+    }
+
+    .bottom-centered {
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+    }
+
+    .header {
+        font-size: 60pt;
+        color: #e8c547;
+    }
+
+    .footer {
+        font-size: 15px;
+        width: 75%;
+    }
+    /* Style the image inside the centered container, if needed */
+    .centered img {
+        width: 150px;
+        border-radius: 50%;
+    }
+
+    #nav-menu {
+        color: #e8c547;
+        font-family: jsMath-cmbx10;
+        text-decoration: none;
+    }
+
+    .nav-item {
+        color: #e8c547;
+        font-size: 30pt;
+    }
+
+    ::deep .nav-item a {
+        text-decoration: none;
+    }
+
+    nav {
+        padding-top: 33%;
+    }
+
+</style>
+
+@code {
+    public void LogoutUser()
+    {
+        Nav.NavigateTo("/");
+    }
 }

@@ -1,5 +1,6 @@
 
 var builder = WebApplication.CreateBuilder(args);
+builder.WebHost.UseWebRoot("wwwroot").UseStaticWebAssets();
 
 // Add services to the container.
 builder.Services.AddRazorPages();

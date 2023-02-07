@@ -14,6 +14,7 @@
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
+    row-gap: 10px;
 }
 
 input {
@@ -23,13 +24,14 @@ input {
     border-radius: 4px;
     background-color: #30323d;
     color: #e8c547;
+    margin: 5px;
 }
 
 button {
     width: 200px;
     height: 35px;
     color: #e8c547;
-    background-color: #30323d
+    background-color: #30323d;
 }
 
 span {
