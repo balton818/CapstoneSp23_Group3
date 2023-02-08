@@ -8,44 +8,44 @@
 <PageTitle>foodie - register</PageTitle>
 
 <EditForm Model="@user" OnValidSubmit="@RegisterUser">
-	<div id="registration-widget">
-		<span class="header">Register for Foodie</span>
-		
-		<input id="usernameField" @bind="user.Username" placeholder="Enter Username" required/>
-		
-		<input id="passwordField" @bind="user.Password" placeholder="Enter Password" required />
-		
-		<input id="fnameField" @bind="user.FirstName" placeholder="Enter First Name" required />
-		
-		<input id="lnameField" @bind="user.LastName" placeholder="Enter Last Name" required />
-		
-		<input id="emailField" type="email" @bind="user.Email" placeholder="Enter Email Address" required/>
-		
-		<input id="addrField" @bind="user.Address" placeholder="Enter Street Address" required />
-		
-		<input id="addr2Field" @bind="user.AddressTwo" placeholder="Enter Address 2" />
-		
-		<input id="cityField" @bind="user.City" placeholder="Enter City" required />
-		
-		<input id="stateField" @bind="user.State" placeholder="Enter State" required/>
-	
-		<input id="zipField" @bind="user.Zipcode" placeholder="Enter Zipcode" required/>
-		
-		<button type="submit" id="submitButton" style="position:center">Submit</button>
-	</div>
+    <div id="registration-widget">
+        <span class="header">Register for Foodie</span>
+
+        <input id="usernameField" @bind="user.Username" placeholder="Enter Username" required />
+
+        <input id="passwordField" @bind="user.Password" placeholder="Enter Password" required />
+
+        <input id="fnameField" @bind="user.FirstName" placeholder="Enter First Name" required />
+
+        <input id="lnameField" @bind="user.LastName" placeholder="Enter Last Name" required />
+
+        <input id="emailField" type="email" @bind="user.Email" placeholder="Enter Email Address" required />
+
+        <input id="addrField" @bind="user.Address" placeholder="Enter Street Address" required />
+
+        <input id="addr2Field" @bind="user.AddressTwo" placeholder="Enter Address 2" />
+
+        <input id="cityField" @bind="user.City" placeholder="Enter City" required />
+
+        <input id="stateField" @bind="user.State" placeholder="Enter State" required />
+
+        <input id="zipField" @bind="user.Zipcode" placeholder="Enter Zipcode" required />
+
+        <button type="submit" id="submitButton" style="position:center">Submit</button>
+    </div>
 </EditForm>
 
 @code {
-	[Parameter]
-	public User user { get; set; } = new User();
+    [Parameter]
+    public User user { get; set; } = new User();
 
-	private void RegisterUser()
-	{
-		//this.user.Id = -2;
-		Console.WriteLine("REGISTER -- SUCCESS");
-		Console.WriteLine("REGISTER -- " + this.user);
-		//var regResult = UserService.CreateUser(this.user);
-		//Console.WriteLine("REGISTER -- REG_RESULT " + regResult);
-		Nav.NavigateTo("/");
-	}
+    private void RegisterUser()
+    {
+        
+        Console.WriteLine("REGISTER -- SUCCESS");
+        Console.WriteLine("REGISTER -- " + this.user);
+        var regResult = UserService.CreateUser(this.user);
+        Console.WriteLine("REGISTER -- REG_RESULT " + regResult);
+        Nav.NavigateTo("/");
+    }
 }

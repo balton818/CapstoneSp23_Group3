@@ -15,14 +15,7 @@
     <div class="pantry">
         @foreach (var ingredient in Ingredients)
         {
-            <fieldset class="ingredient">
-                <legend>@ingredient["name"]</legend>
-                <label>Quantity: @ingredient["quantity"]</label>
-                <label>Category: @ingredient["category"]</label>
-                <br>
-                <button>Add</button>
-                <button>Remove from Pantry</button>
-            </fieldset>
+            <Ingredient IngredientName="@ingredient["name"]" IngredientQuantity="@ingredient["quantity"]" />
         }
     </div>
 </div>
@@ -30,20 +23,29 @@
 @code
 {
     private IList<Dictionary<string, string>> Ingredients { get; set; }
-
+    private string IngredientToRemove { get; set; } = "";
     protected override void OnInitialized()
     {
         Console.WriteLine("PANTRY -- Initializing...");
         this.Ingredients = new List<Dictionary<string, string>>();
-        this.BuildPantry();
+        this.buildPantry();
     }
 
-    private void BuildPantry()
+    private void buildPantry()
     {
-        this.Ingredients.Add(new Dictionary<string, string>(){ { "name", "eggs" }, { "quantity", "4"}, { "category", "dairy"} } );
+        this.Ingredients.Add(new Dictionary<string, string>() { { "name", "eggs" }, { "quantity", "4" }, { "category", "dairy" } });
         this.Ingredients.Add(new Dictionary<string, string>() { { "name", "milk" }, { "quantity", "1" }, { "category", "dairy" } });
         this.Ingredients.Add(new Dictionary<string, string>() { { "name", "bread" }, { "quantity", "10" }, { "category", "baked goods" } });
         this.Ingredients.Add(new Dictionary<string, string>() { { "name", "apple" }, { "quantity", "7" }, { "category", "fruit" } });
         this.Ingredients.Add(new Dictionary<string, string>() { { "name", "carrot" }, { "quantity", "13" }, { "category", "vegetables" } });
+    }
+
+    private void deleteIngredient(MouseEventArgs e, string ingredientName)
+    {
+        if (e.Button.Equals(0))
+        {
+            Console.WriteLine("Deleting ingredient: " + ingredientName);
+        }
+
     }
 }
