@@ -3,81 +3,252 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:view="clr-namespace:Team3DesktopApp.View"
     mc:Ignorable="d">
-
-    <Grid>
-        <StackPanel Orientation="Vertical">
-            <TextBlock
-                Margin="4"
-                FontSize="36"
-                Text="Register"
-                TextAlignment="Center" />
-            <TextBlock
-                x:Name="ErrorMessage"
-                Margin="4"
-                FontSize="20"
-                Foreground="Red"
-                Text=""
-                TextAlignment="Center" />
-            <TextBlock
-                Width="300"
-                Margin="0,0,0,20"
-                VerticalAlignment="Center"
-                FontSize="16"
-                Text="Enter your Information below"
-                TextAlignment="Center"
-                TextWrapping="Wrap" />
-            <TextBox
-                x:Name="UsernameTextBox"
-                Width="250"
-                Margin="4"
-                Text="Username" />
-            <TextBox
-                x:Name="PasswordTextBox"
-                Width="250"
-                Margin="4"
-                Text="Password" />
-            <TextBox
-                x:Name="FirstNameTextBox"
-                Width="250"
-                Margin="4"
-                Text="First Name" />
-            <TextBox
-                x:Name="LastNameTextBox"
-                Width="250"
-                Margin="4"
-                Text="Last Name" />
-            <TextBox
-                x:Name="AddressOneTextBox"
-                Width="250"
-                Margin="4"
-                Text="Address" />
-            <TextBox
-                x:Name="AddressTwoTextBox"
-                Width="250"
-                Margin="4"
-                Text="Address" />
-            <TextBox
-                x:Name="StateTextBox"
-                Width="250"
-                Margin="4"
-                Text="State" />
-            <TextBox
-                x:Name="ZipTextBox"
-                Width="250"
-                Margin="4"
-                Text="Zip Code" />
-            <Button
-                x:Name="RegisterButton"
-                Width="80"
-                Margin="0,20"
-                HorizontalAlignment="Center"
-                Background="DodgerBlue"
-                Click="RegisterButton_Click"
-                Content="Register"
-                Foreground="White" />
-        </StackPanel>
-    </Grid>
+    <Canvas
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        Name="svg512"
+        Width="415"
+        Height="574">
+        <Canvas.RenderTransform>
+            <TranslateTransform X="0" Y="0" />
+        </Canvas.RenderTransform>
+        <Canvas.Resources>
+            <RectangleGeometry
+                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                x:Key="clip0_10_117"
+                Rect="0, 0, 415, 574" />
+        </Canvas.Resources>
+        <Canvas Name="registrationPage" Clip="{StaticResource clip0_10_117}">
+            <Rectangle
+                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                Name="rect434"
+                Width="415"
+                Height="574"
+                Fill="#FF30323D" />
+            <Canvas Name="heading">
+                <Rectangle
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    Name="rect436"
+                    Width="415"
+                    Height="72"
+                    Fill="#FF30323D">
+                    <Rectangle.RenderTransform>
+                        <TranslateTransform X="0" Y="-1" />
+                    </Rectangle.RenderTransform>
+                </Rectangle>
+                <Canvas Name="pageItems">
+                    <Canvas Name="filledButtonLogout">
+                        <view:NavButton
+                            x:Name="backButton"
+                            Canvas.Left="337"
+                            Canvas.Top="16"
+                            Width="69"
+                            Height="44"
+                            Background="#FFD6CCC2"
+                            Click="BackButton_OnClickButton_Click"
+                            Content="Back"
+                            FontFamily="Song Myung"
+                            FontSize="18"
+                            ForceCursor="True"
+                            NavUri="/View/Login.xaml">
+                            <view:NavButton.Resources>
+                                <Style TargetType="Border">
+                                    <Setter Property="CornerRadius" Value="5" />
+                                </Style>
+                            </view:NavButton.Resources>
+                        </view:NavButton>
+                    </Canvas>
+                </Canvas>
+                <Canvas Name="title">
+                    <TextBlock
+                        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                        Name="EnterYourInfoBelow"
+                        Canvas.Left="10"
+                        Canvas.Top="28"
+                        FontFamily="Song Myung"
+                        FontSize="24"
+                        Foreground="#FFE8C547">
+                        <Span FontSize="24">Enter Your Info Below</Span>
+                    </TextBlock>
+                </Canvas>
+            </Canvas>
+            <Canvas Name="divider1">
+                <Rectangle
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    Name="Rectangle5"
+                    Canvas.Top="79"
+                    Width="415"
+                    Height="2"
+                    Fill="#33E8C547"
+                    RadiusX="1"
+                    RadiusY="1" />
+            </Canvas>
+            <Canvas Name="divider2">
+                <Rectangle
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    Name="Rectangle5_2"
+                    Canvas.Top="501"
+                    Width="415"
+                    Height="2"
+                    Fill="#33E8C547"
+                    RadiusX="1"
+                    RadiusY="1" />
+            </Canvas>
+            <Canvas Name="regForm">
+                <Canvas>
+                    <Canvas Name="unCanvas">
+                        <TextBox
+                            Name="userNameTextBox"
+                            Canvas.Left="32"
+                            Canvas.Top="118"
+                            Width="352"
+                            Height="42"
+                            Background="#FFD6CCC2"
+                            BorderBrush="#FFE8C547"
+                            FontFamily="Song Myung"
+                            FontSize="30" />
+                        <TextBlock
+                            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                            Name="something"
+                            Canvas.Left="32"
+                            Canvas.Top="98"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Top"
+                            FontFamily="Song Myung"
+                            FontSize="17"
+                            Foreground="#FF898989">
+                            <Span FontSize="17">Username</Span>
+                        </TextBlock>
+                    </Canvas>
+                    <Canvas Name="pwCanvas">
+                        <TextBox
+                            Name="passwordTextBox"
+                            Canvas.Left="32"
+                            Canvas.Top="186"
+                            Width="352"
+                            Height="42"
+                            Background="#FFD6CCC2"
+                            BorderBrush="#FFE8C547"
+                            FontFamily="Song Myung"
+                            FontSize="30" />
+                        <TextBlock
+                            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                            Name="something1"
+                            Canvas.Left="32"
+                            Canvas.Top="166"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Top"
+                            FontFamily="Song Myung"
+                            FontSize="17"
+                            Foreground="#FF898989">
+                            <Span FontSize="17">Password</Span>
+                        </TextBlock>
+                    </Canvas>
+                    <Canvas Name="firstNameCanvas">
+                        <TextBox
+                            Name="firstNameTextBox"
+                            Canvas.Left="32"
+                            Canvas.Top="253"
+                            Width="352"
+                            Height="42"
+                            Background="#FFD6CCC2"
+                            BorderBrush="#FFE8C547"
+                            FontFamily="Song Myung"
+                            FontSize="30" />
+                        <TextBlock
+                            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                            Name="something3"
+                            Canvas.Left="32"
+                            Canvas.Top="233"
+                            FontFamily="Song Myung"
+                            FontSize="17"
+                            Foreground="#FF898989">
+                            <Span FontSize="17">First Name</Span>
+                        </TextBlock>
+                    </Canvas>
+                    <Canvas Name="lastNameCan">
+                        <TextBox
+                            Name="lastNameTextBox"
+                            Canvas.Left="32"
+                            Canvas.Top="322"
+                            Width="352"
+                            Height="43"
+                            Background="#FFD6CCC2"
+                            BorderBrush="#FFE8C547"
+                            FontFamily="Song Myung"
+                            FontSize="30" />
+                        <TextBlock
+                            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                            Name="something4"
+                            Canvas.Left="32"
+                            Canvas.Top="302"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Top"
+                            FontFamily="Song Myung"
+                            FontSize="17"
+                            Foreground="#FF898989">
+                            <Span FontSize="17">Last Name</Span>
+                        </TextBlock>
+                    </Canvas>
+                    <Canvas Name="emailCan">
+                        <TextBox
+                            Name="emailTextBox"
+                            Canvas.Left="32"
+                            Canvas.Top="394"
+                            Width="352"
+                            Height="42"
+                            Background="#FFD6CCC2"
+                            BorderBrush="#FFE8C547"
+                            FontFamily="Song Myung"
+                            FontSize="30" />
+                        <TextBlock
+                            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                            Name="something5"
+                            Canvas.Left="32"
+                            Canvas.Top="374"
+                            FontFamily="Song Myung"
+                            FontSize="17"
+                            Foreground="#FF898989">
+                            <Span FontSize="17">Email</Span>
+                        </TextBlock>
+                    </Canvas>
+                    <Canvas Name="regCanvasButton">
+                        <view:NavButton
+                            x:Name="registerButton"
+                            Canvas.Left="113"
+                            Canvas.Top="448"
+                            Width="188"
+                            Height="38"
+                            Background="#FFD6CCC2"
+                            Click="RegisterButton_Click"
+                            Content="Register"
+                            FontFamily="Song Myung"
+                            FontSize="18"
+                            ForceCursor="True"
+                            NavUri="/View/RecipePage.xaml">
+                            <view:NavButton.Resources>
+                                <Style TargetType="Border">
+                                    <Setter Property="CornerRadius" Value="5" />
+                                </Style>
+                            </view:NavButton.Resources>
+                        </view:NavButton>
+                    </Canvas>
+                </Canvas>
+            </Canvas>
+            <Canvas Name="legalInfo">
+                <TextBlock
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    Name="Textbox"
+                    Canvas.Left="24"
+                    Canvas.Top="525"
+                    FontFamily="Song Myung"
+                    FontSize="17"
+                    Foreground="#FFE8C547">
+                    <Span FontSize="14">Recipe Planner Irie/Alton/Wagner</Span>
+                </TextBlock>
+            </Canvas>
+        </Canvas>
+    </Canvas>
 </Page>

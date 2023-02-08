@@ -22,44 +22,21 @@ namespace Team3DesktopApp.Model
         public string Password { get; private set; }
         /// <summary>Gets the address.</summary>
         /// <value>The address.</value>
-        public string Address { get; private set; }
-        /// <summary>Gets the address two.</summary>
-        /// <value>The address two.</value>
-        public string AddressTwo { get; private set; }
-        /// <summary>Gets the city.</summary>
-        /// <value>The city.</value>
-        public string City { get; private set; }
-        /// <summary>Gets the state.</summary>
-        /// <value>The state.</value>
-        public string State { get; private set; }
-        /// <summary>Gets the zipcode.</summary>
-        /// <value>The zipcode.</value>
-        public string Zipcode { get; private set; }
         public ArrayList Pantry { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="User" /> class.</summary>
+        /// <param name="username">The username.</param>
         /// <param name="firstName">The first name.</param>
         /// <param name="lastName">The last name.</param>
         /// <param name="email">The email.</param>
         /// <param name="password">The password.</param>
-        /// <param name="address">The address.</param>
-        /// <param name="addressTwo">The address two.</param>
-        /// <param name="city">The city.</param>
-        /// <param name="state">The state.</param>
-        /// <param name="zipcode">The zipcode.</param>
-        public User(string username, string firstName, string lastName, string email, string password, string address, string addressTwo,
-            string city, string state, string zipcode)
+        public User(string username, string firstName, string lastName, string email, string password)
         {
             this.Username = username;
             this.FirstName = firstName;
             this.LastName = lastName;
             this.Email = email;
             this.Password = password;
-            this.Address = address;
-            this.AddressTwo = addressTwo;
-            this.City = city;
-            this.State = state;
-            this.Zipcode = zipcode;
             this.Pantry = new ArrayList();
         }
 
@@ -68,23 +45,12 @@ namespace Team3DesktopApp.Model
         /// <param name="lastName">The last name.</param>
         /// <param name="email">The email.</param>
         /// <param name="password">The password.</param>
-        /// <param name="address">The address.</param>
-        /// <param name="addressTwo">The address two.</param>
-        /// <param name="city">The city.</param>
-        /// <param name="state">The state.</param>
-        /// <param name="zipcode">The zipcode.</param>
-        public void UpdateUserInfo(string firstName, string lastName, string email, string password, string address,
-            string addressTwo, string city, string state, string zipcode)
+        public void UpdateUserInfo(string firstName, string lastName, string email, string password)
         {
             this.FirstName = firstName;
             this.LastName = lastName;
             this.Email = email;
             this.Password = password;
-            this.Address = address;
-            this.AddressTwo = addressTwo;
-            this.City = city;
-            this.State = state;
-            this.Zipcode = zipcode;
         }
 
         /// <summary>Updates the user pantry.</summary>

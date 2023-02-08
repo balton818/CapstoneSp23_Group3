@@ -28,5 +28,7 @@ namespace Team3DesktopApp.View
             set => SetValue(NavUriProperty, value);
         }
 
+
+
     }
 }

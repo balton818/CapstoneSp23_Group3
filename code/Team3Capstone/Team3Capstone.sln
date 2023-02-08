@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Team3WebApp", "Team3WebApp\Team3WebApp.csproj", "{916E4621-DCBF-4444-BAB8-930514BD8D60}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Team3DesktopApp", "Team3DesktopApp\Team3DesktopApp.csproj", "{A07F762A-3E39-43F8-9C83-9A285EB38B67}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Team3DesktopAppTests", "Team3DesktopAppTests\Team3DesktopAppTests.csproj", "{3183BBF7-DD5B-40B7-B28F-ABD0F6973A5E}"
@@ -16,7 +14,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecipePlannerApi", "..\back
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "recipePlannerDatabase", "..\backend\recipePlannerDatabase\recipePlannerDatabase.sqlproj", "{06102982-13D5-41CA-9BE9-DC93FDF1A4C2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecipePlannerWebApp", "RecipePlannerWebApp\RecipePlannerWebApp.csproj", "{69825E75-8886-4248-88B4-9138C304A4A7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecipePlannerWebApp", "RecipePlannerWebApp\RecipePlannerWebApp.csproj", "{69825E75-8886-4248-88B4-9138C304A4A7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,10 +22,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{916E4621-DCBF-4444-BAB8-930514BD8D60}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{916E4621-DCBF-4444-BAB8-930514BD8D60}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{916E4621-DCBF-4444-BAB8-930514BD8D60}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{916E4621-DCBF-4444-BAB8-930514BD8D60}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A07F762A-3E39-43F8-9C83-9A285EB38B67}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A07F762A-3E39-43F8-9C83-9A285EB38B67}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A07F762A-3E39-43F8-9C83-9A285EB38B67}.Release|Any CPU.ActiveCfg = Release|Any CPU

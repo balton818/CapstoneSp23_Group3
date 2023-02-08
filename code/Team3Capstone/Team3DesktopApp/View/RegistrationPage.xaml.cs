@@ -15,5 +15,13 @@ namespace Team3DesktopApp.View
         {
             // Method intentionally left empty.
         }
+
+        private void BackButton_OnClickButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (NavigationService != null)
+            {
+                NavigationService.Navigate(this.backButton.NavUri);
+            }
+        }
     }
 }
