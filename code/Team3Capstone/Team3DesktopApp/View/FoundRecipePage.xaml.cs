@@ -31,18 +31,36 @@ namespace Team3DesktopApp.View
         private void viewDetailClick(object sender, RoutedEventArgs e)
         {
             NavButton navButton = (NavButton)sender;
-            this.viewModel.RecipeDetailNav(navButton.NavUri, navButton.Text);
+            this.navigateToPage(navButton.NavUri);
+            this.viewModel.RecipeDetailNav(navButton.Text);
         }
 
         private void navButtonClick(object sender, RoutedEventArgs e)
         {
             NavButton navButton = (NavButton)sender;
-            this.viewModel.Navigate(navButton.NavUri);
+            this.navigateToPage(navButton.NavUri);
         }
 
         private void navMenuClick(object sender, MouseButtonEventArgs e)
         {
-            this.navGrid.Visibility = Visibility.Visible;
+            if (this.navGrid.Visibility != Visibility.Visible)
+            {
+                this.navGrid.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                this.navGrid.Visibility = Visibility.Collapsed;
+            }
+
         }
+
+        private void navigateToPage(Uri navUri)
+        {
+            if (NavigationService != null)
+            {
+                NavigationService.Navigate(navUri);
+            }
+        }
+
     }
 }

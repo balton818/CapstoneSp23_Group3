@@ -12,21 +12,13 @@ public class FoodieViewModel
     private FoundRecipeViewModel foundRecipeViewModel = new FoundRecipeViewModel();
     private LoginViewModel loginViewModel = new LoginViewModel();
     private RegistrationViewModel registrationViewModel = new RegistrationViewModel();
+    private RecipeDetailViewModel recipeDetailViewModel = new RecipeDetailViewModel();
 
-    public void RecipeDetailNav(Uri navButtonNavUri, string recipeName)
-    {
-        if (navButtonNavUri == null)
-        {
-            throw new ArgumentNullException(nameof(navButtonNavUri));
-        }
-
-        this.foundRecipeViewModel.RecipeDetailNav(navButtonNavUri, recipeName);
-    }
-
-    public void NavigatePage(Uri navButtonNavUri)
+    public void RecipeDetailNav(string recipeName)
     {
 
-        NavigationService.Navigate(navButtonNavUri);
+        this.recipeDetailViewModel.RecipeDetailNav(recipeName);
     }
+
 
 }

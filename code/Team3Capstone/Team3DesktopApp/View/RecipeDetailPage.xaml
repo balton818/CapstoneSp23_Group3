@@ -1,0 +1,270 @@
+﻿<Page
+    x:Class="Team3DesktopApp.View.RecipeDetailPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Team3DesktopApp.View"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="RecipeDetailPage"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+
+    <Grid Margin="0,0,364,-128">
+        <Canvas
+            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+            Name="svg1061"
+            Width="415"
+            Height="574">
+            <Canvas.RenderTransform>
+                <TranslateTransform X="0" Y="0" />
+            </Canvas.RenderTransform>
+            <Canvas.Resources>
+                <RectangleGeometry
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    x:Key="Clip0872"
+                    Rect="0, 0, 415, 574" />
+            </Canvas.Resources>
+            <Canvas Name="mainCanvas" Clip="{StaticResource Clip0872}">
+                <Rectangle
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    Name="rect1005"
+                    Width="415"
+                    Height="574"
+                    Fill="#FF30323D" />
+                <Canvas Name="foodieHeader">
+                    <Canvas Name="navBar">
+
+                        <Canvas Name="headerTitle">
+                            <TextBlock
+                                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                                x:Name="recipeTitleTextBlock"
+                                Canvas.Left="13"
+                                Canvas.Top="23"
+                                FontFamily="Song Myung"
+                                FontSize="24"
+                                Foreground="#FFE8C547">
+                                <Span FontSize="24">Recipe Title</Span>
+                            </TextBlock>
+                        </Canvas>
+                        <Canvas Name="navMenuCan">
+                            <Canvas Name="navCanvas">
+                                <Path
+                                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                                    x:Name="navMenu"
+                                    Canvas.Left="345.242"
+                                    Canvas.Top="24.476"
+                                    Width="36"
+                                    Height="23"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"
+                                    Data="M358.333 30C358.333 29.2636 359.08 28.6667 360 28.6667H390C390.92 28.6667 391.667 29.2636 391.667 30C391.667 30.7364 390.92 31.3333 390 31.3333H360C359.08 31.3333 358.333 30.7364 358.333 30ZM358.333 38C358.333 37.2636 359.08 36.6667 360 36.6667H390C390.92 36.6667 391.667 37.2636 391.667 38C391.667 38.7364 390.92 39.3333 390 39.3333H360C359.08 39.3333 358.333 38.7364 358.333 38ZM360 44.6667C359.08 44.6667 358.333 45.2636 358.333 46C358.333 46.7364 359.08 47.3333 360 47.3333H390C390.92 47.3333 391.667 46.7364 391.667 46C391.667 45.2636 390.92 44.6667 390 44.6667H360Z"
+                                    Fill="#FFE8C547"
+                                    MouseDown="navMenuClick"
+                                    Stretch="Fill" />
+                            </Canvas>
+                        </Canvas>
+                    </Canvas>
+                    <Canvas>
+                        <Rectangle
+                            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                            Name="rect1017"
+                            Width="415"
+                            Height="18"
+                            Fill="#FF30323D">
+                            <Rectangle.RenderTransform>
+                                <TranslateTransform X="0" Y="71" />
+                            </Rectangle.RenderTransform>
+                        </Rectangle>
+                        <Rectangle
+                            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                            Name="rectangle5"
+                            Canvas.Top="79"
+                            Width="415"
+                            Height="2"
+                            Fill="#33E8C547"
+                            RadiusX="1"
+                            RadiusY="1" />
+                    </Canvas>
+                </Canvas>
+                <Canvas Name="navMenu2">
+                    <Canvas />
+                </Canvas>
+                <Canvas>
+                    <Rectangle
+                        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                        Name="rectangle52"
+                        Canvas.Top="501"
+                        Width="415"
+                        Height="2"
+                        Fill="#33E8C547"
+                        RadiusX="1"
+                        RadiusY="1" />
+                </Canvas>
+                <Canvas>
+                    <TextBlock
+                        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                        Name="textbox"
+                        Canvas.Left="25"
+                        Canvas.Top="526"
+                        FontFamily="Song Myung"
+                        FontSize="17"
+                        Foreground="#FFE8C547">
+                        <Span FontSize="17">Legal Info</Span>
+                    </TextBlock>
+                </Canvas>
+                <Canvas Name="recipe">
+                    <Canvas>
+                        <TextBlock
+                            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                            Name="textbox2"
+                            Canvas.Left="16"
+                            Canvas.Top="105"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Top"
+                            FontFamily="Nunito"
+                            FontSize="17"
+                            FontWeight="Medium"
+                            Foreground="#FFE8C547">
+                            <Span FontSize="17">Ingredients</Span>
+                        </TextBlock>
+                    </Canvas>
+                    <Canvas>
+                        <TextBlock
+                            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                            Name="textbox3"
+                            Canvas.Left="13"
+                            Canvas.Top="313"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Top"
+                            FontFamily="Nunito"
+                            FontSize="17"
+                            FontWeight="Medium"
+                            Foreground="#FFE8C547">
+                            <Span FontSize="17">Cooking Instructions</Span>
+                        </TextBlock>
+                    </Canvas>
+                    <Canvas>
+                        <Canvas />
+                    </Canvas>
+                    <Image
+                        Canvas.Left="154"
+                        Canvas.Top="117"
+                        Width="249"
+                        Height="174"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top" />
+                    <ListBox
+                        Canvas.Left="14"
+                        Canvas.Top="140"
+                        Width="110"
+                        Height="147"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Top"
+                        d:ItemsSource="{d:SampleData ItemCount=5}"
+                        Background="#FF30323D"
+                        BorderBrush="#FF30323D"
+                        Foreground="#FFE8C547" />
+                </Canvas>
+            </Canvas>
+            <ListBox
+                Margin="24,342,10,94"
+                d:ItemsSource="{d:SampleData ItemCount=5}"
+                Background="#FF30323D"
+                BorderBrush="#FF30323D"
+                Foreground="#FFE8C547" />
+            <Grid
+                x:Name="navGrid"
+                Grid.Row="0"
+                Grid.Column="0"
+                Visibility="Collapsed">
+                <Canvas
+                    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    Name="navigationBar"
+                    Height="104"
+                    Margin="315,71,7,409"
+                    Background="#30323d">
+                    <Canvas.RenderTransform>
+                        <TranslateTransform X="0" Y="0" />
+                    </Canvas.RenderTransform>
+                    <Canvas.Resources />
+                    <Canvas Name="navBounds">
+                        <Canvas Name="pantryCan">
+                            <local:NavButton
+                                x:Name="pantryButton"
+                                Canvas.Left="7.251"
+                                Canvas.Top="-0.184"
+                                Width="93"
+                                Height="28"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Background="#FFD6CCC2"
+                                Click="navButtonClick"
+                                Content="My Pantry"
+                                FontFamily="Song Myung"
+                                FontSize="18"
+                                ForceCursor="True"
+                                NavUri=""
+                                UseLayoutRounding="False">
+                                <local:NavButton.Resources>
+                                    <Style TargetType="Border">
+                                        <Setter Property="CornerRadius" Value="5" />
+                                    </Style>
+                                </local:NavButton.Resources>
+
+                            </local:NavButton>
+                        </Canvas>
+                        <Canvas Name="RecipeButtonCan">
+                            <local:NavButton
+                                x:Name="recipeButton"
+                                Canvas.Left="7.971"
+                                Canvas.Top="34.851"
+                                Width="93"
+                                Height="28"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Background="#FFD6CCC2"
+                                Click="navButtonClick"
+                                Content="Recipes"
+                                FontFamily="Song Myung"
+                                FontSize="18"
+                                ForceCursor="True"
+                                UseLayoutRounding="False">
+                                <local:NavButton.Resources>
+                                    <Style TargetType="Border">
+                                        <Setter Property="CornerRadius" Value="5" />
+                                    </Style>
+                                </local:NavButton.Resources>
+
+                            </local:NavButton>
+                        </Canvas>
+                        <Canvas>
+                            <local:NavButton
+                                x:Name="logOutButton"
+                                Canvas.Left="7.026"
+                                Canvas.Top="69.047"
+                                Width="93"
+                                Height="28"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Top"
+                                Background="#FFD6CCC2"
+                                Click="navButtonClick"
+                                Content="Log Out"
+                                FontFamily="Song Myung"
+                                FontSize="18"
+                                ForceCursor="True"
+                                UseLayoutRounding="False">
+                                <local:NavButton.Resources>
+                                    <Style TargetType="Border">
+                                        <Setter Property="CornerRadius" Value="5" />
+                                    </Style>
+                                </local:NavButton.Resources>
+
+                            </local:NavButton>
+                        </Canvas>
+                    </Canvas>
+                </Canvas>
+            </Grid>
+        </Canvas>
+    </Grid>
+</Page>

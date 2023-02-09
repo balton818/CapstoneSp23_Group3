@@ -51,7 +51,7 @@
                         <Span FontSize="14">Recipe Planner Irie/Alton/Wagner</Span>
                     </TextBlock>
                 </Canvas>
-                <Canvas Name="13HorizontalDivider">
+                <Canvas>
                     <Rectangle
                         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                         Name="Rectangle5"
@@ -64,7 +64,7 @@
                 </Canvas>
                 <Canvas>
                     <local:NavButton
-                        Name="viewRecipeButton"
+                        x:Name="viewRecipeButton"
                         Canvas.Left="95"
                         Canvas.Top="416"
                         Width="224"
@@ -120,7 +120,7 @@
                             </Canvas>
                         </Canvas>
                     </Canvas>
-                    <Canvas Name="13HorizontalDivider_2">
+                    <Canvas>
                         <Rectangle
                             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                             Name="rect804"
