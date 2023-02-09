@@ -1,0 +1,33 @@
+View Ingredients Use Case - Web
+
+Context: User has logged in.
+
+PRIMARY FLOW:
+1 - User is shown a listing of ingredients and their quantities that are in the user's 'pantry'.
+2 - User enters a value in the 'Enter Quantity' field.
+3 - User clicks 'Add'.
+4 - The service updates the quantity for the specified item.
+
+ALTERNATE FLOW:
+> CHANGES NOT SAVED
+A3 - User navigates away before clicking 'Add'.
+
+> LOGOUT
+B2 - User clicks 'logout'.
+B3 - User is directed to the login page.
+
+> SERVER CONNECTION ERROR
+C1 - Service cannot serve ingredients.
+C2 - User is informed that a connection to the server cannot be established.
+
+> SERVER CONNECTION ERROR ON UPDATE
+D4 - Server cannot update ingredient quantity.
+D5 - User is informed that an error has occurred.
+
+> DELETE INGREDIENT
+E2 - User clicks 'Delete From Pantry'.
+E3 - Service deletes user's ingredient from database.
+
+> NAVIGATE BACK TO RECIPES VIEW
+F2 - User clicks 'recipes'.
+F3 - User is directed to the view recipes page.

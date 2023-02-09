@@ -12,8 +12,11 @@
 
   <ItemGroup>
     <Folder Include="Data\" />
-    <Folder Include="Assets\" />
-    <Folder Include="wwwroot\" />
+    <Folder Include="wwwroot\Assets\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\recipe-filler-image.png" />
   </ItemGroup>
 
 </Project>
