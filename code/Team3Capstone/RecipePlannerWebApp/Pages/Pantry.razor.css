@@ -36,7 +36,21 @@
     overflow-y: auto;
     margin-left: 60px;
     bottom: 0;
-    height: 65%;
+    height: 55%;
+}
+
+.new-ingredient {
+    border: 2px solid;
+    border-color: #30323d;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 300px;
+}
+
+.new-ingredient > * {
+    width: 75%;
+    margin: 2px;
 }
 
 /*  */
@@ -63,10 +77,12 @@
     flex-direction: column;
     text-align: center;
     align-items: center;
+    margin: 5px;
 }
 
-    ::deep .ingredient-body button {
-        border: 10px #30323d;
-        text-align: center;
-        width: 75%;
-    }
+::deep .ingredient-body button {
+    border: 10px #30323d;
+    text-align: center;
+    width: 75%;
+    margin: 5px;
+}

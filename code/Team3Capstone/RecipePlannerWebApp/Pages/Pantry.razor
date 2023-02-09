@@ -13,6 +13,12 @@
         <hr style="height: 2px; opacity: 100%" />
     </div>
     <div class="pantry">
+        <div class="new-ingredient">
+            <span style="text-align:center;">Add Ingredient</span>
+            <input placeholder="Enter Ingredient Name"/>
+            <input placeholder="Enter Ingredient Amount"/>
+            <button type="button" id="add-ingredient">Add to Pantry</button>
+        </div>
         @foreach (var ingredient in Ingredients)
         {
             <Ingredient IngredientName="@ingredient["name"]" IngredientQuantity="@ingredient["quantity"]" />
