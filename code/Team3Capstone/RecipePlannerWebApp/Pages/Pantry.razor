@@ -14,7 +14,7 @@
     </div>
     <div class="pantry">
         <div class="new-ingredient">
-            <span style="text-align:center;">Add Ingredient</span>
+            <span style="text-align:center; font-weight:bold">Add Ingredient to Pantry:</span>
             <input placeholder="Enter Ingredient Name"/>
             <input placeholder="Enter Ingredient Amount"/>
             <button type="button" id="add-ingredient">Add to Pantry</button>
@@ -46,12 +46,4 @@
         this.Ingredients.Add(new Dictionary<string, string>() { { "name", "carrot" }, { "quantity", "13" }, { "category", "vegetables" } });
     }
 
-    private void deleteIngredient(MouseEventArgs e, string ingredientName)
-    {
-        if (e.Button.Equals(0))
-        {
-            Console.WriteLine("Deleting ingredient: " + ingredientName);
-        }
-
-    }
 }

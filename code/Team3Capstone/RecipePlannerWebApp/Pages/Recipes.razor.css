@@ -32,9 +32,20 @@
     text-align: center;
 }
 
-.recipe-area {
+.recipe-list-area {
     overflow-y: auto;
     margin-left: 60px;
     bottom: 0;
     height: 65%;
+    display: flex;
+    flex-direction: column;
+    row-gap: 15px;
+}
+
+.recipe-result {
+    display: inline-block;
+    width: max-content;
+    border-bottom: 2px solid;
+    border-bottom-width: thin;
+    padding: 5px;
 }

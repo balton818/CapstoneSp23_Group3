@@ -1,23 +1,50 @@
-﻿
+﻿@using RecipePlannerApi.Model;
+@using RecipePlannerApi.Service;
+@using RecipePlannerWebApp.LocalServices;
+@inject UserSessionData currentUser;
+@inject IJSRuntime JsRuntime;
+
 <link href="RecipePlannerWebApp.styles.css" rel="stylesheet">
 
 <div class="ingredient">
     <span class="ingredient-label">@IngredientName</span>
     <div class="ingredient-body">
         <label>Quantity: @IngredientQuantity</label>
-        <input placeholder="Amount to add" />
-        <button>Update</button>
+        <input @bind="NewIngredientQuantity" placeholder="Amount to add"/>
+        <button @onclick="@updateIngredientQuantity">Update</button>
         <button @onclick="@deleteIngredient">Delete from Pantry</button>
     </div>
 </div>
+
 @code {
+
     [Parameter]
     public string IngredientName { get; set; } = "";
+
     [Parameter]
     public string IngredientQuantity { get; set; } = "";
 
-    private void deleteIngredient()
+    [Parameter]
+    public string NewIngredientQuantity { get; set; } = "";
+
+    private async void deleteIngredient()
     {
-        Console.WriteLine("Deleting " + this.IngredientName);
+        //Call RPApi to delete the record for this ingredient for the current user
+        //Should look something like:
+        //UserService.DeleteIngredientFromUserPantry(currentUser.CurrentUser.Id, this.IngredientName);
+        bool confirmed = await JsRuntime.InvokeAsync<bool>("confirm", "Are you sure you want to delete this ingredient entirely from your pantry?"); // Confirm
+        if (confirmed)
+        {
+            Console.WriteLine("Deleting " + this.IngredientName + " for user: " + currentUser.CurrentUser.Username);
+        }
+    }
+
+    private void updateIngredientQuantity()
+    {
+        Console.WriteLine("Updating " + this.IngredientName + " quantity to " 
+            + this.NewIngredientQuantity + " for user: " + currentUser.CurrentUser.Username);
+        //Call RPApi to modify the quantity for the record for this ingredient for the currently logged-in user.
+        //Should look something like:
+        //UserService.UpdateQuantity(currentUser.CurrentUser.Id, this.IngredientName, this.NewIngredientQuantity);
     }
 }

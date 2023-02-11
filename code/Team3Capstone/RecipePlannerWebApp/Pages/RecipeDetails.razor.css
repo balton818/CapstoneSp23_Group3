@@ -1,4 +1,12 @@
-﻿
+﻿.right .header {
+    font-size: 60pt;
+    font-family: jsMath-cmbx10;
+    width: 280px;
+    margin-left: 60px;
+    padding-top: 16px;
+    color: #30323d;
+}
+
 .split {
     height: 100%;
     position: fixed;
@@ -24,14 +32,11 @@
     text-align: center;
 }
 
-/* Style the image inside the centered container, if needed */
-.centered img {
-    width: 150px;
-    border-radius: 50%;
+.recipe-area {
+    overflow-y: auto;
+    margin-left: 60px;
+    bottom: 0;
+    height: 65%;
+    overflow-wrap: break-word;
+    word-break: break-all;
 }
-
-#nav-menu {
-    color: #e8c547;
-    font-family: jsMath-cmbx10;
-}
-

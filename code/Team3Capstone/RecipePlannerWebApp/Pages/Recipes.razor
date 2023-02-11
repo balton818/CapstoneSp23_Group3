@@ -1,41 +1,39 @@
 ﻿@page "/recipes"
 @layout MainLayout
+@inject NavigationManager Nav;
 
 <PageTitle>foodie - recipes</PageTitle>
-
+<base href="~/" />
 <div class="split right">
     <div class="header">
         <span>recipes</span>
         <hr style="height: 2px; opacity: 100%" />
     </div>
-    <div class="recipe-area">
-        <h2 class="title">Recipe Title</h2>
-        <h5>Cooktime: 25min</h5>
-        <h5>Serves: 4</h5>
-        <br />
-        <h3 style="text-decoration: underline">Ingredients:</h3>
-        <ul>
-            <li>Ing. 1</li>
-            <li>Ing. 2</li>
-            <li>Ing. 3</li>
-            <li>Ing. 4</li>
-            <li>Ing. 5</li>
-        </ul>
-        <br />
-        <h3 style="text-decoration: underline">Directions:</h3>
-        <ol>
-            <li>Step 1</li>
-            <li>Step 2</li>
-            <li>Step 3</li>
-            <li>Step 4</li>
-            <li>Step 5</li>
-        </ol>
-        <button>&#8672 Back</button>
-        <button>Mark as Complete</button>
+    <div class="recipe-list-area">
+        @foreach (string recipe in recipeResults)
+        {
+            <div class="recipe-result" @onclick="() => goToRecipe(recipe)">
+                <img src="Assets/recipe-filler-image.png" asp-append-version="true" style="width: 125px; height: 125px;" />
+                @recipe
+             </div>
+        }
     </div>
     
 </div>
 
 @code {
-    private string? imageSource = "favicon.png";
+    private List<string> recipeResults { get; set; } = new List<string>() { "Apple Strudel", "Blueberry Muffins", "Chocolate Cake" };
+
+    protected override void OnInitialized()
+    {
+        Console.WriteLine("RECIPES -- Initializing...");
+        //Call RPApi to get recipes for user pantry.
+        //Set recipeResults to API call result so databinding kicks in.
+    }
+
+    private void goToRecipe(string recipe)
+    {
+        Console.WriteLine("Recipe clicked: " + recipe);
+        Nav.NavigateTo("recipe-details/" + recipe);
+    }
 }
