@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Org.OpenAPITools.Model;
+﻿using Microsoft.AspNetCore.Mvc;
 using RecipePlannerApi.Api.Requests;
 using RecipePlannerApi.Model;
 using RecipePlannerApi.Service;
@@ -11,8 +9,15 @@ namespace RecipePlannerApi.Controllers {
     public class RecipeController : ControllerBase {
         public RecipeController() { }
 
-        [HttpGet("by-ingredients")]
+        [HttpGet("get-by-ingredients")]
         public List<Recipe> SearchRecipesByIngredients([FromQuery]SearchRecipesByIngredientsRequest request) =>
             RecipeService.SearchRecipesByIngredients(request);
+
+        [HttpGet("get-by-pantry")]
+        public List<Recipe> GetRecipesByUserPantry([FromQuery] GetRecipesByPantryRequest request) =>
+            RecipeService.GetRecipesByUserPantry(request);
+        [HttpGet("get-recipe-infromation{id}")]
+        public RecipeInformation GetRecipeInformation(int id) =>
+            RecipeService.GetRecipeInformation(id);
     }
 }
