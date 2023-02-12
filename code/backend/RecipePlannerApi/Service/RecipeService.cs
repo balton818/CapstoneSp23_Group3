@@ -1,4 +1,5 @@
-﻿using RecipePlannerApi.Api;
+﻿using Org.OpenAPITools.Model;
+using RecipePlannerApi.Api;
 using RecipePlannerApi.Api.Requests;
 using RecipePlannerApi.Dao.Request;
 using RecipePlannerApi.Model;
@@ -38,19 +39,53 @@ namespace RecipePlannerApi.Service {
         /// <param name="request">The request.</param>
         /// <returns>A list of recipes</returns>
         public static List<Recipe> GetRecipesByUserPantry(GetRecipesByPantryRequest request) {
-            //get user's pantry
-            var ingredients = "eggs, water, sugar, flour, regular oats, cherry, apples, grapes, chocolate chips, carrot, onion, potato, peach, milk, butter, sausage";
+            var pantry = UserService.GetUserPantry(request.userId);
+            var ingredients = string.Join(",", pantry.Select(item => item.IngredientName).ToList());
             var searchRequest = new SearchRecipesByIngredientsRequest() {
                 ingredients = ingredients,
+                ranking = 2,
                 ignorePantry = true,
                 limitLicense = false,
-                number = 30
+                number = 20
             };
 
-            var searcResponse = RecipeApi.SearchRecipesByIngredients(searchRequest);
+            var searchResponse = RecipeApi.SearchRecipesByIngredients(searchRequest);
 
-            return new List<Recipe>();
+            var recipes = new List<Recipe>();
+
+            foreach (var item in searchResponse) {
+                if (item.MissedIngredients.Count > 0 ) {
+                    continue;
+                }
+
+                if(!CheckIngredientAmounts(item.UsedIngredients, pantry)) {
+                    continue;
+                }
+
+                var recipe = new Recipe() {
+                    Id = item.Id,
+                    Image = item.Image,
+                    ImageType = item.ImageType,
+                    Title = item.Title
+                };
+
+                recipes.Add(recipe);
+            }
+
+            return recipes;
         }
+
+        private static bool CheckIngredientAmounts(List<SearchRecipesByIngredients200ResponseInnerMissedIngredientsInner> usedIngredients, List<PantryItem> pantry) {
+            foreach (var recipeIngredient in usedIngredients) {
+                var pantryIngredient = pantry.Find(i => recipeIngredient.Name.ToLower().Contains(i.IngredientName.ToLower()));
+                if (pantryIngredient == null || pantryIngredient.Quantity < (int) Math.Ceiling(recipeIngredient.Amount.Value)) {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
 
 
         /// <summary>Gets the recipe information.</summary>

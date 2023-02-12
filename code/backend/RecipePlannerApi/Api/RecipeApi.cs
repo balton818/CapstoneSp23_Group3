@@ -41,7 +41,7 @@ namespace RecipePlannerApi.Api {
             foreach (var item in info.ExtendedIngredients) {
                 var ingredient = new Ingredient() {
                     name = item.Name,
-                    quanitiy = (int) item.Amount,
+                    quanitiy = (int) Math.Ceiling(item.Amount.Value),
                 };
                 ingredients.Add(ingredient);
             }
@@ -60,9 +60,9 @@ namespace RecipePlannerApi.Api {
         ///   <para>The instructionsfor the recipe</para>
         /// </returns>
         public static List<RecipesStep> GetRecipeInstructions(int recipeId) {
-            var analyzedInsturctions = recipesApi.GetAnalyzedRecipeInstructions(recipeId, false);
+            var analyzedInsturctions = recipesApi.GetAnalyzedRecipeInstructions(recipeId, false).FirstOrDefault();
             var instructions = new List<RecipesStep>();
-            foreach (var step in analyzedInsturctions.ParsedInstructions.FirstOrDefault().Steps) {
+            foreach (var step in analyzedInsturctions.Steps) {
                 instructions.Add(new RecipesStep() {
                     stepNumber = (int) step.Number,
                     instructions = step.Step
