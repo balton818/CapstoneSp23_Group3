@@ -1,6 +1,9 @@
 ﻿@page "/pantry"
 @layout MainLayout;
+@using RecipePlannerApi.Model;
+@using RecipePlannerApi.Service;
 @using RecipePlannerWebApp.LocalServices;
+@inject NavigationManager Nav;
 @inject UserSessionData currentUser;
 
 <PageTitle>foodie - pantry</PageTitle>
@@ -14,36 +17,49 @@
     </div>
     <div class="pantry">
         <div class="new-ingredient">
-            <span style="text-align:center; font-weight:bold">Add Ingredient to Pantry:</span>
-            <input placeholder="Enter Ingredient Name"/>
-            <input placeholder="Enter Ingredient Amount"/>
-            <button type="button" id="add-ingredient">Add to Pantry</button>
+            <form>
+                <span style="text-align:center; font-weight:bold">Add Ingredient to Pantry:</span>
+                <input @bind="newIngredientName" placeholder="Enter Ingredient Name"/>
+                <input @bind="newIngredientQuantity"/>
+                <button type="button" id="add-ingredient" @onclick="addNewIngredient">Add to Pantry</button>
+            </form>
         </div>
-        @foreach (var ingredient in Ingredients)
+        @foreach (var ingredient in this.ingredients)
         {
-            <Ingredient IngredientName="@ingredient["name"]" IngredientQuantity="@ingredient["quantity"]" />
+            <Ingredient IngredientName="@ingredient.IngredientName" IngredientQuantity="@ingredient.Quantity" IngredientId="@ingredient.PantryId" />
         }
     </div>
 </div>
 
 @code
 {
-    private IList<Dictionary<string, string>> Ingredients { get; set; }
-    private string IngredientToRemove { get; set; } = "";
+    private List<PantryItem>? ingredients { get; set; }
+    private string newIngredientName { get; set; }
+    private string newIngredientQuantity { get; set; }
+    private string IngredientToRemove { get; set; }
+
     protected override void OnInitialized()
     {
+
         Console.WriteLine("PANTRY -- Initializing...");
-        this.Ingredients = new List<Dictionary<string, string>>();
-        this.buildPantry();
+        Console.WriteLine("User #" + currentUser.CurrentUser.Id + " just logged in.");
+        this.ingredients = UserService.GetUserPantry(currentUser.CurrentUser.Id);
+        foreach (var ingredient in this.ingredients) 
+        {
+            Console.WriteLine(ingredient.IngredientName + ": " + ingredient.Quantity + " from pantry #" + ingredient.PantryId);
+        }
     }
 
-    private void buildPantry()
+    private void addNewIngredient()
     {
-        this.Ingredients.Add(new Dictionary<string, string>() { { "name", "eggs" }, { "quantity", "4" }, { "category", "dairy" } });
-        this.Ingredients.Add(new Dictionary<string, string>() { { "name", "milk" }, { "quantity", "1" }, { "category", "dairy" } });
-        this.Ingredients.Add(new Dictionary<string, string>() { { "name", "bread" }, { "quantity", "10" }, { "category", "baked goods" } });
-        this.Ingredients.Add(new Dictionary<string, string>() { { "name", "apple" }, { "quantity", "7" }, { "category", "fruit" } });
-        this.Ingredients.Add(new Dictionary<string, string>() { { "name", "carrot" }, { "quantity", "13" }, { "category", "vegetables" } });
+        PantryItem newItem = new PantryItem()
+            {
+                IngredientName = this.newIngredientName,
+                Quantity = Int32.Parse(this.newIngredientQuantity),
+                UserId = currentUser.CurrentUser.Id
+            };
+        UserService.AddPantryItem(newItem);
+        Nav.NavigateTo("/pantry", true);
     }
 
 }

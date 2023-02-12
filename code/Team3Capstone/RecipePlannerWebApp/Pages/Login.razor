@@ -28,7 +28,7 @@
 @code
 {
     [Parameter]
-    public User user { get; set; } = new User();
+    public User? user { get; set; }
 
     [Parameter]
     public bool ValidFields { get; set; }
@@ -47,15 +47,17 @@
     {
 
         LoginValidationResultMessage = "";
-        if (!String.IsNullOrEmpty(this.user.Username) && !String.IsNullOrEmpty(this.user.Password))
+        if (!String.IsNullOrEmpty(this.user?.Username) && !String.IsNullOrEmpty(this.user?.Password))
         {
-            bool result = UserService.ValidateUser(user);
+            int? result = UserService.ValidateUser(this.user);
             LoginValidationResultMessage = "";
-            if (result)
+            if (result != null)
             {
+                Console.WriteLine(result);
                 this.ValidFields = true;
+                this.user.Id = result ?? -1;
                 userData.CurrentUser = this.user;
-                Nav.NavigateTo("/recipes");
+                Nav.NavigateTo("/pantry");
             }
             else
             {

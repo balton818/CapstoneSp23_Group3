@@ -1,6 +1,9 @@
 ﻿@page "/recipes"
 @layout MainLayout
+
+@using RecipePlannerWebApp.LocalServices;
 @inject NavigationManager Nav;
+@inject UserSessionData userData;
 
 <PageTitle>foodie - recipes</PageTitle>
 <base href="~/" />
@@ -22,6 +25,7 @@
 </div>
 
 @code {
+
     private List<string> recipeResults { get; set; } = new List<string>() { "Apple Strudel", "Blueberry Muffins", "Chocolate Cake" };
 
     protected override void OnInitialized()
