@@ -71,7 +71,7 @@
     <Build Include="dbo\Stored Procedures\remove_pantry_item.sql" />
     <Build Include="dbo\Stored Procedures\update_pantry_item.sql" />
     <Build Include="dbo\Stored Procedures\get_pantry_item.sql" />
-    <Build Include="dbo\Stored Procedures\get_user_pantry_item.sql" />
+    <Build Include="dbo\Stored Procedures\get_user_pantry.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="RecipePlannerDatabase.refactorlog" />
