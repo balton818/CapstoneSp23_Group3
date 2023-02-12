@@ -38,8 +38,8 @@ namespace RecipePlannerApi.Service {
         /// <summary>Gets recipes by the ingredients the user has in their pantry.</summary>
         /// <param name="request">The request.</param>
         /// <returns>A list of recipes</returns>
-        public static List<Recipe> GetRecipesByUserPantry(GetRecipesByPantryRequest request) {
-            var pantry = UserService.GetUserPantry(request.userId);
+        public static List<Recipe> GetRecipesByUserPantry(int userId) {
+            var pantry = UserService.GetUserPantry(userId);
             var ingredients = string.Join(",", pantry.Select(item => item.IngredientName).ToList());
             var searchRequest = new SearchRecipesByIngredientsRequest() {
                 ingredients = ingredients,
