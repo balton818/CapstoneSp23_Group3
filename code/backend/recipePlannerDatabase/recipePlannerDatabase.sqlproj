@@ -66,5 +66,14 @@
     <Build Include="dbo\Tables\user.sql" />
     <Build Include="dbo\Stored Procedures\validate_user.sql" />
     <Build Include="dbo\Stored Procedures\create_user.sql" />
+    <Build Include="dbo\Tables\pantry.sql" />
+    <Build Include="dbo\Stored Procedures\add_pantry_item.sql" />
+    <Build Include="dbo\Stored Procedures\remove_pantry_item.sql" />
+    <Build Include="dbo\Stored Procedures\update_pantry_item.sql" />
+    <Build Include="dbo\Stored Procedures\get_pantry_item.sql" />
+    <Build Include="dbo\Stored Procedures\get_user_pantry_item.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <RefactorLog Include="RecipePlannerDatabase.refactorlog" />
   </ItemGroup>
 </Project>
