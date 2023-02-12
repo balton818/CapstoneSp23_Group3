@@ -10,7 +10,7 @@ namespace RecipePlannerApi.Controllers {
         public UserController() { }
 
         [HttpGet("{username},{password}")]
-        public ActionResult<bool> ValidateUser(string username, string password) =>
+        public ActionResult<int?> ValidateUser(string username, string password) =>
             UserService.ValidateUser(new User() { Username = username, Password = password});
 
         [HttpPost("create")]

@@ -1,5 +1,5 @@
 ﻿CREATE PROCEDURE [dbo].[validate_user]
-	@username nvarchar(20),
-	@password nvarchar(20)
+	@username NVARCHAR(20),
+	@password NVARCHAR(20)
 AS
-	SELECT username from [user] where username = @username and [password] = @password
+	SELECT user_id AS Id FROM [user] WHERE username = @username and [password] = @password
