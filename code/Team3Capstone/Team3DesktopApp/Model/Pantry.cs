@@ -12,7 +12,7 @@ namespace Team3DesktopApp.Model
         }
 
 
-        public void AddIngredient(Ingredient ingredient)
+        public void AddIngredient(PantryItem ingredient)
         {
             this.Ingredients.Add(ingredient);
         }
@@ -21,7 +21,7 @@ namespace Team3DesktopApp.Model
         {
             foreach (Ingredient ingredient in this.Ingredients)
             {
-                if (ingredient.Name == name)
+                if (ingredient.name == name)
                 {
                     return ingredient;
                 }

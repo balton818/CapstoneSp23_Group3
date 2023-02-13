@@ -1,4 +1,4 @@
-﻿using System.Windows;
+﻿using Team3DesktopApp.ViewModel;
 
 namespace Team3DesktopApp
 {
@@ -10,7 +10,6 @@ namespace Team3DesktopApp
         public MainWindow()
         {
             this.InitializeComponent();
-
         }
     }
 
