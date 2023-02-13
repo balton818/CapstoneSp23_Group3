@@ -1,5 +1,4 @@
-﻿
-.split {
+﻿.split {
     height: 100%;
     position: fixed;
     z-index: 1;
@@ -14,7 +13,6 @@
     width: 25%;
     background-color: #30323d;
 }
-
 
 /* If you want the content centered horizontally and vertically */
 .centered {
@@ -35,6 +33,10 @@
 
 .header {
     font-size: 60pt;
+    color: #e8c547;
+}
+.footer {
+    font-size: 15px;
 }
 
 /* Style the image inside the centered container, if needed */
