@@ -2,41 +2,36 @@
 using AutoMapper;
 using System.Data;
 using RecipePlannerApi.Model;
+using Microsoft.Extensions.Configuration;
+using RecipePlannerApi.Dao.Request;
+using AutoMapper.Data;
 
 namespace RecipePlannerApi.Dao {
-    public class UserDao {
+    public class UserDao: Dao {
 
         public delegate void CommandUpdate(SqlCommand cmd);
 
-        public static string? ValidateUser(User user) {
+        public static IdDto ValidateUser(User user) {
             CommandUpdate cmd = c => {
                 c.CommandType = CommandType.StoredProcedure;
                 c.Parameters.AddWithValue("@username", user.Username);
                 c.Parameters.AddWithValue("@password", user.Password);
             };
 
-            return execute<string>("dbo.validate_user", cmd).FirstOrDefault();
+            return execute<IdDto>("dbo.validate_user", cmd).FirstOrDefault();
         }
 
-        public static List<T> execute<T>(string storedProc, CommandUpdate updateCmd) {
+        public static int? CreateUser(User user) {
+            CommandUpdate cmd = c => {
+                c.CommandType = CommandType.StoredProcedure;
+                c.Parameters.AddWithValue("@username", user.Username);
+                c.Parameters.AddWithValue("@password", user.Password);
+                c.Parameters.AddWithValue("@first_name", user.FirstName);
+                c.Parameters.AddWithValue("@last_name", user.LastName);
+                c.Parameters.AddWithValue("@email", user.Email);
+            };
 
-            var mapper = new MapperConfiguration(config => {
-                config.CreateMap<IDataReader, User>();
-            }).CreateMapper();
-
-            using(SqlConnection conn = new SqlConnection(Connection.ConnectionString)) {
-                conn.Open();
-                using (SqlCommand cmd = new SqlCommand(storedProc, conn)) {
-                    updateCmd(cmd);
-                    using (var reader = cmd.ExecuteReader()) {
-                        if (reader.HasRows) {
-                            return mapper.Map<IDataReader, List<T>>(reader);
-                        }
-                    }
-                }
-            }
-
-            return new List<T>();
+            return execute<IdDto>("dbo.create_user", cmd).FirstOrDefault()?.Id;
         }
     }
 }
