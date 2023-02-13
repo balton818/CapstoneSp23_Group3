@@ -1,9 +1,11 @@
 ﻿@page "/recipes"
 @layout MainLayout
-
+@using RecipePlannerApi.Service;
+@using RecipePlannerApi.Model;
 @using RecipePlannerWebApp.LocalServices;
+@inject IJSRuntime JsRuntime;
 @inject NavigationManager Nav;
-@inject UserSessionData userData;
+@inject UserSessionData currentUser;
 
 <PageTitle>foodie - recipes</PageTitle>
 <base href="~/" />
@@ -13,11 +15,11 @@
         <hr style="height: 2px; opacity: 100%" />
     </div>
     <div class="recipe-list-area">
-        @foreach (string recipe in recipeResults)
+        @foreach (var recipe in recipeResults)
         {
-            <div class="recipe-result" @onclick="() => goToRecipe(recipe)">
+            <div class="recipe-result" @onclick="() => goToRecipe(recipe.Title, recipe.Id ?? -1)">
                 <img src="Assets/recipe-filler-image.png" asp-append-version="true" style="width: 125px; height: 125px;" />
-                @recipe
+                @recipe.Title
              </div>
         }
     </div>
@@ -25,19 +27,26 @@
 </div>
 
 @code {
-
-    private List<string> recipeResults { get; set; } = new List<string>() { "Apple Strudel", "Blueberry Muffins", "Chocolate Cake" };
+    private List<Recipe> recipeResults { get; set; } 
 
     protected override void OnInitialized()
     {
         Console.WriteLine("RECIPES -- Initializing...");
-        //Call RPApi to get recipes for user pantry.
-        //Set recipeResults to API call result so databinding kicks in.
+        List<Recipe> recipes = RecipeService.GetRecipesByUserPantry(currentUser.CurrentUser.Id);
+        if (recipes != null)
+        {
+            this.recipeResults = recipes;
+        } 
+        else
+        {
+            JsRuntime.InvokeAsync<bool>("alert", "Unable to fetch recipes.\nPlease try again later.");
+
+        }
     }
 
-    private void goToRecipe(string recipe)
+    private void goToRecipe(string recipeTitle, int recipeId)
     {
-        Console.WriteLine("Recipe clicked: " + recipe);
-        Nav.NavigateTo("recipe-details/" + recipe);
+        Console.WriteLine("Recipe clicked: " + recipeId);
+        Nav.NavigateTo("recipe-details/" + recipeTitle + "/" + recipeId);
     }
 }

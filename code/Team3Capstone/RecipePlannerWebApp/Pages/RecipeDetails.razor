@@ -1,5 +1,8 @@
-﻿@page "/recipe-details/{RecipeName}"
+﻿@page "/recipe-details/{RecipeTitle}/{RecipeId}"
 @layout MainLayout
+@using RecipePlannerApi.Service;
+@using RecipePlannerApi.Model;
+@inject IJSRuntime JsRuntime;
 @inject NavigationManager Nav;
 
 <div class="split right">
@@ -8,14 +11,13 @@
         <hr style="height: 2px; opacity: 100%" />
     </div>
     <div class="recipe-area">
-        <h2 class="title" style="font-weight: bold">@RecipeName</h2>
-        <h5>Serves: @numServings</h5>
+        <h2 class="title" style="font-weight: bold">@RecipeTitle</h2>
         <br />
         <h3 style="text-decoration: underline">Ingredients:</h3>
         <ul>
             @foreach (var ingredient in this.ingredients)
             {
-                <li>@ingredient</li>
+                <li>@ingredient.name: @ingredient.quantity</li>
             }
         </ul>
         <br />
@@ -23,7 +25,7 @@
         <ol>
             @foreach (var step in this.steps)
             {
-                <li>@step</li>
+                <li>@step.instructions</li>
             }
         </ol>
         <br />
@@ -35,17 +37,27 @@
 @code {
 
     [Parameter]
-    public string RecipeName { get; set; } = ""; //alternatively change to recipe id depending on recipe endpoint functionality
-    
-    private List<string> ingredients { get; set; } = new List<string>() { "1 tsp baking powder", "1 tsp cinnamon", "1 egg", "1 cup whole milk", "1 1/2 sticks cold unsalted butter cold unsalted butter", "4 larges red apples" };
-    private List<string> steps { get; set; } = new List<string>() { "Soften butter", "Cut apples into inch-sized cubes", "Beat eggs", "Stir in milk, baking powder, and cinnamon", "Add apples", "Bake at 350F for 20 minutes" };
-    private int numServings { get; set; } = 3;
+    public string RecipeId { get; set; }
+    [Parameter]
+    public string RecipeTitle { get; set; }
+
+    private List<RecipePlannerApi.Model.Ingredient>? ingredients { get; set; } 
+    private List<RecipePlannerApi.Model.RecipesStep>? steps { get; set; }
 
     protected override void OnInitialized()
     {
         Console.WriteLine("RECIPEVIEW -- Initializing...");
-        //Call RPApi to get recipe details.
-        //Set appropriate properties (ingredients, steps, numServings) so databinding kicks in.
+        RecipeInformation info = RecipeService.GetRecipeInformation(Int32.Parse(this.RecipeId));
+        if (info != null)
+        {
+            this.ingredients = info?.Ingredients;
+            this.steps = info?.Steps;
+        } else
+        {
+            JsRuntime.InvokeAsync<bool>("alert", "Unable to fetch recipe details from server.\nPlease try again later.");
+        
+        }
+
     }
 
     private void returnToRecipesPage()

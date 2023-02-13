@@ -19,9 +19,9 @@
         <div class="new-ingredient">
             <form>
                 <span style="text-align:center; font-weight:bold">Add Ingredient to Pantry:</span>
-                <input @bind="newIngredientName" placeholder="Enter Ingredient Name"/>
-                <input @bind="newIngredientQuantity"/>
-                <button type="button" id="add-ingredient" @onclick="addNewIngredient">Add to Pantry</button>
+                <input @bind="newIngredientName" placeholder="Enter Ingredient Name" required/>
+                <input @bind="newIngredientQuantity" required/>
+                <button type="submit" id="add-ingredient" @onclick="addNewIngredient">Add to Pantry</button>
             </form>
         </div>
         @foreach (var ingredient in this.ingredients)
