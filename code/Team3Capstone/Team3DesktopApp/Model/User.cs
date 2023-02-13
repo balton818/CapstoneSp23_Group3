@@ -20,9 +20,6 @@ namespace Team3DesktopApp.Model
         /// <summary>Gets the password.</summary>
         /// <value>The password.</value>
         public string Password { get; private set; }
-        /// <summary>Gets the address.</summary>
-        /// <value>The address.</value>
-        public ArrayList Pantry { get; private set; }
 
         /// <summary>Initializes a new instance of the <see cref="User" /> class.</summary>
         /// <param name="username">The username.</param>
@@ -37,7 +34,6 @@ namespace Team3DesktopApp.Model
             this.LastName = lastName;
             this.Email = email;
             this.Password = password;
-            this.Pantry = new ArrayList();
         }
 
         /// <summary>Updates the user information.</summary>
@@ -53,12 +49,5 @@ namespace Team3DesktopApp.Model
             this.Password = password;
         }
 
-        /// <summary>Updates the user pantry.</summary>
-        /// <param name="pantry">The new pantry.</param>
-        public void UpdateUserPantry(ArrayList pantry)
-        {
-            this.Pantry = pantry;
-
-        }
     }
 }

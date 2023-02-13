@@ -6,11 +6,13 @@
     xmlns:local="clr-namespace:Team3DesktopApp.View"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="RecipeDetailPage"
-    d:DesignHeight="450"
-    d:DesignWidth="800"
-    mc:Ignorable="d">
-
-    <Grid Margin="0,0,364,-128">
+    d:DesignHeight="650"
+    mc:Ignorable="d" Width="418">
+    <Grid Margin="0,10,-11,-61">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="643*"/>
+            <RowDefinition Height="129*"/>
+        </Grid.RowDefinitions>
         <Canvas
             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
             Name="svg1061"
@@ -42,27 +44,11 @@
                                 Canvas.Left="13"
                                 Canvas.Top="23"
                                 FontFamily="Song Myung"
-                                FontSize="24"
-                                Foreground="#FFE8C547">
+                                FontSize="16"
+                                TextWrapping="Wrap"
+                                Foreground="#FFE8C547" HorizontalAlignment="Left" VerticalAlignment="Center" Width="231">
                                 <Span FontSize="24">Recipe Title</Span>
                             </TextBlock>
-                        </Canvas>
-                        <Canvas Name="navMenuCan">
-                            <Canvas Name="navCanvas">
-                                <Path
-                                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                                    x:Name="navMenu"
-                                    Canvas.Left="345.242"
-                                    Canvas.Top="24.476"
-                                    Width="36"
-                                    Height="23"
-                                    HorizontalAlignment="Left"
-                                    VerticalAlignment="Center"
-                                    Data="M358.333 30C358.333 29.2636 359.08 28.6667 360 28.6667H390C390.92 28.6667 391.667 29.2636 391.667 30C391.667 30.7364 390.92 31.3333 390 31.3333H360C359.08 31.3333 358.333 30.7364 358.333 30ZM358.333 38C358.333 37.2636 359.08 36.6667 360 36.6667H390C390.92 36.6667 391.667 37.2636 391.667 38C391.667 38.7364 390.92 39.3333 390 39.3333H360C359.08 39.3333 358.333 38.7364 358.333 38ZM360 44.6667C359.08 44.6667 358.333 45.2636 358.333 46C358.333 46.7364 359.08 47.3333 360 47.3333H390C390.92 47.3333 391.667 46.7364 391.667 46C391.667 45.2636 390.92 44.6667 390 44.6667H360Z"
-                                    Fill="#FFE8C547"
-                                    MouseDown="navMenuClick"
-                                    Stretch="Fill" />
-                            </Canvas>
                         </Canvas>
                     </Canvas>
                     <Canvas>
@@ -147,32 +133,26 @@
                     <Canvas>
                         <Canvas />
                     </Canvas>
-                    <Image
-                        Canvas.Left="154"
-                        Canvas.Top="117"
-                        Width="249"
-                        Height="174"
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Top" />
+
                     <ListBox
                         Canvas.Left="14"
                         Canvas.Top="140"
-                        Width="110"
+                        x:Name ="ingredientList"
+                        Width="171"
                         Height="147"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Top"
-                        d:ItemsSource="{d:SampleData ItemCount=5}"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
                         Background="#FF30323D"
                         BorderBrush="#FF30323D"
-                        Foreground="#FFE8C547" />
+                        Foreground="#FFE8C547" 
+                        />
                 </Canvas>
             </Canvas>
             <ListBox
-                Margin="24,342,10,94"
-                d:ItemsSource="{d:SampleData ItemCount=5}"
+                x:Name="stepsList"
                 Background="#FF30323D"
                 BorderBrush="#FF30323D"
-                Foreground="#FFE8C547" />
+                Foreground="#FFE8C547" Canvas.Left="24" Canvas.Top="342" Width="361" HorizontalAlignment="Left" VerticalAlignment="Center" />
             <Grid
                 x:Name="navGrid"
                 Grid.Row="0"
@@ -188,83 +168,11 @@
                         <TranslateTransform X="0" Y="0" />
                     </Canvas.RenderTransform>
                     <Canvas.Resources />
-                    <Canvas Name="navBounds">
-                        <Canvas Name="pantryCan">
-                            <local:NavButton
-                                x:Name="pantryButton"
-                                Canvas.Left="7.251"
-                                Canvas.Top="-0.184"
-                                Width="93"
-                                Height="28"
-                                HorizontalAlignment="Left"
-                                VerticalAlignment="Center"
-                                Background="#FFD6CCC2"
-                                Click="navButtonClick"
-                                Content="My Pantry"
-                                FontFamily="Song Myung"
-                                FontSize="18"
-                                ForceCursor="True"
-                                NavUri=""
-                                UseLayoutRounding="False">
-                                <local:NavButton.Resources>
-                                    <Style TargetType="Border">
-                                        <Setter Property="CornerRadius" Value="5" />
-                                    </Style>
-                                </local:NavButton.Resources>
-
-                            </local:NavButton>
-                        </Canvas>
-                        <Canvas Name="RecipeButtonCan">
-                            <local:NavButton
-                                x:Name="recipeButton"
-                                Canvas.Left="7.971"
-                                Canvas.Top="34.851"
-                                Width="93"
-                                Height="28"
-                                HorizontalAlignment="Left"
-                                VerticalAlignment="Center"
-                                Background="#FFD6CCC2"
-                                Click="navButtonClick"
-                                Content="Recipes"
-                                FontFamily="Song Myung"
-                                FontSize="18"
-                                ForceCursor="True"
-                                UseLayoutRounding="False">
-                                <local:NavButton.Resources>
-                                    <Style TargetType="Border">
-                                        <Setter Property="CornerRadius" Value="5" />
-                                    </Style>
-                                </local:NavButton.Resources>
-
-                            </local:NavButton>
-                        </Canvas>
-                        <Canvas>
-                            <local:NavButton
-                                x:Name="logOutButton"
-                                Canvas.Left="7.026"
-                                Canvas.Top="69.047"
-                                Width="93"
-                                Height="28"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Top"
-                                Background="#FFD6CCC2"
-                                Click="navButtonClick"
-                                Content="Log Out"
-                                FontFamily="Song Myung"
-                                FontSize="18"
-                                ForceCursor="True"
-                                UseLayoutRounding="False">
-                                <local:NavButton.Resources>
-                                    <Style TargetType="Border">
-                                        <Setter Property="CornerRadius" Value="5" />
-                                    </Style>
-                                </local:NavButton.Resources>
-
-                            </local:NavButton>
-                        </Canvas>
-                    </Canvas>
                 </Canvas>
             </Grid>
         </Canvas>
+        <local:NavMenu Canvas.Left="354" Canvas.Top="26" x:Name="navMenu" Margin="267,0,-38,404">
+
+        </local:NavMenu>
     </Grid>
 </Page>

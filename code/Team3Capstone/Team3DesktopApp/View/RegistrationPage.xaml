@@ -52,7 +52,7 @@
                             FontFamily="Song Myung"
                             FontSize="18"
                             ForceCursor="True"
-                            NavUri="/View/Login.xaml">
+                            NavUri="/View/LoginPage.xaml">
                             <view:NavButton.Resources>
                                 <Style TargetType="Border">
                                     <Setter Property="CornerRadius" Value="5" />
@@ -222,7 +222,7 @@
                             Width="188"
                             Height="38"
                             Background="#FFD6CCC2"
-                            Click="RegisterButton_Click"
+                            Click="RegisterButton_ClickAsync"
                             Content="Register"
                             FontFamily="Song Myung"
                             FontSize="18"
@@ -250,5 +250,6 @@
                 </TextBlock>
             </Canvas>
         </Canvas>
+        <TextBlock x:Name="errorLabel" Canvas.Left="131" Visibility="Hidden" FontSize="20" TextWrapping="Wrap" Text="Errors on page" Canvas.Top="85" Foreground="#FFFB1212" Height="24" Width="153" HorizontalAlignment="Left" VerticalAlignment="Top"/>
     </Canvas>
 </Page>

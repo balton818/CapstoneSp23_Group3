@@ -13,7 +13,7 @@ namespace Team3DesktopApp.View
         }
 
         public static readonly DependencyProperty TextProperty = DependencyProperty.Register("Text", typeof(string), typeof(NavButton), new PropertyMetadata(null));
-        public static readonly DependencyProperty NavUriProperty = DependencyProperty.Register("NavUri", typeof(Uri), typeof(NavButton), new PropertyMetadata(null));
+        public static readonly DependencyProperty NavUriProperty = DependencyProperty.Register("NavUri", typeof(string), typeof(NavButton), new PropertyMetadata(null));
 
 
         public string Text
@@ -22,9 +22,9 @@ namespace Team3DesktopApp.View
             set => SetValue(TextProperty, value);
         }
 
-        public Uri NavUri
+        public string NavUri
         {
-            get => (Uri)GetValue(NavUriProperty);
+            get => (string)GetValue(NavUriProperty);
             set => SetValue(NavUriProperty, value);
         }
 

@@ -7,15 +7,16 @@ namespace Team3DesktopApp.ViewModel;
 public class LoginViewModel
 {
 
-    public async Task<bool> LoginAsync(string userName, string password)
+    public async Task<int> LoginAsync(string userName, string password)
     {
         if (string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(password))
         {
-            return false;
+            //for testing
+            return -1;
         }
 
         HttpClientConnection connection = new HttpClientConnection();
-        bool result = await connection.ValidateUser(userName, password);
+        int result = await connection.ValidateUser(userName, password);
         Console.WriteLine(result);
         return result;
 

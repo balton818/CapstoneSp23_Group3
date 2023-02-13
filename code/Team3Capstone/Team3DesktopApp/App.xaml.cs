@@ -1,6 +1,4 @@
-﻿using System.Windows;
-
-namespace Team3DesktopApp
+﻿namespace Team3DesktopApp
 {
     /// <summary>
     /// Interaction logic for App.xaml

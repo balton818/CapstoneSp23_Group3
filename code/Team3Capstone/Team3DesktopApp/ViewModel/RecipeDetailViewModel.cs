@@ -1,10 +1,15 @@
-﻿namespace Team3DesktopApp.ViewModel;
+﻿using Team3DesktopApp.Dal;
+using Team3DesktopApp.Model;
+
+namespace Team3DesktopApp.ViewModel;
 
 public class RecipeDetailViewModel
 {
-    public void RecipeDetailNav(string recipeName)
+    public RecipeInformation RecipeInfo { get; set; }
+    public async void RecipeDetailNav(int recipeId)
     {
-        //Get recipe by name from dal. maybe by ID.
+        HttpClientConnection connection = new HttpClientConnection();
+        this.RecipeInfo = await connection.GetRecipeDetail(recipeId);
     }
 
 }

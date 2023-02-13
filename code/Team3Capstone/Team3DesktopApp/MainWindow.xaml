@@ -9,6 +9,6 @@
     Height="650"
     mc:Ignorable="d">
     <Grid>
-        <Frame Source="View/Login.xaml"  NavigationUIVisibility="Hidden"/>
+        <Frame Source="View/LoginPage.xaml"  NavigationUIVisibility="Hidden"/>
     </Grid>
 </Window>

@@ -14,15 +14,6 @@ namespace Team3DesktopAppTests.ModelTests
         }
 
         [TestMethod]
-        public void UpdatePantry()
-        {
-            User testUser = new User("Testing", "Test", "tester", "test@ok.com", "1234");
-            ArrayList testPantry = new ArrayList();
-            testPantry.Add("test");
-            testUser.UpdateUserPantry(testPantry);
-            Assert.AreEqual(testUser.Pantry.Count, testPantry.Count);
-        }
-        [TestMethod]
         public void UpdateUserInfo()
         {
             User testUser = new User("Testing", "Test", "tester", "test@ok.com", "1234");
