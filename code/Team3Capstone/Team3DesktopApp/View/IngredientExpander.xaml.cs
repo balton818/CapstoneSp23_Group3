@@ -2,6 +2,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Navigation;
 using Team3DesktopApp.ViewModel;
 
 namespace Team3DesktopApp.View;
@@ -23,6 +24,8 @@ public partial class IngredientExpander : UserControl
     /// <summary>Gets or sets the view model.</summary>
     /// <value>The view model.</value>
     public FoodieViewModel ViewModel { get; set; }
+
+
 
     #endregion
 
@@ -47,20 +50,26 @@ public partial class IngredientExpander : UserControl
     private void PlusButton_OnClick(object sender, RoutedEventArgs e)
     {
         this.IngredientAmount++;
-        ;
         this.ViewModel.EditIngredient(this.IngredientName, this.IngredientAmount);
+        this.ViewModel.NavigateToPage("View/PantryPage.xaml", this.current.NavigationService);
     }
 
     private void MinusButton_OnClick(object sender, RoutedEventArgs e)
     {
         this.IngredientAmount--;
         this.ViewModel.EditIngredient(this.IngredientName, this.IngredientAmount);
+        this.ViewModel.NavigateToPage("View/PantryPage.xaml", this.current.NavigationService);
     }
 
     private void RemoveButton_OnClick(object sender, RoutedEventArgs e)
     {
-        throw new NotImplementedException();
+        this.ViewModel.RemoveIngredient(this.IngredientName, this.IngredientAmount);
+        this.ViewModel.NavigateToPage("View/PantryPage.xaml", this.current.NavigationService);
+
+
     }
+
+    public Page current { get; set; }
 
     #endregion
 }

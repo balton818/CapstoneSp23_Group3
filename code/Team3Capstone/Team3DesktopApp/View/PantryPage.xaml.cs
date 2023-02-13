@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Navigation;
 using Team3DesktopApp.ViewModel;
 
 namespace Team3DesktopApp.View;
@@ -101,6 +102,7 @@ public partial class PantryPage : Page, INotifyPropertyChanged
         foreach (var current in this.ViewModel.getPantry())
         {
             var ingredientExpander = new IngredientExpander(current.IngredientName, current.Quantity, this.ViewModel);
+            ingredientExpander.current = this;
             pantry.Add(ingredientExpander);
         }
 

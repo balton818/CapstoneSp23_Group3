@@ -1,0 +1,21 @@
+View Recipes Page - Web
+
+Context: User successfully logged in
+
+PRIMARY FLOW:
+1 - User is shown a listing of all recipes that are viable given the user's amount of ingredients on-hand.
+2 - User selects a recipe from the list.
+3 - User is directed to the recipe detail view page.
+
+ALTERNATE FLOW:
+> LOGOUT
+A2 - User clicks logout.
+A3 - User is directed to the login page.
+
+> NAVIGATE TO PANTRY
+B2 - User clicks 'pantry'.
+B3 - User is directed to the pantry page.
+
+> SERVER CONNECTION ERROR
+C1 - Server fails to connect.
+C2 - User is informed that the service cannot connect.

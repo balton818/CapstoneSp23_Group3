@@ -216,4 +216,10 @@ public class FoodieViewModel
     }
 
     #endregion
+
+    public void RemoveIngredient(string ingredientName, int ingredientAmount)
+    {
+        this.pantryViewModel.RemoveIngredient(ingredientName, ingredientAmount);
+
+    }
 }

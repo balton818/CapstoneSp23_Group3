@@ -167,5 +167,26 @@ public class HttpClientConnection
         return null;
     }
 
+    public async void RemovePantryItem(PantryItem toRemove)
+    {
+        var pantryID = toRemove.PantryId;
+        var query = new Uri("User/remove-pantry-item/" + pantryID, UriKind.Relative);
+        var json = JsonConvert.SerializeObject(toRemove);
+
+        var data = new StringContent(json, Encoding.UTF8, "application/json");
+
+        var response = Client.PostAsync(query, data);
+
+        Console.WriteLine(response.Result);
+        if (response.Result.IsSuccessStatusCode)
+        {
+            var readTask = response.Result.Content.ReadAsStringAsync();
+            readTask.Wait();
+
+            var result = readTask.Result;
+        }
+
+    }
+
     #endregion
 }

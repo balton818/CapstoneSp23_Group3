@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using Team3DesktopApp.Dal;
 using Team3DesktopApp.Model;
 
@@ -71,6 +73,15 @@ public class PantryViewModel
         }
 
         return new PantryItem();
+    }
+
+    public void RemoveIngredient(string name, int quantity)
+    {
+        this.getItem(name);
+        var pantryItem = this.getItem(name);
+        pantryItem.Quantity = quantity;
+        var connection = new HttpClientConnection();
+        connection.RemovePantryItem(pantryItem);
     }
 
     #endregion
