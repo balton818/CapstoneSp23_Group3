@@ -10,11 +10,10 @@
     mc:Ignorable="d" Width="418">
     <Grid Margin="0,10,-11,-61">
         <Grid.RowDefinitions>
-            <RowDefinition Height="643*"/>
-            <RowDefinition Height="129*"/>
+            <RowDefinition Height="643*" />
+            <RowDefinition Height="129*" />
         </Grid.RowDefinitions>
         <Canvas
-            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
             Name="svg1061"
             Width="415"
             Height="574">
@@ -23,13 +22,11 @@
             </Canvas.RenderTransform>
             <Canvas.Resources>
                 <RectangleGeometry
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     x:Key="Clip0872"
                     Rect="0, 0, 415, 574" />
             </Canvas.Resources>
             <Canvas Name="mainCanvas" Clip="{StaticResource Clip0872}">
                 <Rectangle
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     Name="rect1005"
                     Width="415"
                     Height="574"
@@ -39,21 +36,20 @@
 
                         <Canvas Name="headerTitle">
                             <TextBlock
-                                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                                 x:Name="recipeTitleTextBlock"
                                 Canvas.Left="13"
                                 Canvas.Top="23"
                                 FontFamily="Song Myung"
                                 FontSize="16"
                                 TextWrapping="Wrap"
-                                Foreground="#FFE8C547" HorizontalAlignment="Left" VerticalAlignment="Center" Width="231">
+                                Foreground="#FFE8C547" HorizontalAlignment="Left" VerticalAlignment="Center"
+                                Width="231">
                                 <Span FontSize="24">Recipe Title</Span>
                             </TextBlock>
                         </Canvas>
                     </Canvas>
                     <Canvas>
                         <Rectangle
-                            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                             Name="rect1017"
                             Width="415"
                             Height="18"
@@ -63,7 +59,6 @@
                             </Rectangle.RenderTransform>
                         </Rectangle>
                         <Rectangle
-                            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                             Name="rectangle5"
                             Canvas.Top="79"
                             Width="415"
@@ -78,7 +73,6 @@
                 </Canvas>
                 <Canvas>
                     <Rectangle
-                        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                         Name="rectangle52"
                         Canvas.Top="501"
                         Width="415"
@@ -89,7 +83,6 @@
                 </Canvas>
                 <Canvas>
                     <TextBlock
-                        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                         Name="textbox"
                         Canvas.Left="25"
                         Canvas.Top="526"
@@ -102,7 +95,6 @@
                 <Canvas Name="recipe">
                     <Canvas>
                         <TextBlock
-                            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                             Name="textbox2"
                             Canvas.Left="16"
                             Canvas.Top="105"
@@ -117,7 +109,6 @@
                     </Canvas>
                     <Canvas>
                         <TextBlock
-                            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                             Name="textbox3"
                             Canvas.Left="13"
                             Canvas.Top="313"
@@ -137,29 +128,26 @@
                     <ListBox
                         Canvas.Left="14"
                         Canvas.Top="140"
-                        x:Name ="ingredientList"
+                        x:Name="ingredientList"
                         Width="171"
                         Height="147"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Center"
                         Background="#FF30323D"
                         BorderBrush="#FF30323D"
-                        Foreground="#FFE8C547" 
-                        />
+                        Foreground="#FFE8C547" />
                 </Canvas>
             </Canvas>
             <ListBox
                 x:Name="stepsList"
                 Background="#FF30323D"
                 BorderBrush="#FF30323D"
-                Foreground="#FFE8C547" Canvas.Left="24" Canvas.Top="342" Width="361" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                Foreground="#FFE8C547" Canvas.Left="24" Canvas.Top="342" Width="361" HorizontalAlignment="Left"
+                VerticalAlignment="Center" />
             <Grid
                 x:Name="navGrid"
-                Grid.Row="0"
-                Grid.Column="0"
                 Visibility="Collapsed">
                 <Canvas
-                    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     Name="navigationBar"
                     Height="104"
                     Margin="315,71,7,409"
@@ -171,8 +159,6 @@
                 </Canvas>
             </Grid>
         </Canvas>
-        <local:NavMenu Canvas.Left="354" Canvas.Top="26" x:Name="navMenu" Margin="267,0,-38,404">
-
-        </local:NavMenu>
+        <local:NavMenu x:Name="navMenu" Margin="267,0,-38,404" />
     </Grid>
 </Page>

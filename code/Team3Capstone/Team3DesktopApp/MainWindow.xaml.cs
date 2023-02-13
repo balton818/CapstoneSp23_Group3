@@ -1,6 +1,4 @@
-﻿using Team3DesktopApp.ViewModel;
-
-namespace Team3DesktopApp
+﻿namespace Team3DesktopApp
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

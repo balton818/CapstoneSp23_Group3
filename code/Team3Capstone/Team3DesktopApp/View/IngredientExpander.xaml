@@ -9,7 +9,7 @@
     d:DesignWidth="400"
     mc:Ignorable="d">
 
-    <Grid Margin="0,0,0,10" >
+    <Grid Margin="0,0,0,10">
 
 
         <Expander
@@ -53,7 +53,7 @@
                             HorizontalAlignment="Left"
                             VerticalAlignment="Top"
                             Foreground="#FFE8C547"
-                            Text="+"  />
+                            Text="+" />
                     </Button.Content>
                 </Button>
                 <Button
@@ -83,7 +83,7 @@
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"
                             Foreground="#FFE8C547"
-                            Text="-"/>
+                            Text="-" />
                     </Button.Content>
                 </Button>
             </Grid>
