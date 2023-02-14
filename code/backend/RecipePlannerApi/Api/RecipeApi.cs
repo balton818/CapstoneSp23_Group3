@@ -41,7 +41,7 @@ namespace RecipePlannerApi.Api {
             foreach (var item in info.ExtendedIngredients) {
                 var ingredient = new Ingredient() {
                     name = item.Name,
-                    quanitiy = (int) Math.Ceiling(item.Amount.Value),
+                    quantity = (int) Math.Ceiling(item.Amount.Value),
                 };
                 ingredients.Add(ingredient);
             }
