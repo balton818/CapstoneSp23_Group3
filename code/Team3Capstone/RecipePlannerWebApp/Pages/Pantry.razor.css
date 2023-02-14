@@ -1,0 +1,88 @@
+﻿.right .header {
+    font-size: 60pt;
+    font-family: jsMath-cmbx10;
+    width: 280px;
+    margin-left: 60px;
+    padding-top: 16px;
+    color: #30323d;
+}
+
+.split {
+    height: 100%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    overflow-x: hidden;
+    padding-top: 20px;
+}
+
+/* Control the right side */
+.right {
+    right: 0;
+    width: 75%;
+    background-color: #d6ccc2;
+}
+
+/* If you want the content centered horizontally and vertically */
+.centered {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.pantry {
+    overflow-y: auto;
+    margin-left: 60px;
+    bottom: 0;
+    height: 55%;
+}
+
+.new-ingredient {
+    border: 2px solid;
+    border-color: #30323d;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 300px;
+}
+
+.new-ingredient > * {
+    width: 75%;
+    margin: 2px;
+}
+
+/*  */
+
+::deep .ingredient {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    border: 2px solid;
+}
+
+::deep .ingredient-label {
+    text-align: left;
+    font-size: 25pt;
+    font-weight: bold;
+    width: 80%;
+    margin-left: 5%;
+}
+
+::deep .ingredient-body {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    margin: 5px;
+}
+
+::deep .ingredient-body button {
+    border: 10px #30323d;
+    text-align: center;
+    width: 75%;
+    margin: 5px;
+}

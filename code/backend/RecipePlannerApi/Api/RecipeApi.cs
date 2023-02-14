@@ -7,13 +7,16 @@ using RecipePlannerApi.Dao.Request;
 using RecipePlannerApi.Model;
 using System.Runtime.CompilerServices;
 
-namespace RecipePlannerApi.Api {
+namespace RecipePlannerApi.Api
+{
     /// <summary>Wrapper class for the spoonacular api</summary>
-    public static class RecipeApi {
+    public static class RecipeApi
+    {
         private static RecipesApi recipesApi = new RecipesApi();
 
         /// <summary>Initializes the <see cref="RecipeApi" /> class.</summary>
-        static RecipeApi() {
+        static RecipeApi()
+        {
             Configuration.ApiKey.Add("x-api-key", Connection.SpoonacularApiKey);
         }
 
@@ -24,7 +27,8 @@ namespace RecipePlannerApi.Api {
         ///   Responce from api
         ///   <br />
         /// </returns>
-        public static List<SearchRecipesByIngredients200ResponseInner> SearchRecipesByIngredients(SearchRecipesByIngredientsRequest request) {
+        public static List<SearchRecipesByIngredients200ResponseInner> SearchRecipesByIngredients(SearchRecipesByIngredientsRequest request)
+        {
             return recipesApi.SearchRecipesByIngredients(request.ingredients, request.number, request.limitLicense, request.ranking, request.ignorePantry);
         }
 
@@ -34,19 +38,23 @@ namespace RecipePlannerApi.Api {
         /// <returns>
         ///   <para>The information for the recipe</para>
         /// </returns>
-        public static RecipeInformation GetRecipeInformation(int recipeId) {
+        public static RecipeInformation GetRecipeInformation(int recipeId)
+        {
             var info = recipesApi.GetRecipeInformation(recipeId, false);
             var ingredients = new List<Ingredient>();
             var instructions = GetRecipeInstructions(recipeId);
-            foreach (var item in info.ExtendedIngredients) {
-                var ingredient = new Ingredient() {
+            foreach (var item in info?.ExtendedIngredients)
+            {
+                var ingredient = new Ingredient()
+                {
                     name = item.Name,
-                    quantity = (int) Math.Ceiling(item.Amount.Value),
+                    quantity = (int)Math.Ceiling(item.Amount.Value),
                 };
                 ingredients.Add(ingredient);
             }
 
-            return new RecipeInformation {
+            return new RecipeInformation
+            {
                 Summary = info.Summary,
                 Ingredients = ingredients,
                 Steps = instructions
@@ -59,16 +67,21 @@ namespace RecipePlannerApi.Api {
         /// <returns>
         ///   <para>The instructionsfor the recipe</para>
         /// </returns>
-        public static List<RecipesStep> GetRecipeInstructions(int recipeId) {
+        public static List<RecipesStep> GetRecipeInstructions(int recipeId)
+        {
             var analyzedInsturctions = recipesApi.GetAnalyzedRecipeInstructions(recipeId, false).FirstOrDefault();
             var instructions = new List<RecipesStep>();
-            foreach (var step in analyzedInsturctions.Steps) {
-                instructions.Add(new RecipesStep() {
-                    stepNumber = (int) step.Number,
-                    instructions = step.Step
-                });
+            if (analyzedInsturctions != null)
+            {
+                foreach (var step in analyzedInsturctions?.Steps)
+                {
+                    instructions.Add(new RecipesStep()
+                    {
+                        stepNumber = (int)step.Number,
+                        instructions = step.Step
+                    });
+                }
             }
-
             return instructions;
         }
     }

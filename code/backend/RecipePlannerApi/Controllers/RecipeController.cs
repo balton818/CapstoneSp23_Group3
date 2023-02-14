@@ -16,6 +16,7 @@ namespace RecipePlannerApi.Controllers {
         [HttpGet("get-by-pantry/{userId}")]
         public List<Recipe> GetRecipesByUserPantry(int userId) =>
             RecipeService.GetRecipesByUserPantry(userId);
+
         [HttpGet("get-recipe-infromation/{id}")]
         public RecipeInformation GetRecipeInformation(int id) =>
             RecipeService.GetRecipeInformation(id);

@@ -1,0 +1,81 @@
+﻿@page "/recipe-details/{RecipeTitle}/{RecipeId}"
+@layout MainLayout
+@using RecipePlannerApi.Service;
+@using RecipePlannerApi.Model;
+@inject IJSRuntime JsRuntime;
+@inject NavigationManager Nav;
+
+<div class="split right">
+    <div class="header">
+        <span>recipes</span>
+        <hr style="height: 2px; opacity: 100%" />
+    </div>
+    <div class="recipe-area">
+        <h2 class="title" style="font-weight: bold">@RecipeTitle</h2>
+        <br />
+        <h3 style="text-decoration: underline">Ingredients:</h3>
+        <ul>
+            @foreach (var ingredient in this.ingredients)
+            {
+                <li>@ingredient.name: @ingredient.quantity</li>
+            }
+        </ul>
+        <br />
+        <h3 style="text-decoration: underline">Directions:</h3>
+        <ol>
+            @foreach (var step in this.steps)
+            {
+                <li>@step.instructions</li>
+            }
+        </ol>
+        <br />
+        <button @onclick="returnToRecipesPage">&#8672 Back</button>
+    </div>
+
+</div>
+
+@code {
+
+    [Parameter]
+    public string RecipeId { get; set; }
+    [Parameter]
+    public string RecipeTitle { get; set; }
+
+    private List<RecipePlannerApi.Model.Ingredient>? ingredients { get; set; } 
+    private List<RecipePlannerApi.Model.RecipesStep>? steps { get; set; }
+
+    protected override void OnInitialized()
+    {
+        Console.WriteLine("RECIPEVIEW -- Initializing...");
+        RecipeInformation info = RecipeService.GetRecipeInformation(Int32.Parse(this.RecipeId));
+        if (info != null)
+        {
+            this.ingredients = info?.Ingredients;
+            this.steps = info?.Steps;
+        } else
+        {
+            JsRuntime.InvokeAsync<bool>("alert", "Unable to fetch recipe details from server.\nPlease try again later.");
+        
+        }
+
+    }
+
+    private void returnToRecipesPage()
+    {
+        Console.WriteLine("RECIPEVIEW -- Go Back");
+        Nav.NavigateTo("/recipes");
+    }
+
+    //FUTUREPROOFING - DISREGARD
+    //<button @onclick="updateUsedIngredientQuantities">Mark as Complete</button>
+    //private void updateUsedIngredientQuantities()
+    //{
+    //    Console.WriteLine("RECIPEVIEW -- Completed recipe for " + this.RecipeName);
+    //    foreach (string ingredient in this.ingredients)
+    //    {
+    //        Console.WriteLine("RECIPEVIEW -- Updating quantity for " + ingredient);
+    //    }
+    //    //Call RPApi to update quantities of user's ingredients
+    //    Nav.NavigateTo("/recipes");
+    //}
+}

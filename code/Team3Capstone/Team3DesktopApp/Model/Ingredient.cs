@@ -2,26 +2,12 @@
 
 public class Ingredient
 {
-    public string Name { get; private set; }
-    public int Quantity { get; private set; }
+    public string name { get; set; }
+    public int quanitiy { get; set; }
 
     public Ingredient(string name, int quantity)
     {
-        this.Name = name;
-        this.Quantity = quantity;
-    }
-
-    public void SetQuantity(int quantity)
-    {
-        this.Quantity = quantity;
-    }
-
-    public void SetName(string name)
-    {
-        if (!string.IsNullOrEmpty(name))
-        {
-            this.Name = name;
-        }
-
+        this.name = name;
+        this.quanitiy = quantity;
     }
 }

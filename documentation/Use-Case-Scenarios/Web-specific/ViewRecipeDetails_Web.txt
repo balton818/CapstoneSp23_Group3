@@ -1,0 +1,26 @@
+View Recipe Details Use Case - Web
+
+Context: User is logged in and has selected a viable recipe.
+
+PRIMARY FLOW:
+1 - User is shown a page that lists the recipe name, ingredients, and directions to make the recipe.
+2 - User clicks 'Mark as Completed'.
+3 - Service API adjusts the quantities of ingredients used in the recipe.
+4 - User is directed to the view recipes page.
+
+ALTERNATE FLOW:
+> NAVIGATE BACK TO RECIPES VIEW
+A2 - User clicks 'Back' or 'recipes'.
+A3 - User is directed to the view recipes page.
+
+> LOGOUT
+B2 - User clicks 'Logout'.
+B3 - User is directed to the login page.
+
+> SERVER CONNECTION ERROR
+C1 - Server fails to serve recipe details.
+C2 - User is informed that server connection cannot be established.
+
+> NAVIGATE TO PANTRY
+D2 - User clicks 'pantry'.
+D3 - User is directed to the pantry page.

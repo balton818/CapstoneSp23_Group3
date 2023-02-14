@@ -1,0 +1,41 @@
+﻿@page "/register"
+
+@using RecipePlannerApi.Model;
+@using RecipePlannerApi.Service;
+@inject NavigationManager Nav;
+
+<link href="RecipePlannerWebApp.styles.css" rel="stylesheet">
+<PageTitle>foodie - register</PageTitle>
+
+<EditForm Model="@user" OnValidSubmit="@RegisterUser">
+    <div id="registration-widget">
+        <span class="header">Register for Foodie</span>
+
+        <input id="usernameField" @bind="user.Username" placeholder="Enter Username" required />
+
+        <input id="passwordField" @bind="user.Password" placeholder="Enter Password" required />
+
+        <input id="fnameField" @bind="user.FirstName" placeholder="Enter First Name" required />
+
+        <input id="lnameField" @bind="user.LastName" placeholder="Enter Last Name" required />
+
+        <input id="emailField" type="email" @bind="user.Email" placeholder="Enter Email Address" required />
+
+        <button type="submit" id="submitButton" style="position:center">Submit</button>
+    </div>
+</EditForm>
+
+@code {
+    [Parameter]
+    public User user { get; set; } = new User();
+
+    private void RegisterUser()
+    {
+        
+        Console.WriteLine("REGISTER -- SUCCESS");
+        Console.WriteLine("REGISTER -- " + this.user);
+        var regResult = UserService.CreateUser(this.user);
+        Console.WriteLine("REGISTER -- REG_RESULT " + regResult);
+        Nav.NavigateTo("/");
+    }
+}
