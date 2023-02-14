@@ -1,17 +1,14 @@
 ﻿<UserControl x:Class="Team3DesktopApp.View.NavMenu"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Team3DesktopApp.View"
              mc:Ignorable="d" Height="180" Width="200">
     <Grid Margin="214,0,-124,0">
 
         <Button
-            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
             x:Name="navMenu"
-            Canvas.Left="345.242"
-            Canvas.Top="24.476"
             Height="45"
             Click="navMenu_Click"
             VerticalAlignment="Top" Margin="-125,16,0,0" HorizontalAlignment="Left" Width="49"
@@ -21,7 +18,7 @@
                     <DrawingImage>
                         <DrawingImage.Drawing>
                             <GeometryDrawing Brush="#FFE8C547"
-                                             Geometry="M358.333 30C358.333 29.2636 359.08 28.6667 360 28.6667H390C390.92 28.6667 391.667 29.2636 391.667 30C391.667 30.7364 390.92 31.3333 390 31.3333H360C359.08 31.3333 358.333 30.7364 358.333 30ZM358.333 38C358.333 37.2636 359.08 36.6667 360 36.6667H390C390.92 36.6667 391.667 37.2636 391.667 38C391.667 38.7364 390.92 39.3333 390 39.3333H360C359.08 39.3333 358.333 38.7364 358.333 38ZM360 44.6667C359.08 44.6667 358.333 45.2636 358.333 46C358.333 46.7364 359.08 47.3333 360 47.3333H390C390.92 47.3333 391.667 46.7364 391.667 46C391.667 45.2636 390.92 44.6667 390 44.6667H360Z"/>
+                                             Geometry="M358.333 30C358.333 29.2636 359.08 28.6667 360 28.6667H390C390.92 28.6667 391.667 29.2636 391.667 30C391.667 30.7364 390.92 31.3333 390 31.3333H360C359.08 31.3333 358.333 30.7364 358.333 30ZM358.333 38C358.333 37.2636 359.08 36.6667 360 36.6667H390C390.92 36.6667 391.667 37.2636 391.667 38C391.667 38.7364 390.92 39.3333 390 39.3333H360C359.08 39.3333 358.333 38.7364 358.333 38ZM360 44.6667C359.08 44.6667 358.333 45.2636 358.333 46C358.333 46.7364 359.08 47.3333 360 47.3333H390C390.92 47.3333 391.667 46.7364 391.667 46C391.667 45.2636 390.92 44.6667 390 44.6667H360Z" />
                         </DrawingImage.Drawing>
                     </DrawingImage>
                 </Image.Source>
@@ -34,7 +31,6 @@
             Grid.Column="0"
             Visibility="Hidden" Margin="10,56,210,28">
             <Canvas
-                xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                 Name="navigationBar"
                 Height="104" Margin="-36,132,725,-37"
                 Background="#30323d">

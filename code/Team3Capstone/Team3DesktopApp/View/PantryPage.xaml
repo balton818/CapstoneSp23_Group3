@@ -24,7 +24,6 @@
             </TransformGroup>
         </Grid.RenderTransform>
         <Canvas
-            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
             Name="svg234"
             Width="415"
             Height="574">
@@ -34,13 +33,11 @@
             <Canvas.Resources />
             <Canvas Name="antryPage">
                 <Rectangle
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     Name="rect121"
                     Width="415"
                     Height="574"
                     Fill="#FF30323D" />
                 <TextBlock
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     Name="headerTitle"
                     Canvas.Left="4"
                     Canvas.Top="27"
@@ -51,7 +48,6 @@
                 </TextBlock>
 
                 <Rectangle
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     Name="rect133"
                     Width="415"
                     Height="18"
@@ -61,7 +57,6 @@
                     </Rectangle.RenderTransform>
                 </Rectangle>
                 <Rectangle
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     Name="Rectangle5"
                     Canvas.Top="80"
                     Width="415"
@@ -82,7 +77,7 @@
                     BorderBrush="#FF30323D"
                     FontFamily="Song Myung"
                     FontSize="36"
-                    Foreground="#FFE8C547" 
+                    Foreground="#FFE8C547"
                     SelectionMode="Single">
                     <ListBox.ItemContainerStyle>
                         <Style TargetType="ListBoxItem">
@@ -107,7 +102,6 @@
                     RadiusX="1"
                     RadiusY="1" />
                 <TextBlock
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     Name="footerTextBox"
                     Canvas.Left="21"
                     Canvas.Top="529"
@@ -162,7 +156,9 @@
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Foreground="#FFE8C547"
-            TextWrapping="Wrap"><Run Text="Amount" /><LineBreak /><Run /></TextBlock>
+            TextWrapping="Wrap">
+            <Run Text="Amount" /><LineBreak /><Run />
+        </TextBlock>
         <TextBlock
             Name="errorText"
             Width="178"

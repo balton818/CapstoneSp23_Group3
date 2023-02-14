@@ -1,14 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace Team3DesktopApp.Model;
 
-namespace Team3DesktopApp.Model
+/// <summary>
+/// </summary>
+public class RecipeStep
 {
-    public class RecipeStep
-    {
-        public int stepNumber { get; set; }
-        public string instructions { get; set; }
-    }
+    #region Properties
+
+    /// <summary>
+    ///     Gets or sets the step number.
+    /// </summary>
+    /// <value>
+    ///     The step number.
+    /// </value>
+    public int stepNumber { get; set; }
+
+    /// <summary>
+    ///     Gets or sets the instructions.
+    /// </summary>
+    /// <value>
+    ///     The instructions.
+    /// </value>
+    public string instructions { get; set; }
+
+    #endregion
 }

@@ -1,59 +1,75 @@
 ﻿using System;
-using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Threading;
-using System.Xml.Linq;
+using System.Windows.Navigation;
 using Team3DesktopApp.ViewModel;
 
-namespace Team3DesktopApp.View
+namespace Team3DesktopApp.View;
+
+/// <summary>Interaction logic for ingredientExpander.xaml</summary>
+[ExcludeFromCodeCoverage]
+public partial class IngredientExpander : UserControl
 {
-    /// <summary>
-    /// Interaction logic for ingredientExpander.xaml
-    /// </summary>
-    public partial class IngredientExpander : UserControl
+    #region Properties
+
+    /// <summary>Gets or sets the name of the ingredient.</summary>
+    /// <value>The name of the ingredient.</value>
+    public string IngredientName { get; set; }
+
+    /// <summary>Gets or sets the ingredient amount.</summary>
+    /// <value>The ingredient amount.</value>
+    public int IngredientAmount { get; set; }
+
+    /// <summary>Gets or sets the view model.</summary>
+    /// <value>The view model.</value>
+    public FoodieViewModel ViewModel { get; set; }
+
+
+
+    #endregion
+
+    #region Constructors
+
+    /// <summary>Initializes a new instance of the <see cref="IngredientExpander" /> class.</summary>
+    /// <param name="name">The name.</param>
+    /// <param name="amount">The amount.</param>
+    /// <param name="viewModel">The view model.</param>
+    public IngredientExpander(string name, int amount, FoodieViewModel viewModel)
     {
-
-        public string IngredientName
-        {
-            get;
-            set;
-        }
-        public int IngredientAmount
-        {
-            get;
-            set;
-        }
-
-        public FoodieViewModel ViewModel { get; set; }
-
-        public IngredientExpander(String name, int amount, FoodieViewModel viewModel)
-        {
-            this.InitializeComponent();
-            this.IngredientName = name;
-            this.IngredientAmount = amount;
-            this.ViewModel = viewModel;
-
-
-
-        }
-
-        private void PlusButton_OnClick(object sender, RoutedEventArgs e)
-        {
-            this.IngredientAmount++; ;
-            this.ViewModel.EditIngredient(this.IngredientName, this.IngredientAmount);
-
-        }
-
-        private void MinusButton_OnClick(object sender, RoutedEventArgs e)
-        {
-            this.IngredientAmount--;
-            this.ViewModel.EditIngredient(this.IngredientName, this.IngredientAmount);
-        }
-
-        private void RemoveButton_OnClick(object sender, RoutedEventArgs e)
-        {
-            throw new NotImplementedException();
-        }
+        this.InitializeComponent();
+        this.IngredientName = name;
+        this.IngredientAmount = amount;
+        this.ViewModel = viewModel;
     }
+
+    #endregion
+
+    #region Methods
+
+    private void PlusButton_OnClick(object sender, RoutedEventArgs e)
+    {
+        this.IngredientAmount++;
+        this.ViewModel.EditIngredient(this.IngredientName, this.IngredientAmount);
+        this.ViewModel.NavigateToPage("View/PantryPage.xaml", this.current.NavigationService);
+    }
+
+    private void MinusButton_OnClick(object sender, RoutedEventArgs e)
+    {
+        this.IngredientAmount--;
+        this.ViewModel.EditIngredient(this.IngredientName, this.IngredientAmount);
+        this.ViewModel.NavigateToPage("View/PantryPage.xaml", this.current.NavigationService);
+    }
+
+    private void RemoveButton_OnClick(object sender, RoutedEventArgs e)
+    {
+        this.ViewModel.RemoveIngredient(this.IngredientName, this.IngredientAmount);
+        this.ViewModel.NavigateToPage("View/PantryPage.xaml", this.current.NavigationService);
+
+
+    }
+
+    public Page current { get; set; }
+
+    #endregion
 }

@@ -1,0 +1,10 @@
+Find Recipe Use Case Scenario
+
+Context - User has successfully logged in.
+
+PRIMARY FLOW
+1 - User is shown qualifying (all ingredients in pantry) recipe titles.
+2 - User selects a recipe
+
+EMPTY PANTRY
+A1 - User is informed that their pantry is empty and there are no recipes to show.

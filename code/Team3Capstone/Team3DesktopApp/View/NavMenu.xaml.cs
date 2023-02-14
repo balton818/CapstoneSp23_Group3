@@ -1,43 +1,51 @@
-﻿using System;
+﻿using System.Diagnostics.CodeAnalysis;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
-using System.Windows.Navigation;
 using Team3DesktopApp.ViewModel;
 
-namespace Team3DesktopApp.View
+namespace Team3DesktopApp.View;
+[ExcludeFromCodeCoverage]
+/// <summary>
+///     Interaction logic for NavMenu.xaml
+/// </summary>
+public partial class NavMenu : UserControl
 {
-    /// <summary>
-    /// Interaction logic for NavMenu.xaml
-    /// </summary>
-    public partial class NavMenu : UserControl
+    #region Properties
+
+    public FoodieViewModel? FoodViewModel { get; set; }
+    public Page current { get; set; }
+
+    #endregion
+
+    #region Constructors
+
+    /// <summary>Initializes a new instance of the <see cref="NavMenu" /> class.</summary>
+    public NavMenu()
     {
-        public FoodieViewModel? FoodViewModel { get; set; }
-        public Page current { get; set; }
+        this.InitializeComponent();
+    }
 
-        public NavMenu()
+    #endregion
+
+    #region Methods
+
+    private void NavButton_Click(object sender, RoutedEventArgs e)
+    {
+        var navButton = (NavButton)sender;
+        this.FoodViewModel.NavigateToPage(navButton.NavUri, this.current.NavigationService);
+    }
+
+    private void navMenu_Click(object sender, RoutedEventArgs e)
+    {
+        if (this.navGrid.Visibility != Visibility.Visible)
         {
-            this.InitializeComponent();
+            this.navGrid.Visibility = Visibility.Visible;
         }
-
-        private void NavButton_Click(object sender, RoutedEventArgs e)
+        else
         {
-
-            NavButton navButton = (NavButton)sender;
-            this.FoodViewModel.NavigateToPage(navButton.NavUri, this.current.NavigationService);
-        }
-
-
-        private void navMenu_Click(object sender, RoutedEventArgs e)
-        {
-            if (this.navGrid.Visibility != Visibility.Visible)
-            {
-                this.navGrid.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                this.navGrid.Visibility = Visibility.Collapsed;
-            }
+            this.navGrid.Visibility = Visibility.Collapsed;
         }
     }
+
+    #endregion
 }

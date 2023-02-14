@@ -7,7 +7,6 @@
     xmlns:view="clr-namespace:Team3DesktopApp.View"
     mc:Ignorable="d">
     <Canvas
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         Name="svg512"
         Width="415"
         Height="574">
@@ -16,20 +15,17 @@
         </Canvas.RenderTransform>
         <Canvas.Resources>
             <RectangleGeometry
-                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                 x:Key="clip0_10_117"
                 Rect="0, 0, 415, 574" />
         </Canvas.Resources>
         <Canvas Name="registrationPage" Clip="{StaticResource clip0_10_117}">
             <Rectangle
-                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                 Name="rect434"
                 Width="415"
                 Height="574"
                 Fill="#FF30323D" />
             <Canvas Name="heading">
                 <Rectangle
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     Name="rect436"
                     Width="415"
                     Height="72"
@@ -63,7 +59,6 @@
                 </Canvas>
                 <Canvas Name="title">
                     <TextBlock
-                        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                         Name="EnterYourInfoBelow"
                         Canvas.Left="10"
                         Canvas.Top="28"
@@ -76,7 +71,6 @@
             </Canvas>
             <Canvas Name="divider1">
                 <Rectangle
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     Name="Rectangle5"
                     Canvas.Top="79"
                     Width="415"
@@ -87,7 +81,6 @@
             </Canvas>
             <Canvas Name="divider2">
                 <Rectangle
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     Name="Rectangle5_2"
                     Canvas.Top="501"
                     Width="415"
@@ -110,7 +103,6 @@
                             FontFamily="Song Myung"
                             FontSize="30" />
                         <TextBlock
-                            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                             Name="something"
                             Canvas.Left="32"
                             Canvas.Top="98"
@@ -134,7 +126,6 @@
                             FontFamily="Song Myung"
                             FontSize="30" />
                         <TextBlock
-                            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                             Name="something1"
                             Canvas.Left="32"
                             Canvas.Top="166"
@@ -158,7 +149,6 @@
                             FontFamily="Song Myung"
                             FontSize="30" />
                         <TextBlock
-                            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                             Name="something3"
                             Canvas.Left="32"
                             Canvas.Top="233"
@@ -180,7 +170,6 @@
                             FontFamily="Song Myung"
                             FontSize="30" />
                         <TextBlock
-                            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                             Name="something4"
                             Canvas.Left="32"
                             Canvas.Top="302"
@@ -204,7 +193,6 @@
                             FontFamily="Song Myung"
                             FontSize="30" />
                         <TextBlock
-                            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                             Name="something5"
                             Canvas.Left="32"
                             Canvas.Top="374"
@@ -239,7 +227,6 @@
             </Canvas>
             <Canvas Name="legalInfo">
                 <TextBlock
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     Name="Textbox"
                     Canvas.Left="24"
                     Canvas.Top="525"
@@ -250,6 +237,8 @@
                 </TextBlock>
             </Canvas>
         </Canvas>
-        <TextBlock x:Name="errorLabel" Canvas.Left="131" Visibility="Hidden" FontSize="20" TextWrapping="Wrap" Text="Errors on page" Canvas.Top="85" Foreground="#FFFB1212" Height="24" Width="153" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <TextBlock x:Name="errorLabel" Canvas.Left="131" Visibility="Hidden" FontSize="20" TextWrapping="Wrap"
+                   Text="Errors on page" Canvas.Top="85" Foreground="#FFFB1212" Height="24" Width="153"
+                   HorizontalAlignment="Left" VerticalAlignment="Top" />
     </Canvas>
 </Page>

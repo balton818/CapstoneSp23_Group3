@@ -1,11 +1,12 @@
-﻿using System.Windows;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Windows;
 using System.Windows.Controls;
 using Team3DesktopApp.ViewModel;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
 namespace Team3DesktopApp.View;
-
+[ExcludeFromCodeCoverage]
 /// <summary>
 ///     An empty page that can be used on its own or navigated to within a Frame.
 /// </summary>
@@ -19,6 +20,8 @@ public sealed partial class RegistrationPage : Page
 
     #region Constructors
 
+    /// <summary>Initializes a new instance of the <see cref="RegistrationPage" /> class.</summary>
+    /// <param name="viewModel">The view model.</param>
     public RegistrationPage(FoodieViewModel viewModel)
     {
         this.InitializeComponent();
@@ -58,6 +61,9 @@ public sealed partial class RegistrationPage : Page
         }
     }
 
+    /// <summary>Handles the Click event of the BackButton_OnClickButton control.</summary>
+    /// <param name="sender">The source of the event.</param>
+    /// <param name="e">The <see cref="RoutedEventArgs" /> instance containing the event data.</param>
     private void BackButton_OnClickButton_Click(object sender, RoutedEventArgs e)
     {
         this.ViewModel.NavigateToPage(this.backButton.NavUri, this.NavigationService);
