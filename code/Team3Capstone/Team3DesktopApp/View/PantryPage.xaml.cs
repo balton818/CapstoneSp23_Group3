@@ -99,7 +99,7 @@ public partial class PantryPage : Page, INotifyPropertyChanged
     private void buildView()
     {
         var pantry = new List<IngredientExpander>();
-        foreach (var current in this.ViewModel.getPantry())
+        foreach (var current in this.ViewModel.GetPantry().Result)
         {
             var ingredientExpander = new IngredientExpander(current.IngredientName, current.Quantity, this.ViewModel);
             ingredientExpander.current = this;

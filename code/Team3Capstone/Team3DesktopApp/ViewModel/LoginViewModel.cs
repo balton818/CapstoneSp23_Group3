@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Team3DesktopApp.Dal;
 
@@ -14,7 +15,7 @@ public class LoginViewModel
     /// <returns>
     ///     <br />
     /// </returns>
-    public async Task<int> LoginAsync(string userName, string password)
+    public async Task<int> LoginAsync(string userName, string password, HttpClient client)
     {
         if (string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(password))
         {
@@ -22,7 +23,7 @@ public class LoginViewModel
         }
 
         var connection = new HttpClientConnection();
-        var result = await connection.ValidateUser(userName, password);
+        var result = await connection.ValidateUser(userName, password, client);
         Console.WriteLine(result);
         return result;
     }

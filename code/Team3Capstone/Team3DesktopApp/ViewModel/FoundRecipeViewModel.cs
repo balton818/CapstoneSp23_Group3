@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Net.Http;
 using Team3DesktopApp.Dal;
 using Team3DesktopApp.Model;
 
@@ -28,11 +29,11 @@ public class FoundRecipeViewModel
     /// <returns>
     ///     <br />
     /// </returns>
-    public List<Recipe> GetRecipes(int userId)
+    public List<Recipe> GetRecipes(int userId, HttpClient client)
     {
         this.Recipes = new List<Recipe>();
         var connection = new HttpClientConnection();
-        var retrieved = connection.GetRecipes(userId);
+        var retrieved = connection.GetRecipes(userId, client);
         if (retrieved.Result != null)
         {
             this.Recipes.AddRange(retrieved.Result);

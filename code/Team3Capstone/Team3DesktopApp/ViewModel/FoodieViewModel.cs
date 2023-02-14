@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Net.Http;
 using System.Threading.Tasks;
 using System.Windows.Navigation;
 using Team3DesktopApp.Model;
@@ -12,7 +14,8 @@ namespace Team3DesktopApp.ViewModel;
 public class FoodieViewModel
 {
     #region Data members
-
+    public HttpClient ClientToSet { get; set; }
+    private static readonly HttpClient Client = new() { BaseAddress = new Uri("https://localhost:7278/api/") };
     private readonly FoundRecipeViewModel foundRecipeViewModel;
     private readonly LoginViewModel loginViewModel;
     private readonly RegistrationViewModel registrationViewModel;
@@ -34,7 +37,7 @@ public class FoodieViewModel
 
     /// <summary>Gets or sets the pantry.</summary>
     /// <value>The pantry.</value>
-    public List<PantryItem> Pantry { get; set; }
+    public List<PantryItem>? Pantry { get; set; }
 
     #endregion
 
@@ -48,6 +51,7 @@ public class FoodieViewModel
         this.loginViewModel = new LoginViewModel();
         this.registrationViewModel = new RegistrationViewModel();
         this.pantryViewModel = new PantryViewModel();
+        this.ClientToSet = Client;
     }
 
     #endregion
@@ -95,7 +99,7 @@ public class FoodieViewModel
     /// </returns>
     public async Task<int> Login(string username, string password)
     {
-        var result = await this.loginViewModel.LoginAsync(username, password);
+        var result = await this.loginViewModel.LoginAsync(username, password, this.ClientToSet);
         if (result >= 0)
         {
             this.Userid = result;
@@ -108,11 +112,11 @@ public class FoodieViewModel
     /// <returns>
     ///     <br />
     /// </returns>
-    public List<PantryItem> getPantry()
+    public async Task<List<PantryItem>> GetPantry()
     {
         var recipes = new List<PantryItem>();
 
-        recipes.AddRange(this.pantryViewModel.getPantry(this.Userid));
+        recipes.AddRange(await this.pantryViewModel.GetPantry(this.Userid, this.ClientToSet));
         return recipes;
     }
 
@@ -123,7 +127,7 @@ public class FoodieViewModel
     public List<string> GetRecipes()
     {
         var recipeNames = new List<string>();
-        foreach (var recipe in this.foundRecipeViewModel.GetRecipes(this.Userid))
+        foreach (var recipe in this.foundRecipeViewModel.GetRecipes(this.Userid, this.ClientToSet))
         {
             recipeNames.Add(recipe.Title);
         }
@@ -143,37 +147,39 @@ public class FoodieViewModel
     public async Task<int> RegisterUser(string username, string password, string email, string firstName,
         string lastName)
     {
-        return await this.registrationViewModel.RegisterAsync(username, password, email, firstName, lastName);
+        return await this.registrationViewModel.RegisterAsync(username, password, email, firstName, lastName, this.ClientToSet);
     }
 
     /// <summary>Adds the ingredient.</summary>
     /// <param name="name">The name.</param>
     /// <param name="quantity">The quantity.</param>
-    public async void AddIngredient(string name, int quantity)
+    public async Task<PantryItem> AddIngredient(string name, int quantity)
     {
-        await this.pantryViewModel.addIngredient(this.Userid, name, quantity);
+        return await this.pantryViewModel.AddIngredient(this.Userid, name, quantity, this.ClientToSet);
+
     }
 
     /// <summary>Recipes the detail nav.</summary>
     /// <param name="recipeName">Name of the recipe.</param>
-    public void RecipeDetailNav(string recipeName)
+    public async Task<RecipeInformation> RecipeDetailNav(string recipeName)
     {
         this.foundRecipeViewModel.SelectedRecipeTitle = recipeName;
         foreach (var recipe in this.foundRecipeViewModel.Recipes)
         {
             if (recipe.Title.Equals(recipeName) && recipe.Id != null)
             {
-                this.recipeDetailViewModel.RecipeDetailNav((int)recipe.Id);
+                await this.recipeDetailViewModel.RecipeDetailNav((int)recipe.Id, this.ClientToSet);
             }
         }
+        return this.recipeDetailViewModel.RecipeInfo;
     }
 
     /// <summary>Edits the ingredient.</summary>
     /// <param name="ingredientName">Name of the ingredient.</param>
     /// <param name="ingredientAmount">The ingredient amount.</param>
-    public async void EditIngredient(string ingredientName, int ingredientAmount)
+    public async Task<PantryItem> EditIngredient(string ingredientName, int ingredientAmount)
     {
-        await this.pantryViewModel.editIngredientAmount(ingredientName, ingredientAmount);
+        return await this.pantryViewModel.EditIngredientAmount(ingredientName, ingredientAmount, this.ClientToSet);
     }
 
     /// <summary>Gets the recipe ingredients.</summary>
@@ -217,9 +223,9 @@ public class FoodieViewModel
 
     #endregion
 
-    public void RemoveIngredient(string ingredientName, int ingredientAmount)
+    public Task<bool> RemoveIngredient(string ingredientName, int ingredientAmount)
     {
-        this.pantryViewModel.RemoveIngredient(ingredientName, ingredientAmount);
+        return this.pantryViewModel.RemoveIngredient(ingredientName, ingredientAmount, this.ClientToSet);
 
     }
 }

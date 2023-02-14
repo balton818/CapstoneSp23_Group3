@@ -1,4 +1,6 @@
-﻿using Team3DesktopApp.Dal;
+﻿using System.Net.Http;
+using System.Threading.Tasks;
+using Team3DesktopApp.Dal;
 using Team3DesktopApp.Model;
 
 namespace Team3DesktopApp.ViewModel;
@@ -17,10 +19,11 @@ public class RecipeDetailViewModel
 
     /// <summary>Recipes the detail nav.</summary>
     /// <param name="recipeId">The recipe identifier.</param>
-    public async void RecipeDetailNav(int recipeId)
+    public async Task RecipeDetailNav(int recipeId, HttpClient client)
     {
         var connection = new HttpClientConnection();
-        this.RecipeInfo = await connection.GetRecipeDetail(recipeId);
+        this.RecipeInfo = await connection.GetRecipeDetail(recipeId, client);
+
     }
 
     #endregion

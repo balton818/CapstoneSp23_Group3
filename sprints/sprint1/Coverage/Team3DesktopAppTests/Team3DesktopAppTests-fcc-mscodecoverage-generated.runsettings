@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RunSettings>
   <RunConfiguration>
-    <ResultsDirectory>C:\Users\jorda\OneDrive\Desktop\Capstone\code\Team3Capstone\..\..\sprints\sprint1\Team3DesktopAppTests</ResultsDirectory>
+    <ResultsDirectory>C:\Users\jorda\OneDrive\Desktop\Capstone\code\Team3Capstone\..\..\sprints\sprint1\Coverage\Team3DesktopAppTests</ResultsDirectory>
     <TestAdaptersPaths>C:\Users\jorda\AppData\Local\FineCodeCoverage\msCodeCoverage\17.1.0\build\netstandard1.0</TestAdaptersPaths>
     <CollectSourceInformation>False</CollectSourceInformation>
   </RunConfiguration>

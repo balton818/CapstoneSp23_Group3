@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace Team3DesktopApp.View;
@@ -6,6 +7,7 @@ namespace Team3DesktopApp.View;
 /// <summary>
 /// </summary>
 /// <seealso cref="System.Windows.Controls.Button" />
+[ExcludeFromCodeCoverage]
 public class NavButton : Button
 {
     #region Data members
