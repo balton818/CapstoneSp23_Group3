@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Windows;
 using System.Windows.Controls;
 using Team3DesktopApp.ViewModel;
@@ -78,4 +79,27 @@ public sealed partial class RegistrationPage : Page
     }
 
     #endregion
+
+    private void SubmitButton_OnClick_(object sender, RoutedEventArgs e)
+    {
+        if (String.IsNullOrEmpty(this.unTextBox.Text))
+        {
+            this.errorLabel.Visibility = Visibility.Visible;
+            this.errorLabel.Text = "Please enter a username";
+        }
+
+        if (this.pwTextBox.Text.Equals(this.pwConfirmBox.Text))
+        {
+            this.regForm.Visibility = Visibility.Visible;
+            this.formTwo.Visibility = Visibility.Collapsed;
+            this.errorLabel.Visibility = Visibility.Collapsed;
+        }
+
+        else
+        {
+            this.errorLabel.Text = "Passwords do not match";
+            this.errorLabel.Visibility = Visibility.Visible;
+
+        }
+    }
 }
