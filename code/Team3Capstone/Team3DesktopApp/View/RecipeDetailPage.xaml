@@ -150,7 +150,7 @@
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel  Width="340">
-                            <TextBlock Text="{Binding }" TextWrapping="Wrap" Height="20" HorizontalAlignment="Left"/>
+                            <TextBlock Text="{Binding }" TextWrapping="Wrap" HorizontalAlignment="Left"/>
                         </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
