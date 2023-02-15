@@ -34,6 +34,11 @@ public partial class FoundRecipePage : Page
 
     private void ViewDetail_Click(object sender, RoutedEventArgs e)
     {
+        if (this.recipeListBox.SelectedItem == null)
+        {
+            MessageBox.Show("Please select a recipe to view");
+            return;
+        }
         this.ViewModel.RecipeDetailNav(this.recipeListBox.SelectedItem.ToString());
         var navButton = (NavButton)sender;
         this.navigateToPage(navButton.NavUri);

@@ -188,11 +188,11 @@
                 </TextBlock>
             </Canvas>
         </Canvas>
-        <TextBlock x:Name="errorLabel" Canvas.Left="131" Visibility="Hidden" FontSize="20" TextWrapping="Wrap"
-                   Text="Errors on page" Canvas.Top="136" Foreground="#FFFB1212" Height="24" Width="153"
+        <TextBlock x:Name="errorLabel" Canvas.Left="131" Visibility="Hidden" FontSize="16" TextWrapping="Wrap"
+                   Text="Errors on page" Canvas.Top="140" Foreground="#FFFB1212" Height="24" Width="262"
                    HorizontalAlignment="Center" VerticalAlignment="Top" />
-        <TextBlock x:Name="pwError" Canvas.Left="131" Visibility="Hidden" FontSize="20" TextWrapping="Wrap"
-                   Text="Errors on page" Canvas.Top="217" Foreground="#FFFB1212" Height="24" Width="153"
+        <TextBlock x:Name="pwError" Canvas.Left="131" Visibility="Hidden" FontSize="16" TextWrapping="Wrap"
+                   Text="Errors on page" Canvas.Top="228" Foreground="#FFFB1212" Height="24" Width="257"
                    HorizontalAlignment="Center" VerticalAlignment="Top" />
         <Canvas Height="404" x:Name="formTwo" Width="415" Canvas.Top="85" HorizontalAlignment="Left" Visibility="Visible" VerticalAlignment="Center">
             <Canvas>
