@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<coverage line-rate="0.886685552407932" branch-rate="0.61290322580645162" complexity="128" version="1.9" timestamp="1676341945" lines-covered="313" lines-valid="353" branches-covered="38" branches-valid="62">
+<coverage line-rate="0.95665634674922606" branch-rate="0.70370370370370372" complexity="120" version="1.9" timestamp="1676475864" lines-covered="309" lines-valid="323" branches-covered="38" branches-valid="54">
   <sources />
   <packages>
-    <package line-rate="0.886685552407932" branch-rate="0" complexity="128" name="Team3DesktopApp">
+    <package line-rate="0.95665634674922606" branch-rate="0" complexity="120" name="Team3DesktopApp">
       <classes>
-        <class line-rate="0.631578947368421" branch-rate="0.6" complexity="30" name="Team3DesktopApp.ViewModel.FoodieViewModel" filename="C:\Users\jorda\OneDrive\Desktop\Capstone\code\Team3Capstone\Team3DesktopApp\ViewModel\FoodieViewModel.cs">
+        <class line-rate="0.95652173913043481" branch-rate="1" complexity="22" name="Team3DesktopApp.ViewModel.FoodieViewModel" filename="C:\Users\jorda\OneDrive\Desktop\Capstone\code\Team3Capstone\Team3DesktopApp\ViewModel\FoodieViewModel.cs">
           <methods>
             <method line-rate="1" branch-rate="1" complexity="1" name="get_ClientToSet" signature="()">
               <lines>
@@ -18,150 +18,100 @@
             </method>
             <method line-rate="1" branch-rate="1" complexity="1" name="get_Userid" signature="()">
               <lines>
-                <line number="36" hits="1" branch="False" />
+                <line number="32" hits="1" branch="False" />
               </lines>
             </method>
             <method line-rate="1" branch-rate="1" complexity="1" name="set_Userid" signature="(int)">
               <lines>
-                <line number="36" hits="1" branch="False" />
+                <line number="32" hits="1" branch="False" />
               </lines>
             </method>
             <method line-rate="0" branch-rate="1" complexity="1" name="get_Pantry" signature="()">
               <lines>
-                <line number="40" hits="0" branch="False" />
+                <line number="36" hits="0" branch="False" />
               </lines>
             </method>
             <method line-rate="0" branch-rate="1" complexity="1" name="set_Pantry" signature="(System.Collections.Generic.List&lt;Team3DesktopApp.Model.PantryItem&gt;)">
               <lines>
-                <line number="40" hits="0" branch="False" />
+                <line number="36" hits="0" branch="False" />
               </lines>
             </method>
             <method line-rate="1" branch-rate="1" complexity="1" name=".ctor" signature="()">
               <lines>
-                <line number="25" hits="1" branch="False" />
-                <line number="26" hits="1" branch="False" />
-                <line number="27" hits="1" branch="False" />
-                <line number="28" hits="1" branch="False" />
+                <line number="43" hits="1" branch="False" />
+                <line number="44" hits="1" branch="False" />
+                <line number="45" hits="1" branch="False" />
+                <line number="46" hits="1" branch="False" />
                 <line number="47" hits="1" branch="False" />
                 <line number="48" hits="1" branch="False" />
                 <line number="49" hits="1" branch="False" />
                 <line number="50" hits="1" branch="False" />
                 <line number="51" hits="1" branch="False" />
-                <line number="52" hits="1" branch="False" />
-                <line number="53" hits="1" branch="False" />
-                <line number="54" hits="1" branch="False" />
-                <line number="55" hits="1" branch="False" />
-              </lines>
-            </method>
-            <method line-rate="0" branch-rate="0" complexity="8" name="NavigateToPage" signature="(string, System.Windows.Navigation.NavigationService)">
-              <lines>
-                <line number="65" hits="0" branch="False" />
-                <line number="66" hits="0" branch="True" condition-coverage="0% (0/2)">
-                  <conditions>
-                    <condition number="0" type="jump" coverage="0%" />
-                  </conditions>
-                </line>
-                <line number="67" hits="0" branch="False" />
-                <line number="68" hits="0" branch="False" />
-                <line number="69" hits="0" branch="False" />
-                <line number="70" hits="0" branch="False" />
-                <line number="71" hits="0" branch="True" condition-coverage="0% (0/2)">
-                  <conditions>
-                    <condition number="0" type="jump" coverage="0%" />
-                  </conditions>
-                </line>
-                <line number="72" hits="0" branch="False" />
-                <line number="73" hits="0" branch="False" />
-                <line number="74" hits="0" branch="False" />
-                <line number="75" hits="0" branch="False" />
-                <line number="76" hits="0" branch="True" condition-coverage="0% (0/2)">
-                  <conditions>
-                    <condition number="0" type="jump" coverage="0%" />
-                  </conditions>
-                </line>
-                <line number="77" hits="0" branch="False" />
-                <line number="78" hits="0" branch="False" />
-                <line number="79" hits="0" branch="False" />
-                <line number="80" hits="0" branch="False" />
-                <line number="81" hits="0" branch="True" condition-coverage="0% (0/2)">
-                  <conditions>
-                    <condition number="0" type="jump" coverage="0%" />
-                  </conditions>
-                </line>
-                <line number="82" hits="0" branch="False" />
-                <line number="83" hits="0" branch="False" />
-                <line number="85" hits="0" branch="False" />
-                <line number="86" hits="0" branch="False" />
-                <line number="88" hits="0" branch="False" />
-                <line number="89" hits="0" branch="False" />
-                <line number="90" hits="0" branch="False" />
-                <line number="91" hits="0" branch="False" />
-                <line number="92" hits="0" branch="False" />
               </lines>
             </method>
             <method line-rate="1" branch-rate="1" complexity="4" name="GetRecipes" signature="()">
               <lines>
-                <line number="128" hits="1" branch="False" />
-                <line number="129" hits="1" branch="False" />
-                <line number="130" hits="1" branch="True" condition-coverage="100% (4/4)">
+                <line number="93" hits="1" branch="False" />
+                <line number="94" hits="1" branch="False" />
+                <line number="95" hits="1" branch="True" condition-coverage="100% (4/4)">
                   <conditions>
                     <condition number="0" type="jump" coverage="100%" />
                     <condition number="1" type="jump" coverage="100%" />
                   </conditions>
                 </line>
-                <line number="131" hits="1" branch="False" />
-                <line number="132" hits="1" branch="False" />
-                <line number="133" hits="1" branch="False" />
-                <line number="135" hits="1" branch="False" />
-                <line number="136" hits="1" branch="False" />
+                <line number="96" hits="1" branch="False" />
+                <line number="97" hits="1" branch="False" />
+                <line number="98" hits="1" branch="False" />
+                <line number="100" hits="1" branch="False" />
+                <line number="101" hits="1" branch="False" />
               </lines>
             </method>
             <method line-rate="1" branch-rate="1" complexity="4" name="GetRecipeIngredients" signature="()">
               <lines>
-                <line number="190" hits="1" branch="False" />
-                <line number="191" hits="1" branch="False" />
-                <line number="192" hits="1" branch="True" condition-coverage="100% (4/4)">
+                <line number="155" hits="1" branch="False" />
+                <line number="156" hits="1" branch="False" />
+                <line number="157" hits="1" branch="True" condition-coverage="100% (4/4)">
                   <conditions>
                     <condition number="0" type="jump" coverage="100%" />
                     <condition number="1" type="jump" coverage="100%" />
                   </conditions>
                 </line>
-                <line number="193" hits="1" branch="False" />
-                <line number="194" hits="1" branch="False" />
-                <line number="195" hits="1" branch="False" />
-                <line number="197" hits="1" branch="False" />
-                <line number="198" hits="1" branch="False" />
+                <line number="158" hits="1" branch="False" />
+                <line number="159" hits="1" branch="False" />
+                <line number="160" hits="1" branch="False" />
+                <line number="162" hits="1" branch="False" />
+                <line number="163" hits="1" branch="False" />
               </lines>
             </method>
             <method line-rate="1" branch-rate="1" complexity="4" name="GetRecipeSteps" signature="()">
               <lines>
-                <line number="205" hits="1" branch="False" />
-                <line number="206" hits="1" branch="False" />
-                <line number="207" hits="1" branch="True" condition-coverage="100% (4/4)">
+                <line number="170" hits="1" branch="False" />
+                <line number="171" hits="1" branch="False" />
+                <line number="172" hits="1" branch="True" condition-coverage="100% (4/4)">
                   <conditions>
                     <condition number="0" type="jump" coverage="100%" />
                     <condition number="1" type="jump" coverage="100%" />
                   </conditions>
                 </line>
-                <line number="208" hits="1" branch="False" />
-                <line number="209" hits="1" branch="False" />
-                <line number="210" hits="1" branch="False" />
-                <line number="212" hits="1" branch="False" />
-                <line number="213" hits="1" branch="False" />
+                <line number="173" hits="1" branch="False" />
+                <line number="174" hits="1" branch="False" />
+                <line number="175" hits="1" branch="False" />
+                <line number="177" hits="1" branch="False" />
+                <line number="178" hits="1" branch="False" />
               </lines>
             </method>
             <method line-rate="1" branch-rate="1" complexity="1" name="GetRecipeTitle" signature="()">
               <lines>
-                <line number="220" hits="1" branch="False" />
-                <line number="221" hits="1" branch="False" />
-                <line number="222" hits="1" branch="False" />
+                <line number="185" hits="1" branch="False" />
+                <line number="186" hits="1" branch="False" />
+                <line number="187" hits="1" branch="False" />
               </lines>
             </method>
             <method line-rate="1" branch-rate="1" complexity="1" name="RemoveIngredient" signature="(string, int)">
               <lines>
-                <line number="227" hits="1" branch="False" />
-                <line number="228" hits="1" branch="False" />
-                <line number="230" hits="1" branch="False" />
+                <line number="192" hits="1" branch="False" />
+                <line number="193" hits="1" branch="False" />
+                <line number="195" hits="1" branch="False" />
               </lines>
             </method>
             <method line-rate="1" branch-rate="1" complexity="1" name=".cctor" signature="()">
@@ -173,108 +123,62 @@
           <lines>
             <line number="17" hits="1" branch="False" />
             <line number="18" hits="1" branch="False" />
-            <line number="25" hits="1" branch="False" />
-            <line number="26" hits="1" branch="False" />
-            <line number="27" hits="1" branch="False" />
-            <line number="28" hits="1" branch="False" />
-            <line number="36" hits="1" branch="False" />
-            <line number="40" hits="0" branch="False" />
+            <line number="32" hits="1" branch="False" />
+            <line number="36" hits="0" branch="False" />
+            <line number="43" hits="1" branch="False" />
+            <line number="44" hits="1" branch="False" />
+            <line number="45" hits="1" branch="False" />
+            <line number="46" hits="1" branch="False" />
             <line number="47" hits="1" branch="False" />
             <line number="48" hits="1" branch="False" />
             <line number="49" hits="1" branch="False" />
             <line number="50" hits="1" branch="False" />
             <line number="51" hits="1" branch="False" />
-            <line number="52" hits="1" branch="False" />
-            <line number="53" hits="1" branch="False" />
-            <line number="54" hits="1" branch="False" />
-            <line number="55" hits="1" branch="False" />
-            <line number="65" hits="0" branch="False" />
-            <line number="66" hits="0" branch="True" condition-coverage="0% (0/2)">
-              <conditions>
-                <condition number="0" type="jump" coverage="0%" />
-              </conditions>
-            </line>
-            <line number="67" hits="0" branch="False" />
-            <line number="68" hits="0" branch="False" />
-            <line number="69" hits="0" branch="False" />
-            <line number="70" hits="0" branch="False" />
-            <line number="71" hits="0" branch="True" condition-coverage="0% (0/2)">
-              <conditions>
-                <condition number="0" type="jump" coverage="0%" />
-              </conditions>
-            </line>
-            <line number="72" hits="0" branch="False" />
-            <line number="73" hits="0" branch="False" />
-            <line number="74" hits="0" branch="False" />
-            <line number="75" hits="0" branch="False" />
-            <line number="76" hits="0" branch="True" condition-coverage="0% (0/2)">
-              <conditions>
-                <condition number="0" type="jump" coverage="0%" />
-              </conditions>
-            </line>
-            <line number="77" hits="0" branch="False" />
-            <line number="78" hits="0" branch="False" />
-            <line number="79" hits="0" branch="False" />
-            <line number="80" hits="0" branch="False" />
-            <line number="81" hits="0" branch="True" condition-coverage="0% (0/2)">
-              <conditions>
-                <condition number="0" type="jump" coverage="0%" />
-              </conditions>
-            </line>
-            <line number="82" hits="0" branch="False" />
-            <line number="83" hits="0" branch="False" />
-            <line number="85" hits="0" branch="False" />
-            <line number="86" hits="0" branch="False" />
-            <line number="88" hits="0" branch="False" />
-            <line number="89" hits="0" branch="False" />
-            <line number="90" hits="0" branch="False" />
-            <line number="91" hits="0" branch="False" />
-            <line number="92" hits="0" branch="False" />
-            <line number="128" hits="1" branch="False" />
-            <line number="129" hits="1" branch="False" />
-            <line number="130" hits="1" branch="True" condition-coverage="100% (4/4)">
+            <line number="93" hits="1" branch="False" />
+            <line number="94" hits="1" branch="False" />
+            <line number="95" hits="1" branch="True" condition-coverage="100% (4/4)">
               <conditions>
                 <condition number="0" type="jump" coverage="100%" />
                 <condition number="1" type="jump" coverage="100%" />
               </conditions>
             </line>
-            <line number="131" hits="1" branch="False" />
-            <line number="132" hits="1" branch="False" />
-            <line number="133" hits="1" branch="False" />
-            <line number="135" hits="1" branch="False" />
-            <line number="136" hits="1" branch="False" />
-            <line number="190" hits="1" branch="False" />
-            <line number="191" hits="1" branch="False" />
-            <line number="192" hits="1" branch="True" condition-coverage="100% (4/4)">
+            <line number="96" hits="1" branch="False" />
+            <line number="97" hits="1" branch="False" />
+            <line number="98" hits="1" branch="False" />
+            <line number="100" hits="1" branch="False" />
+            <line number="101" hits="1" branch="False" />
+            <line number="155" hits="1" branch="False" />
+            <line number="156" hits="1" branch="False" />
+            <line number="157" hits="1" branch="True" condition-coverage="100% (4/4)">
               <conditions>
                 <condition number="0" type="jump" coverage="100%" />
                 <condition number="1" type="jump" coverage="100%" />
               </conditions>
             </line>
+            <line number="158" hits="1" branch="False" />
+            <line number="159" hits="1" branch="False" />
+            <line number="160" hits="1" branch="False" />
+            <line number="162" hits="1" branch="False" />
+            <line number="163" hits="1" branch="False" />
+            <line number="170" hits="1" branch="False" />
+            <line number="171" hits="1" branch="False" />
+            <line number="172" hits="1" branch="True" condition-coverage="100% (4/4)">
+              <conditions>
+                <condition number="0" type="jump" coverage="100%" />
+                <condition number="1" type="jump" coverage="100%" />
+              </conditions>
+            </line>
+            <line number="173" hits="1" branch="False" />
+            <line number="174" hits="1" branch="False" />
+            <line number="175" hits="1" branch="False" />
+            <line number="177" hits="1" branch="False" />
+            <line number="178" hits="1" branch="False" />
+            <line number="185" hits="1" branch="False" />
+            <line number="186" hits="1" branch="False" />
+            <line number="187" hits="1" branch="False" />
+            <line number="192" hits="1" branch="False" />
             <line number="193" hits="1" branch="False" />
-            <line number="194" hits="1" branch="False" />
             <line number="195" hits="1" branch="False" />
-            <line number="197" hits="1" branch="False" />
-            <line number="198" hits="1" branch="False" />
-            <line number="205" hits="1" branch="False" />
-            <line number="206" hits="1" branch="False" />
-            <line number="207" hits="1" branch="True" condition-coverage="100% (4/4)">
-              <conditions>
-                <condition number="0" type="jump" coverage="100%" />
-                <condition number="1" type="jump" coverage="100%" />
-              </conditions>
-            </line>
-            <line number="208" hits="1" branch="False" />
-            <line number="209" hits="1" branch="False" />
-            <line number="210" hits="1" branch="False" />
-            <line number="212" hits="1" branch="False" />
-            <line number="213" hits="1" branch="False" />
-            <line number="220" hits="1" branch="False" />
-            <line number="221" hits="1" branch="False" />
-            <line number="222" hits="1" branch="False" />
-            <line number="227" hits="1" branch="False" />
-            <line number="228" hits="1" branch="False" />
-            <line number="230" hits="1" branch="False" />
           </lines>
         </class>
         <class line-rate="1" branch-rate="1" complexity="6" name="Team3DesktopApp.ViewModel.FoundRecipeViewModel" filename="C:\Users\jorda\OneDrive\Desktop\Capstone\code\Team3Capstone\Team3DesktopApp\ViewModel\FoundRecipeViewModel.cs">
@@ -754,160 +658,160 @@
             <line number="228" hits="1" branch="False" />
           </lines>
         </class>
-        <class line-rate="1" branch-rate="1" complexity="1" name="Team3DesktopApp.ViewModel.FoodieViewModel.&lt;AddIngredient&gt;d__28" filename="C:\Users\jorda\OneDrive\Desktop\Capstone\code\Team3Capstone\Team3DesktopApp\ViewModel\FoodieViewModel.cs">
+        <class line-rate="1" branch-rate="1" complexity="1" name="Team3DesktopApp.ViewModel.FoodieViewModel.&lt;AddIngredient&gt;d__23" filename="C:\Users\jorda\OneDrive\Desktop\Capstone\code\Team3Capstone\Team3DesktopApp\ViewModel\FoodieViewModel.cs">
           <methods>
             <method line-rate="1" branch-rate="1" complexity="1" name="MoveNext" signature="()">
               <lines>
-                <line number="157" hits="1" branch="False" />
-                <line number="158" hits="1" branch="False" />
-                <line number="160" hits="1" branch="False" />
+                <line number="122" hits="1" branch="False" />
+                <line number="123" hits="1" branch="False" />
+                <line number="125" hits="1" branch="False" />
               </lines>
             </method>
           </methods>
           <lines>
-            <line number="157" hits="1" branch="False" />
-            <line number="158" hits="1" branch="False" />
-            <line number="160" hits="1" branch="False" />
+            <line number="122" hits="1" branch="False" />
+            <line number="123" hits="1" branch="False" />
+            <line number="125" hits="1" branch="False" />
           </lines>
         </class>
-        <class line-rate="1" branch-rate="1" complexity="1" name="Team3DesktopApp.ViewModel.FoodieViewModel.&lt;EditIngredient&gt;d__30" filename="C:\Users\jorda\OneDrive\Desktop\Capstone\code\Team3Capstone\Team3DesktopApp\ViewModel\FoodieViewModel.cs">
+        <class line-rate="1" branch-rate="1" complexity="1" name="Team3DesktopApp.ViewModel.FoodieViewModel.&lt;EditIngredient&gt;d__25" filename="C:\Users\jorda\OneDrive\Desktop\Capstone\code\Team3Capstone\Team3DesktopApp\ViewModel\FoodieViewModel.cs">
           <methods>
             <method line-rate="1" branch-rate="1" complexity="1" name="MoveNext" signature="()">
               <lines>
-                <line number="181" hits="1" branch="False" />
-                <line number="182" hits="1" branch="False" />
-                <line number="183" hits="1" branch="False" />
+                <line number="146" hits="1" branch="False" />
+                <line number="147" hits="1" branch="False" />
+                <line number="148" hits="1" branch="False" />
               </lines>
             </method>
           </methods>
           <lines>
-            <line number="181" hits="1" branch="False" />
-            <line number="182" hits="1" branch="False" />
-            <line number="183" hits="1" branch="False" />
+            <line number="146" hits="1" branch="False" />
+            <line number="147" hits="1" branch="False" />
+            <line number="148" hits="1" branch="False" />
           </lines>
         </class>
-        <class line-rate="1" branch-rate="1" complexity="1" name="Team3DesktopApp.ViewModel.FoodieViewModel.&lt;GetPantry&gt;d__25" filename="C:\Users\jorda\OneDrive\Desktop\Capstone\code\Team3Capstone\Team3DesktopApp\ViewModel\FoodieViewModel.cs">
+        <class line-rate="1" branch-rate="1" complexity="1" name="Team3DesktopApp.ViewModel.FoodieViewModel.&lt;GetPantry&gt;d__20" filename="C:\Users\jorda\OneDrive\Desktop\Capstone\code\Team3Capstone\Team3DesktopApp\ViewModel\FoodieViewModel.cs">
           <methods>
             <method line-rate="1" branch-rate="1" complexity="1" name="MoveNext" signature="()">
               <lines>
-                <line number="116" hits="1" branch="False" />
-                <line number="117" hits="1" branch="False" />
-                <line number="119" hits="1" branch="False" />
-                <line number="120" hits="1" branch="False" />
-                <line number="121" hits="1" branch="False" />
+                <line number="81" hits="1" branch="False" />
+                <line number="82" hits="1" branch="False" />
+                <line number="84" hits="1" branch="False" />
+                <line number="85" hits="1" branch="False" />
+                <line number="86" hits="1" branch="False" />
               </lines>
             </method>
           </methods>
           <lines>
-            <line number="116" hits="1" branch="False" />
-            <line number="117" hits="1" branch="False" />
-            <line number="119" hits="1" branch="False" />
-            <line number="120" hits="1" branch="False" />
-            <line number="121" hits="1" branch="False" />
+            <line number="81" hits="1" branch="False" />
+            <line number="82" hits="1" branch="False" />
+            <line number="84" hits="1" branch="False" />
+            <line number="85" hits="1" branch="False" />
+            <line number="86" hits="1" branch="False" />
           </lines>
         </class>
-        <class line-rate="1" branch-rate="1" complexity="2" name="Team3DesktopApp.ViewModel.FoodieViewModel.&lt;Login&gt;d__24" filename="C:\Users\jorda\OneDrive\Desktop\Capstone\code\Team3Capstone\Team3DesktopApp\ViewModel\FoodieViewModel.cs">
+        <class line-rate="1" branch-rate="1" complexity="2" name="Team3DesktopApp.ViewModel.FoodieViewModel.&lt;Login&gt;d__19" filename="C:\Users\jorda\OneDrive\Desktop\Capstone\code\Team3Capstone\Team3DesktopApp\ViewModel\FoodieViewModel.cs">
           <methods>
             <method line-rate="1" branch-rate="1" complexity="2" name="MoveNext" signature="()">
               <lines>
-                <line number="101" hits="1" branch="False" />
-                <line number="102" hits="1" branch="False" />
-                <line number="103" hits="1" branch="True" condition-coverage="100% (2/2)">
+                <line number="66" hits="1" branch="False" />
+                <line number="67" hits="1" branch="False" />
+                <line number="68" hits="1" branch="True" condition-coverage="100% (2/2)">
                   <conditions>
                     <condition number="0" type="jump" coverage="100%" />
                   </conditions>
                 </line>
-                <line number="104" hits="1" branch="False" />
-                <line number="105" hits="1" branch="False" />
-                <line number="106" hits="1" branch="False" />
-                <line number="108" hits="1" branch="False" />
-                <line number="109" hits="1" branch="False" />
+                <line number="69" hits="1" branch="False" />
+                <line number="70" hits="1" branch="False" />
+                <line number="71" hits="1" branch="False" />
+                <line number="73" hits="1" branch="False" />
+                <line number="74" hits="1" branch="False" />
               </lines>
             </method>
           </methods>
           <lines>
-            <line number="101" hits="1" branch="False" />
-            <line number="102" hits="1" branch="False" />
-            <line number="103" hits="1" branch="True" condition-coverage="100% (2/2)">
+            <line number="66" hits="1" branch="False" />
+            <line number="67" hits="1" branch="False" />
+            <line number="68" hits="1" branch="True" condition-coverage="100% (2/2)">
               <conditions>
                 <condition number="0" type="jump" coverage="100%" />
               </conditions>
             </line>
-            <line number="104" hits="1" branch="False" />
-            <line number="105" hits="1" branch="False" />
-            <line number="106" hits="1" branch="False" />
-            <line number="108" hits="1" branch="False" />
-            <line number="109" hits="1" branch="False" />
+            <line number="69" hits="1" branch="False" />
+            <line number="70" hits="1" branch="False" />
+            <line number="71" hits="1" branch="False" />
+            <line number="73" hits="1" branch="False" />
+            <line number="74" hits="1" branch="False" />
           </lines>
         </class>
-        <class line-rate="1" branch-rate="0.8" complexity="10" name="Team3DesktopApp.ViewModel.FoodieViewModel.&lt;RecipeDetailNav&gt;d__29" filename="C:\Users\jorda\OneDrive\Desktop\Capstone\code\Team3Capstone\Team3DesktopApp\ViewModel\FoodieViewModel.cs">
+        <class line-rate="1" branch-rate="0.8" complexity="10" name="Team3DesktopApp.ViewModel.FoodieViewModel.&lt;RecipeDetailNav&gt;d__24" filename="C:\Users\jorda\OneDrive\Desktop\Capstone\code\Team3Capstone\Team3DesktopApp\ViewModel\FoodieViewModel.cs">
           <methods>
             <method line-rate="1" branch-rate="0.8" complexity="10" name="MoveNext" signature="()">
               <lines>
-                <line number="165" hits="1" branch="False" />
-                <line number="166" hits="1" branch="False" />
-                <line number="167" hits="1" branch="True" condition-coverage="100% (4/4)">
+                <line number="130" hits="1" branch="False" />
+                <line number="131" hits="1" branch="False" />
+                <line number="132" hits="1" branch="True" condition-coverage="100% (4/4)">
                   <conditions>
                     <condition number="0" type="jump" coverage="100%" />
                     <condition number="1" type="jump" coverage="100%" />
                   </conditions>
                 </line>
-                <line number="168" hits="1" branch="False" />
-                <line number="169" hits="1" branch="True" condition-coverage="66.67% (4/6)">
+                <line number="133" hits="1" branch="False" />
+                <line number="134" hits="1" branch="True" condition-coverage="66.67% (4/6)">
                   <conditions>
                     <condition number="0" type="jump" coverage="50%" />
                     <condition number="1" type="jump" coverage="50%" />
                     <condition number="2" type="jump" coverage="100%" />
                   </conditions>
                 </line>
-                <line number="170" hits="1" branch="False" />
-                <line number="171" hits="1" branch="False" />
-                <line number="172" hits="1" branch="False" />
-                <line number="173" hits="1" branch="False" />
-                <line number="174" hits="1" branch="False" />
-                <line number="175" hits="1" branch="False" />
+                <line number="135" hits="1" branch="False" />
+                <line number="136" hits="1" branch="False" />
+                <line number="137" hits="1" branch="False" />
+                <line number="138" hits="1" branch="False" />
+                <line number="139" hits="1" branch="False" />
+                <line number="140" hits="1" branch="False" />
               </lines>
             </method>
           </methods>
           <lines>
-            <line number="165" hits="1" branch="False" />
-            <line number="166" hits="1" branch="False" />
-            <line number="167" hits="1" branch="True" condition-coverage="100% (4/4)">
+            <line number="130" hits="1" branch="False" />
+            <line number="131" hits="1" branch="False" />
+            <line number="132" hits="1" branch="True" condition-coverage="100% (4/4)">
               <conditions>
                 <condition number="0" type="jump" coverage="100%" />
                 <condition number="1" type="jump" coverage="100%" />
               </conditions>
             </line>
-            <line number="168" hits="1" branch="False" />
-            <line number="169" hits="1" branch="True" condition-coverage="66.67% (4/6)">
+            <line number="133" hits="1" branch="False" />
+            <line number="134" hits="1" branch="True" condition-coverage="66.67% (4/6)">
               <conditions>
                 <condition number="0" type="jump" coverage="50%" />
                 <condition number="1" type="jump" coverage="50%" />
                 <condition number="2" type="jump" coverage="100%" />
               </conditions>
             </line>
-            <line number="170" hits="1" branch="False" />
-            <line number="171" hits="1" branch="False" />
-            <line number="172" hits="1" branch="False" />
-            <line number="173" hits="1" branch="False" />
-            <line number="174" hits="1" branch="False" />
-            <line number="175" hits="1" branch="False" />
+            <line number="135" hits="1" branch="False" />
+            <line number="136" hits="1" branch="False" />
+            <line number="137" hits="1" branch="False" />
+            <line number="138" hits="1" branch="False" />
+            <line number="139" hits="1" branch="False" />
+            <line number="140" hits="1" branch="False" />
           </lines>
         </class>
-        <class line-rate="1" branch-rate="1" complexity="1" name="Team3DesktopApp.ViewModel.FoodieViewModel.&lt;RegisterUser&gt;d__27" filename="C:\Users\jorda\OneDrive\Desktop\Capstone\code\Team3Capstone\Team3DesktopApp\ViewModel\FoodieViewModel.cs">
+        <class line-rate="1" branch-rate="1" complexity="1" name="Team3DesktopApp.ViewModel.FoodieViewModel.&lt;RegisterUser&gt;d__22" filename="C:\Users\jorda\OneDrive\Desktop\Capstone\code\Team3Capstone\Team3DesktopApp\ViewModel\FoodieViewModel.cs">
           <methods>
             <method line-rate="1" branch-rate="1" complexity="1" name="MoveNext" signature="()">
               <lines>
-                <line number="149" hits="1" branch="False" />
-                <line number="150" hits="1" branch="False" />
-                <line number="151" hits="1" branch="False" />
+                <line number="114" hits="1" branch="False" />
+                <line number="115" hits="1" branch="False" />
+                <line number="116" hits="1" branch="False" />
               </lines>
             </method>
           </methods>
           <lines>
-            <line number="149" hits="1" branch="False" />
-            <line number="150" hits="1" branch="False" />
-            <line number="151" hits="1" branch="False" />
+            <line number="114" hits="1" branch="False" />
+            <line number="115" hits="1" branch="False" />
+            <line number="116" hits="1" branch="False" />
           </lines>
         </class>
         <class line-rate="0.77777777777777779" branch-rate="0.5" complexity="6" name="Team3DesktopApp.ViewModel.LoginViewModel.&lt;LoginAsync&gt;d__0" filename="C:\Users\jorda\OneDrive\Desktop\Capstone\code\Team3Capstone\Team3DesktopApp\ViewModel\LoginViewModel.cs">

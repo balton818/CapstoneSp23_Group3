@@ -47,25 +47,38 @@ public partial class IngredientExpander : UserControl
 
     #region Methods
 
-    private void PlusButton_OnClick(object sender, RoutedEventArgs e)
+    private async void PlusButton_OnClick(object sender, RoutedEventArgs e)
     {
         this.IngredientAmount++;
-        this.ViewModel.EditIngredient(this.IngredientName, this.IngredientAmount);
-        this.ViewModel.NavigateToPage("View/PantryPage.xaml", this.current.NavigationService);
+        await this.ViewModel.EditIngredient(this.IngredientName, this.IngredientAmount);
+
+        this.navigateToPage("View/PantryPage.xaml");
     }
 
-    private void MinusButton_OnClick(object sender, RoutedEventArgs e)
+    private async void MinusButton_OnClick(object sender, RoutedEventArgs e)
     {
         this.IngredientAmount--;
-        this.ViewModel.EditIngredient(this.IngredientName, this.IngredientAmount);
-        this.ViewModel.NavigateToPage("View/PantryPage.xaml", this.current.NavigationService);
+        await this.ViewModel.EditIngredient(this.IngredientName, this.IngredientAmount);
+        this.navigateToPage("View/PantryPage.xaml");
     }
 
     private void RemoveButton_OnClick(object sender, RoutedEventArgs e)
     {
         this.ViewModel.RemoveIngredient(this.IngredientName, this.IngredientAmount);
-        this.ViewModel.NavigateToPage("View/PantryPage.xaml", this.current.NavigationService);
+        this.navigateToPage("View/PantryPage.xaml");
 
+
+    }
+
+    private void navigateToPage(string navUri)
+    {
+
+        PageNavigation navigate = new PageNavigation(this.ViewModel);
+        var currentNavigationService = this.current.NavigationService;
+        if (currentNavigationService != null)
+        {
+            navigate.NavigateToPage(navUri, currentNavigationService);
+        }
 
     }
 

@@ -52,7 +52,11 @@ public sealed partial class RegistrationPage : Page
             }
             else
             {
-                this.ViewModel.NavigateToPage(this.registerButton.NavUri, this.NavigationService);
+                if (NavigationService != null)
+                {
+                    PageNavigation navigate = new PageNavigation(this.ViewModel);
+                    navigate.NavigateToPage(this.registerButton.NavUri, NavigationService);
+                }
             }
         }
         else
@@ -66,7 +70,11 @@ public sealed partial class RegistrationPage : Page
     /// <param name="e">The <see cref="RoutedEventArgs" /> instance containing the event data.</param>
     private void BackButton_OnClickButton_Click(object sender, RoutedEventArgs e)
     {
-        this.ViewModel.NavigateToPage(this.backButton.NavUri, this.NavigationService);
+        if (NavigationService != null)
+        {
+            PageNavigation navigate = new PageNavigation(this.ViewModel);
+            navigate.NavigateToPage(this.backButton.NavUri, NavigationService);
+        }
     }
 
     #endregion
