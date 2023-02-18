@@ -10,15 +10,43 @@ namespace RecipePlannerApi.Controllers {
         public RecipeController() { }
 
         [HttpGet("get-by-ingredients")]
-        public List<Recipe> SearchRecipesByIngredients([FromQuery]SearchRecipesByIngredientsRequest request) =>
-            RecipeService.SearchRecipesByIngredients(request);
+        public ActionResult<List<Recipe>> SearchRecipesByIngredients([FromQuery] SearchRecipesByIngredientsRequest request) {
+            try {
+                return Ok(RecipeService.SearchRecipesByIngredients(request));
+            } catch (Exception e) {
+
+                return BadRequest(e.Message);
+            }
+        }
 
         [HttpGet("get-by-pantry/{userId}")]
-        public List<Recipe> GetRecipesByUserPantry(int userId) =>
-            RecipeService.GetRecipesByUserPantry(userId);
+        public ActionResult<List<Recipe>> GetRecipesByUserPantry(int userId) {
+            try {
+                return Ok(RecipeService.GetRecipesByUserPantry(userId));
+            } catch (Exception e) {
+
+                return BadRequest(e.Message);
+            }
+        }
 
         [HttpGet("get-recipe-infromation/{id}")]
-        public RecipeInformation GetRecipeInformation(int id) =>
-            RecipeService.GetRecipeInformation(id);
+        public ActionResult<RecipeInformation> GetRecipeInformation(int id) {
+            try {
+                return Ok(RecipeService.GetRecipeInformation(id));
+            } catch (Exception e) {
+
+                return BadRequest(e.Message);
+            }
+        }
+
+        [HttpGet("test/{to}/{from}/{value}")]
+        public ActionResult<int?> GetRecipeInformation(string from, int to, decimal value) {
+            try {
+                return Ok(MeasurementService.Convert(value, from, (AppUnit)to));
+            } catch (Exception e) {
+
+                return BadRequest(e.Message);
+            }
+        }
     }
 }
