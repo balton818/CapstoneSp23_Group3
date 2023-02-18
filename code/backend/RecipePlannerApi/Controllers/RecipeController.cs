@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Org.OpenAPITools.Model;
 using RecipePlannerApi.Api.Requests;
 using RecipePlannerApi.Model;
 using RecipePlannerApi.Service;
@@ -8,6 +9,16 @@ namespace RecipePlannerApi.Controllers {
     [ApiController]
     public class RecipeController : ControllerBase {
         public RecipeController() { }
+
+        [HttpGet("search")]
+        public ActionResult<List<SearchRecipesByIngredients200ResponseInner>> SearchRecipes([FromQuery] SearchRecipesByIngredientsRequest request) {
+            try {
+                return Ok(RecipeService.SearchRecipes(request));
+            } catch (Exception e) {
+
+                return BadRequest(e.Message);
+            }
+        }
 
         [HttpGet("get-by-ingredients")]
         public ActionResult<List<Recipe>> SearchRecipesByIngredients([FromQuery] SearchRecipesByIngredientsRequest request) {
@@ -43,6 +54,16 @@ namespace RecipePlannerApi.Controllers {
         public ActionResult<int?> GetRecipeInformation(string from, int to, decimal value) {
             try {
                 return Ok(MeasurementService.Convert(value, from, (AppUnit)to));
+            } catch (Exception e) {
+
+                return BadRequest(e.Message);
+            }
+        }
+
+        [HttpGet("search-ingredient")]
+        public ActionResult<List<Ingredient>> SearchIngredients([FromQuery] string search) {
+            try {
+                return Ok(RecipeService.SearchIngredient(search));
             } catch (Exception e) {
 
                 return BadRequest(e.Message);

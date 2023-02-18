@@ -73,6 +73,8 @@
     <Build Include="dbo\Stored Procedures\get_pantry_item.sql" />
     <Build Include="dbo\Stored Procedures\get_user_pantry.sql" />
     <Build Include="dbo\Tables\measurment_unit.sql" />
+    <Build Include="dbo\Tables\ingredient.sql" />
+    <Build Include="dbo\Stored Procedures\search_ingredient.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="RecipePlannerDatabase.refactorlog" />

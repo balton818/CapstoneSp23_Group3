@@ -2,6 +2,7 @@
 (
     [pantry_id] INT IDENTITY(1,1) PRIMARY KEY,
 	[user_id] INT NOT NULL , 
+    [ingredient_id] INT NULL, 
     [ingredient_name] NVARCHAR(40) NOT NULL, 
     [quantity] INT NOT NULL, 
     [unit_id] INT DEFAULT 0 NOT NULL, 
