@@ -5,6 +5,7 @@ AS
 		pantry_id 			as PantryId,
 		user_id 			as UserId,
 		ingredient_name 	as IngredientName,
-		quantity 			as Quantity
+		quantity 			as Quantity,
+		unit_id				as UnitId
 	FROM [dbo].pantry
 	WHERE user_id = @userId
