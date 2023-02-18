@@ -1,5 +1,5 @@
 ﻿CREATE PROCEDURE [dbo].[search_ingredient]
-    @search NVARCHAR(40)
+    @search NVARCHAR(40) = ''
 AS
     DECLARE @formattedSearch NVARCHAR(43) = '%' + @search + '%'
     SELECT 

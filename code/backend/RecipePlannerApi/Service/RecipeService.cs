@@ -50,7 +50,7 @@ namespace RecipePlannerApi.Service {
         /// <returns>A list of recipes</returns>
         public static List<Recipe> GetRecipesByUserPantry(int userId)
         {
-            var pantry = UserService.GetUserPantry(userId);
+            var pantry = GetUserPantry(userId);
             var ingredients = string.Join(",", pantry.Select(item => item.IngredientName).ToList());
             var searchRequest = new SearchRecipesByIngredientsRequest() {
                 ingredients = ingredients,
@@ -84,6 +84,19 @@ namespace RecipePlannerApi.Service {
             }
 
             return recipes;
+        }
+
+        private static List<PantryItem> GetUserPantry(int userId) {
+            var pantry = UserService.GetUserPantry(userId);
+
+            pantry.Add(new PantryItem() {
+                IngredientId = 14412,
+                IngredientName = "water",
+                Quantity = 100,
+                unit = AppUnits.NONE
+            });
+
+            return pantry;
         }
 
         private static bool CheckIngredientAmounts(List<SearchRecipesByIngredients200ResponseInnerMissedIngredientsInner> usedIngredients, List<PantryItem> pantry) {
