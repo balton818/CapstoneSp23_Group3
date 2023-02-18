@@ -1,6 +1,7 @@
 ﻿namespace RecipePlannerApi.Model {
     public class Ingredient {
-        public string name { get; set; }
-        public int quantity { get; set; }
+        public int? IngredientId { get; set; }
+        public string IngredientName { get; set; }
+        public int Quantity { get; set; }
     }
 }
