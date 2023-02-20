@@ -15,19 +15,24 @@
         <span>pantry</span>
         <hr style="height: 2px; opacity: 100%" />
     </div>
+    <div class="new-ingredient">
+        <form>
+            <span style="text-align:center; font-weight:bold">Add Ingredient to Pantry:</span>
+            <input @bind="newIngredientName" placeholder="Enter Ingredient Name" required/>
+            <input @bind="newIngredientQuantity" required/>
+            <button type="submit" id="add-ingredient" @onclick="addNewIngredient">Add to Pantry</button>
+        </form>
+    </div>
+    
     <div class="pantry">
-        <div class="new-ingredient">
-            <form>
-                <span style="text-align:center; font-weight:bold">Add Ingredient to Pantry:</span>
-                <input @bind="newIngredientName" placeholder="Enter Ingredient Name" required/>
-                <input @bind="newIngredientQuantity" required/>
-                <button type="submit" id="add-ingredient" @onclick="addNewIngredient">Add to Pantry</button>
-            </form>
-        </div>
+        <div class="row navBoxGrid">
         @foreach (var ingredient in this.ingredients)
         {
-            <Ingredient IngredientName="@ingredient.IngredientName" IngredientQuantity="@ingredient.Quantity" IngredientId="@ingredient.PantryId" />
+            <div class="col navBox">
+                <Ingredient IngredientName="@ingredient.IngredientName" IngredientQuantity="@ingredient.Quantity" IngredientId="@ingredient.PantryId" />
+            </div>
         }
+        </div>
     </div>
 </div>
 
