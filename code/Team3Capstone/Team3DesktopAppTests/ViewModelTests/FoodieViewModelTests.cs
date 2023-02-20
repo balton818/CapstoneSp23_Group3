@@ -3,6 +3,7 @@ using System.Windows.Controls;
 using System.Windows.Navigation;
 using Moq;
 using Moq.Protected;
+using Team3DesktopApp;
 using Team3DesktopApp.View;
 using Team3DesktopApp.ViewModel;
 

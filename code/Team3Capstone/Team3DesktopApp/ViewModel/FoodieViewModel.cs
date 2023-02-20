@@ -22,10 +22,6 @@ public class FoodieViewModel
     private readonly RecipeDetailViewModel recipeDetailViewModel;
     private readonly PantryViewModel pantryViewModel;
 
-    private readonly string LoginUri = "/View/LoginPage.xaml";
-    private readonly string RegistrationUri = "/View/RegistrationPage.xaml";
-    private readonly string FoundRecipeUri = "/View/RecipePage.xaml";
-    private readonly string RecipeDetailUri = "/View/RecipeDetailPage.xaml";
 
     #endregion
 
@@ -58,38 +54,7 @@ public class FoodieViewModel
 
     #region Methods
 
-    /// <summary>Navigates to page.</summary>
-    /// <param name="navUri">The nav URI.</param>
-    /// <param name="navigationService">The navigation service.</param>
-    public void NavigateToPage(string navUri, NavigationService navigationService)
-    {
-        if (navUri.Equals(this.LoginUri))
-        {
-            var loginPage = new LoginPage();
-            navigationService.Navigate(loginPage);
-        }
-        else if (navUri.Equals(this.FoundRecipeUri))
-        {
-            var foundRecipePage = new FoundRecipePage(this);
-            navigationService.Navigate(foundRecipePage);
-        }
-        else if (navUri.Equals(this.RegistrationUri))
-        {
-            var registrationPage = new RegistrationPage(this);
-            navigationService.Navigate(registrationPage);
-        }
-        else if (navUri.Equals(this.RecipeDetailUri))
-        {
-            var recipeDetailPage = new RecipeDetailPage(this);
 
-            navigationService.Navigate(recipeDetailPage);
-        }
-        else
-        {
-            var pantryPage = new PantryPage(this);
-            navigationService.Navigate(pantryPage);
-        }
-    }
 
     /// <summary>Logins the specified username.</summary>
     /// <param name="username">The username.</param>

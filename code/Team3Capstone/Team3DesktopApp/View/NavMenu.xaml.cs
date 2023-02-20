@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Navigation;
 using Team3DesktopApp.ViewModel;
 
 namespace Team3DesktopApp.View;
@@ -12,8 +13,8 @@ public partial class NavMenu : UserControl
 {
     #region Properties
 
-    public FoodieViewModel? FoodViewModel { get; set; }
-    public Page current { get; set; }
+    public FoodieViewModel FoodViewModel { get; set; }
+    public Page Current { get; set; }
 
     #endregion
 
@@ -32,7 +33,11 @@ public partial class NavMenu : UserControl
     private void NavButton_Click(object sender, RoutedEventArgs e)
     {
         var navButton = (NavButton)sender;
-        this.FoodViewModel.NavigateToPage(navButton.NavUri, this.current.NavigationService);
+        if (this.Current.NavigationService != null)
+        {
+            PageNavigation navigate = new PageNavigation(this.FoodViewModel);
+            navigate.NavigateToPage(navButton.NavUri, this.Current.NavigationService);
+        }
     }
 
     private void navMenu_Click(object sender, RoutedEventArgs e)

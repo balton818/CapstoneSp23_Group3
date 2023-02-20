@@ -36,9 +36,11 @@ public partial class LoginPage
         int id = await this.ViewModel.Login(this.userNameTextBox.Text, this.passwordTextBox.Text);
         if (id >= 0)
         {
-            NavigationService ns = this.NavigationService;
-            this.ViewModel.Userid = id;
-            this.ViewModel.NavigateToPage(this.loginButton.NavUri, ns);
+            if (NavigationService != null)
+            {
+                PageNavigation navigate = new PageNavigation(this.ViewModel);
+                navigate.NavigateToPage(this.loginButton.NavUri, NavigationService);
+            }
         }
         else
         {
@@ -49,8 +51,11 @@ public partial class LoginPage
     private void RegisterButton_Click(object sender, RoutedEventArgs e)
     {
 
-        NavigationService ns = this.NavigationService;
-        this.ViewModel.NavigateToPage(this.registerButton.NavUri, ns);
+        if (NavigationService != null)
+        {
+            PageNavigation navigate = new PageNavigation(this.ViewModel);
+            navigate.NavigateToPage(this.registerButton.NavUri, NavigationService);
+        }
     }
 
 
