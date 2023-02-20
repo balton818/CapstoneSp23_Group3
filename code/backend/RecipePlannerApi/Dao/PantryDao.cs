@@ -11,8 +11,10 @@ namespace RecipePlannerApi.Dao {
             CommandUpdate cmd = c => {
                 c.CommandType = System.Data.CommandType.StoredProcedure;
                 c.Parameters.AddWithValue("@userId", item.UserId);
+                c.Parameters.AddWithValue("@ingredientId", item.IngredientId);
                 c.Parameters.AddWithValue("@ingredientName", item.IngredientName);
                 c.Parameters.AddWithValue("@quantity", item.Quantity);
+                c.Parameters.AddWithValue("@unitId", item.unit);
             };
 
             return execute<PantryItem>("add_pantry_item", cmd).FirstOrDefault();
@@ -51,8 +53,10 @@ namespace RecipePlannerApi.Dao {
             CommandUpdate cmd = c => {
                 c.CommandType = System.Data.CommandType.StoredProcedure;
                 c.Parameters.AddWithValue("@pantryId", item.PantryId);
+                c.Parameters.AddWithValue("@ingredientId", item.IngredientId);
                 c.Parameters.AddWithValue("@ingredientName", item.IngredientName);
                 c.Parameters.AddWithValue("@quantity", item.Quantity);
+                c.Parameters.AddWithValue("@unitId", item.unit);
             };
 
             return execute<PantryItem>("update_pantry_item", cmd).FirstOrDefault();

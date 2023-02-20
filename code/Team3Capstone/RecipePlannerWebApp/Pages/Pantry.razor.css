@@ -23,6 +23,13 @@
     background-color: #d6ccc2;
 }
 
+.navBoxGrid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+
 /* If you want the content centered horizontally and vertically */
 .centered {
     position: absolute;
@@ -46,12 +53,13 @@
     flex-direction: column;
     align-items: center;
     width: 300px;
+    margin-left: 60px;
 }
 
-.new-ingredient > * {
-    width: 75%;
-    margin: 2px;
-}
+    .new-ingredient > * {
+        width: 75%;
+        margin: 2px;
+    }
 
 /*  */
 
@@ -80,9 +88,9 @@
     margin: 5px;
 }
 
-::deep .ingredient-body button {
-    border: 10px #30323d;
-    text-align: center;
-    width: 75%;
-    margin: 5px;
-}
+    ::deep .ingredient-body button {
+        border: 10px #30323d;
+        text-align: center;
+        width: 75%;
+        margin: 5px;
+    }
