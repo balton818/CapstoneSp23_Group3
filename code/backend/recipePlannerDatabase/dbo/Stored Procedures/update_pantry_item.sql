@@ -1,6 +1,6 @@
 ﻿CREATE PROCEDURE [dbo].[update_pantry_item]
 	@pantryId INT,
-	@ingredientName NVARCHAR(20),
+	@ingredientName NVARCHAR(40),
 	@quantity INT
 AS
 	UPDATE [dbo].[pantry]

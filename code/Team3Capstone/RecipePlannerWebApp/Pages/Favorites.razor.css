@@ -3,6 +3,7 @@
     font-family: jsMath-cmbx10;
     width: 280px;
     padding-top: 16px;
+    color: #30323d;
 }
 
 .split {
@@ -19,7 +20,6 @@
     right: 0;
     width: 75%;
     background-color: #d6ccc2;
-    padding-left: 60px;
 }
 
 /* If you want the content centered horizontally and vertically */
@@ -30,4 +30,3 @@
     transform: translate(-50%, -50%);
     text-align: center;
 }
-

@@ -13,7 +13,7 @@ namespace RecipePlannerApi.Service {
         ///   <br />
         /// </returns>
         public static int? ValidateUser(User user) {
-            return UserDao.ValidateUser(user).Id;
+            return UserDao.ValidateUser(user)?.Id;
         }
 
         /// <summary>Creates the user.</summary>
@@ -38,7 +38,7 @@ namespace RecipePlannerApi.Service {
                 throw new ArgumentNullException("pantry item cannot be null");
             }
 
-            if (item.IngredientName == null || item.IngredientName.Length == 0 || item.IngredientName.Length >= 20) {
+            if (item.IngredientName == null || item.IngredientName.Length == 0 || item.IngredientName.Length >= 40) {
                 throw new ArgumentException("ingredient name cannot be null or empty and must be less than or equal to 20 characters");
             }
 

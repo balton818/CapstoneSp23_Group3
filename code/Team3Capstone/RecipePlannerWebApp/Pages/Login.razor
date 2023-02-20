@@ -1,56 +1,78 @@
 ﻿@page "/"
 @using RecipePlannerApi.Model;
 @using RecipePlannerApi.Service;
+@using RecipePlannerWebApp.LocalServices;
 @inject NavigationManager Nav;
+@inject UserSessionData userData;
+@layout LoginLayout;
+
+<PageTitle>foodie - login</PageTitle>
 
 <link href="RecipePlannerWebApp.styles.css" rel="stylesheet">
-<PageTitle>foodie - login</PageTitle>
+
 <EditForm Model="@user" OnValidSubmit="@ValidateUser">
-	<div id="login-widget">
-		<span class="header">Login to Foodie</span>
-		<br/>
-		<input id="usernameField" @bind="user.Username" placeholder="Enter username"/>
-		<br />
-		<input id="passwordField" @bind="user.Password" placeholder="Enter password" />
-		<br />
-		<button type="submit" id="loginButton" style="position:center">Login</button>
-		<br />
-		<span id="loginResultMessage">@LoginValidationResultMessage</span>
-	</div>
+    <div id="login-widget">
+        <span class="header">Login to Foodie</span>
+       
+        <input id="usernameField" @bind="user.Username" placeholder="Enter username" required />
+      
+        <input id="passwordField" type="password" @bind="user.Password" placeholder="Enter password" required />
+       
+        <button type="submit" id="loginButton" style="position:center">Login</button>
+        <button type="submit" id="registerButton" style="position:center" @onclick="RegisterUser">Register</button>
+        
+        <span id="loginResultMessage">@LoginValidationResultMessage</span>
+    </div>
 </EditForm>
 
 @code
 {
-	[Parameter]
-	public User user { get; set; } = new User();
+    [Parameter]
+    public User? user { get; set; }
 
-	[Parameter]
-	public bool ValidFields { get; set; } = false;
+    [Parameter]
+    public bool ValidFields { get; set; }
 
-	private string? LoginValidationResultMessage { get; set; }
+    private string? LoginValidationResultMessage { get; set; }
 
-	private void ValidateUser()
-	{
-		LoginValidationResultMessage = "";
-		if (!String.IsNullOrEmpty(user.Username) && !String.IsNullOrEmpty(user.Password))
-		{
-			bool result = UserService.ValidateUser(user);
-			LoginValidationResultMessage = "";
-			if (result)
-			{
-				this.ValidFields = true;
-				Nav.NavigateTo("/home");
-			}
-			else
-			{
-				this.ValidFields = false;
-				LoginValidationResultMessage = "Invalid Credentials";
-			}
-		}
-		else
-		{
-			LoginValidationResultMessage = "Please enter a username and password";
-		}
-		
-	}
+    protected override void OnInitialized()
+    {
+        Console.WriteLine("LOGIN -- Initializing...");
+        this.ValidFields = false;
+        this.user = new User();
+        userData.CurrentUser = new User();
+    }
+
+    private void ValidateUser()
+    {
+
+        LoginValidationResultMessage = "";
+        if (!String.IsNullOrEmpty(this.user?.Username) && !String.IsNullOrEmpty(this.user?.Password))
+        {
+            int? result = UserService.ValidateUser(this.user);
+            LoginValidationResultMessage = "";
+            if (result != null)
+            {
+                Console.WriteLine(result);
+                this.ValidFields = true;
+                this.user.Id = result ?? -1;
+                userData.CurrentUser = this.user;
+                Nav.NavigateTo("/recipes");
+            }
+            else
+            {
+                this.ValidFields = false;
+                LoginValidationResultMessage = "Invalid Credentials";
+            }
+        }
+        else
+        {
+            LoginValidationResultMessage = "Please enter a username and password";
+        }
+    }
+
+    private void RegisterUser()
+    {
+        Nav.NavigateTo("/register");
+    }
 }

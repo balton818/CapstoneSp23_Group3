@@ -1,16 +1,65 @@
 ﻿@page "/pantry"
-@layout MainLayout
+@layout MainLayout;
+@using RecipePlannerApi.Model;
+@using RecipePlannerApi.Service;
+@using RecipePlannerWebApp.LocalServices;
+@inject NavigationManager Nav;
+@inject UserSessionData currentUser;
 
 <PageTitle>foodie - pantry</PageTitle>
+
+<link href="RecipePlannerWebApp.styles.css" rel="stylesheet">
 
 <div class="split right">
     <div class="header">
         <span>pantry</span>
         <hr style="height: 2px; opacity: 100%" />
     </div>
-
+    <div class="pantry">
+        <div class="new-ingredient">
+            <form>
+                <span style="text-align:center; font-weight:bold">Add Ingredient to Pantry:</span>
+                <input @bind="newIngredientName" placeholder="Enter Ingredient Name" required/>
+                <input @bind="newIngredientQuantity" required/>
+                <button type="submit" id="add-ingredient" @onclick="addNewIngredient">Add to Pantry</button>
+            </form>
+        </div>
+        @foreach (var ingredient in this.ingredients)
+        {
+            <Ingredient IngredientName="@ingredient.IngredientName" IngredientQuantity="@ingredient.Quantity" IngredientId="@ingredient.PantryId" />
+        }
+    </div>
 </div>
 
-@code {
+@code
+{
+    private List<PantryItem>? ingredients { get; set; }
+    private string newIngredientName { get; set; }
+    private string newIngredientQuantity { get; set; }
+    private string IngredientToRemove { get; set; }
+
+    protected override void OnInitialized()
+    {
+
+        Console.WriteLine("PANTRY -- Initializing...");
+        Console.WriteLine("User #" + currentUser.CurrentUser.Id + " just logged in.");
+        this.ingredients = UserService.GetUserPantry(currentUser.CurrentUser.Id);
+        foreach (var ingredient in this.ingredients) 
+        {
+            Console.WriteLine(ingredient.IngredientName + ": " + ingredient.Quantity + " from pantry #" + ingredient.PantryId);
+        }
+    }
+
+    private void addNewIngredient()
+    {
+        PantryItem newItem = new PantryItem()
+            {
+                IngredientName = this.newIngredientName,
+                Quantity = Int32.Parse(this.newIngredientQuantity),
+                UserId = currentUser.CurrentUser.Id
+            };
+        UserService.AddPantryItem(newItem);
+        Nav.NavigateTo("/pantry", true);
+    }
 
 }

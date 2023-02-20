@@ -1,6 +1,6 @@
 ﻿CREATE PROCEDURE [dbo].[add_pantry_item]
 	@userId INT,
-	@ingredientName NVARCHAR(20),
+	@ingredientName NVARCHAR(40),
 	@quantity INT
 AS
 	INSERT INTO [dbo].[pantry](user_id, [ingredient_name], quantity) VALUES (@userId, @ingredientName, @quantity);
