@@ -1,0 +1,164 @@
+﻿<Page
+    x:Class="Team3DesktopApp.View.RecipeDetailPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Team3DesktopApp.View"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="RecipeDetailPage"
+    d:DesignHeight="650"
+    mc:Ignorable="d" Width="418">
+    <Grid Margin="0,10,-11,-61">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="643*" />
+            <RowDefinition Height="129*" />
+        </Grid.RowDefinitions>
+        <Canvas
+            Name="svg1061"
+            Width="415"
+            Height="574">
+            <Canvas.RenderTransform>
+                <TranslateTransform X="0" Y="0" />
+            </Canvas.RenderTransform>
+            <Canvas.Resources>
+                <RectangleGeometry
+                    x:Key="Clip0872"
+                    Rect="0, 0, 415, 574" />
+            </Canvas.Resources>
+            <Canvas Name="mainCanvas" Clip="{StaticResource Clip0872}">
+                <Rectangle
+                    Name="rect1005"
+                    Width="415"
+                    Height="574"
+                    Fill="#FF30323D" />
+                <Canvas Name="foodieHeader">
+                    <Canvas Name="navBar">
+
+                        <Canvas Name="headerTitle">
+                            <TextBlock
+                                x:Name="recipeTitleTextBlock"
+                                Canvas.Left="13"
+                                Canvas.Top="23"
+                                FontFamily="Song Myung"
+                                FontSize="16"
+                                TextWrapping="Wrap"
+                                Foreground="#FFE8C547" HorizontalAlignment="Left" VerticalAlignment="Center"
+                                Width="231">
+                                <Span FontSize="24">Recipe Title</Span>
+                            </TextBlock>
+                        </Canvas>
+                    </Canvas>
+                    <Canvas>
+                        <Rectangle
+                            Name="rect1017"
+                            Width="415"
+                            Height="18"
+                            Fill="#FF30323D">
+                            <Rectangle.RenderTransform>
+                                <TranslateTransform X="0" Y="71" />
+                            </Rectangle.RenderTransform>
+                        </Rectangle>
+                        <Rectangle
+                            Name="rectangle5"
+                            Canvas.Top="79"
+                            Width="415"
+                            Height="2"
+                            Fill="#33E8C547"
+                            RadiusX="1"
+                            RadiusY="1" />
+                    </Canvas>
+                </Canvas>
+                <Canvas Name="navMenu2">
+                    <Canvas />
+                </Canvas>
+                <Canvas>
+                    <Rectangle
+                        Name="rectangle52"
+                        Canvas.Top="501"
+                        Width="415"
+                        Height="2"
+                        Fill="#33E8C547"
+                        RadiusX="1"
+                        RadiusY="1" />
+                </Canvas>
+                <Canvas>
+                    <TextBlock
+                        Name="textbox"
+                        Canvas.Left="25"
+                        Canvas.Top="526"
+                        FontFamily="Song Myung"
+                        FontSize="17"
+                        Foreground="#FFE8C547">
+                        <Span FontSize="17">Legal Info</Span>
+                    </TextBlock>
+                </Canvas>
+                <Canvas Name="recipe">
+                    <Canvas>
+                        <TextBlock
+                            Name="textbox2"
+                            Canvas.Left="16"
+                            Canvas.Top="105"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Top"
+                            FontFamily="Nunito"
+                            FontSize="17"
+                            FontWeight="Medium"
+                            Foreground="#FFE8C547">
+                            <Span FontSize="17">Ingredients</Span>
+                        </TextBlock>
+                    </Canvas>
+                    <Canvas>
+                        <TextBlock
+                            Name="textbox3"
+                            Canvas.Left="13"
+                            Canvas.Top="313"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Top"
+                            FontFamily="Nunito"
+                            FontSize="17"
+                            FontWeight="Medium"
+                            Foreground="#FFE8C547">
+                            <Span FontSize="17">Cooking Instructions</Span>
+                        </TextBlock>
+                    </Canvas>
+                    <Canvas>
+                        <Canvas />
+                    </Canvas>
+
+                    <ListBox
+                        Canvas.Left="14"
+                        Canvas.Top="140"
+                        x:Name="ingredientList"
+                        Width="171"
+                        Height="147"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        Background="#FF30323D"
+                        BorderBrush="#FF30323D"
+                        Foreground="#FFE8C547" />
+                </Canvas>
+            </Canvas>
+            <ListBox
+                x:Name="stepsList"
+                Background="#FF30323D"
+                BorderBrush="#FF30323D"
+                Foreground="#FFE8C547" Canvas.Left="24" Canvas.Top="342" Width="361" HorizontalAlignment="Left"
+                VerticalAlignment="Center" />
+            <Grid
+                x:Name="navGrid"
+                Visibility="Collapsed">
+                <Canvas
+                    Name="navigationBar"
+                    Height="104"
+                    Margin="315,71,7,409"
+                    Background="#30323d">
+                    <Canvas.RenderTransform>
+                        <TranslateTransform X="0" Y="0" />
+                    </Canvas.RenderTransform>
+                    <Canvas.Resources />
+                </Canvas>
+            </Grid>
+        </Canvas>
+        <local:NavMenu x:Name="navMenu" Margin="267,0,-38,404" />
+    </Grid>
+</Page>

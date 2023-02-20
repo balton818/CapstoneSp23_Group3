@@ -38,12 +38,12 @@ namespace RecipePlannerApi.Service {
                 throw new ArgumentNullException("pantry item cannot be null");
             }
 
-            if (item.IngredientName == null || item.IngredientName.Length == 0 || item.IngredientName.Length >= 20) {
-                throw new ArgumentException("ingredient name cannot be null or empty and must be less than or equal to 20 characters");
+            if (item.IngredientName == null || item.IngredientName.Length == 0 || item.IngredientName.Length >= 40) {
+                throw new ArgumentException("ingredient name cannot be null or empty and must be less than or equal to 40 characters");
             }
 
-            if(item.UserId == null) {
-                throw new ArgumentException("user id cannot be null");
+            if(item.UserId == null || item.UserId <= 0) {
+                throw new ArgumentException("user id cannot be null or zero");
             }
 
             return PantryDao.AddPantryItem(item);

@@ -1,0 +1,8 @@
+Add New Pantry Ingredient Use Case Scenario
+Context - User has successfully logged in and clicked the My Pantry button from the Main Page
+
+PRIMARY FLOW
+1 - User enters ingredient name in name textbox.
+2 - User enters quantity in quantity box.
+3 - User clicks Add button 
+4 - Pantry is updated with added item.
