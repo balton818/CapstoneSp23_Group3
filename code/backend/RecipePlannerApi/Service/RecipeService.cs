@@ -139,5 +139,12 @@ namespace RecipePlannerApi.Service {
         public static List<Ingredient> SearchIngredient(string search) {
             return IngredientDao.SearchIngredient(search);
         }
+
+        public static BrowseRecipeResponse BrowseRecipes(BrowseRecipeRequest request) {
+            var pantry = GetUserPantry(request.UserId);
+            var ingredients = string.Join(",", pantry.Select(item => item.IngredientName).ToList());
+   
+            return RecipeApi.BrowseRecipes(request, ingredients, 20);
+        }
     }
 }

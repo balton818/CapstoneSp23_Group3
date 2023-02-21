@@ -85,5 +85,37 @@ namespace RecipePlannerApi.Api
             }
             return instructions;
         }
+
+        public static BrowseRecipeResponse BrowseRecipes(BrowseRecipeRequest request, string ingredients, int perPage) {
+            var searchRequest = new SearchRecipeRequest() {
+                query = request.Query,
+                cuisine = request.Cuisine,
+                diet = request.Diet,
+                type = request.Type,
+                offset = request.PageNumber * perPage,
+                limitLicense = false,
+                sort = "min-missing-ingredients",
+                addRecipeInformation = false,
+                number = perPage
+            };
+
+            var response = recipesApi.SearchRecipes(searchRequest);
+            var recipes = new List<Recipe>();
+
+            foreach (var item in response.Results) {
+                recipes.Add(new Recipe() {
+                    Id = item.Id,
+                    Image = item.Image,
+                    ImageType = item.ImageType,
+                    Title = item.Title
+                });
+            }
+
+            return new BrowseRecipeResponse() {
+                recipes = recipes,
+                page = response.Offset / perPage,
+                totalNumberOfRecipes = response.TotalResults
+            };
+        }
     }
 }
