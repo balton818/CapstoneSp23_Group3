@@ -75,6 +75,12 @@
     <Build Include="dbo\Tables\measurment_unit.sql" />
     <Build Include="dbo\Tables\ingredient.sql" />
     <Build Include="dbo\Stored Procedures\search_ingredient.sql" />
+    <Build Include="dbo\Tables\cuisine.sql" />
+    <Build Include="dbo\Tables\diet.sql" />
+    <Build Include="dbo\Tables\meal_type.sql" />
+    <Build Include="dbo\Stored Procedures\get_cuisines.sql" />
+    <Build Include="dbo\Tables\get_diets.sql" />
+    <Build Include="dbo\Tables\get_meal_types.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="RecipePlannerDatabase.refactorlog" />
