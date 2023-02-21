@@ -61,9 +61,10 @@
                 <Canvas>
                     <local:NavButton
                         x:Name="viewRecipeButton"
-                        Canvas.Left="94"
-                        Canvas.Top="417"
-                        Width="224"
+                        Canvas.Left="227"
+                        Canvas.Right="15"
+                        Canvas.Top="416"
+                        Width="171"
                         Height="66"
                         Background="#FFD6CCC2"
                         Click="ViewDetail_Click"
@@ -71,7 +72,7 @@
                         NavUri="/View/RecipeDetailPage.xaml"
                         FontFamily="Song Myung"
                         FontSize="18"
-                        ForceCursor="True" HorizontalAlignment="Center" VerticalAlignment="Top">
+                        ForceCursor="True" HorizontalAlignment="Left" VerticalAlignment="Top">
                         <local:NavButton.Resources>
                             <Style TargetType="Border">
                                 <Setter Property="CornerRadius" Value="5" />
@@ -115,6 +116,26 @@
                             RadiusY="1" />
                     </Canvas>
                 </Canvas>
+                <local:NavButton
+                    x:Name="browseAllRecipes"
+                    Canvas.Left="15"
+                    Canvas.Top="416"
+                    Width="171"
+                    Height="66"
+                    Background="#FFD6CCC2"
+                    Click="BrowseAllRecipes_OnClick"
+                    Content="Browse All Recipes"
+                    NavUri="/View/BrowseRecipePage.xaml"
+                    FontFamily="Song Myung"
+                    FontSize="18"
+                    ForceCursor="True" HorizontalAlignment="Left" VerticalAlignment="Top">
+                    <local:NavButton.Resources>
+                        <Style TargetType="{x:Type Border}">
+                            <Setter Property="CornerRadius" Value="5" />
+                        </Style>
+                    </local:NavButton.Resources>
+
+                </local:NavButton>
             </Canvas>
         </Canvas>
         <ListBox

@@ -24,5 +24,20 @@ namespace Team3DesktopApp.View
         {
             InitializeComponent();
         }
+
+        private void ViewDetail_Click(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void SearchByName_Click(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void recipeGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }

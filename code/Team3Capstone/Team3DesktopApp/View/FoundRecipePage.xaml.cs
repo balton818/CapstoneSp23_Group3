@@ -54,4 +54,9 @@ public partial class FoundRecipePage : Page
     }
 
     #endregion
+
+    private void BrowseAllRecipes_OnClick(object sender, RoutedEventArgs e)
+    {
+        throw new System.NotImplementedException();
+    }
 }

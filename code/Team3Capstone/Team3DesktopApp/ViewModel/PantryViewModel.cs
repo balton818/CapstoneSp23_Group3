@@ -43,14 +43,30 @@ public class PantryViewModel
     /// <param name="name">The name.</param>
     /// <param name="quantity">The quantity.</param>
     /// <param name="client"></param>
-    public async Task<PantryItem> AddIngredient(int userId, string name, int quantity, HttpClient client)
+    public async Task<PantryItem> AddIngredient(int userId, string name, int quantity, HttpClient client, string unit)
     {
         var pantryItem = new PantryItem();
         pantryItem.UserId = userId;
         pantryItem.IngredientName = name;
         pantryItem.Quantity = quantity;
+        pantryItem.Unit = this.getUnit(unit);
         var connection = new HttpClientConnection();
         return await connection.AddPantryItem(pantryItem, client);
+    }
+
+    private UnitEnum getUnit(string unit)
+    {
+        switch (unit)
+        {
+            case "Ml":
+                return UnitEnum.Milliliters;
+            case "g":
+                return UnitEnum.Grams;
+            case "Oz":
+                return UnitEnum.Ounces;
+            default:
+                return UnitEnum.None;
+        }
     }
 
     /// <summary>Edits the ingredient amount.</summary>

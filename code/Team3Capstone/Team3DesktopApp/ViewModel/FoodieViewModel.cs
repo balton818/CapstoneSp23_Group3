@@ -118,9 +118,9 @@ public class FoodieViewModel
     /// <summary>Adds the ingredient.</summary>
     /// <param name="name">The name.</param>
     /// <param name="quantity">The quantity.</param>
-    public async Task<PantryItem> AddIngredient(string name, int quantity)
+    public async Task<PantryItem> AddIngredient(string name, int quantity, string unit)
     {
-        return await this.pantryViewModel.AddIngredient(this.Userid, name, quantity, this.ClientToSet);
+        return await this.pantryViewModel.AddIngredient(this.Userid, name, quantity, this.ClientToSet, unit);
 
     }
 

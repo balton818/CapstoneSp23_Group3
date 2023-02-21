@@ -23,6 +23,8 @@ public class Ingredient
     /// </value>
     public int quanitiy { get; set; }
 
+    public int unit { get; set; }
+
     #endregion
 
     #region Constructors

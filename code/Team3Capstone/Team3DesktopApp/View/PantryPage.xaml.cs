@@ -56,7 +56,7 @@ public partial class PantryPage : Page
     {
         if (!string.IsNullOrEmpty(this.ingredientNameTextBox.Text) && !string.IsNullOrEmpty(this.quantityTextBox.Text))
         {
-            await this.ViewModel.AddIngredient(this.ingredientNameTextBox.Text, int.Parse(this.quantityTextBox.Text));
+            await this.ViewModel.AddIngredient(this.ingredientNameTextBox.Text, int.Parse(this.quantityTextBox.Text), this.measurementCombo.Text);
             this.buildView();
             this.errorText.Visibility = Visibility.Hidden;
             this.ingredientNameTextBox.Text = "";
