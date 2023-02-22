@@ -73,7 +73,7 @@ public partial class PantryPage : Page
         var pantry = new List<IngredientExpander>();
         foreach (var current in this.ViewModel.GetPantry().Result)
         {
-            var ingredientExpander = new IngredientExpander(current.IngredientName, current.Quantity, this.ViewModel);
+            var ingredientExpander = new IngredientExpander(current.IngredientName, current.Quantity, current.Unit.ToString(), this.ViewModel);
             ingredientExpander.current = this;
             pantry.Add(ingredientExpander);
         }

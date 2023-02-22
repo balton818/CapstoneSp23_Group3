@@ -1,10 +1,10 @@
 Registration Use Case Scenario
 
-Context - User has launched App and clicked Register on the login screen.
+Context - User has launched App and selected Register on the login screen.
 
 Primary flow:
-1 - User enters desired username and password, then, first name, last name, address, phone, and email.
-2 - User clicks "Register".
+1 - User enters desired username and password, then, first name, last name, and email.
+2 - User selects Register.
 3 - Server checks whether user exists.
 4 - Server creates new user with specified credentials.
 5 - User is taken to the Main Page.

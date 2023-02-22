@@ -137,7 +137,7 @@ public class FoodieViewModelTests
             BaseAddress = new Uri("http://test.com/")
         };
         ;
-        var result = foodieViewModel.AddIngredient("Pasta", 2);
+        var result = foodieViewModel.AddIngredient("Pasta", 2, "Oz");
 
         Assert.AreEqual("Pasta", result.Result.IngredientName);
     }

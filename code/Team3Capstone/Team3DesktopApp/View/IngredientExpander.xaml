@@ -18,22 +18,31 @@
             IsExpanded="False" BorderBrush="#FFE8C547">
             <Expander.HeaderTemplate>
                 <DataTemplate DataType="local:IngredientExpander">
-                    <Grid>
+                    <Grid Width="363">
                         <TextBlock
                             x:Name="ingredientHeader"
                             DataContext="{Binding DataContext, RelativeSource={RelativeSource AncestorType={x:Type Expander}}}"
                             FontSize="15"
                             FontWeight="Bold"
                             Text="{Binding IngredientName}"
-                            Margin="26,0,-26,0" Foreground="#FFE8C547" />
+                            Foreground="#FFE8C547" HorizontalAlignment="Left" Width="142"/>
                         <TextBlock
                             x:Name="ingredientAmount"
                             DataContext="{Binding DataContext, RelativeSource={RelativeSource AncestorType={x:Type Expander}}}"
-                            Margin="181,0,-180,0"
+                            Margin="147,0,140,0"
                             FontSize="15"
                             FontWeight="Bold"
                             Text="{Binding IngredientAmount}"
                             Foreground="#FFE8C547" />
+                        <TextBlock
+                            x:Name="UnitTextBox"
+                            DataContext="{Binding DataContext, RelativeSource={RelativeSource AncestorType={x:Type Expander}}}"
+                  
+                            FontSize="15"
+                            HorizontalAlignment="Left"
+                            FontWeight="Bold"
+                            Text="{Binding IngredientUnit}"
+                            Foreground="#FFE8C547" Height="20" VerticalAlignment="Center" Width="42" Margin="246,0,0,0" />
                     </Grid>
                 </DataTemplate>
             </Expander.HeaderTemplate>

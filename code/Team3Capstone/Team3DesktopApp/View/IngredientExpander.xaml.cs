@@ -21,6 +21,8 @@ public partial class IngredientExpander : UserControl
     /// <value>The ingredient amount.</value>
     public int IngredientAmount { get; set; }
 
+    public string IngredientUnit { get; set; }
+
     /// <summary>Gets or sets the view model.</summary>
     /// <value>The view model.</value>
     public FoodieViewModel ViewModel { get; set; }
@@ -35,11 +37,12 @@ public partial class IngredientExpander : UserControl
     /// <param name="name">The name.</param>
     /// <param name="amount">The amount.</param>
     /// <param name="viewModel">The view model.</param>
-    public IngredientExpander(string name, int amount, FoodieViewModel viewModel)
+    public IngredientExpander(string name, int amount, string measure, FoodieViewModel viewModel)
     {
         this.InitializeComponent();
         this.IngredientName = name;
         this.IngredientAmount = amount;
+        this.IngredientUnit = measure;
         this.ViewModel = viewModel;
     }
 
