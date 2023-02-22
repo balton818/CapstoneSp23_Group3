@@ -1,0 +1,20 @@
+Filter Recipes Use Case Scenario
+
+Context - User has successfully logged in and selected browse all recipes.
+
+PRIMARY FLOW
+1 - User selects the type of recipe they would like to browse from the combo box.
+2 - User clicks apply.
+3 - User is shown filtered list of recipes based on the type selected (20 per page).
+
+ALTERNATE FLOWS
+
+APPLY NOT CLICKED
+A2 - User doesn't click apply page doesnt change.
+
+USER NAVIGATES AWAY
+A2 - User selects a navigation button and leaves the page.
+
+NO RECIPES OF TYPE
+A3 - User is informed that no recipes of that type exist (Not sure why this would happen but just in case)
+

@@ -11,7 +11,7 @@ public partial class FoundRecipePage : Page
 {
     #region Properties
 
-    private FoodieViewModel? ViewModel { get; }
+    private FoodieViewModel ViewModel { get; }
 
     #endregion
 
@@ -24,7 +24,7 @@ public partial class FoundRecipePage : Page
         this.InitializeComponent();
         this.ViewModel = viewModel;
         this.navMenu.FoodViewModel = this.ViewModel;
-        this.navMenu.current = this;
+        this.navMenu.Current = this;
         this.recipeListBox.ItemsSource = this.ViewModel.GetRecipes();
     }
 
@@ -34,16 +34,22 @@ public partial class FoundRecipePage : Page
 
     private void ViewDetail_Click(object sender, RoutedEventArgs e)
     {
+        if (this.recipeListBox.SelectedItem == null)
+        {
+            MessageBox.Show("Please select a recipe to view");
+            return;
+        }
         this.ViewModel.RecipeDetailNav(this.recipeListBox.SelectedItem.ToString());
         var navButton = (NavButton)sender;
-        this.NavigateToPage(navButton.NavUri);
+        this.navigateToPage(navButton.NavUri);
     }
 
-    private void NavigateToPage(string navUri)
+    private void navigateToPage(string navUri)
     {
         if (NavigationService != null)
         {
-            this.ViewModel.NavigateToPage(navUri, NavigationService);
+            PageNavigation navigate = new PageNavigation(this.ViewModel);
+            navigate.NavigateToPage(navUri, NavigationService);
         }
     }
 

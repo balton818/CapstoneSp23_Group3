@@ -142,8 +142,19 @@
                 x:Name="stepsList"
                 Background="#FF30323D"
                 BorderBrush="#FF30323D"
-                Foreground="#FFE8C547" Canvas.Left="24" Canvas.Top="342" Width="361" HorizontalAlignment="Left"
-                VerticalAlignment="Center" />
+                Foreground="#FFE8C547" Canvas.Left="10" Canvas.Top="342" Width="380" HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Height="147"
+                ScrollViewer.CanContentScroll="True"
+                ScrollViewer.HorizontalScrollBarVisibility ="Hidden">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel  Width="340">
+                            <TextBlock Text="{Binding }" TextWrapping="Wrap" HorizontalAlignment="Left"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
             <Grid
                 x:Name="navGrid"
                 Visibility="Collapsed">
@@ -158,7 +169,7 @@
                     <Canvas.Resources />
                 </Canvas>
             </Grid>
+            <local:NavMenu x:Name="navMenu" Margin="267,0,-38,404" />
         </Canvas>
-        <local:NavMenu x:Name="navMenu" Margin="267,0,-38,404" />
     </Grid>
 </Page>

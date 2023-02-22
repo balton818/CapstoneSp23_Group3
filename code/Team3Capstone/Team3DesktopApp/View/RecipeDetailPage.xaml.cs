@@ -24,7 +24,7 @@ public partial class RecipeDetailPage : Page
         this.InitializeComponent();
         this.ViewModel = viewModel;
         this.navMenu.FoodViewModel = this.ViewModel;
-        this.navMenu.current = this;
+        this.navMenu.Current = this;
         this.setPage();
     }
 

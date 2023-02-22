@@ -9,15 +9,13 @@
     d:DesignWidth="400"
     mc:Ignorable="d">
 
-    <Grid Margin="0,0,0,10">
+    <Grid>
 
 
         <Expander
             x:Name="expander"
             Background="#30323d"
-            IsExpanded="False"
-            HorizontalAlignment="Stretch"
-            VerticalAlignment="Stretch" BorderBrush="#FFE8C547">
+            IsExpanded="False" BorderBrush="#FFE8C547">
             <Expander.HeaderTemplate>
                 <DataTemplate DataType="local:IngredientExpander">
                     <Grid>

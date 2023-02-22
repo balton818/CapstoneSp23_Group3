@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Windows;
 using System.Windows.Controls;
 using Team3DesktopApp.ViewModel;
@@ -34,14 +35,14 @@ public sealed partial class RegistrationPage : Page
 
     private async void RegisterButton_ClickAsync(object sender, RoutedEventArgs e)
     {
-        if (!string.IsNullOrWhiteSpace(this.userNameTextBox.Text) &&
-            !string.IsNullOrWhiteSpace(this.passwordTextBox.Text) &&
+        if (!string.IsNullOrWhiteSpace(this.unTextBox.Text) &&
+            !string.IsNullOrWhiteSpace(this.pwTextBox.Text) &&
             !string.IsNullOrWhiteSpace(this.emailTextBox.Text) &&
             !string.IsNullOrWhiteSpace(this.firstNameTextBox.Text) &&
             !string.IsNullOrWhiteSpace(this.lastNameTextBox.Text))
         {
             var result = await ((this.ViewModel != null
-                ? this.ViewModel.RegisterUser(this.userNameTextBox.Text, this.passwordTextBox.Text,
+                ? this.ViewModel.RegisterUser(this.unTextBox.Text, this.pwTextBox.Text,
                     this.emailTextBox.Text,
                     this.firstNameTextBox.Text, this.lastNameTextBox.Text)
                 : null)!);
@@ -52,7 +53,11 @@ public sealed partial class RegistrationPage : Page
             }
             else
             {
-                this.ViewModel.NavigateToPage(this.registerButton.NavUri, this.NavigationService);
+                if (NavigationService != null)
+                {
+                    PageNavigation navigate = new PageNavigation(this.ViewModel);
+                    navigate.NavigateToPage(this.registerButton.NavUri, NavigationService);
+                }
             }
         }
         else
@@ -66,8 +71,37 @@ public sealed partial class RegistrationPage : Page
     /// <param name="e">The <see cref="RoutedEventArgs" /> instance containing the event data.</param>
     private void BackButton_OnClickButton_Click(object sender, RoutedEventArgs e)
     {
-        this.ViewModel.NavigateToPage(this.backButton.NavUri, this.NavigationService);
+        if (NavigationService != null)
+        {
+            PageNavigation navigate = new PageNavigation(this.ViewModel);
+            navigate.NavigateToPage(this.backButton.NavUri, NavigationService);
+        }
     }
 
     #endregion
+
+    private void SubmitButton_OnClick_(object sender, RoutedEventArgs e)
+    {
+        this.errorLabel.Visibility = Visibility.Collapsed;
+        this.pwError.Visibility = Visibility.Collapsed;
+        if (String.IsNullOrEmpty(this.unTextBox.Text))
+        {
+            this.errorLabel.Visibility = Visibility.Visible;
+            this.errorLabel.Text = "Please enter a username";
+        }
+
+        if (this.pwTextBox.Text.Equals(this.pwConfirmBox.Text))
+        {
+            this.regForm.Visibility = Visibility.Visible;
+            this.formTwo.Visibility = Visibility.Collapsed;
+            this.pwError.Visibility = Visibility.Collapsed;
+        }
+
+        else
+        {
+            this.pwError.Text = "Passwords do not match";
+            this.pwError.Visibility = Visibility.Visible;
+
+        }
+    }
 }
