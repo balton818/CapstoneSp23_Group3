@@ -1,0 +1,1 @@
+INSERT INTO [dbo].[measurment_unit] (unit_id, name) VALUES (0,'NONE'), (1,'MILLILITERS'), (2,'GRAMS'), (3, 'OUNCES')
