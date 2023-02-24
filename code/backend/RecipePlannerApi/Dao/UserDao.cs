@@ -1,8 +1,10 @@
-﻿using RecipePlannerApi.Dao.Request;
+﻿using RecipePlannerApi.Dao.Interface;
+using RecipePlannerApi.Dao.Request;
 using RecipePlannerApi.Model;
 using System.Data;
 
-namespace RecipePlannerApi.Dao {
+namespace RecipePlannerApi.Dao
+{
     public class UserDao: Dao, IUserDao {
 
         public IdDto ValidateUser(User user) {
@@ -27,10 +29,5 @@ namespace RecipePlannerApi.Dao {
 
             return execute<IdDto>("dbo.create_user", cmd).FirstOrDefault()?.Id;
         }
-    }
-
-    public interface IUserDao {
-        public IdDto ValidateUser(User user);
-        public int? CreateUser(User user);
     }
 }

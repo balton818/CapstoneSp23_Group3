@@ -1,7 +1,9 @@
-﻿using UnitsNet;
+﻿using RecipePlannerApi.Service.Interface;
+using UnitsNet;
 using UnitsNet.Units;
 
-namespace RecipePlannerApi.Service {
+namespace RecipePlannerApi.Service
+{
     public enum AppUnit { NONE = 0, MILLILITERS = 1, GRAMS = 2, OUNCES = 3 }
     public class MeasurementService: IMeasurementService {
         private static readonly Dictionary<AppUnit, UnitInfo> AppUnitUnitInfo = new Dictionary<AppUnit, UnitInfo>() {
@@ -24,9 +26,5 @@ namespace RecipePlannerApi.Service {
 
             return null;
         }
-    }
-
-    public interface IMeasurementService {
-        public int? Convert(decimal quantity, string fromUnit, AppUnit toUnit);
     }
 }

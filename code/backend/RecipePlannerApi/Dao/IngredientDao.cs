@@ -1,6 +1,8 @@
-﻿using RecipePlannerApi.Model;
+﻿using RecipePlannerApi.Dao.Interface;
+using RecipePlannerApi.Model;
 
-namespace RecipePlannerApi.Dao {
+namespace RecipePlannerApi.Dao
+{
     public class IngredientDao: Dao, IIngredientDao {
 
         /// <summary>Searches the ingredient.</summary>
@@ -14,9 +16,5 @@ namespace RecipePlannerApi.Dao {
 
             return execute<List<Ingredient>>("search_ingredient", cmd).FirstOrDefault();
         }
-    }
-
-    public interface IIngredientDao {
-        public List<Ingredient> SearchIngredient(string search);
     }
 }

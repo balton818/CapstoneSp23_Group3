@@ -1,9 +1,10 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RecipePlannerApi.Dao;
-using RecipePlannerApi.Service;
+using RecipePlannerApi.Service.Interface;
 
-namespace RecipePlannerApi.Controllers {
+namespace RecipePlannerApi.Controllers
+{
     [Route("api/[controller]")]
     [ApiController]
     public class AppController : ControllerBase {

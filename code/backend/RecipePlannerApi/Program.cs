@@ -1,11 +1,15 @@
 ﻿using AutoMapper;
 using Org.OpenAPITools.Client;
 using RecipePlannerApi.Api;
+using RecipePlannerApi.Api.Interface;
 using RecipePlannerApi.Controllers;
 using RecipePlannerApi.Dao;
+using RecipePlannerApi.Dao.Interface;
 using RecipePlannerApi.Service;
+using RecipePlannerApi.Service.Interface;
 
-namespace RecipePlannerApi {
+namespace RecipePlannerApi
+{
     public class Program {
 
         public static void Main(string[] args) {

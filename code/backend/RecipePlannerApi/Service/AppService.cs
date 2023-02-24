@@ -1,6 +1,8 @@
-﻿using RecipePlannerApi.Dao;
+﻿using RecipePlannerApi.Dao.Interface;
+using RecipePlannerApi.Service.Interface;
 
-namespace RecipePlannerApi.Service {
+namespace RecipePlannerApi.Service
+{
     public class AppService: IAppService {
         private readonly IAppDao _appDao;
 
@@ -19,13 +21,5 @@ namespace RecipePlannerApi.Service {
         public List<string> getAppMealTypes() {
             return this._appDao.getAppMealTypes();
         }
-    }
-
-    public interface IAppService {
-        public List<string> getAppCuisines();
-
-        public List<string> getAppDiets();
-
-        public List<string> getAppMealTypes();
     }
 }
