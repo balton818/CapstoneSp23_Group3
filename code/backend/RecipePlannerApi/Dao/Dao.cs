@@ -17,6 +17,8 @@ namespace RecipePlannerApi.Dao {
                 config.CreateMap<IDataReader, IdDto>();
                 config.CreateMap<IDataReader, PantryItem>();
                 config.CreateMap<IDataReader, Ingredient>();
+                config.CreateMap<IDataReader, StringDto>();
+                config.CreateMap<StringDto, string>();
             }).CreateMapper();
 
             using (SqlConnection conn = new SqlConnection(Connection.ConnectionString)) {

@@ -3,6 +3,7 @@ using Org.OpenAPITools.Model;
 using RecipePlannerApi.Api.Requests;
 using RecipePlannerApi.Model;
 using RecipePlannerApi.Service;
+using System.Linq.Expressions;
 
 namespace RecipePlannerApi.Controllers {
     [Route("api/[controller]")]
@@ -66,6 +67,15 @@ namespace RecipePlannerApi.Controllers {
                 return Ok(RecipeService.SearchIngredient(search));
             } catch (Exception e) {
 
+                return BadRequest(e.Message);
+            }
+        }
+
+        [HttpGet("browse")]
+        public ActionResult<BrowseRecipeResponse> BrowseRecipes([FromQuery] BrowseRecipeRequest request) {
+            try {
+                return Ok(RecipeService.BrowseRecipes(request));
+            } catch (Exception e) {
                 return BadRequest(e.Message);
             }
         }
