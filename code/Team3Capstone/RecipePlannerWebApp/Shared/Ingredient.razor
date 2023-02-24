@@ -10,7 +10,7 @@
 <div class="ingredient">
     <span class="ingredient-label">@IngredientName</span>
     <div class="ingredient-body">
-        <label>Quantity: @IngredientQuantity</label>
+        <label>Quantity: @IngredientQuantity @IngredientUnit</label>
         <input placeholder="Amount to add" @bind="NewIngredientQuantity" />
         <button @onclick="@updateIngredientQuantity">Update</button>
         <button @onclick="@deleteIngredient">Delete from Pantry</button>
@@ -27,6 +27,9 @@
 
     [Parameter]
     public int? IngredientId { get; set; }
+
+    [Parameter]
+    public AppUnits IngredientUnit { get; set; }
 
     private string NewIngredientQuantity { get; set; }
 

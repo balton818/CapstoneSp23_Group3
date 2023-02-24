@@ -1,0 +1,59 @@
+﻿@page "/explore"
+@layout MainLayout;
+@using RecipePlannerApi.Model;
+@using RecipePlannerApi.Service;
+@using RecipePlannerWebApp.LocalServices;
+@inject NavigationManager Nav;
+@inject UserSessionData currentUser;
+
+
+<PageTitle>foodie - explore</PageTitle>
+<base href="~/" />
+<div class="split right">
+    <div class="header">
+        <span>explore</span>
+        <hr style="height: 2px; opacity: 100%" />
+    </div>
+    <div id="filter-options">
+        <div class="filter">
+            <label for="filter-selector">Meal Type</label>
+            <select @bind="filterSelection" name="filter-selector" multiple>
+                @foreach (var filter in this.filters)
+                {
+                    <option>@filter</option>
+                }
+            </select>
+        </div>
+        <div class="filter">
+            <label for="filter-selector2">Meal Type2</label>
+            <select @bind="filterSelection" name="filter-selector2" multiple>
+                @foreach (var filter in this.filters)
+                {
+                    <option>@filter 2</option>
+                }
+            </select>
+        </div>
+        <div class="filter">
+            <label for="filter-selector3">Meal Type3</label>
+            <select @bind="filterSelection" name="filter-selector3" multiple>
+                @foreach (var filter in this.filters)
+                {
+                    <option>@filter 3</option>
+                }
+            </select>
+        </div>
+        <button type="submit" id="add-ingredient-button" @onclick="applyFilters">Apply</button>
+    </div>
+    <div class="recipe-list-area"></div>
+
+</div>
+
+@code {
+    private List<String> filters { get; set; } = new List<String>() { "Breakfast", "Lunch", "Dinner"};
+    private string[] filterSelection = new[] { "" };
+
+    private void applyFilters()
+    {
+        Console.WriteLine("Applying filters");
+    }
+}
