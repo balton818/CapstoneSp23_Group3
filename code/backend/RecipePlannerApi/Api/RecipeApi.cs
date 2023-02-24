@@ -54,11 +54,12 @@ namespace RecipePlannerApi.Api
                 ingredients.Add(ingredient);
             }
 
-            return new RecipeInformation
-            {
+            return new RecipeInformation {
                 Summary = info.Summary,
                 Ingredients = ingredients,
-                Steps = instructions
+                Steps = instructions,
+                Image = info.Image,
+                ImageType = info.ImageType
             };
         }
 
