@@ -23,16 +23,25 @@
     background-color: #d6ccc2;
 }
 
-.filter-options {
+#filter-options {
     border-bottom: 2px solid;
     border-color: #30323d;
     display: flex;
     flex-direction: row;
     margin-left: 60px;
+    margin-right: 60px;
     padding-bottom: 5px;
+    align-items: center;
 }
 
-.filter-options > * {
-    width: 75%;
-    margin: 2px;
+.filter {
+    display: flex;
+    flex-direction: column;
+    width: 25%;
+    padding: 5px;
+}
+
+#add-ingredient-button {
+    height: 40px;
+    width: 80px;
 }

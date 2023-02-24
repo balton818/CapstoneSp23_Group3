@@ -15,13 +15,34 @@
         <hr style="height: 2px; opacity: 100%" />
     </div>
     <div id="filter-options">
-        <select @bind="filterSelection" name="filter-selector" id="filter-selector">
-            @foreach (var filter in this.filters)
-            {
-                <option>@filter</option>
-            }
-        </select>
-        <button type="submit" id="add-ingredient" @onclick="applyFilters">Apply</button>
+        <div class="filter">
+            <label for="filter-selector">Meal Type</label>
+            <select @bind="filterSelection" name="filter-selector" multiple>
+                @foreach (var filter in this.filters)
+                {
+                    <option>@filter</option>
+                }
+            </select>
+        </div>
+        <div class="filter">
+            <label for="filter-selector2">Meal Type2</label>
+            <select @bind="filterSelection" name="filter-selector2" multiple>
+                @foreach (var filter in this.filters)
+                {
+                    <option>@filter 2</option>
+                }
+            </select>
+        </div>
+        <div class="filter">
+            <label for="filter-selector3">Meal Type3</label>
+            <select @bind="filterSelection" name="filter-selector3" multiple>
+                @foreach (var filter in this.filters)
+                {
+                    <option>@filter 3</option>
+                }
+            </select>
+        </div>
+        <button type="submit" id="add-ingredient-button" @onclick="applyFilters">Apply</button>
     </div>
     <div class="recipe-list-area"></div>
 
