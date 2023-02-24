@@ -1,17 +1,11 @@
-﻿using System.Data.SqlClient;
-using AutoMapper;
-using System.Data;
+﻿using RecipePlannerApi.Dao.Request;
 using RecipePlannerApi.Model;
-using Microsoft.Extensions.Configuration;
-using RecipePlannerApi.Dao.Request;
-using AutoMapper.Data;
+using System.Data;
 
 namespace RecipePlannerApi.Dao {
-    public class UserDao: Dao {
+    public class UserDao: Dao, IUserDao {
 
-        public delegate void CommandUpdate(SqlCommand cmd);
-
-        public static IdDto ValidateUser(User user) {
+        public IdDto ValidateUser(User user) {
             CommandUpdate cmd = c => {
                 c.CommandType = CommandType.StoredProcedure;
                 c.Parameters.AddWithValue("@username", user.Username);
@@ -21,7 +15,7 @@ namespace RecipePlannerApi.Dao {
             return execute<IdDto>("dbo.validate_user", cmd).FirstOrDefault();
         }
 
-        public static int? CreateUser(User user) {
+        public int? CreateUser(User user) {
             CommandUpdate cmd = c => {
                 c.CommandType = CommandType.StoredProcedure;
                 c.Parameters.AddWithValue("@username", user.Username);
@@ -33,5 +27,10 @@ namespace RecipePlannerApi.Dao {
 
             return execute<IdDto>("dbo.create_user", cmd).FirstOrDefault()?.Id;
         }
+    }
+
+    public interface IUserDao {
+        public IdDto ValidateUser(User user);
+        public int? CreateUser(User user);
     }
 }

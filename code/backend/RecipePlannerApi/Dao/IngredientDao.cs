@@ -1,13 +1,12 @@
 ﻿using RecipePlannerApi.Model;
-using static RecipePlannerApi.Dao.UserDao;
 
 namespace RecipePlannerApi.Dao {
-    public class IngredientDao: Dao {
+    public class IngredientDao: Dao, IIngredientDao {
 
         /// <summary>Searches the ingredient.</summary>
         /// <param name="search">The search.</param>
         /// <returns>List of matching ingredients</returns>
-        public static List<Ingredient> SearchIngredient(string search) {
+        public List<Ingredient> SearchIngredient(string search) {
             CommandUpdate cmd = c => {
                 c.CommandType = System.Data.CommandType.StoredProcedure;
                 c.Parameters.AddWithValue("@search", search);
@@ -15,5 +14,9 @@ namespace RecipePlannerApi.Dao {
 
             return execute<List<Ingredient>>("search_ingredient", cmd).FirstOrDefault();
         }
+    }
+
+    public interface IIngredientDao {
+        public List<Ingredient> SearchIngredient(string search);
     }
 }

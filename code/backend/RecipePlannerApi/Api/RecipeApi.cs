@@ -5,19 +5,18 @@ using RecipePlannerApi.Api.Requests;
 using RecipePlannerApi.Dao;
 using RecipePlannerApi.Dao.Request;
 using RecipePlannerApi.Model;
-using System.Runtime.CompilerServices;
 
 namespace RecipePlannerApi.Api
 {
     /// <summary>Wrapper class for the spoonacular api</summary>
-    public static class RecipeApi
+    public class RecipeApi: IRecipeApi
     {
-        private static RecipesApi recipesApi = new RecipesApi();
+        private readonly RecipesApi recipesApi;
 
         /// <summary>Initializes the <see cref="RecipeApi" /> class.</summary>
-        static RecipeApi()
+        public RecipeApi()
         {
-            Configuration.ApiKey.Add("x-api-key", Connection.SpoonacularApiKey);
+            this.recipesApi = new RecipesApi();
         }
 
 
@@ -27,7 +26,7 @@ namespace RecipePlannerApi.Api
         ///   Responce from api
         ///   <br />
         /// </returns>
-        public static List<SearchRecipesByIngredients200ResponseInner> SearchRecipesByIngredients(SearchRecipesByIngredientsRequest request)
+        public List<SearchRecipesByIngredients200ResponseInner> SearchRecipesByIngredients(SearchRecipesByIngredientsRequest request)
         {
             return recipesApi.SearchRecipesByIngredients(request.ingredients, request.number, request.limitLicense, request.ranking, request.ignorePantry);
         }
@@ -38,7 +37,7 @@ namespace RecipePlannerApi.Api
         /// <returns>
         ///   <para>The information for the recipe</para>
         /// </returns>
-        public static RecipeInformation GetRecipeInformation(int recipeId)
+        public RecipeInformation GetRecipeInformation(int recipeId)
         {
             var info = recipesApi.GetRecipeInformation(recipeId, false);
             var ingredients = new List<Ingredient>();
@@ -68,7 +67,7 @@ namespace RecipePlannerApi.Api
         /// <returns>
         ///   <para>The instructionsfor the recipe</para>
         /// </returns>
-        public static List<RecipesStep> GetRecipeInstructions(int recipeId)
+        public List<RecipesStep> GetRecipeInstructions(int recipeId)
         {
             var analyzedInsturctions = recipesApi.GetAnalyzedRecipeInstructions(recipeId, false).FirstOrDefault();
             var instructions = new List<RecipesStep>();
@@ -86,7 +85,7 @@ namespace RecipePlannerApi.Api
             return instructions;
         }
 
-        public static BrowseRecipeResponse BrowseRecipes(BrowseRecipeRequest request, string ingredients, int perPage) {
+        public BrowseRecipeResponse BrowseRecipes(BrowseRecipeRequest request, string ingredients, int perPage) {
             var searchRequest = new SearchRecipeRequest() {
                 query = request.Query,
                 cuisine = request.Cuisine,
@@ -117,5 +116,33 @@ namespace RecipePlannerApi.Api
                 totalNumberOfRecipes = response.TotalResults
             };
         }
+    }
+
+    public interface IRecipeApi {
+        /// <summary>Searches the recipes by ingredients.</summary>
+        /// <param name="request">The request.</param>
+        /// <returns>
+        ///   Responce from api
+        ///   <br />
+        /// </returns>
+        public List<SearchRecipesByIngredients200ResponseInner> SearchRecipesByIngredients(SearchRecipesByIngredientsRequest request);
+
+
+        /// <summary>Gets the recipe information.</summary>
+        /// <param name="recipeId">The recipe identifier.</param>
+        /// <returns>
+        ///   <para>The information for the recipe</para>
+        /// </returns>
+        public RecipeInformation GetRecipeInformation(int recipeId);
+
+
+        /// <summary>Gets the recipe instructions.</summary>
+        /// <param name="recipeId">The recipe identifier.</param>
+        /// <returns>
+        ///   <para>The instructionsfor the recipe</para>
+        /// </returns>
+        public List<RecipesStep> GetRecipeInstructions(int recipeId);
+
+        public BrowseRecipeResponse BrowseRecipes(BrowseRecipeRequest request, string ingredients, int perPage);
     }
 }

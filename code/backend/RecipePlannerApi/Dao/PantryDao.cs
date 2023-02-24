@@ -1,13 +1,12 @@
 ﻿using RecipePlannerApi.Model;
-using static RecipePlannerApi.Dao.UserDao;
 
 namespace RecipePlannerApi.Dao {
-    public class PantryDao: Dao {
+    public class PantryDao: Dao, IPantryDao {
 
         /// <summary>Adds the pantry item.</summary>
         /// <param name="item">The item.</param>
         /// <returns>The added pantry item</returns>
-        public static PantryItem AddPantryItem(PantryItem item) {
+        public PantryItem AddPantryItem(PantryItem item) {
             CommandUpdate cmd = c => {
                 c.CommandType = System.Data.CommandType.StoredProcedure;
                 c.Parameters.AddWithValue("@userId", item.UserId);
@@ -24,7 +23,7 @@ namespace RecipePlannerApi.Dao {
         /// <summary>Gets the pantry item.</summary>
         /// <param name="pantry_id">The pantry identifier.</param>
         /// <returns>The pantry item</returns>
-        public static PantryItem GetPantryItem(int pantry_id) {
+        public PantryItem GetPantryItem(int pantry_id) {
             CommandUpdate cmd = c => {
                 c.CommandType = System.Data.CommandType.StoredProcedure;
                 c.Parameters.AddWithValue("@pantryId", pantry_id);
@@ -37,7 +36,7 @@ namespace RecipePlannerApi.Dao {
         /// <summary>Gets the user pantry.</summary>
         /// <param name="userId">The user identifier.</param>
         /// <returns>The user's pantry</returns>
-        public static List<PantryItem> GetUserPantry(int userId) {
+        public List<PantryItem> GetUserPantry(int userId) {
             CommandUpdate cmd = c => {
                 c.CommandType = System.Data.CommandType.StoredProcedure;
                 c.Parameters.AddWithValue("@userId", userId);
@@ -49,7 +48,7 @@ namespace RecipePlannerApi.Dao {
         /// <summary>Updates the pantry item.</summary>
         /// <param name="item">The item.</param>
         /// <returns>The updated pantry item</returns>
-        public static PantryItem UpdatePantryItem(PantryItem item) {
+        public PantryItem UpdatePantryItem(PantryItem item) {
             CommandUpdate cmd = c => {
                 c.CommandType = System.Data.CommandType.StoredProcedure;
                 c.Parameters.AddWithValue("@pantryId", item.PantryId);
@@ -65,7 +64,7 @@ namespace RecipePlannerApi.Dao {
 
         /// <summary>Removes the pantry item.</summary>
         /// <param name="pantry_id">The pantry identifier.</param>
-        public static void RemovePantryItem(int pantry_id) {
+        public void RemovePantryItem(int pantry_id) {
             CommandUpdate cmd = c => {
                 c.CommandType = System.Data.CommandType.StoredProcedure;
                 c.Parameters.AddWithValue("@pantryId", pantry_id);
@@ -73,5 +72,34 @@ namespace RecipePlannerApi.Dao {
 
             execute<PantryItem>("remove_pantry_item", cmd).FirstOrDefault();
         }
+    }
+
+    public interface IPantryDao {
+        /// <summary>Adds the pantry item.</summary>
+        /// <param name="item">The item.</param>
+        /// <returns>The added pantry item</returns>
+        public PantryItem AddPantryItem(PantryItem item);
+
+
+        /// <summary>Gets the pantry item.</summary>
+        /// <param name="pantry_id">The pantry identifier.</param>
+        /// <returns>The pantry item</returns>
+        public PantryItem GetPantryItem(int pantry_id);
+
+
+        /// <summary>Gets the user pantry.</summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <returns>The user's pantry</returns>
+        public List<PantryItem> GetUserPantry(int userId);
+
+        /// <summary>Updates the pantry item.</summary>
+        /// <param name="item">The item.</param>
+        /// <returns>The updated pantry item</returns>
+        public PantryItem UpdatePantryItem(PantryItem item);
+
+
+        /// <summary>Removes the pantry item.</summary>
+        /// <param name="pantry_id">The pantry identifier.</param>
+        public void RemovePantryItem(int pantry_id);
     }
 }

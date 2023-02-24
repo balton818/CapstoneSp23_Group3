@@ -3,14 +3,14 @@ using UnitsNet.Units;
 
 namespace RecipePlannerApi.Service {
     public enum AppUnit { NONE = 0, MILLILITERS = 1, GRAMS = 2, OUNCES = 3 }
-    public class MeasurementService {
+    public class MeasurementService: IMeasurementService {
         private static readonly Dictionary<AppUnit, UnitInfo> AppUnitUnitInfo = new Dictionary<AppUnit, UnitInfo>() {
             { AppUnit.MILLILITERS,  Quantity.GetUnitInfo(VolumeUnit.Milliliter) },
             { AppUnit.GRAMS,  Quantity.GetUnitInfo(MassUnit.Gram) },
             { AppUnit.OUNCES,  Quantity.GetUnitInfo(MassUnit.Ounce) }
         };
 
-        public static int? Convert(decimal quantity, string fromUnit, AppUnit toUnit) {
+        public int? Convert(decimal quantity, string fromUnit, AppUnit toUnit) {
             var unitInfo = AppUnitUnitInfo[toUnit];
             if (unitInfo == null) {
                 return null;
@@ -24,5 +24,9 @@ namespace RecipePlannerApi.Service {
 
             return null;
         }
+    }
+
+    public interface IMeasurementService {
+        public int? Convert(decimal quantity, string fromUnit, AppUnit toUnit);
     }
 }

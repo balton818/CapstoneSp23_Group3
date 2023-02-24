@@ -6,15 +6,15 @@ using RecipePlannerApi.Dao.Request;
 using RecipePlannerApi.Model;
 
 namespace RecipePlannerApi.Service {
-    public static class RecipeService {
+    public class RecipeService: IRecipeService {
+        private readonly IUserService _userService;
+        private readonly IIngredientDao _ingredientDao;
+        private readonly IRecipeApi _recipeApi;
 
-        /// <summary>Searches recipes by ingredients in api.</summary>
-        /// <param name="request">The request to search for recipes by ingredients.</param>
-        /// <returns>
-        ///     List of qualifing recipes
-        /// </returns>
-        public static List<SearchRecipesByIngredients200ResponseInner> SearchRecipes(SearchRecipesByIngredientsRequest request) {
-            return RecipeApi.SearchRecipesByIngredients(request);
+        public RecipeService(IUserService userService, IIngredientDao ingredientDao, IRecipeApi recipeApi) {
+            this._userService = userService;
+            this._ingredientDao = ingredientDao;
+            this._recipeApi = recipeApi;
         }
 
         /// <summary>Searches recipes by ingredients in api.</summary>
@@ -22,8 +22,17 @@ namespace RecipePlannerApi.Service {
         /// <returns>
         ///     List of qualifing recipes
         /// </returns>
-        public static List<Recipe> SearchRecipesByIngredients(SearchRecipesByIngredientsRequest request) {
-            var searchResponse = RecipeApi.SearchRecipesByIngredients(request);
+        public List<SearchRecipesByIngredients200ResponseInner> SearchRecipes(SearchRecipesByIngredientsRequest request) {
+            return this._recipeApi.SearchRecipesByIngredients(request);
+        }
+
+        /// <summary>Searches recipes by ingredients in api.</summary>
+        /// <param name="request">The request to search for recipes by ingredients.</param>
+        /// <returns>
+        ///     List of qualifing recipes
+        /// </returns>
+        public List<Recipe> SearchRecipesByIngredients(SearchRecipesByIngredientsRequest request) {
+            var searchResponse = this._recipeApi.SearchRecipesByIngredients(request);
             var recipes = new List<Recipe>();
 
             foreach (var item in searchResponse) {
@@ -48,7 +57,7 @@ namespace RecipePlannerApi.Service {
         /// <summary>Gets recipes by the ingredients the user has in their pantry.</summary>
         /// <param name="request">The request.</param>
         /// <returns>A list of recipes</returns>
-        public static List<Recipe> GetRecipesByUserPantry(int userId)
+        public List<Recipe> GetRecipesByUserPantry(int userId)
         {
             var pantry = GetUserPantry(userId);
             var ingredients = string.Join(",", pantry.Select(item => item.IngredientName).ToList());
@@ -60,7 +69,7 @@ namespace RecipePlannerApi.Service {
                 number = 20
             };
 
-            var searchResponse = RecipeApi.SearchRecipesByIngredients(searchRequest);
+            var searchResponse = this._recipeApi.SearchRecipesByIngredients(searchRequest);
 
             var recipes = new List<Recipe>();
 
@@ -86,8 +95,8 @@ namespace RecipePlannerApi.Service {
             return recipes;
         }
 
-        private static List<PantryItem> GetUserPantry(int userId) {
-            var pantry = UserService.GetUserPantry(userId);
+        private List<PantryItem> GetUserPantry(int userId) {
+            var pantry = _userService.GetUserPantry(userId);
 
             pantry.Add(new PantryItem() {
                 IngredientId = 14412,
@@ -99,7 +108,7 @@ namespace RecipePlannerApi.Service {
             return pantry;
         }
 
-        private static bool CheckIngredientAmounts(List<SearchRecipesByIngredients200ResponseInnerMissedIngredientsInner> usedIngredients, List<PantryItem> pantry) {
+        private bool CheckIngredientAmounts(List<SearchRecipesByIngredients200ResponseInnerMissedIngredientsInner> usedIngredients, List<PantryItem> pantry) {
             foreach (var item in usedIngredients) {
                 var recipeIngredient = new Ingredient() {
                     IngredientId = item.Id,
@@ -117,7 +126,7 @@ namespace RecipePlannerApi.Service {
             return true;
         }
 
-        private static PantryItem GetMatchingPantryItem(List<PantryItem> pantry, Ingredient recipeIngredient) {
+        private PantryItem GetMatchingPantryItem(List<PantryItem> pantry, Ingredient recipeIngredient) {
             PantryItem pantryIngredient;
             pantryIngredient = pantry.Find(i => recipeIngredient.IngredientId == i.IngredientId);
             if (pantryIngredient == null) {
@@ -132,19 +141,50 @@ namespace RecipePlannerApi.Service {
         /// <summary>Gets the recipe information.</summary>
         /// <param name="recipeId">The recipe identifier.</param>
         /// <returns>The information for the recipe</returns>
-        public static RecipeInformation GetRecipeInformation(int recipeId) {
-            return RecipeApi.GetRecipeInformation(recipeId);
+        public RecipeInformation GetRecipeInformation(int recipeId) {
+            return this._recipeApi.GetRecipeInformation(recipeId);
         }
 
-        public static List<Ingredient> SearchIngredient(string search) {
-            return IngredientDao.SearchIngredient(search);
+        public List<Ingredient> SearchIngredient(string search) {
+            return this._ingredientDao.SearchIngredient(search);
         }
 
-        public static BrowseRecipeResponse BrowseRecipes(BrowseRecipeRequest request) {
+        public BrowseRecipeResponse BrowseRecipes(BrowseRecipeRequest request) {
             var pantry = GetUserPantry(request.UserId);
             var ingredients = string.Join(",", pantry.Select(item => item.IngredientName).ToList());
    
-            return RecipeApi.BrowseRecipes(request, ingredients, 20);
+            return this._recipeApi.BrowseRecipes(request, ingredients, 20);
         }
+    }
+
+    public interface IRecipeService {
+        /// <summary>Searches recipes by ingredients in api.</summary>
+        /// <param name="request">The request to search for recipes by ingredients.</param>
+        /// <returns>
+        ///     List of qualifing recipes
+        /// </returns>
+        public List<SearchRecipesByIngredients200ResponseInner> SearchRecipes(SearchRecipesByIngredientsRequest request);
+
+        /// <summary>Searches recipes by ingredients in api.</summary>
+        /// <param name="request">The request to search for recipes by ingredients.</param>
+        /// <returns>
+        ///     List of qualifing recipes
+        /// </returns>
+        public List<Recipe> SearchRecipesByIngredients(SearchRecipesByIngredientsRequest request);
+
+
+        /// <summary>Gets recipes by the ingredients the user has in their pantry.</summary>
+        /// <param name="request">The request.</param>
+        /// <returns>A list of recipes</returns>
+        public List<Recipe> GetRecipesByUserPantry(int userId);
+
+        /// <summary>Gets the recipe information.</summary>
+        /// <param name="recipeId">The recipe identifier.</param>
+        /// <returns>The information for the recipe</returns>
+        public RecipeInformation GetRecipeInformation(int recipeId);
+
+        public List<Ingredient> SearchIngredient(string search);
+
+        public BrowseRecipeResponse BrowseRecipes(BrowseRecipeRequest request);
     }
 }
