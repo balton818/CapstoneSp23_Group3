@@ -40,7 +40,7 @@ namespace RecipePlannerApi.Service
             var recipes = new List<Recipe>();
 
             foreach (var item in searchResponse) {
-                if(item.MissedIngredients.Count > 0) {
+                if(item.MissedIngredientCount > 0) {
                     continue;
                 }
 
@@ -78,7 +78,7 @@ namespace RecipePlannerApi.Service
             var recipes = new List<Recipe>();
 
             foreach (var item in searchResponse) {
-                if (item.MissedIngredients.Count > 0 ) {
+                if (item.MissedIngredientCount > 0 ) {
                     continue;
                 }
 

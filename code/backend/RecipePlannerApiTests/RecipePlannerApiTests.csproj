@@ -28,4 +28,10 @@
     <ProjectReference Include="..\RecipePlannerApi\RecipePlannerApi.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="SpoonacularApi">
+      <HintPath>..\RecipePlannerApi\SpoonacularApi.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>
