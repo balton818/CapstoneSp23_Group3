@@ -16,7 +16,7 @@ namespace RecipePlannerApi.Controllers
         [HttpGet("{username},{password}")]
         public ActionResult<int?> ValidateUser(string username, string password) {
             try {
-                return Ok(this._userService.ValidateUser(new User() { Username = username, Password = password}));
+                return Ok(this._userService.ValidateUser(username, password));
             } catch (Exception e) {
                 return BadRequest(e.Message);
             }

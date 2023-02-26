@@ -9,7 +9,7 @@ namespace RecipePlannerApi.Service.Interface
         /// <returns>
         ///   <br />
         /// </returns>
-        public int? ValidateUser(User user);
+        public int? ValidateUser(string username, string password);
 
         /// <summary>Creates the user.</summary>
         /// <param name="user">The user.</param>

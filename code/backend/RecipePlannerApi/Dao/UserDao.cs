@@ -7,11 +7,11 @@ namespace RecipePlannerApi.Dao
 {
     public class UserDao: Dao, IUserDao {
 
-        public IdDto ValidateUser(User user) {
+        public IdDto ValidateUser(string username, string password) {
             CommandUpdate cmd = c => {
                 c.CommandType = CommandType.StoredProcedure;
-                c.Parameters.AddWithValue("@username", user.Username);
-                c.Parameters.AddWithValue("@password", user.Password);
+                c.Parameters.AddWithValue("@username", username);
+                c.Parameters.AddWithValue("@password", password);
             };
 
             return execute<IdDto>("dbo.validate_user", cmd).FirstOrDefault();

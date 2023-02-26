@@ -15,7 +15,7 @@ namespace RecipePlannerApi.Dao
                 c.Parameters.AddWithValue("@ingredientId", item.IngredientId);
                 c.Parameters.AddWithValue("@ingredientName", item.IngredientName);
                 c.Parameters.AddWithValue("@quantity", item.Quantity);
-                c.Parameters.AddWithValue("@unitId", (int)item.unit);
+                c.Parameters.AddWithValue("@unitId", (int)item.Unit);
             };
 
             return execute<PantryItem>("add_pantry_item", cmd).FirstOrDefault();
@@ -57,7 +57,7 @@ namespace RecipePlannerApi.Dao
                 c.Parameters.AddWithValue("@ingredientId", item.IngredientId);
                 c.Parameters.AddWithValue("@ingredientName", item.IngredientName);
                 c.Parameters.AddWithValue("@quantity", item.Quantity);
-                c.Parameters.AddWithValue("@unitId", (int)item.unit);
+                c.Parameters.AddWithValue("@unitId", (int)item.Unit);
             };
 
             return execute<PantryItem>("update_pantry_item", cmd).FirstOrDefault();

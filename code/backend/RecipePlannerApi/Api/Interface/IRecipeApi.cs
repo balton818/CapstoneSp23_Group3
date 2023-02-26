@@ -31,5 +31,7 @@ namespace RecipePlannerApi.Api.Interface
         public List<RecipesStep> GetRecipeInstructions(int recipeId);
 
         public BrowseRecipeResponse BrowseRecipes(BrowseRecipeRequest request, string ingredients, int perPage);
+
+        public decimal? ConvertAmount(ConvertAmountRequest request);
     }
 }

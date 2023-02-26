@@ -13,18 +13,13 @@ namespace RecipePlannerApi.Service
             this._pantryDao = pantryDao;
         }
 
-
-
-        /// <summary>Initializes the <see cref="UserService" /> class.</summary>
-        public UserService() { }
-
         /// <summary>Validates the user.</summary>
         /// <param name="user">The user.</param>
         /// <returns>
         ///   <br />
         /// </returns>
-        public int? ValidateUser(User user) {
-            return this._userDao.ValidateUser(user)?.Id;
+        public int? ValidateUser(string username, string password) {
+            return this._userDao.ValidateUser(username, password)?.Id;
         }
 
         /// <summary>Creates the user.</summary>

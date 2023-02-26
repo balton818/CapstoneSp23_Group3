@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecipePlannerApi", "RecipeP
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "RecipePlannerDatabase", "recipePlannerDatabase\RecipePlannerDatabase.sqlproj", "{06102982-13D5-41CA-9BE9-DC93FDF1A4C2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecipePlannerApiTests", "RecipePlannerApiTests\RecipePlannerApiTests.csproj", "{70737AC2-F455-4CF1-A360-5541BC3404B5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,6 +25,10 @@ Global
 		{06102982-13D5-41CA-9BE9-DC93FDF1A4C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{06102982-13D5-41CA-9BE9-DC93FDF1A4C2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{06102982-13D5-41CA-9BE9-DC93FDF1A4C2}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{70737AC2-F455-4CF1-A360-5541BC3404B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{70737AC2-F455-4CF1-A360-5541BC3404B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{70737AC2-F455-4CF1-A360-5541BC3404B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{70737AC2-F455-4CF1-A360-5541BC3404B5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

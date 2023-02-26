@@ -12,11 +12,13 @@ namespace RecipePlannerApi.Service
         private readonly IUserService _userService;
         private readonly IIngredientDao _ingredientDao;
         private readonly IRecipeApi _recipeApi;
+        private readonly IMeasurementService _measurementService;
 
-        public RecipeService(IUserService userService, IIngredientDao ingredientDao, IRecipeApi recipeApi) {
+        public RecipeService(IUserService userService, IIngredientDao ingredientDao, IRecipeApi recipeApi, IMeasurementService measurementService) {
             this._userService = userService;
             this._ingredientDao = ingredientDao;
             this._recipeApi = recipeApi;
+            this._measurementService = measurementService;
         }
 
         /// <summary>Searches recipes by ingredients in api.</summary>
@@ -104,7 +106,7 @@ namespace RecipePlannerApi.Service
                 IngredientId = 14412,
                 IngredientName = "water",
                 Quantity = 100,
-                unit = AppUnits.NONE
+                Unit = AppUnit.NONE
             });
 
             return pantry;
@@ -115,12 +117,19 @@ namespace RecipePlannerApi.Service
                 var recipeIngredient = new Ingredient() {
                     IngredientId = item.Id,
                     IngredientName = item.Name,
-                    Quantity = (int)Math.Ceiling(item.Amount.Value)
+                    Quantity = (int)Math.Ceiling(item.Amount.Value),
+                    Unit = item.Unit,
                 };
 
                 var pantryIngredient = GetMatchingPantryItem(pantry, recipeIngredient);
 
-                if (pantryIngredient == null || pantryIngredient.Quantity < recipeIngredient.Quantity) {
+                if (pantryIngredient == null) {
+                    return false;
+                }
+
+                var recipeQuantity = TryConvertQuantity(recipeIngredient, pantryIngredient);
+
+                if (pantryIngredient == null || pantryIngredient.Quantity < recipeQuantity) {
                     return false;
                 }
             }
@@ -128,13 +137,39 @@ namespace RecipePlannerApi.Service
             return true;
         }
 
+        private int? TryConvertQuantity(Ingredient recipeIngredient, PantryItem pantryIngredient) {
+            if (!this._measurementService.IsValidUnit(recipeIngredient.Unit)) {
+                return recipeIngredient.Quantity;
+            }
+
+            var recipeQuantity = this._measurementService.Convert(recipeIngredient.Quantity, recipeIngredient.Unit, pantryIngredient.Unit);
+
+            if (recipeQuantity == null) {
+                var toUnitString = MeasurementService.AppUnitUnitInfo[pantryIngredient.Unit].Name;
+                var result = this._recipeApi.ConvertAmount(new ConvertAmountRequest {
+                    IngredientName = recipeIngredient.IngredientName,
+                    SourceAmount = recipeIngredient.Quantity,
+                    SourceUnit = recipeIngredient.Unit,
+                    TargetUnit = toUnitString,
+                });
+
+                recipeQuantity = result != null ? (int)Math.Ceiling(result.Value) : recipeIngredient.Quantity;
+            }
+
+            return recipeQuantity;
+        }
+
         private PantryItem GetMatchingPantryItem(List<PantryItem> pantry, Ingredient recipeIngredient) {
             PantryItem pantryIngredient;
             pantryIngredient = pantry.Find(i => recipeIngredient.IngredientId == i.IngredientId);
             if (pantryIngredient == null) {
                 pantryIngredient = pantry.Find(i => recipeIngredient.IngredientName.ToLower().Contains(i.IngredientName.ToLower()));
+                pantryIngredient = pantryIngredient ?? pantry.Find(i => i.IngredientName.ToLower().Contains(i.IngredientName.ToLower()));
             }
-            pantryIngredient.IngredientId = recipeIngredient.IngredientId;
+
+            if (recipeIngredient.IngredientId != null) {
+                pantryIngredient.IngredientId = recipeIngredient.IngredientId;
+            }
             return pantryIngredient;
         }
 

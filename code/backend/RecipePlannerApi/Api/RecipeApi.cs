@@ -50,6 +50,7 @@ namespace RecipePlannerApi.Api
                     IngredientId = item.Id,
                     IngredientName = item.Name,
                     Quantity = (int)Math.Ceiling(item.Amount.Value),
+                    Unit = item.Unit
                 };
                 ingredients.Add(ingredient);
             }
@@ -117,6 +118,12 @@ namespace RecipePlannerApi.Api
                 page = response.Offset / perPage,
                 totalNumberOfRecipes = response.TotalResults
             };
+        }
+
+        public decimal? ConvertAmount(ConvertAmountRequest request) {
+            var response = this.recipesApi.ConvertAmounts(request.IngredientName, request.SourceAmount, request.SourceUnit, request.TargetUnit);
+
+            return response.TargetAmount;
         }
     }
 }
