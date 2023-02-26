@@ -1,18 +1,22 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RecipePlannerApi.Model;
-using RecipePlannerApi.Service;
+using RecipePlannerApi.Service.Interface;
 
-namespace RecipePlannerApi.Controllers {
+namespace RecipePlannerApi.Controllers
+{
     [Route("api/[controller]")]
     [ApiController]
     public class UserController : ControllerBase {
-        public UserController() { }
+        private readonly IUserService _userService;
+        public UserController(IUserService userService) {
+            this._userService = userService;
+        }
 
         [HttpGet("{username},{password}")]
         public ActionResult<int?> ValidateUser(string username, string password) {
             try {
-                return Ok(UserService.ValidateUser(new User() { Username = username, Password = password}));
+                return Ok(this._userService.ValidateUser(username, password));
             } catch (Exception e) {
                 return BadRequest(e.Message);
             }
@@ -21,7 +25,7 @@ namespace RecipePlannerApi.Controllers {
         [HttpPost("create")]
         public ActionResult<int?> CreateUser(User user) {
             try {
-                return Ok(UserService.CreateUser(user));
+                return Ok(this._userService.CreateUser(user));
             } catch (Exception e) {
 
                 return BadRequest(e.Message);
@@ -32,7 +36,7 @@ namespace RecipePlannerApi.Controllers {
         [HttpPost("get-pantry/{userId}")]
         public ActionResult<List<PantryItem>> GetPantry(int userId) {
             try {
-                return Ok(UserService.GetUserPantry(userId));
+                return Ok(this._userService.GetUserPantry(userId));
             } catch (Exception e) {
 
                 return BadRequest(e.Message);
@@ -43,7 +47,7 @@ namespace RecipePlannerApi.Controllers {
         [HttpPost("add-pantry-item")]
         public ActionResult<PantryItem> AddPantryItem(PantryItem item) {
             try {
-                return Ok(UserService.AddPantryItem(item));
+                return Ok(this._userService.AddPantryItem(item));
             } catch (Exception e) {
 
                 return BadRequest(e.Message);
@@ -54,7 +58,7 @@ namespace RecipePlannerApi.Controllers {
         [HttpPost("update-pantry-item")]
         public ActionResult UpdatePantryItem(PantryItem item) {
             try {
-                return Ok(UserService.UpdatePantryItem(item));
+                return Ok(this._userService.UpdatePantryItem(item));
             } catch (Exception e) {
 
                 return BadRequest(e.Message);
@@ -65,7 +69,7 @@ namespace RecipePlannerApi.Controllers {
         [HttpPost("remove-pantry-item/{pantryId}")]
         public ActionResult RemovePantryItem(int pantryId) {
             try {
-                UserService.RemovePantryItem(pantryId);
+                this._userService.RemovePantryItem(pantryId);
                 return Ok();
             } catch (Exception e) {
 

@@ -61,6 +61,7 @@
     <Folder Include="dbo\" />
     <Folder Include="dbo\Tables\" />
     <Folder Include="dbo\Stored Procedures" />
+    <Folder Include="dbo\Scripts" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\user.sql" />
@@ -81,11 +82,11 @@
     <Build Include="dbo\Stored Procedures\get_cuisines.sql" />
     <Build Include="dbo\Stored Procedures\get_diets.sql" />
     <Build Include="dbo\Stored Procedures\get_meal_types.sql" />
-    <Build Include="dbo\ingredient_insert.sql" />
-    <Build Include="dbo\insert_cuisines.sql" />
-    <Build Include="dbo\insert_diets.sql" />
-    <Build Include="dbo\insert_types.sql" />
-    <Build Include="dbo\measurement_unit_insert.sql" />
+    <Build Include="dbo\Scripts\ingredient_insert.sql" />
+    <Build Include="dbo\Scripts\insert_cuisines.sql" />
+    <Build Include="dbo\Scripts\insert_diets.sql" />
+    <Build Include="dbo\Scripts\insert_types.sql" />
+    <Build Include="dbo\Scripts\measurement_unit_insert.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="RecipePlannerDatabase.refactorlog" />
