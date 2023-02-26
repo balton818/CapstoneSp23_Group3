@@ -20,7 +20,7 @@ namespace RecipePlannerApiTests.TestServices.TestUserService {
 
             pantryDao.Setup(x => x.UpdatePantryItem(It.IsAny<PantryItem>())).Returns(new PantryItem());
             var userService = new UserService(userDao.Object, pantryDao.Object);
-            var result = userService.GetUserPantry(1);
+            var result = userService.UpdatePantryItem(pantryItem);
 
             Assert.NotNull(result);
         }
