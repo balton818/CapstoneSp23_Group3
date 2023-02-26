@@ -19,14 +19,15 @@ namespace Team3DesktopApp.View
         private readonly string RegistrationUri = "/View/RegistrationPage.xaml";
         private readonly string FoundRecipeUri = "/View/RecipePage.xaml";
         private readonly string RecipeDetailUri = "/View/RecipeDetailPage.xaml";
+        private readonly string BrowseRecipesUri = "/View/BrowseRecipesPage.xaml";
 
         public PageNavigation(FoodieViewModel viewModel)
         {
             this.ViewModel = viewModel;
         }
         /// <summary>Navigates to page.</summary>
-        /// <param name="navUri">The nav URI.</param>
-        /// <param name="navigationService">The navigation service.</param>
+        /// <param name="navUri">The nav URI for the page.</param>
+        /// <param name="navigationService">The navigation service of the current page.</param>
         public void NavigateToPage(string navUri, NavigationService navigationService)
         {
             if (navUri.Equals(this.LoginUri))
@@ -49,6 +50,11 @@ namespace Team3DesktopApp.View
                 var recipeDetailPage = new RecipeDetailPage(this.ViewModel);
 
                 navigationService.Navigate(recipeDetailPage);
+            }
+            else if (navUri.Equals(this.BrowseRecipesUri))
+            {
+                var browseRecipesPage = new BrowseRecipesPage(this.ViewModel);
+                navigationService.Navigate(browseRecipesPage);
             }
             else
             {

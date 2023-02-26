@@ -49,7 +49,7 @@ public class PantryViewModel
         pantryItem.UserId = userId;
         pantryItem.IngredientName = name;
         pantryItem.Quantity = quantity;
-        pantryItem.Unit = this.getUnit(unit);
+        pantryItem.UnitId = this.getUnit(unit);
         var connection = new HttpClientConnection();
         return await connection.AddPantryItem(pantryItem, client);
     }

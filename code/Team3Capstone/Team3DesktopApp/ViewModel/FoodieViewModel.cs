@@ -1,15 +1,18 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Navigation;
+using Team3DesktopApp.Dal;
 using Team3DesktopApp.Model;
-using Team3DesktopApp.View;
+
 
 namespace Team3DesktopApp.ViewModel;
 
 /// <summary>
-///     <br />
+///     the view model class that wraps the other view models
 /// </summary>
 public class FoodieViewModel
 {
@@ -21,6 +24,7 @@ public class FoodieViewModel
     private readonly RegistrationViewModel registrationViewModel;
     private readonly RecipeDetailViewModel recipeDetailViewModel;
     private readonly PantryViewModel pantryViewModel;
+    private readonly BrowseRecipesViewModel browseRecipesViewModel;
 
 
     #endregion
@@ -47,6 +51,7 @@ public class FoodieViewModel
         this.loginViewModel = new LoginViewModel();
         this.registrationViewModel = new RegistrationViewModel();
         this.pantryViewModel = new PantryViewModel();
+        this.browseRecipesViewModel = new BrowseRecipesViewModel();
         this.ClientToSet = Client;
     }
 
@@ -126,10 +131,23 @@ public class FoodieViewModel
 
     /// <summary>Recipes the detail nav.</summary>
     /// <param name="recipeName">Name of the recipe.</param>
-    public async Task<RecipeInformation> RecipeDetailNav(string recipeName)
+    public async Task<RecipeInformation> RecipeDetailNavFound(string recipeName)
     {
         this.foundRecipeViewModel.SelectedRecipeTitle = recipeName;
         foreach (var recipe in this.foundRecipeViewModel.Recipes)
+        {
+            if (recipe.Title.Equals(recipeName) && recipe.Id != null)
+            {
+                await this.recipeDetailViewModel.RecipeDetailNav((int)recipe.Id, this.ClientToSet);
+            }
+        }
+        return this.recipeDetailViewModel.RecipeInfo;
+    }
+
+    public async Task<RecipeInformation> RecipeDetailNavBrowse(string recipeName)
+    {
+        this.browseRecipesViewModel.SelectedRecipeTitle = recipeName;
+        foreach (var recipe in this.browseRecipesViewModel.Recipes)
         {
             if (recipe.Title.Equals(recipeName) && recipe.Id != null)
             {
@@ -156,7 +174,7 @@ public class FoodieViewModel
         var ingredients = new List<string>();
         foreach (var ingredient in this.recipeDetailViewModel.RecipeInfo.Ingredients)
         {
-            ingredients.Add(ingredient.name + " " + ingredient.quanitiy);
+            ingredients.Add(ingredient.ingredientName + " " + ingredient.quantity);
         }
 
         return ingredients;
@@ -192,5 +210,72 @@ public class FoodieViewModel
     {
         return this.pantryViewModel.RemoveIngredient(ingredientName, ingredientAmount, this.ClientToSet);
 
+    }
+
+    public List<string> BrowseRecipes()
+    {
+        var recipeNames = new List<string>();
+        foreach (var recipe in this.browseRecipesViewModel.BrowseRecipes(this.ClientToSet))
+        {
+            recipeNames.Add(recipe.Title);
+        }
+
+        return recipeNames;
+    }
+    public void IncrementPage()
+    {
+        if (this.browseRecipesViewModel.CurrentPage < this.browseRecipesViewModel.NumberOfPages)
+        {
+            this.browseRecipesViewModel.CurrentPage++;
+        }
+
+
+    }
+
+    public void ResetBrowse()
+    {
+        this.browseRecipesViewModel.CurrentPage = 0;
+        this.browseRecipesViewModel.NumberOfPages = 0;
+        this.browseRecipesViewModel.NumberOfRecipes = 0;
+    }
+
+    public void DecrementPage()
+    {
+        if (this.browseRecipesViewModel.CurrentPage > 0)
+        {
+            this.browseRecipesViewModel.CurrentPage--;
+        }
+
+    }
+
+    public List<string> GetRecipeTypes()
+    {
+        var recipeTypes = new List<string>();
+        var connection = new HttpClientConnection();
+        var retrieved = connection.GetRecipeTypes(this.ClientToSet);
+        recipeTypes.AddRange(retrieved.Result);
+        recipeTypes.Add("");
+        return recipeTypes;
+    }
+
+    public List<string> GetDietTypes()
+    {
+        var dietTypes = new List<string>();
+        var connection = new HttpClientConnection();
+        var retrieved = connection.GetDietTypes(this.ClientToSet);
+        dietTypes.AddRange(retrieved.Result);
+        dietTypes.Add("");
+        return dietTypes;
+    }
+
+    public void SetFilters(string typeComboboxText, string dietComboboxText)
+    {
+        this.browseRecipesViewModel.AppliedRecipeType = typeComboboxText;
+        this.browseRecipesViewModel.AppliedDietType = dietComboboxText;
+    }
+
+    public string GetPageInfo()
+    {
+        return this.browseRecipesViewModel.CurrentPage + " of " + this.browseRecipesViewModel.NumberOfPages;
     }
 }

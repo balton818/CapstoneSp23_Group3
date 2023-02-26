@@ -5,17 +5,17 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:Team3DesktopApp.View"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    Width="200"
+    Width="183"
     Height="180"
     mc:Ignorable="d">
-    <Grid Margin="214,0,-124,0">
+    <Grid Margin="0,0,44,0" >
 
         <Button
             x:Name="navMenu"
             Width="49"
             Height="45"
-            Margin="-125,16,0,0"
-            HorizontalAlignment="Left"
+            Margin="0,10,0,0"
+            HorizontalAlignment="Center"
             VerticalAlignment="Top"
             Background="#30323d"
             Click="navMenu_Click">
@@ -32,97 +32,72 @@
 
         <Grid
             x:Name="navGrid"
-            Grid.Row="0"
-            Grid.Column="0"
-            Margin="10,56,210,28"
-            Visibility="Hidden">
-            <Canvas
-                Name="navigationBar"
-                Height="104"
-                Margin="-36,132,725,-37"
-                Background="#30323d">
-                <Canvas.RenderTransform>
-                    <TranslateTransform X="0" Y="0" />
-                </Canvas.RenderTransform>
-                <Canvas.Resources />
-                <Canvas Name="navBounds">
-                    <Canvas Name="pantryCan">
-                        <local:NavButton
-                            x:Name="pantryButton"
-                            Canvas.Left="-132.044"
-                            Canvas.Top="-119.461"
-                            Width="93"
-                            Height="28"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Top"
-                            Background="#FFD6CCC2"
-                            Click="NavButton_Click"
-                            Content="My Pantry"
-                            FontFamily="Song Myung"
-                            FontSize="18"
-                            ForceCursor="True"
-                            NavUri="/View/PantryPage.xaml"
-                            UseLayoutRounding="False">
-                            <local:NavButton.Resources>
-                                <Style TargetType="Border">
-                                    <Setter Property="CornerRadius" Value="5" />
-                                </Style>
-                            </local:NavButton.Resources>
+ 
+            Background="#30323d"
+            Visibility="Hidden" Margin="0,55,30,15">
 
-                        </local:NavButton>
-                    </Canvas>
-                    <Canvas Name="RecipeButtonCan">
-                        <local:NavButton
-                            x:Name="recipeButton"
-                            Canvas.Left="-132.158"
-                            Canvas.Top="-82.758"
-                            Width="93"
-                            Height="28"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Top"
-                            Background="#FFD6CCC2"
-                            Click="NavButton_Click"
-                            Content="Recipes"
-                            FontFamily="Song Myung"
-                            FontSize="18"
-                            ForceCursor="True"
-                            NavUri="/View/RecipePage.xaml"
-                            UseLayoutRounding="False">
-                            <local:NavButton.Resources>
-                                <Style TargetType="Border">
-                                    <Setter Property="CornerRadius" Value="5" />
-                                </Style>
-                            </local:NavButton.Resources>
+            <local:NavButton
+                x:Name="pantryButton"
+                Width="93"
+                Height="28"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top"
+                Background="#FFD6CCC2"
+                Click="NavButton_Click"
+                Content="My Pantry"
+                FontFamily="Song Myung"
+                FontSize="18"
+                ForceCursor="True"
+                NavUri="/View/PantryPage.xaml"
+                UseLayoutRounding="False" Margin="0,43,0,0">
+                <local:NavButton.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="5" />
+                    </Style>
+                </local:NavButton.Resources>
+            </local:NavButton>
+            <local:NavButton
+                x:Name="recipeButton"
+                Width="93"
+                Height="28"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top"
+                Background="#FFD6CCC2"
+                Click="NavButton_Click"
+                Content="Recipes"
+                FontFamily="Song Myung"
+                FontSize="18"
+                ForceCursor="True"
+                NavUri="/View/RecipePage.xaml"
+                UseLayoutRounding="False" Margin="0,10,0,0">
+                <local:NavButton.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="5" />
+                    </Style>
+                </local:NavButton.Resources>
 
-                        </local:NavButton>
-                    </Canvas>
-                    <Canvas>
-                        <local:NavButton
-                            x:Name="logOutButton"
-                            Canvas.Left="-133.103"
-                            Canvas.Top="-46.893"
-                            Width="93"
-                            Height="28"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Top"
-                            Background="#FFD6CCC2"
-                            Click="NavButton_Click"
-                            Content="Log Out"
-                            FontFamily="Song Myung"
-                            FontSize="18"
-                            ForceCursor="True"
-                            NavUri="/View/LoginPage.xaml"
-                            UseLayoutRounding="False">
-                            <local:NavButton.Resources>
-                                <Style TargetType="Border">
-                                    <Setter Property="CornerRadius" Value="5" />
-                                </Style>
-                            </local:NavButton.Resources>
+            </local:NavButton>
+            <local:NavButton
+                x:Name="logOutButton"
+                Width="93"
+                Height="28"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top"
+                Background="#FFD6CCC2"
+                Click="NavButton_Click"
+                Content="Log Out"
+                FontFamily="Song Myung"
+                FontSize="18"
+                ForceCursor="True"
+                NavUri="/View/LoginPage.xaml"
+                UseLayoutRounding="False" Margin="0,76,0,0">
+                <local:NavButton.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="5" />
+                    </Style>
+                </local:NavButton.Resources>
 
-                        </local:NavButton>
-                    </Canvas>
-                </Canvas>
-            </Canvas>
+            </local:NavButton>
         </Grid>
     </Grid>
 

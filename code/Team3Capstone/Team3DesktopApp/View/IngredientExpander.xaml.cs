@@ -60,15 +60,28 @@ public partial class IngredientExpander : UserControl
 
     private async void MinusButton_OnClick(object sender, RoutedEventArgs e)
     {
-        this.IngredientAmount--;
-        await this.ViewModel.EditIngredient(this.IngredientName, this.IngredientAmount);
-        this.navigateToPage("View/PantryPage.xaml");
+        if (this.IngredientAmount > 0)
+        {
+
+            this.IngredientAmount--;
+            await this.ViewModel.EditIngredient(this.IngredientName, this.IngredientAmount);
+            this.navigateToPage("View/PantryPage.xaml");
+        }
+
     }
 
     private void RemoveButton_OnClick(object sender, RoutedEventArgs e)
     {
-        this.ViewModel.RemoveIngredient(this.IngredientName, this.IngredientAmount);
-        this.navigateToPage("View/PantryPage.xaml");
+
+        if (MessageBox.Show("Confirm removal of " + this.IngredientName + "?",
+                            "Ingredient Removal",
+                            MessageBoxButton.YesNo,
+                            MessageBoxImage.Question) == MessageBoxResult.Yes)
+        {
+            this.ViewModel.RemoveIngredient(this.IngredientName, this.IngredientAmount);
+            this.navigateToPage("View/PantryPage.xaml");
+        }
+
 
 
     }

@@ -56,11 +56,18 @@ public partial class PantryPage : Page
     {
         if (!string.IsNullOrEmpty(this.ingredientNameTextBox.Text) && !string.IsNullOrEmpty(this.quantityTextBox.Text))
         {
-            await this.ViewModel.AddIngredient(this.ingredientNameTextBox.Text, int.Parse(this.quantityTextBox.Text), this.measurementCombo.Text);
-            this.buildView();
-            this.errorText.Visibility = Visibility.Hidden;
-            this.ingredientNameTextBox.Text = "";
-            this.quantityTextBox.Text = "";
+            if (MessageBox.Show("Confirm addition of " + this.ingredientNameTextBox.Text + " " + this.quantityTextBox.Text + " " + this.measurementCombo.Text + "?",
+                    "Ingredient Addition",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Question) == MessageBoxResult.Yes)
+            {
+                await this.ViewModel.AddIngredient(this.ingredientNameTextBox.Text, int.Parse(this.quantityTextBox.Text), this.measurementCombo.Text);
+                this.buildView();
+                this.errorText.Visibility = Visibility.Hidden;
+                this.ingredientNameTextBox.Text = "";
+                this.quantityTextBox.Text = "";
+            }
+
         }
         else
         {
@@ -73,7 +80,7 @@ public partial class PantryPage : Page
         var pantry = new List<IngredientExpander>();
         foreach (var current in this.ViewModel.GetPantry().Result)
         {
-            var ingredientExpander = new IngredientExpander(current.IngredientName, current.Quantity, current.Unit.ToString(), this.ViewModel);
+            var ingredientExpander = new IngredientExpander(current.IngredientName, current.Quantity, current.UnitId.ToString(), this.ViewModel);
             ingredientExpander.current = this;
             pantry.Add(ingredientExpander);
         }

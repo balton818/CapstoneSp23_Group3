@@ -13,7 +13,7 @@ public class Ingredient
     /// <value>
     ///     The name.
     /// </value>
-    public string name { get; set; }
+    public string ingredientName { get; set; }
 
     /// <summary>
     ///     Gets or sets the quanitiy.
@@ -21,9 +21,9 @@ public class Ingredient
     /// <value>
     ///     The quanitiy.
     /// </value>
-    public int quanitiy { get; set; }
+    public int quantity { get; set; }
 
-    public int unit { get; set; }
+    public UnitEnum UnitId { get; set; }
 
     #endregion
 
@@ -36,8 +36,8 @@ public class Ingredient
     /// <param name="quantity">The quantity.</param>
     public Ingredient(string name, int quantity)
     {
-        this.name = name;
-        this.quanitiy = quantity;
+        this.ingredientName = name;
+        this.quantity = quantity;
     }
 
     #endregion

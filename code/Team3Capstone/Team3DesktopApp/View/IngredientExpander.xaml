@@ -42,7 +42,7 @@
                             HorizontalAlignment="Left"
                             FontWeight="Bold"
                             Text="{Binding IngredientUnit}"
-                            Foreground="#FFE8C547" Height="20" VerticalAlignment="Center" Width="42" Margin="246,0,0,0" />
+                            Foreground="#FFE8C547" Height="20" VerticalAlignment="Center" Width="107" Margin="246,0,0,0" />
                     </Grid>
                 </DataTemplate>
             </Expander.HeaderTemplate>

@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Team3DesktopApp.ViewModel;
 
 namespace Team3DesktopApp.View
 {
@@ -20,24 +21,67 @@ namespace Team3DesktopApp.View
     /// </summary>
     public partial class BrowseRecipesPage : Page
     {
-        public BrowseRecipesPage()
+        private FoodieViewModel ViewModel { get; }
+        public BrowseRecipesPage(FoodieViewModel viewModel)
         {
-            InitializeComponent();
+            this.InitializeComponent();
+            this.ViewModel = viewModel;
+            this.navMenu.FoodViewModel = this.ViewModel;
+            this.navMenu.Current = this;
+            this.ViewModel.BrowseRecipes();
+            this.recipeListBox.ItemsSource = this.ViewModel.BrowseRecipes();
+            this.typeCombobox.ItemsSource = this.ViewModel.GetRecipeTypes();
+            this.dietCombobox.ItemsSource = this.ViewModel.GetDietTypes();
+            this.pageLabel.Text = this.ViewModel.GetPageInfo();
         }
 
         private void ViewDetail_Click(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            if (this.recipeListBox.SelectedItem == null)
+            {
+                MessageBox.Show("Please select a recipe to view");
+                return;
+            }
+            _ = this.ViewModel.RecipeDetailNavBrowse(this.recipeListBox.SelectedItem.ToString());
+            var navButton = (NavButton)sender;
+            this.navigateToPage(navButton.NavUri);
         }
+
+        private void navigateToPage(string navUri)
+        {
+            if (NavigationService != null)
+            {
+                PageNavigation navigate = new PageNavigation(this.ViewModel);
+                navigate.NavigateToPage(navUri, NavigationService);
+            }
+        }
+
 
         private void SearchByName_Click(object sender, RoutedEventArgs e)
         {
             throw new NotImplementedException();
         }
 
-        private void recipeGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void PrevPageButton_OnClick(object sender, RoutedEventArgs e)
         {
+            this.ViewModel.DecrementPage();
+            this.recipeListBox.ItemsSource = this.ViewModel.BrowseRecipes();
+            this.pageLabel.Text = this.ViewModel.GetPageInfo();
+        }
 
+        private void NextPageButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            this.ViewModel.IncrementPage();
+            this.recipeListBox.ItemsSource = this.ViewModel.BrowseRecipes();
+            this.pageLabel.Text = this.ViewModel.GetPageInfo();
+        }
+
+        private void ApplyButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            this.ViewModel.ResetBrowse();
+            this.ViewModel.SetFilters(this.typeCombobox.Text, this.dietCombobox.Text);
+            this.recipeListBox.ItemsSource = this.ViewModel.BrowseRecipes();
+            this.pageLabel.Text = this.ViewModel.GetPageInfo();
         }
     }
 }

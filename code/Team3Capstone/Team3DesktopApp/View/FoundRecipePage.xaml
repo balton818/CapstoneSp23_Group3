@@ -125,7 +125,7 @@
                     Background="#FFD6CCC2"
                     Click="BrowseAllRecipes_OnClick"
                     Content="Browse All Recipes"
-                    NavUri="/View/BrowseRecipePage.xaml"
+                    NavUri="/View/BrowseRecipesPage.xaml"
                     FontFamily="Song Myung"
                     FontSize="18"
                     ForceCursor="True" HorizontalAlignment="Left" VerticalAlignment="Top">
@@ -140,14 +140,21 @@
         </Canvas>
         <ListBox
             x:Name="recipeListBox"
-            ItemsSource="{Binding recipes }"
             Grid.Row="0"
-            Margin="20,110,26,184"
+            Margin="14,97,8,193"
             Background="#30323d"
             BorderBrush="#FF30323D"
             FontFamily="Song Myung"
             FontSize="16"
-            Foreground="#FFE8C547" />
-        <local:NavMenu x:Name="navMenu" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="252,3,0,0" />
+            Foreground="#FFE8C547"
+            ItemsSource="{Binding recipes}"
+            ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding}" TextWrapping="Wrap" />
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <local:NavMenu x:Name="navMenu" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="306,8,0,0" />
     </Grid>
 </Page>

@@ -169,7 +169,7 @@
                     <Canvas.Resources />
                 </Canvas>
             </Grid>
-            <local:NavMenu x:Name="navMenu" Margin="267,0,-38,404" />
+            <local:NavMenu x:Name="navMenu" Canvas.Left="306" Canvas.Top="10" />
         </Canvas>
     </Grid>
 </Page>

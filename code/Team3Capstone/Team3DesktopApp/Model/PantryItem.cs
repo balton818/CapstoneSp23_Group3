@@ -38,7 +38,7 @@ public class PantryItem
     /// </value>
     public int Quantity { get; set; }
 
-    public UnitEnum Unit { get; set; }
+    public UnitEnum UnitId { get; set; }
 
     #endregion
 }
