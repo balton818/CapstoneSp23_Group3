@@ -4,7 +4,7 @@
 @using RecipePlannerApi.Service;
 @using RecipePlannerWebApp.LocalServices;
 @inject NavigationManager Nav;
-@inject UserSessionData currentUser;
+@inject UserSessionData currentUserData;
 @inject IJSRuntime JsRuntime;
 
 <PageTitle>foodie - pantry</PageTitle>
@@ -38,7 +38,7 @@
         @foreach (var ingredient in this.ingredients)
         {
             <div class="col navBox">
-                <Ingredient IngredientName="@ingredient.IngredientName" IngredientQuantity="@ingredient.Quantity" IngredientId="@ingredient.PantryId" IngredientUnit="@ingredient.unit"/>
+                <Ingredient IngredientName="@ingredient.IngredientName" IngredientQuantity="@ingredient.Quantity" IngredientId="@ingredient.PantryId" IngredientUnit="@ingredient.UnitId"/>
             </div>
         }
         </div>
@@ -56,11 +56,11 @@
     protected override void OnInitialized()
     {
         Console.WriteLine("\nPANTRY -- Initializing...");
-        Console.WriteLine("User #" + currentUser.CurrentUser.Id + " just logged in.");
-        this.ingredients = UserService.GetUserPantry(currentUser.CurrentUser.Id);
+        Console.WriteLine("User #" + currentUserData.CurrentUser.Id + " just logged in.");
+        this.ingredients = UserService.GetUserPantry(currentUserData.CurrentUser.Id);
         foreach (var ingredient in this.ingredients) 
         {
-            Console.WriteLine(ingredient.IngredientName + ": " + ingredient.Quantity + " " + ingredient.unit + " from pantry #" + ingredient.PantryId );
+            Console.WriteLine(ingredient.IngredientName + ": " + ingredient.Quantity + " " + ingredient.UnitId + " from pantry #" + ingredient.PantryId );
         }
 
     }
@@ -68,15 +68,16 @@
     private void addNewIngredient()
     {
         Console.WriteLine("SELECTED UNIT -- " + this.newIngredientUnit);
-        PantryItem newItem = new PantryItem()
-        {
-                IngredientName = this.newIngredientName,
-                Quantity = Int32.Parse(this.newIngredientQuantity),
-                UserId = currentUser.CurrentUser.Id,
-                unit = this.newIngredientUnit
-        };
+        
         try
         {
+            PantryItem newItem = new PantryItem()
+                {
+                    IngredientName = this.newIngredientName,
+                    Quantity = Int32.Parse(this.newIngredientQuantity),
+                    UserId = currentUserData.CurrentUser.Id,
+                    UnitId = this.newIngredientUnit
+                };
             UserService.AddPantryItem(newItem);
         } catch (System.Exception exc)
         {

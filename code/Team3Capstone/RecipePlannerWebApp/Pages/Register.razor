@@ -24,6 +24,8 @@
         <input id="emailField" type="email" @bind="user.Email" placeholder="Enter Email Address" required />
 
         <button type="submit" id="submitButton" style="position:center">Submit</button>
+        <br />
+        <button style="position:center" @onclick="goToLogin">&#8672 Back</button>
     </div>
 </EditForm>
 
@@ -80,5 +82,10 @@
     private void clearUsername()
     {
         this.user.Username = "";
+    }
+
+    private void goToLogin()
+    {
+        Nav.NavigateTo("/");
     }
 }

@@ -3,9 +3,9 @@
 @using RecipePlannerApi.Model;
 @using RecipePlannerApi.Service;
 @using RecipePlannerWebApp.LocalServices;
+@using RecipePlannerApi.Api.Requests;
 @inject NavigationManager Nav;
-@inject UserSessionData currentUser;
-
+@inject UserSessionData currentUserData;
 
 <PageTitle>foodie - explore</PageTitle>
 <base href="~/" />
@@ -14,46 +14,160 @@
         <span>explore</span>
         <hr style="height: 2px; opacity: 100%" />
     </div>
+    <div class="search-bar">
+        <label>Search Terms:</label>
+        <input type="search" @bind="this.searchParam"/>
+    </div>
     <div id="filter-options">
         <div class="filter">
             <label for="filter-selector">Meal Type</label>
-            <select @bind="filterSelection" name="filter-selector" multiple>
-                @foreach (var filter in this.filters)
+            <select @bind="mealTypeFilterSelection" name="filter-selector" >
+                @foreach (var filter in this.mealTypeFilters)
                 {
                     <option>@filter</option>
                 }
             </select>
         </div>
         <div class="filter">
-            <label for="filter-selector2">Meal Type2</label>
-            <select @bind="filterSelection" name="filter-selector2" multiple>
-                @foreach (var filter in this.filters)
+            <label for="filter-selector2">Cuisine</label>
+            <select @bind="cuisineFilterSelection" name="filter-selector2">
+                @foreach (var filter in this.cuisineFilters)
                 {
-                    <option>@filter 2</option>
+                    <option>@filter</option>
                 }
             </select>
         </div>
         <div class="filter">
-            <label for="filter-selector3">Meal Type3</label>
-            <select @bind="filterSelection" name="filter-selector3" multiple>
-                @foreach (var filter in this.filters)
+            <label for="filter-selector3">Dietary Restriction</label>
+            <select @bind="dietaryRestrictionFilterSelection" name="filter-selector3">
+                @foreach (var filter in this.dietaryRestrictionFilters)
                 {
-                    <option>@filter 3</option>
+                    <option>@filter</option>
                 }
             </select>
         </div>
-        <button type="submit" id="add-ingredient-button" @onclick="applyFilters">Apply</button>
+        <button type="submit" class="apply-filter-button" @onclick="browse">Apply</button>
     </div>
-    <div class="recipe-list-area"></div>
+    <div class="recipe-list-area">
+        <label hidden="@resultsFound" style="font-weight: bold">No results found.</label>
+        @foreach (var recipe in this.results)
+        {
+            <div class="recipe-result" @onclick="() => goToRecipe(recipe.Title, recipe.Id ?? -1)">
+                <img src="@recipe.Image" asp-append-version="true" style="width: 125px; height: 125px;" />
+                @recipe.Title
+            </div>
+        }
+        <div class="pagination-controls">
+            <button disabled="@hidePrevPageButton" @onclick="this.viewPreviousPage">&#8672 Previous</button>
+            <label>Page: @pageNum</label>
+            <button disabled="@hideNextPageButton" @onclick="this.viewNextPage">Next &#8674;</button>
+        </div>
+        
+    </div>
 
 </div>
 
 @code {
-    private List<String> filters { get; set; } = new List<String>() { "Breakfast", "Lunch", "Dinner"};
-    private string[] filterSelection = new[] { "" };
+    private string[] mealTypeFilters { get; set; } = new[] { "", "appetizer", "beverage", "bread", "breakfast", "dessert",
+        "drink", "fingerfood", "main course", "marinade", "salad", "sauce", "side dish", "snack", "soup" };
 
-    private void applyFilters()
+    private string[] cuisineFilters { get; set; } = new[] { "", "African", "American", "British", "Cajun", "Caribbean",
+    "Chinese", "Eastern European", "European", "French", "German", "Greek", "Indian", "Irish", "Italian", "Japanese",
+    "Jewish", "Korean", "Latin American", "Mediterranean", "Mexican", "Middle Eastern", "Nordic", "Southern", "Spanish", "Thai", "Vietnamese"};
+
+    private string[] dietaryRestrictionFilters { get; set; } = new[] { "", "Gluten Free", "Ketogenic", "Lacto-Vegetarian",
+        "Low FODMAP", "Ovo-Vegetarian", "Paleo", "Pescetarian", "Primal", "Vegan", "Vegetarian", "Whole30" };
+
+    private string mealTypeFilterSelection = "";
+    private string cuisineFilterSelection = "";
+    private string dietaryRestrictionFilterSelection = "";
+    private string searchParam = "";
+    private int pageNum = 1;
+    private bool resultsFound;
+    private bool hidePrevPageButton;
+    private bool hideNextPageButton;
+
+    private List<Recipe> results = new List<Recipe>();
+
+    protected override void OnInitialized()
     {
-        Console.WriteLine("Applying filters");
+        this.resultsFound = false;
+        this.hideNextPageButton = true;
+        this.hidePrevPageButton = true;
+        if (this.currentUserData.lastExplorePageRequest != null)
+        {
+            this.returnFromDetailView();
+        } else
+        {
+            this.browse(); 
+        }
+    }
+
+    private void returnFromDetailView()
+    {
+        this.repopulateFilters();
+        this.results = RecipeService.BrowseRecipes(this.currentUserData.lastExplorePageRequest).recipes;
+        this.resultsFound = this.results.Count > 0;
+        this.hidePrevPageButton = this.pageNum == 1;
+        this.hideNextPageButton = this.pageNum > 35 || !this.resultsFound;
+    }
+
+    private void repopulateFilters()
+    {
+        this.searchParam = this.currentUserData.lastExplorePageRequest.Query;
+        this.mealTypeFilterSelection = this.currentUserData.lastExplorePageRequest.Type;
+        this.cuisineFilterSelection = this.currentUserData.lastExplorePageRequest.Cuisine;
+        this.dietaryRestrictionFilterSelection = this.currentUserData.lastExplorePageRequest.Diet;
+        this.pageNum = this.currentUserData.lastExplorePageRequest.PageNumber + 1;
+    }
+
+    private void browse()
+    {
+        try
+        {
+            BrowseRecipeRequest request = new BrowseRecipeRequest()
+                {
+                    UserId = this.currentUserData.CurrentUser.Id,
+                    Query = this.searchParam,
+                    Cuisine = this.cuisineFilterSelection,
+                    Diet = this.dietaryRestrictionFilterSelection,
+                    Type = this.mealTypeFilterSelection,
+                    PageNumber = this.pageNum - 1
+                };
+            this.results = RecipeService.BrowseRecipes(request).recipes;
+            this.resultsFound = this.results.Count > 0;
+            this.hidePrevPageButton = this.pageNum == 1;
+            this.hideNextPageButton = this.pageNum > 34 || !this.resultsFound;
+            this.currentUserData.lastExplorePageRequest = request;
+        }
+        catch (System.Data.SqlClient.SqlException sqlEx)
+        {
+            Console.WriteLine("\nSQL ERR -- ");
+            Console.WriteLine(sqlEx.Message);
+        }
+    }
+
+    private void goToRecipe(string recipeTitle, int recipeId)
+    {
+        Console.WriteLine("Recipe clicked: " + recipeId);
+        Nav.NavigateTo("recipe-details/" + recipeTitle + "/" + recipeId);
+    }
+
+    private void viewPreviousPage()
+    {
+        if (this.pageNum > 1)
+        {
+            this.pageNum--;
+            this.browse();
+        }
+    }
+
+    private void viewNextPage()
+    {
+        if (this.pageNum < 35)
+        {
+            this.pageNum++;
+            this.browse();
+        }
     }
 }

@@ -93,7 +93,7 @@ namespace RecipePlannerApi.Service {
                 IngredientId = 14412,
                 IngredientName = "water",
                 Quantity = 100,
-                unit = AppUnits.NONE
+                UnitId = AppUnits.NONE
             });
 
             return pantry;

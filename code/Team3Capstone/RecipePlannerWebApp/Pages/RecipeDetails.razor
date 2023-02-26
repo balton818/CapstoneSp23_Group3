@@ -4,6 +4,8 @@
 @using RecipePlannerApi.Model;
 @inject IJSRuntime JsRuntime;
 @inject NavigationManager Nav;
+@using RecipePlannerWebApp.LocalServices;
+@inject UserSessionData currentUserData;
 
 <div class="split right">
     <div class="header">
@@ -17,7 +19,7 @@
         <ul>
             @foreach (var ingredient in this.ingredients)
             {
-                <li>@ingredient.name: @ingredient.quantity</li>
+                <li>@ingredient.IngredientName: @ingredient.Quantity</li>
             }
         </ul>
         <br />
@@ -29,7 +31,7 @@
             }
         </ol>
         <br />
-        <button @onclick="returnToRecipesPage">&#8672 Back</button>
+        <button @onclick="goBack">&#8672 Back</button>
     </div>
 
 </div>
@@ -37,33 +39,37 @@
 @code {
 
     [Parameter]
-    public string RecipeId { get; set; }
+    public string? RecipeId { get; set; }
     [Parameter]
-    public string RecipeTitle { get; set; }
+    public string? RecipeTitle { get; set; }
 
     private List<RecipePlannerApi.Model.Ingredient>? ingredients { get; set; } 
     private List<RecipePlannerApi.Model.RecipesStep>? steps { get; set; }
 
     protected override void OnInitialized()
     {
-        Console.WriteLine("RECIPEVIEW -- Initializing...");
         RecipeInformation info = RecipeService.GetRecipeInformation(Int32.Parse(this.RecipeId));
         if (info != null)
         {
             this.ingredients = info?.Ingredients;
             this.steps = info?.Steps;
-        } else
+        }
+        else
         {
             JsRuntime.InvokeAsync<bool>("alert", "Unable to fetch recipe details from server.\nPlease try again later.");
-        
         }
-
     }
 
-    private void returnToRecipesPage()
+    private void goBack()
     {
-        Console.WriteLine("RECIPEVIEW -- Go Back");
-        Nav.NavigateTo("/recipes");
+        if (this.currentUserData.lastExplorePageRequest != null)
+        {
+            Nav.NavigateTo("/explore");
+        }
+        else
+        {
+            Nav.NavigateTo("/recipes");
+        }
     }
 
     //FUTUREPROOFING - DISREGARD
