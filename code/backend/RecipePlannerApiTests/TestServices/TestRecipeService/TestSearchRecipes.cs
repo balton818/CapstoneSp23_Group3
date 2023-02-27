@@ -5,11 +5,6 @@ using RecipePlannerApi.Api.Requests;
 using RecipePlannerApi.Dao.Interface;
 using RecipePlannerApi.Service;
 using RecipePlannerApi.Service.Interface;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RecipePlannerApiTests.TestServices.TestRecipeService {
     public class TestSearchRecipes {

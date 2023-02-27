@@ -1,15 +1,9 @@
 ﻿using Moq;
-using Org.OpenAPITools.Model;
 using RecipePlannerApi.Api.Interface;
 using RecipePlannerApi.Api.Requests;
 using RecipePlannerApi.Dao.Interface;
 using RecipePlannerApi.Service.Interface;
 using RecipePlannerApi.Service;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using RecipePlannerApi.Model;
 
 namespace RecipePlannerApiTests.TestServices.TestRecipeService {

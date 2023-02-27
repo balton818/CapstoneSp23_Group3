@@ -12,11 +12,9 @@ namespace RecipePlannerApi.Controllers
     [ApiController]
     public class RecipeController : ControllerBase {
         private readonly IRecipeService _recipeService;
-        private readonly IMeasurementService _measurementService;
 
-        public RecipeController(IRecipeService recipeService, IMeasurementService measurementService) {
+        public RecipeController(IRecipeService recipeService) {
             this._recipeService = recipeService;
-            this._measurementService = measurementService;
         }
 
         [HttpGet("search")]
@@ -53,16 +51,6 @@ namespace RecipePlannerApi.Controllers
         public ActionResult<RecipeInformation> GetRecipeInformation(int id) {
             try {
                 return Ok(this._recipeService.GetRecipeInformation(id));
-            } catch (Exception e) {
-
-                return BadRequest(e.Message);
-            }
-        }
-
-        [HttpGet("test/{to}/{from}/{value}")]
-        public ActionResult<int?> GetRecipeInformation(string from, int to, decimal value) {
-            try {
-                return Ok(this._measurementService.Convert(value, from, (AppUnit)to));
             } catch (Exception e) {
 
                 return BadRequest(e.Message);
