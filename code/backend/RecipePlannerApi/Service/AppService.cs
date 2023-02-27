@@ -1,17 +1,25 @@
-﻿using RecipePlannerApi.Dao;
+﻿using RecipePlannerApi.Dao.Interface;
+using RecipePlannerApi.Service.Interface;
 
-namespace RecipePlannerApi.Service {
-    public class AppService {
-        public static List<string> getAppCuisines() {
-            return AppDao.getAppCuisines();
+namespace RecipePlannerApi.Service
+{
+    public class AppService: IAppService {
+        private readonly IAppDao _appDao;
+
+        public AppService(IAppDao appDao) {
+            this._appDao = appDao;
         }
 
-        public static List<string> getAppDiets() {
-            return AppDao.getAppDiets();
+        public List<string> getAppCuisines() {
+            return this._appDao.getAppCuisines();
         }
 
-        public static List<string> getAppMealTypes() {
-            return AppDao.getAppMealTypes();
+        public List<string> getAppDiets() {
+            return this._appDao.getAppDiets();
+        }
+
+        public List<string> getAppMealTypes() {
+            return this._appDao.getAppMealTypes();
         }
     }
 }

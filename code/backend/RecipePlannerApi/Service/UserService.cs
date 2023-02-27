@@ -1,19 +1,25 @@
-﻿using RecipePlannerApi.Dao;
+﻿using RecipePlannerApi.Dao.Interface;
 using RecipePlannerApi.Model;
+using RecipePlannerApi.Service.Interface;
 
-namespace RecipePlannerApi.Service {
-    public static class UserService {
+namespace RecipePlannerApi.Service
+{
+    public class UserService: IUserService {
+        private readonly IUserDao _userDao;
+        private readonly IPantryDao _pantryDao;
 
-        /// <summary>Initializes the <see cref="UserService" /> class.</summary>
-        static UserService() { }
+        public UserService(IUserDao userDao, IPantryDao pantryDao) {
+            this._userDao = userDao;
+            this._pantryDao = pantryDao;
+        }
 
         /// <summary>Validates the user.</summary>
         /// <param name="user">The user.</param>
         /// <returns>
         ///   <br />
         /// </returns>
-        public static int? ValidateUser(User user) {
-            return UserDao.ValidateUser(user)?.Id;
+        public int? ValidateUser(string username, string password) {
+            return this._userDao.ValidateUser(username, password)?.Id;
         }
 
         /// <summary>Creates the user.</summary>
@@ -21,8 +27,8 @@ namespace RecipePlannerApi.Service {
         /// <returns>
         ///   <br />
         /// </returns>
-        public static int? CreateUser(User user) {
-            return UserDao.CreateUser(user);
+        public int? CreateUser(User user) {
+            return this._userDao.CreateUser(user);
         }
 
 
@@ -33,7 +39,7 @@ namespace RecipePlannerApi.Service {
         /// <exception cref="System.ArgumentException">ingredient name cannot be null or empty and must be less than or equal to 20 characters
         /// or
         /// user id cannot be null</exception>
-        public static PantryItem AddPantryItem(PantryItem item) {
+        public PantryItem AddPantryItem(PantryItem item) {
             if(item == null) {
                 throw new ArgumentNullException("pantry item cannot be null");
             }
@@ -46,15 +52,19 @@ namespace RecipePlannerApi.Service {
                 throw new ArgumentException("user id cannot be null or zero");
             }
 
-            return PantryDao.AddPantryItem(item);
+            return this._pantryDao.AddPantryItem(item);
         }
 
 
         /// <summary>Gets the user pantry.</summary>
         /// <param name="userId">The user identifier.</param>
         /// <returns>The pantry for the user</returns>
-        public static List<PantryItem> GetUserPantry(int userId) {
-            return PantryDao.GetUserPantry(userId);
+        public List<PantryItem> GetUserPantry(int userId) {
+            if (userId <= 0) {
+                throw new ArgumentException("user id cannot be less than 1");
+            }
+
+            return this._pantryDao.GetUserPantry(userId);
         }
 
 
@@ -64,7 +74,11 @@ namespace RecipePlannerApi.Service {
         /// <exception cref="System.ArgumentException">ingredient name cannot be null or empty and must be less than or equal to 20 characters
         /// or
         /// pantry id cannot be null</exception>
-        public static PantryItem UpdatePantryItem(PantryItem item) {
+        public PantryItem UpdatePantryItem(PantryItem item) {
+            if (item == null) {
+                throw new ArgumentNullException("pantry item cannot be null");
+            }
+
             if (item.IngredientName == null || item.IngredientName.Length == 0 || item.IngredientName.Length >= 20) {
                 throw new ArgumentException("ingredient name cannot be null or empty and must be less than or equal to 20 characters");
             }
@@ -73,14 +87,18 @@ namespace RecipePlannerApi.Service {
                 throw new ArgumentException("pantry id cannot be null");
             }
 
-            return PantryDao.UpdatePantryItem(item);
+            return this._pantryDao.UpdatePantryItem(item);
         }
 
 
         /// <summary>Removes the pantry item.</summary>
-        /// <param name="pantry_id">The pantry identifier.</param>
-        public static void RemovePantryItem(int pantry_id) {
-            PantryDao.RemovePantryItem(pantry_id);
+        /// <param name="pantryId">The pantry identifier.</param>
+        public void RemovePantryItem(int pantryId) {
+            if (pantryId <= 0) {
+                throw new ArgumentException("pantry id cannot be less than 1");
+            }
+
+            this._pantryDao.RemovePantryItem(pantryId);
         }
     }
 }
