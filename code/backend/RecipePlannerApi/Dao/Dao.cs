@@ -1,14 +1,17 @@
 ﻿using AutoMapper;
-using static RecipePlannerApi.Dao.UserDao;
 using System.Data.SqlClient;
 using System.Data;
 using AutoMapper.Data;
 using RecipePlannerApi.Model;
 using RecipePlannerApi.Dao.Request;
+using System.Diagnostics.CodeAnalysis;
 
 namespace RecipePlannerApi.Dao {
+
+    [ExcludeFromCodeCoverage]
     public abstract class Dao {
-        public static List<T> execute<T>(string storedProc, CommandUpdate updateCmd) {
+        public delegate void CommandUpdate(SqlCommand cmd);
+        public List<T> execute<T>(string storedProc, CommandUpdate updateCmd) {
 
             var mapper = new MapperConfiguration(config => {
                 config.AddDataReaderMapping();

@@ -1,9 +1,14 @@
-﻿using RecipePlannerApi.Dao.Request;
+﻿using RecipePlannerApi.Dao.Interface;
+using RecipePlannerApi.Dao.Request;
+using System.Diagnostics.CodeAnalysis;
+using static RecipePlannerApi.Dao.Dao;
 using static RecipePlannerApi.Dao.UserDao;
 
-namespace RecipePlannerApi.Dao {
-    public class AppDao:Dao {
-        public static List<string> getAppCuisines() {
+namespace RecipePlannerApi.Dao
+{
+    [ExcludeFromCodeCoverage]
+    public class AppDao: Dao, IAppDao {
+        public List<string> getAppCuisines() {
             CommandUpdate cmd = c => {
                 c.CommandType = System.Data.CommandType.StoredProcedure;
             };
@@ -12,7 +17,7 @@ namespace RecipePlannerApi.Dao {
 
         }
 
-        public static List<string> getAppDiets() {
+        public List<string> getAppDiets() {
             CommandUpdate cmd = c => {
                 c.CommandType = System.Data.CommandType.StoredProcedure;
             };
@@ -21,7 +26,7 @@ namespace RecipePlannerApi.Dao {
 
         }
 
-        public static List<string> getAppMealTypes() {
+        public List<string> getAppMealTypes() {
             CommandUpdate cmd = c => {
                 c.CommandType = System.Data.CommandType.StoredProcedure;
             };

@@ -1,16 +1,23 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RecipePlannerApi.Dao;
-using RecipePlannerApi.Service;
+using RecipePlannerApi.Service.Interface;
 
-namespace RecipePlannerApi.Controllers {
+namespace RecipePlannerApi.Controllers
+{
     [Route("api/[controller]")]
     [ApiController]
     public class AppController : ControllerBase {
+        private IAppService _appService;
+
+        public AppController(IAppService appService) {
+            this._appService = appService;
+        }
+
         [HttpGet("cuisines")]
         public ActionResult<List<string>> getAppCuisines() {
             try {
-                return Ok(AppService.getAppCuisines());
+                return Ok(this._appService.getAppCuisines());
             } catch (Exception e) {
                 return BadRequest(e.Message);
             }
@@ -19,7 +26,7 @@ namespace RecipePlannerApi.Controllers {
         [HttpGet("diet")]
         public ActionResult<List<string>> getAppDiets() {
             try {
-                return Ok(AppService.getAppDiets());
+                return Ok(this._appService.getAppDiets());
             } catch (Exception e) {
                 return BadRequest(e.Message);
             }
@@ -28,7 +35,7 @@ namespace RecipePlannerApi.Controllers {
         [HttpGet("meal-types")]
         public ActionResult<List<string>> getAppMealTypes() {
             try {
-                return Ok(AppService.getAppMealTypes());
+                return Ok(this._appService.getAppMealTypes());
             } catch (Exception e) {
                 return BadRequest(e.Message);
             }
