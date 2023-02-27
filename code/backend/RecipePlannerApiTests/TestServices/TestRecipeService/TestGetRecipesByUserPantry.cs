@@ -45,7 +45,7 @@ namespace RecipePlannerApiTests.TestServices.TestRecipeService
             };
 
             userService.Setup(x => x.GetUserPantry(It.IsAny<int>()))
-                .Returns(new List<PantryItem> { new PantryItem { IngredientName = "apple", Quantity = 5, Unit = AppUnit.NONE }, new PantryItem { IngredientName = "pear", Quantity = 5, Unit = AppUnit.NONE } });
+                .Returns(new List<PantryItem> { new PantryItem { IngredientName = "apple", Quantity = 5, UnitId = AppUnit.NONE }, new PantryItem { IngredientName = "pear", Quantity = 5, UnitId = AppUnit.NONE } });
             recipeApi.Setup(x => x.SearchRecipesByIngredients(It.IsAny<SearchRecipesByIngredientsRequest>()))
                 .Returns(apiReturn);
             var service = new RecipeService(userService.Object, ingredientDao.Object, recipeApi.Object, measurementService.Object);
