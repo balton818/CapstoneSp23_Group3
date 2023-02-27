@@ -267,7 +267,7 @@ public class FoodieViewModel
     public List<string> BrowseRecipes()
     {
         var recipeNames = new List<string>();
-        foreach (var recipe in this.browseRecipesViewModel.BrowseRecipes(this.ClientToSet))
+        foreach (var recipe in this.browseRecipesViewModel.BrowseRecipes(this.ClientToSet, this.Userid))
         {
             recipeNames.Add(recipe.Title);
         }

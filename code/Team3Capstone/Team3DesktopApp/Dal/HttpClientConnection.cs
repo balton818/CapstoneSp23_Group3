@@ -285,10 +285,10 @@ public class HttpClientConnection
     /// <returns>
     ///   a list of recipes and their information if successful null otherwise
     /// </returns>
-    public Task<JObject> BrowseRecipes(HttpClient client, string recipeType, string dietType, int page, string name)
+    public Task<JObject> BrowseRecipes(int userId, HttpClient client, string recipeType, string dietType, int page, string name)
     {
         var query = new Uri(
-            "Recipe/browse?Type=" + recipeType + "&Diet=" + dietType + "&PageNumber=" + page + "&Query=" + name,
+            "Recipe/browse?Type=" + recipeType + "&UserId=" + userId + "&Diet=" + dietType + "&PageNumber=" + page + "&Query=" + name,
             UriKind.Relative);
         var response = client.GetAsync(query);
         Console.WriteLine(response);

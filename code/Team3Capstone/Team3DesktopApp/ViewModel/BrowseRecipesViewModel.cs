@@ -58,12 +58,12 @@ namespace Team3DesktopApp.ViewModel
         /// <returns>
         ///   the list of recipes browsable by the user based on filter types and search term entered.
         /// </returns>
-        public List<Recipe> BrowseRecipes(HttpClient client)
+        public List<Recipe> BrowseRecipes(HttpClient client, int userId)
         {
             this.Recipes = new List<Recipe>();
             var connection = new HttpClientConnection();
             var retrieved =
-                connection.BrowseRecipes(client, this.AppliedRecipeType, this.AppliedDietType, this.CurrentPage,
+                connection.BrowseRecipes(userId, client, this.AppliedRecipeType, this.AppliedDietType, this.CurrentPage,
                     this.SearchName);
 
             var recipes = JsonConvert.DeserializeObject<List<Recipe>>(retrieved.Result.GetValue("recipes").ToString());
