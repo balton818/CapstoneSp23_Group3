@@ -14,7 +14,7 @@ namespace RecipePlannerApiTests.TestServices.TestUserService {
                 IngredientName = "apple",
                 Quantity = 1,
                 PantryId = 2,
-                Unit = AppUnit.NONE,
+                UnitId = AppUnit.NONE,
                 UserId = 1
             };
 
@@ -45,7 +45,7 @@ namespace RecipePlannerApiTests.TestServices.TestUserService {
                 IngredientName = null,
                 Quantity = 1,
                 PantryId = 2,
-                Unit = AppUnit.NONE,
+                UnitId = AppUnit.NONE,
                 UserId = 1
             };
 
@@ -64,7 +64,7 @@ namespace RecipePlannerApiTests.TestServices.TestUserService {
                 IngredientName = "",
                 Quantity = 1,
                 PantryId = 2,
-                Unit = AppUnit.NONE,
+                UnitId = AppUnit.NONE,
                 UserId = 1
             };
 
@@ -83,7 +83,7 @@ namespace RecipePlannerApiTests.TestServices.TestUserService {
                 IngredientName = "The worlds most larget recipe ingredient item that ever existed",
                 Quantity = 1,
                 PantryId = 2,
-                Unit = AppUnit.NONE,
+                UnitId = AppUnit.NONE,
                 UserId = 1
             };
 
