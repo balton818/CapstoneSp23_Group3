@@ -24,7 +24,6 @@
         </Grid.RenderTransform>
 
         <Canvas
-            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
             Name="svg810"
             Width="415"
             Height="574">
@@ -34,14 +33,12 @@
             <Canvas.Resources />
             <Canvas>
                 <Rectangle
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     Name="rect721"
                     Width="415"
                     Height="574"
                     Fill="#FF30323D" />
                 <Canvas Name="FooterTextBox">
                     <TextBlock
-                        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                         Name="Footer"
                         Canvas.Left="9"
                         Canvas.Top="524"
@@ -53,7 +50,6 @@
                 </Canvas>
                 <Canvas>
                     <Rectangle
-                        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                         Name="Rectangle5"
                         Canvas.Top="501"
                         Width="415"
@@ -89,7 +85,6 @@
 
                     <Canvas Name="HeaderTitle">
                         <TextBlock
-                            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                             Name="YourText"
                             Canvas.Left="10"
                             Canvas.Top="28"
@@ -102,7 +97,6 @@
                     </Canvas>
                     <Canvas>
                         <Rectangle
-                            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                             Name="rect804"
                             Width="415"
                             Height="18"
@@ -112,7 +106,6 @@
                             </Rectangle.RenderTransform>
                         </Rectangle>
                         <Rectangle
-                            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                             Name="Rectangle5_2"
                             Canvas.Top="80"
                             Width="415"
@@ -133,8 +126,7 @@
             BorderBrush="#FF30323D"
             FontFamily="Song Myung"
             FontSize="16"
-            Foreground="#FFE8C547">
-        </ListBox>
-        <local:NavMenu Canvas.Left="269" Canvas.Top="11" x:Name="navMenu" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="252,3,0,0"/>
+            Foreground="#FFE8C547" />
+        <local:NavMenu x:Name="navMenu" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="252,3,0,0" />
     </Grid>
 </Page>

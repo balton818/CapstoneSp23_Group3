@@ -5,6 +5,7 @@
 @using RecipePlannerWebApp.LocalServices;
 @inject NavigationManager Nav;
 @inject UserSessionData currentUser;
+@inject IJSRuntime JsRuntime;
 
 <PageTitle>foodie - pantry</PageTitle>
 
@@ -15,19 +16,32 @@
         <span>pantry</span>
         <hr style="height: 2px; opacity: 100%" />
     </div>
+    <div class="new-ingredient">
+        <form>
+            <span style="font-weight:bold">Add Ingredient to Pantry:</span>
+            <br />
+            <input @bind="newIngredientName" placeholder="Enter Ingredient Name" required/>
+            <input @bind="newIngredientQuantity" placeholder="Enter Quantity" required/>
+            <label class="unit-dropdown" for="ingredient-units" />
+            <select @bind="newIngredientUnit" name="ingredient-units" id="ingredient-units" selected="Select Unit">
+                @foreach (var unit in Enum.GetValues(typeof(AppUnits))) 
+                {
+                    <option >@unit</option>
+                }
+            </select>
+            <button type="submit" id="add-ingredient" @onclick="addNewIngredient">Add to Pantry</button>
+        </form>
+    </div>
+    
     <div class="pantry">
-        <div class="new-ingredient">
-            <form>
-                <span style="text-align:center; font-weight:bold">Add Ingredient to Pantry:</span>
-                <input @bind="newIngredientName" placeholder="Enter Ingredient Name" required/>
-                <input @bind="newIngredientQuantity" required/>
-                <button type="submit" id="add-ingredient" @onclick="addNewIngredient">Add to Pantry</button>
-            </form>
-        </div>
+        <div class="row navBoxGrid">
         @foreach (var ingredient in this.ingredients)
         {
-            <Ingredient IngredientName="@ingredient.IngredientName" IngredientQuantity="@ingredient.Quantity" IngredientId="@ingredient.PantryId" />
+            <div class="col navBox">
+                <Ingredient IngredientName="@ingredient.IngredientName" IngredientQuantity="@ingredient.Quantity" IngredientId="@ingredient.PantryId" IngredientUnit="@ingredient.unit"/>
+            </div>
         }
+        </div>
     </div>
 </div>
 
@@ -36,29 +50,39 @@
     private List<PantryItem>? ingredients { get; set; }
     private string newIngredientName { get; set; }
     private string newIngredientQuantity { get; set; }
+    private AppUnits newIngredientUnit { get; set; }
     private string IngredientToRemove { get; set; }
 
     protected override void OnInitialized()
     {
-
-        Console.WriteLine("PANTRY -- Initializing...");
+        Console.WriteLine("\nPANTRY -- Initializing...");
         Console.WriteLine("User #" + currentUser.CurrentUser.Id + " just logged in.");
         this.ingredients = UserService.GetUserPantry(currentUser.CurrentUser.Id);
         foreach (var ingredient in this.ingredients) 
         {
-            Console.WriteLine(ingredient.IngredientName + ": " + ingredient.Quantity + " from pantry #" + ingredient.PantryId);
+            Console.WriteLine(ingredient.IngredientName + ": " + ingredient.Quantity + " " + ingredient.unit + " from pantry #" + ingredient.PantryId );
         }
+
     }
 
     private void addNewIngredient()
     {
+        Console.WriteLine("SELECTED UNIT -- " + this.newIngredientUnit);
         PantryItem newItem = new PantryItem()
-            {
+        {
                 IngredientName = this.newIngredientName,
                 Quantity = Int32.Parse(this.newIngredientQuantity),
-                UserId = currentUser.CurrentUser.Id
-            };
-        UserService.AddPantryItem(newItem);
+                UserId = currentUser.CurrentUser.Id,
+                unit = this.newIngredientUnit
+        };
+        try
+        {
+            UserService.AddPantryItem(newItem);
+        } catch (System.Exception exc)
+        {
+            JsRuntime.InvokeVoidAsync("alert", "There was an error adding your new ingredient:\n" + exc.Message);
+        }
+
         Nav.NavigateTo("/pantry", true);
     }
 

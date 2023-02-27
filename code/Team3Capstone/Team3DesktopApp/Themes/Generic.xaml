@@ -3,8 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:view="clr-namespace:Team3DesktopApp.View">
 
-    <Style TargetType = "{x:Type view:NavButton}"
-           BasedOn = "{StaticResource {x:Type Button}}" />
+    <Style BasedOn="{StaticResource {x:Type Button}}" TargetType="{x:Type view:NavButton}" />
 
 
 </ResourceDictionary>

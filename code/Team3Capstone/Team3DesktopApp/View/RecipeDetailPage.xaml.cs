@@ -1,33 +1,43 @@
-﻿using System;
-using System.Windows;
+﻿using System.Diagnostics.CodeAnalysis;
 using System.Windows.Controls;
-using System.Windows.Input;
-using Team3DesktopApp.Model;
 using Team3DesktopApp.ViewModel;
 
-namespace Team3DesktopApp.View
+namespace Team3DesktopApp.View;
+[ExcludeFromCodeCoverage]
+/// <summary>
+///     Interaction logic for RecipeDetailPage.xaml
+/// </summary>
+public partial class RecipeDetailPage : Page
 {
-    /// <summary>
-    /// Interaction logic for RecipeDetailPage.xaml
-    /// </summary>
-    public partial class RecipeDetailPage : Page
+    #region Properties
+
+    private FoodieViewModel? ViewModel { get; }
+
+    #endregion
+
+    #region Constructors
+
+    /// <summary>Initializes a new instance of the <see cref="RecipeDetailPage" /> class.</summary>
+    /// <param name="viewModel">The view model.</param>
+    public RecipeDetailPage(FoodieViewModel viewModel)
     {
-        private FoodieViewModel? ViewModel { get; set; }
-
-        public RecipeDetailPage(FoodieViewModel viewModel)
-        {
-            this.InitializeComponent();
-            this.ViewModel = viewModel;
-            this.navMenu.FoodViewModel = this.ViewModel;
-            this.navMenu.current = this;
-            this.setPage();
-        }
-
-        private void setPage()
-        {
-            this.ingredientList.ItemsSource = this.ViewModel.GetRecipeIngredients();
-            this.stepsList.ItemsSource = this.ViewModel.GetRecipeSteps();
-            this.recipeTitleTextBlock.Text = this.ViewModel.GetRecipeTitle();
-        }
+        this.InitializeComponent();
+        this.ViewModel = viewModel;
+        this.navMenu.FoodViewModel = this.ViewModel;
+        this.navMenu.Current = this;
+        this.setPage();
     }
+
+    #endregion
+
+    #region Methods
+
+    private void setPage()
+    {
+        this.ingredientList.ItemsSource = this.ViewModel.GetRecipeIngredients();
+        this.stepsList.ItemsSource = this.ViewModel.GetRecipeSteps();
+        this.recipeTitleTextBlock.Text = this.ViewModel.GetRecipeTitle();
+    }
+
+    #endregion
 }

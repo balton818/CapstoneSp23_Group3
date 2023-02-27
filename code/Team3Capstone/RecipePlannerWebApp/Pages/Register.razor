@@ -3,6 +3,7 @@
 @using RecipePlannerApi.Model;
 @using RecipePlannerApi.Service;
 @inject NavigationManager Nav;
+@inject IJSRuntime JsRuntime;
 
 <link href="RecipePlannerWebApp.styles.css" rel="stylesheet">
 <PageTitle>foodie - register</PageTitle>
@@ -14,6 +15,7 @@
         <input id="usernameField" @bind="user.Username" placeholder="Enter Username" required />
 
         <input id="passwordField" @bind="user.Password" placeholder="Enter Password" required />
+        <input id="passwordReentryField" @bind="this.passwordReentry" placeholder="Re-enter Password" required />
 
         <input id="fnameField" @bind="user.FirstName" placeholder="Enter First Name" required />
 
@@ -29,13 +31,54 @@
     [Parameter]
     public User user { get; set; } = new User();
 
+    private string passwordReentry { get; set; } = "";
+
     private void RegisterUser()
+    {       
+        if (String.Equals(this.user.Password, this.passwordReentry))
+        {
+            try
+            {
+                var regResult = UserService.CreateUser(this.user);
+                Console.WriteLine("REGISTER -- REG_RESULT " + regResult);
+                Nav.NavigateTo("/");
+            }
+            catch (System.Data.SqlClient.SqlException sqlEx)
+            {
+                this.alertUser("The username you entered is already in use.\nPlease enter a different username.");
+                this.clearUsername();
+                Console.WriteLine("\nSQL ERR -- ");
+                Console.WriteLine(sqlEx.Message);
+            }
+            catch (System.Exception exc)
+            {
+                this.alertUser("There was an issue processing your registration");
+                Console.WriteLine("\nERR -- ");
+                Console.WriteLine(exc.Message);
+            }
+            Console.WriteLine("REGISTER -- SUCCESS");
+            Console.WriteLine("REGISTER -- " + this.user.Username);
+
+        } else
+        {
+            this.alertUser("Password values do not match");
+            this.clearPasswordFields();
+        }
+    }
+
+    private async void alertUser(string message)
     {
-        
-        Console.WriteLine("REGISTER -- SUCCESS");
-        Console.WriteLine("REGISTER -- " + this.user);
-        var regResult = UserService.CreateUser(this.user);
-        Console.WriteLine("REGISTER -- REG_RESULT " + regResult);
-        Nav.NavigateTo("/");
+        await JsRuntime.InvokeVoidAsync("alert", message);
+    }
+
+    private void clearPasswordFields()
+    {
+        this.user.Password = "";
+        this.passwordReentry = "";
+    }
+
+    private void clearUsername()
+    {
+        this.user.Username = "";
     }
 }

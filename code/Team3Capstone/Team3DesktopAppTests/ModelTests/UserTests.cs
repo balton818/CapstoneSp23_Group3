@@ -22,9 +22,10 @@ namespace Team3DesktopAppTests.ModelTests
             Assert.AreEqual("last", testUser.LastName);
             Assert.AreEqual("email", testUser.Email);
             Assert.AreEqual("pass", testUser.Password);
-
+            Assert.AreEqual("Testing", testUser.Username);
 
         }
+
 
     }
 }
