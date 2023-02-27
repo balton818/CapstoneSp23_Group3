@@ -10,9 +10,14 @@ using Team3DesktopApp.ViewModel;
 namespace Team3DesktopApp.View
 {
 
+    /// <summary>
+    ///   <br />
+    /// </summary>
     [ExcludeFromCodeCoverage]
     public class PageNavigation
     {
+        /// <summary>Gets or sets the view model.</summary>
+        /// <value>The Main view model.</value>
         public FoodieViewModel ViewModel { get; set; }
 
         private readonly string LoginUri = "/View/LoginPage.xaml";
@@ -21,11 +26,13 @@ namespace Team3DesktopApp.View
         private readonly string RecipeDetailUri = "/View/RecipeDetailPage.xaml";
         private readonly string BrowseRecipesUri = "/View/BrowseRecipesPage.xaml";
 
+        /// <summary>Initializes a new instance of the <see cref="PageNavigation" /> class.</summary>
+        /// <param name="viewModel">The view model.</param>
         public PageNavigation(FoodieViewModel viewModel)
         {
             this.ViewModel = viewModel;
         }
-        /// <summary>Navigates to page.</summary>
+        /// <summary>Navigates to page This is the logic that the custom navButton uses to move to each page.</summary>
         /// <param name="navUri">The nav URI for the page.</param>
         /// <param name="navigationService">The navigation service of the current page.</param>
         public void NavigateToPage(string navUri, NavigationService navigationService)

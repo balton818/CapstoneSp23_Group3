@@ -8,6 +8,7 @@ namespace Team3DesktopApp.View;
 [ExcludeFromCodeCoverage]
 /// <summary>
 ///     Interaction logic for NavMenu.xaml
+///     Custom control for hamburger navigation menu
 /// </summary>
 public partial class NavMenu : UserControl
 {

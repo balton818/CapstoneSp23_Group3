@@ -10,15 +10,15 @@ public class RegistrationViewModel
 {
     #region Methods
 
-    /// <summary>Registers the asynchronous.</summary>
-    /// <param name="userName">Name of the user.</param>
-    /// <param name="password">The password.</param>
-    /// <param name="email">The email.</param>
-    /// <param name="firstName">The first name.</param>
-    /// <param name="lastName">The last name.</param>
-    /// <param name="client"></param>
+    /// <summary>Registers a new user.</summary>
+    /// <param name="userName">Desired username .</param>
+    /// <param name="password">entered password.</param>
+    /// <param name="email">The users email.</param>
+    /// <param name="firstName">The users first name.</param>
+    /// <param name="lastName">The users last name.</param>
+    /// <param name="client">the client used to connect to the backend</param>
     /// <returns>
-    ///     <br />
+    ///     the id of the user that was created or -1 if the user was not created
     /// </returns>
     public async Task<int> RegisterAsync(string userName, string password, string email, string firstName,
         string lastName, HttpClient client)

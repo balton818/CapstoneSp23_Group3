@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Media;
-using System.Windows.Navigation;
 using Team3DesktopApp.Dal;
 using Team3DesktopApp.Model;
-
 
 namespace Team3DesktopApp.ViewModel;
 
@@ -18,7 +14,7 @@ namespace Team3DesktopApp.ViewModel;
 public class FoodieViewModel
 {
     #region Data members
-    public HttpClient ClientToSet { get; set; }
+
     private static readonly HttpClient Client = new() { BaseAddress = new Uri("https://localhost:7278/api/") };
     private readonly FoundRecipeViewModel foundRecipeViewModel;
     private readonly LoginViewModel loginViewModel;
@@ -27,17 +23,18 @@ public class FoodieViewModel
     private readonly PantryViewModel pantryViewModel;
     private readonly BrowseRecipesViewModel browseRecipesViewModel;
 
-
     #endregion
 
     #region Properties
 
+    public HttpClient ClientToSet { get; set; }
+
     /// <summary>Gets or sets the userid.</summary>
-    /// <value>The userid.</value>
+    /// <value>The currently logged in users ID.</value>
     public int Userid { get; set; }
 
     /// <summary>Gets or sets the pantry.</summary>
-    /// <value>The pantry.</value>
+    /// <value>The currently logged in user's pantry.</value>
     public List<PantryItem>? Pantry { get; set; }
 
     #endregion
@@ -60,13 +57,11 @@ public class FoodieViewModel
 
     #region Methods
 
-
-
-    /// <summary>Logins the specified username.</summary>
-    /// <param name="username">The username.</param>
-    /// <param name="password">The password.</param>
+    /// <summary>Verifies the login info inputted by the user.</summary>
+    /// <param name="username">The username entered.</param>
+    /// <param name="password">The password entered.</param>
     /// <returns>
-    ///     <br />
+    ///     the user id of the user if the login was successful, -1 if the login was unsuccessful
     /// </returns>
     public async Task<int> Login(string username, string password)
     {
@@ -79,9 +74,9 @@ public class FoodieViewModel
         return result;
     }
 
-    /// <summary>Gets the pantry.</summary>
+    /// <summary>Gets the pantry for the current user.</summary>
     /// <returns>
-    ///     <br />
+    ///     a list of ingredients and their quantities that the user had previously entered into the system
     /// </returns>
     public async Task<List<PantryItem>> GetPantry()
     {
@@ -93,7 +88,7 @@ public class FoodieViewModel
 
     /// <summary>Gets the recipes.</summary>
     /// <returns>
-    ///     <br />
+    ///     A list of recipes that the user can currently cook based on their pantry ingredients
     /// </returns>
     public List<string> GetRecipes()
     {
@@ -113,62 +108,74 @@ public class FoodieViewModel
     /// <param name="firstName">The first name.</param>
     /// <param name="lastName">The last name.</param>
     /// <returns>
-    ///     <br />
+    ///     the new user's id if successful -1 otherwise.
     /// </returns>
     public async Task<int> RegisterUser(string username, string password, string email, string firstName,
         string lastName)
     {
-        return await this.registrationViewModel.RegisterAsync(username, password, email, firstName, lastName, this.ClientToSet);
+        return await this.registrationViewModel.RegisterAsync(username, password, email, firstName, lastName,
+            this.ClientToSet);
     }
 
-    /// <summary>Adds the ingredient.</summary>
-    /// <param name="name">The name.</param>
-    /// <param name="quantity">The quantity.</param>
+    /// <summary>Adds an ingredient to the user's pantry.</summary>
+    /// <param name="name">The name of the ingredient being added.</param>
+    /// <param name="quantity">The quantity being added</param>
+    /// <param name="unit">The unit of measurement for the quantity being added.</param>
+    /// <returns>
+    ///     the added pantryItem or null if unsuccessful
+    /// </returns>
     public async Task<PantryItem> AddIngredient(string name, int quantity, string unit)
     {
         return await this.pantryViewModel.AddIngredient(this.Userid, name, quantity, this.ClientToSet, unit);
-
     }
 
-    /// <summary>Recipes the detail nav.</summary>
-    /// <param name="recipeName">Name of the recipe.</param>
+    /// <summary>The logic to display the recipe details upon user navigation from the Found recipes page</summary>
+    /// <param name="recipeName">Name of the recipe the user wants details for.</param>
+    /// <returns>
+    ///     The recipe information if successful ie the steps, ingredients etc. null otherwise
+    /// </returns>
     public async Task<RecipeInformation> RecipeDetailNavFound(string recipeName)
     {
         this.foundRecipeViewModel.SelectedRecipeTitle = recipeName;
-        foreach (var recipe in this.foundRecipeViewModel.Recipes)
-        {
-            if (recipe.Title.Equals(recipeName) && recipe.Id != null)
-            {
-                await this.recipeDetailViewModel.RecipeDetailNav((int)recipe.Id, this.ClientToSet);
-            }
-        }
-        return this.recipeDetailViewModel.RecipeInfo;
+        return await this.recipeInformation(recipeName, this.foundRecipeViewModel.Recipes);
     }
 
+    /// <summary>The logic to display the recipe details upon user navigation from the Browse recipes page</summary>
+    /// <param name="recipeName">Name of the recipe the user wants details for.</param>
+    /// <returns>
+    ///     The recipe information if successful ie the steps, ingredients etc. null otherwise
+    /// </returns>
     public async Task<RecipeInformation> RecipeDetailNavBrowse(string recipeName)
     {
         this.browseRecipesViewModel.SelectedRecipeTitle = recipeName;
-        foreach (var recipe in this.browseRecipesViewModel.Recipes)
+        return await this.recipeInformation(recipeName, this.browseRecipesViewModel.Recipes);
+    }
+
+    private async Task<RecipeInformation> recipeInformation(string recipeName, List<Recipe> recipes)
+    {
+        foreach (var recipe in recipes)
         {
             if (recipe.Title.Equals(recipeName) && recipe.Id != null)
             {
                 await this.recipeDetailViewModel.RecipeDetailNav((int)recipe.Id, this.ClientToSet);
             }
         }
+
         return this.recipeDetailViewModel.RecipeInfo;
     }
 
-    /// <summary>Edits the ingredient.</summary>
+    /// <summary>Edits the Pantry ingredient in the users pantry.</summary>
     /// <param name="ingredientName">Name of the ingredient.</param>
     /// <param name="ingredientAmount">The ingredient amount.</param>
+    /// <returns> the edited item if successful null otherwise </returns>
     public async Task<PantryItem> EditIngredient(string ingredientName, int ingredientAmount)
     {
         return await this.pantryViewModel.EditIngredientAmount(ingredientName, ingredientAmount, this.ClientToSet);
     }
 
-    /// <summary>Gets the recipe ingredients.</summary>
+    /// <summary>Gets the recipe ingredients form the recipe information.</summary>
     /// <returns>
-    ///     <br />
+    ///     A list of the ingredients required to make a recipe includes quantity name and unit of measure
     /// </returns>
     public List<string> GetRecipeIngredients()
     {
@@ -183,7 +190,7 @@ public class FoodieViewModel
 
     /// <summary>Gets the recipe steps.</summary>
     /// <returns>
-    ///     <br />
+    ///     An ordered list of steps that instruct how to prepare a recipe
     /// </returns>
     public List<string> GetRecipeSteps()
     {
@@ -192,21 +199,18 @@ public class FoodieViewModel
         {
             return this.splitSteps();
         }
-        else
-        {
-            foreach (var step in this.recipeDetailViewModel.RecipeInfo.Steps)
-            {
-                steps.Add(step.stepNumber + ". " + step.instructions);
-            }
 
-            return steps;
+        foreach (var step in this.recipeDetailViewModel.RecipeInfo.Steps)
+        {
+            steps.Add(step.stepNumber + ". " + step.instructions);
         }
 
+        return steps;
     }
 
     private List<string> splitSteps()
     {
-        int count = 1;
+        var count = 1;
         var splitToSteps = new List<string>();
         var steps = new List<string>();
         splitToSteps.AddRange(this.recipeDetailViewModel.RecipeInfo.Steps[0].instructions.Split('.'));
@@ -217,12 +221,15 @@ public class FoodieViewModel
                 steps.Add(count + ". " + step);
                 count++;
             }
-
         }
 
         return steps;
-
     }
+
+    /// <summary>Gets the recipe image.</summary>
+    /// <returns>
+    ///     the image source for the selected recipe
+    /// </returns>
     public ImageSource GetRecipeImage()
     {
         return this.recipeDetailViewModel.RecipeInfo.Image;
@@ -230,7 +237,7 @@ public class FoodieViewModel
 
     /// <summary>Gets the recipe title.</summary>
     /// <returns>
-    ///     <br />
+    ///     the recipe titile
     /// </returns>
     public string GetRecipeTitle()
     {
@@ -238,18 +245,25 @@ public class FoodieViewModel
         {
             return this.browseRecipesViewModel.SelectedRecipeTitle;
         }
+
         return this.foundRecipeViewModel.SelectedRecipeTitle;
     }
 
-
-    #endregion
-
+    /// <summary>Removes an ingredient from a user's pantry.</summary>
+    /// <param name="ingredientName">Name of the ingredient.</param>
+    /// <param name="ingredientAmount">The ingredient amount.</param>
+    /// <returns>
+    ///     true if successful false otherwise
+    /// </returns>
     public Task<bool> RemoveIngredient(string ingredientName, int ingredientAmount)
     {
         return this.pantryViewModel.RemoveIngredient(ingredientName, ingredientAmount, this.ClientToSet);
-
     }
 
+    /// <summary>Gets a list of recipes agnostic of users pantry items.</summary>
+    /// <returns>
+    ///     a list of recipe names that match the search and filtering criteria
+    /// </returns>
     public List<string> BrowseRecipes()
     {
         var recipeNames = new List<string>();
@@ -260,16 +274,17 @@ public class FoodieViewModel
 
         return recipeNames;
     }
+
+    /// <summary>Increments the users browsing page.</summary>
     public void IncrementPage()
     {
         if (this.browseRecipesViewModel.CurrentPage < this.browseRecipesViewModel.NumberOfPages)
         {
             this.browseRecipesViewModel.CurrentPage++;
         }
-
-
     }
 
+    /// <summary>Resets the browse Page fields and properties so the display is accurate.</summary>
     public void ResetBrowse()
     {
         this.browseRecipesViewModel.CurrentPage = 0;
@@ -280,15 +295,19 @@ public class FoodieViewModel
         this.browseRecipesViewModel.SearchName = "";
     }
 
+    /// <summary>Decrements the current browsing page.</summary>
     public void DecrementPage()
     {
         if (this.browseRecipesViewModel.CurrentPage > 0)
         {
             this.browseRecipesViewModel.CurrentPage--;
         }
-
     }
 
+    /// <summary>Gets the recipe types from the database.</summary>
+    /// <returns>
+    ///     a collection of meal types that user can filter recipes with
+    /// </returns>
     public List<string> GetRecipeTypes()
     {
         var recipeTypes = new List<string>();
@@ -299,6 +318,10 @@ public class FoodieViewModel
         return recipeTypes;
     }
 
+    /// <summary>Gets the diet types from the database.</summary>
+    /// <returns>
+    ///     a collection of diet types that user can filter recipes with
+    /// </returns>
     public List<string> GetDietTypes()
     {
         var dietTypes = new List<string>();
@@ -309,30 +332,50 @@ public class FoodieViewModel
         return dietTypes;
     }
 
+    /// <summary>Sets the filters to browse recipes with.</summary>
+    /// <param name="typeComboboxText">The recipe type combobox text.</param>
+    /// <param name="dietComboboxText">The diet combobox text.</param>
     public void SetFilters(string typeComboboxText, string dietComboboxText)
     {
         this.browseRecipesViewModel.AppliedRecipeType = typeComboboxText;
         this.browseRecipesViewModel.AppliedDietType = dietComboboxText;
     }
 
+    /// <summary>Gets the browsing page information.</summary>
+    /// <returns>
+    ///     the current page and the total number of pages
+    /// </returns>
     public string GetPageInfo()
     {
         var numberOfPages = this.browseRecipesViewModel.NumberOfPages + 1;
         return this.browseRecipesViewModel.CurrentPage + 1 + " of " + numberOfPages;
     }
 
+    /// <summary>Sets the name the user is searching with.</summary>
+    /// <param name="name">The name entered by the user.</param>
     public void SetSearchName(string name)
     {
         this.browseRecipesViewModel.SearchName = name;
     }
 
+    /// <summary>Gets the name the user searched with.</summary>
+    /// <returns>
+    ///     The name entered by the user
+    /// </returns>
     public string? GetSearchName()
     {
         return this.browseRecipesViewModel.SearchName;
     }
 
+    /// <summary>Gets the filters the user applied.</summary>
+    /// <returns>
+    ///     A tuple holding strings that indicate the filters used by the user when browsing
+    /// </returns>
     public Tuple<string, string> GetFilters()
     {
-        return new Tuple<string, string>(this.browseRecipesViewModel.AppliedRecipeType, this.browseRecipesViewModel.AppliedDietType);
+        return new Tuple<string, string>(this.browseRecipesViewModel.AppliedRecipeType,
+            this.browseRecipesViewModel.AppliedDietType);
     }
+
+    #endregion
 }

@@ -1,5 +1,8 @@
 ﻿namespace Team3DesktopApp.Model;
 
+/// <summary>
+///   Unit of measurements to use with Pantry items
+/// </summary>
 public enum UnitEnum
 {
     None = 0,

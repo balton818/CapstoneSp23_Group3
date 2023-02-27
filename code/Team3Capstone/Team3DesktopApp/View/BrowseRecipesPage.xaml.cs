@@ -16,12 +16,13 @@ using Team3DesktopApp.ViewModel;
 
 namespace Team3DesktopApp.View
 {
-    /// <summary>
-    /// Interaction logic for BrowseRecipesPage.xaml
-    /// </summary>
+    /// <summary>Interaction logic for BrowseRecipesPage.xaml</summary>
     public partial class BrowseRecipesPage : Page
     {
         private FoodieViewModel ViewModel { get; }
+
+        /// <summary>Initializes a new instance of the <see cref="BrowseRecipesPage" /> class.</summary>
+        /// <param name="viewModel">The view model. This is the main view model that has a single instance so data is persistent</param>
         public BrowseRecipesPage(FoodieViewModel viewModel)
         {
             this.InitializeComponent();

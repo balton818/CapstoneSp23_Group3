@@ -5,6 +5,7 @@ using System.Windows.Controls;
 namespace Team3DesktopApp.View;
 
 /// <summary>
+/// Custom nav button to make wpf page navigation easier
 /// </summary>
 /// <seealso cref="System.Windows.Controls.Button" />
 [ExcludeFromCodeCoverage]
@@ -20,6 +21,7 @@ public class NavButton : Button
 
     /// <summary>
     ///     The nav URI property
+    ///     Storing this allows us to navigate to the page when the button is clicked
     /// </summary>
     public static readonly DependencyProperty NavUriProperty =
         DependencyProperty.Register("NavUri", typeof(string), typeof(NavButton), new PropertyMetadata(null));
@@ -32,7 +34,7 @@ public class NavButton : Button
     ///     Gets or sets the text.
     /// </summary>
     /// <value>
-    ///     The text.
+    ///     The text of the button.
     /// </value>
     public string Text
     {
@@ -44,7 +46,7 @@ public class NavButton : Button
     ///     Gets or sets the nav URI.
     /// </summary>
     /// <value>
-    ///     The nav URI.
+    ///     The nav URI that points to the page the button navigates to.
     /// </value>
     public string NavUri
     {

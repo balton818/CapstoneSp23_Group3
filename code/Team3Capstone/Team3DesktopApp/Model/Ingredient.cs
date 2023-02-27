@@ -1,7 +1,7 @@
 ﻿namespace Team3DesktopApp.Model;
 
 /// <summary>
-///     <br />
+///     The ingredient class that allows the proper formatting for recipe ingredients.
 /// </summary>
 public class Ingredient
 {

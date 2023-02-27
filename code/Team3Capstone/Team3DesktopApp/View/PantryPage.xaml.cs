@@ -47,9 +47,9 @@ public partial class PantryPage : Page
 
     #region Methods
 
-    public event PropertyChangedEventHandler? PropertyChanged;
-
-    /// <summary>Handles the OnClick event of the AddIngredientButton control.</summary>
+    /// <summary>Handles the OnClick event of the AddIngredientButton control.
+    ///    Adds an ingredient to the pantry.</summary>
+    /// </summary>
     /// <param name="sender">The source of the event.</param>
     /// <param name="e">The <see cref="RoutedEventArgs" /> instance containing the event data.</param>
     private async void AddIngredientButton_OnClick(object sender, RoutedEventArgs e)
