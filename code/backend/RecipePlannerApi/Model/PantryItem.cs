@@ -8,6 +8,6 @@ namespace RecipePlannerApi.Model {
         public int? IngredientId { get; set; }
         public string IngredientName { get; set; }
         public int Quantity { get; set; }
-        public AppUnit Unit { get; set; }
+        public AppUnit UnitId { get; set; }
     }
 }
