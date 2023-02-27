@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,6 +18,7 @@ using Team3DesktopApp.ViewModel;
 namespace Team3DesktopApp.View
 {
     /// <summary>Interaction logic for BrowseRecipesPage.xaml</summary>
+    [ExcludeFromCodeCoverage]
     public partial class BrowseRecipesPage : Page
     {
         private FoodieViewModel ViewModel { get; }

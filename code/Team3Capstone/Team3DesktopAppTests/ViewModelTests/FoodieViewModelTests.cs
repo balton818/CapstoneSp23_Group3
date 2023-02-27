@@ -4,6 +4,7 @@ using System.Windows.Navigation;
 using Moq;
 using Moq.Protected;
 using Team3DesktopApp;
+using Team3DesktopApp.Model;
 using Team3DesktopApp.View;
 using Team3DesktopApp.ViewModel;
 
@@ -129,15 +130,20 @@ public class FoodieViewModelTests
                        {
                            StatusCode = HttpStatusCode.OK,
                            Content = new StringContent(
-                               "{'pantryId':5,  'userId': 5,'ingredientName': 'Pasta','quantity': 2}")
+                               "{'pantryId':5,  'userId': 5,'ingredientName': 'Pasta','quantity': 2, 'unitId':3}")
                        })
                    .Verifiable();
         foodieViewModel.ClientToSet = new HttpClient(handlerMock.Object)
         {
             BaseAddress = new Uri("http://test.com/")
         };
-        ;
-        var result = foodieViewModel.AddIngredient("Pasta", 2, "Oz");
+
+        var result = foodieViewModel.AddIngredient("Pasta", 2, "g");
+        result = foodieViewModel.AddIngredient("Pasta", 2, "Ml");
+        result = foodieViewModel.AddIngredient("Pasta", 2, "Fluid_Ounces");
+        result = foodieViewModel.AddIngredient("Pasta", 2, "None");
+        result = foodieViewModel.AddIngredient("Pasta", 2, "Oz");
+        Assert.AreEqual(UnitEnum.Ounces, result.Result.UnitId);
 
         Assert.AreEqual("Pasta", result.Result.IngredientName);
     }
@@ -163,9 +169,58 @@ public class FoodieViewModelTests
             BaseAddress = new Uri("http://test.com/")
         };
 
-        var result = foodieViewModel.RecipeDetailNav("oranges");
+        var result = foodieViewModel.RecipeDetailNavFound("oranges");
 
         Assert.AreEqual(1, result.Result.Ingredients.Count);
+    }
+
+
+    [TestMethod]
+    public void TestRecipeDetailNavBrowse()
+    {
+        var handlerMock = new Mock<HttpMessageHandler>(MockBehavior.Strict);
+        var foodieViewModel = new FoodieViewModel();
+        this.addRecipesForBrowseNavTest(foodieViewModel);
+        handlerMock.Protected().Setup<Task<HttpResponseMessage>>("SendAsync",
+                       ItExpr.IsAny<HttpRequestMessage>(),
+                       ItExpr.IsAny<CancellationToken>()).ReturnsAsync(
+                       new HttpResponseMessage
+                       {
+                           StatusCode = HttpStatusCode.OK,
+                           Content = new StringContent(
+                               "{'summary':'test', 'ingredients':[ {'name': 'oranges', 'quantity': 5},], 'steps':[{'stepNumber':1, 'instructions': 'Peel Orange'}] }")
+                       })
+                   .Verifiable();
+        foodieViewModel.ClientToSet = new HttpClient(handlerMock.Object)
+        {
+            BaseAddress = new Uri("http://test.com/")
+        };
+
+        var result = foodieViewModel.RecipeDetailNavBrowse("oranges");
+
+        Assert.AreEqual(1, result.Result.Ingredients.Count);
+    }
+
+    private void addRecipesForBrowseNavTest(FoodieViewModel foodieViewModel)
+    {
+
+        var handlerMock = new Mock<HttpMessageHandler>(MockBehavior.Strict);
+        handlerMock.Protected().Setup<Task<HttpResponseMessage>>("SendAsync",
+                       ItExpr.IsAny<HttpRequestMessage>(),
+                       ItExpr.IsAny<CancellationToken>()).ReturnsAsync(
+                       new HttpResponseMessage
+                       {
+                           StatusCode = HttpStatusCode.OK,
+                           Content = new StringContent("{'recipes':[{ 'id': 634141, 'title': 'oranges', 'image': 'https://spoonacular.com/recipeImages/634141-312x231.jpg', 'imageType': 'jpg'}], 'page':0, 'totalNumberOfRecipes': 1 }")
+                       })
+                   .Verifiable();
+        foodieViewModel.ClientToSet = new HttpClient(handlerMock.Object)
+        {
+            BaseAddress = new Uri("http://test.com/")
+        };
+        foodieViewModel.Userid = 1;
+
+        var result = foodieViewModel.BrowseRecipes();
     }
 
     private void addRecipesForDetailNavTest(FoodieViewModel foodieViewModel)
@@ -201,7 +256,7 @@ public class FoodieViewModelTests
                        {
                            StatusCode = HttpStatusCode.OK,
                            Content = new StringContent(
-                               "{'pantryId':5,  'userId': 5,'ingredientName': 'Pasta','quantity': 5}")
+                               "{'pantryId':5,  'userId': 5,'ingredientName': 'Pasta','quantity': 5, 'Unit': 'Fluid_Ounces'}")
                        })
                    .Verifiable();
         foodieViewModel.ClientToSet = new HttpClient(handlerMock.Object)
@@ -226,7 +281,7 @@ public class FoodieViewModelTests
                        {
                            StatusCode = HttpStatusCode.OK,
                            Content = new StringContent(
-                               "[{'pantryId':5, 'UserId':5, 'ingredientName': 'Pasta', 'quantity': 2 }]")
+                               "[{'pantryId':5, 'UserId':5, 'ingredientName': 'Pasta', 'quantity': 2, 'unit':'g'}]")
                        })
                    .Verifiable();
         foodieViewModel.ClientToSet = new HttpClient(handlerMock.Object)
@@ -261,6 +316,39 @@ public class FoodieViewModelTests
 
     }
 
+    [TestMethod]
+    public void TestGetRecipeStepsMultiStep()
+    {
+        List<string> ingredients = new List<string>();
+        FoodieViewModel foodieViewModel = new FoodieViewModel();
+        this.simulateNavForTestMultiStep(foodieViewModel);
+        ingredients.AddRange(foodieViewModel.GetRecipeSteps());
+        Assert.AreEqual(2, ingredients.Count);
+        Assert.AreEqual("oranges", foodieViewModel.GetRecipeTitle());
+
+    }
+
+    private void simulateNavForTestMultiStep(FoodieViewModel foodieViewModel)
+    {
+        var handlerMock = new Mock<HttpMessageHandler>(MockBehavior.Strict);
+        this.addRecipesForDetailNavTest(foodieViewModel);
+        handlerMock.Protected().Setup<Task<HttpResponseMessage>>("SendAsync",
+                       ItExpr.IsAny<HttpRequestMessage>(),
+                       ItExpr.IsAny<CancellationToken>()).ReturnsAsync(
+                       new HttpResponseMessage
+                       {
+                           StatusCode = HttpStatusCode.OK,
+                           Content = new StringContent(
+                               "{'summary':'test', 'ingredients':[ {'name': 'oranges', 'quantity': 5},], 'steps':[{'stepNumber':1, 'instructions': 'Peel Orange'}, {'stepNumber':2, 'instructions': 'Eat Orange'},] }")
+                       })
+                   .Verifiable();
+        foodieViewModel.ClientToSet = new HttpClient(handlerMock.Object)
+        {
+            BaseAddress = new Uri("http://test.com/")
+        };
+        var result = foodieViewModel.RecipeDetailNavFound("oranges");
+    }
+
     private void simulateNavForTest(FoodieViewModel foodieViewModel)
     {
         var handlerMock = new Mock<HttpMessageHandler>(MockBehavior.Strict);
@@ -280,9 +368,7 @@ public class FoodieViewModelTests
             BaseAddress = new Uri("http://test.com/")
         };
 
-        var result = foodieViewModel.RecipeDetailNav("oranges");
-
-        Assert.AreEqual(1, result.Result.Ingredients.Count);
+        var result = foodieViewModel.RecipeDetailNavFound("oranges");
     }
 
     [TestMethod]
@@ -311,5 +397,164 @@ public class FoodieViewModelTests
 
     }
 
+    [TestMethod]
+    public void TestBrowseRecipes()
+    {
+        var handlerMock = new Mock<HttpMessageHandler>(MockBehavior.Strict);
+        var foodieViewModel = new FoodieViewModel();
+        handlerMock.Protected().Setup<Task<HttpResponseMessage>>("SendAsync",
+                       ItExpr.IsAny<HttpRequestMessage>(),
+                       ItExpr.IsAny<CancellationToken>()).ReturnsAsync(
+                       new HttpResponseMessage
+                       {
+                           StatusCode = HttpStatusCode.OK,
+                           Content = new StringContent("{'recipes':[{ 'id': 634141, 'title': 'Pasta!', 'image': 'https://spoonacular.com/recipeImages/634141-312x231.jpg', 'imageType': 'jpg'}], 'page':0, 'totalNumberOfRecipes': 1 }")
+                       })
+                   .Verifiable();
+        foodieViewModel.ClientToSet = new HttpClient(handlerMock.Object)
+        {
+            BaseAddress = new Uri("http://test.com/")
+        };
+        foodieViewModel.Userid = 1;
+
+        var result = foodieViewModel.BrowseRecipes();
+
+        Assert.AreEqual("Pasta!", result[0]);
+        foodieViewModel.IncrementPage();
+        Assert.AreEqual("1 of 1", foodieViewModel.GetPageInfo());
+        foodieViewModel.DecrementPage();
+        Assert.AreEqual("1 of 1", foodieViewModel.GetPageInfo());
+    }
+
+    [TestMethod]
+    public void TestBrowseRecipesDifferentNumberOfPages()
+    {
+        var handlerMock = new Mock<HttpMessageHandler>(MockBehavior.Strict);
+        var foodieViewModel = new FoodieViewModel();
+        handlerMock.Protected().Setup<Task<HttpResponseMessage>>("SendAsync",
+                       ItExpr.IsAny<HttpRequestMessage>(),
+                       ItExpr.IsAny<CancellationToken>()).ReturnsAsync(
+                       new HttpResponseMessage
+                       {
+                           StatusCode = HttpStatusCode.OK,
+                           Content = new StringContent("{'recipes':[{ 'id': 634141, 'title': 'Pasta!', 'image': 'https://spoonacular.com/recipeImages/634141-312x231.jpg', 'imageType': 'jpg'}], 'page':0, 'totalNumberOfRecipes': 5000 }")
+                       })
+                   .Verifiable();
+        foodieViewModel.ClientToSet = new HttpClient(handlerMock.Object)
+        {
+            BaseAddress = new Uri("http://test.com/")
+        };
+        foodieViewModel.Userid = 1;
+
+        var result = foodieViewModel.BrowseRecipes();
+
+        Assert.AreEqual("Pasta!", result[0]);
+        foodieViewModel.IncrementPage();
+        Assert.AreEqual("2 of 46", foodieViewModel.GetPageInfo());
+        foodieViewModel.DecrementPage();
+        Assert.AreEqual("1 of 46", foodieViewModel.GetPageInfo());
+        foodieViewModel.ResetBrowse();
+        Assert.AreEqual("1 of 1", foodieViewModel.GetPageInfo());
+
+    }
+
+    [TestMethod]
+    public void TestBrowseRecipesNoPages()
+    {
+        var handlerMock = new Mock<HttpMessageHandler>(MockBehavior.Strict);
+        var foodieViewModel = new FoodieViewModel();
+        handlerMock.Protected().Setup<Task<HttpResponseMessage>>("SendAsync",
+                       ItExpr.IsAny<HttpRequestMessage>(),
+                       ItExpr.IsAny<CancellationToken>()).ReturnsAsync(
+                       new HttpResponseMessage
+                       {
+                           StatusCode = HttpStatusCode.OK,
+                           Content = new StringContent("{'recipes':[{ 'id': 634141, 'title': 'Pasta!', 'image': 'https://spoonacular.com/recipeImages/634141-312x231.jpg', 'imageType': 'jpg'}], 'page':0, 'totalNumberOfRecipes': 0 }")
+                       })
+                   .Verifiable();
+        foodieViewModel.ClientToSet = new HttpClient(handlerMock.Object)
+        {
+            BaseAddress = new Uri("http://test.com/")
+        };
+        foodieViewModel.Userid = 1;
+
+        var result = foodieViewModel.BrowseRecipes();
+
+        Assert.AreEqual("Pasta!", result[0]);
+        foodieViewModel.IncrementPage();
+        Assert.AreEqual("1 of 1", foodieViewModel.GetPageInfo());
+        foodieViewModel.DecrementPage();
+        Assert.AreEqual("1 of 1", foodieViewModel.GetPageInfo());
+    }
+
+
+    [TestMethod]
+    public void TestGetRecipeTypes()
+    {
+        var handlerMock = new Mock<HttpMessageHandler>(MockBehavior.Strict);
+        var foodieViewModel = new FoodieViewModel();
+        handlerMock.Protected().Setup<Task<HttpResponseMessage>>("SendAsync",
+                       ItExpr.IsAny<HttpRequestMessage>(),
+                       ItExpr.IsAny<CancellationToken>()).ReturnsAsync(
+                       new HttpResponseMessage
+                       {
+                           StatusCode = HttpStatusCode.OK,
+                           Content = new StringContent(
+                               "['breakfast']")
+                       })
+                   .Verifiable();
+        foodieViewModel.ClientToSet = new HttpClient(handlerMock.Object)
+        {
+            BaseAddress = new Uri("http://test.com/")
+        };
+        foodieViewModel.Userid = 1;
+        var result = foodieViewModel.GetRecipeTypes();
+
+        Assert.AreEqual(2, result.Count);
+    }
+
+
+    [TestMethod]
+    public void TestGetDietTypes()
+    {
+        var handlerMock = new Mock<HttpMessageHandler>(MockBehavior.Strict);
+        var foodieViewModel = new FoodieViewModel();
+        handlerMock.Protected().Setup<Task<HttpResponseMessage>>("SendAsync",
+                       ItExpr.IsAny<HttpRequestMessage>(),
+                       ItExpr.IsAny<CancellationToken>()).ReturnsAsync(
+                       new HttpResponseMessage
+                       {
+                           StatusCode = HttpStatusCode.OK,
+                           Content = new StringContent(
+                               "['vegan']")
+                       })
+                   .Verifiable();
+        foodieViewModel.ClientToSet = new HttpClient(handlerMock.Object)
+        {
+            BaseAddress = new Uri("http://test.com/")
+        };
+        foodieViewModel.Userid = 1;
+        var result = foodieViewModel.GetDietTypes();
+
+        Assert.AreEqual(2, result.Count);
+    }
+
+    [TestMethod]
+    public void TestSetFilters()
+    {
+        var foodieViewModel = new FoodieViewModel();
+        foodieViewModel.SetFilters("breakfast", "vegan");
+
+        Assert.AreEqual("breakfast", foodieViewModel.GetFilters().Item1);
+        Assert.AreEqual("vegan", foodieViewModel.GetFilters().Item2);
+    }
+
+    [TestMethod]
+    public void TestSetSearchName()
+    {
+        var foodieViewModel = new FoodieViewModel();
+        foodieViewModel.SetSearchName("Pasta");
+        Assert.AreEqual("Pasta", foodieViewModel.GetSearchName());
+    }
     #endregion
 }
