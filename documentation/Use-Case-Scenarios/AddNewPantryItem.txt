@@ -1,29 +1,29 @@
 Add New Pantry Ingredient Use Case Scenario
-Context - User has successfully logged in and clicked the My Pantry button from the Main Page
+Context - User has successfully logged in and navigated to My Pantry from the Main Page
 
 PRIMARY FLOW
-1 - User enters ingredient name in name textbox.
-2 - User enters quantity in quantity box.
-3 - User Selects Unit of Measurement from combobox.
-4 - User clicks Add button.
+1 - User enters ingredient name.
+2 - User enters quantity.
+3 - User Selects Unit of Measurement.
+4 - User Adds entry.
 5 - Pantry is updated with added item.
 
 ALTERNATE FLOW
 
 No Measurement
 A3 - User doesnt select measurement
-A4 - User clicks Add
+A4 - User confirms Addition
 A5 - User is informed a measurement must be selects.
 
 No Quantity
 A2 - User doesnt enter quantity
 A3 - User Selects Unit of Measurement.
-A4 - User clicks Add 
+A4 - User confirms Addition 
 A5 - User is informed that quantity cant be empty.
 
 No Ingredient Name
 A1 - User doesnt enter a name of ingredient
-A2 - User enters quantity in quantity box.
+A2 - User enters quantity.
 A3 - User Selects Unit of Measurement.
-A4 - User clicks Add 
+A4 - User confirms Addition 
 A5 - User is informed that name cant be empty.

@@ -9,11 +9,11 @@ public class LoginViewModel
 {
     #region Methods
 
-    /// <summary>Logins the asynchronous.</summary>
-    /// <param name="userName">Name of the user.</param>
-    /// <param name="password">The password.</param>
+    /// <summary>Verified the user login information and allows access to the app.</summary>
+    /// <param name="userName">user name entered.</param>
+    /// <param name="password">The password entered.</param>
     /// <returns>
-    ///     <br />
+    ///     the user id if successful, -1 if not
     /// </returns>
     public async Task<int> LoginAsync(string userName, string password, HttpClient client)
     {

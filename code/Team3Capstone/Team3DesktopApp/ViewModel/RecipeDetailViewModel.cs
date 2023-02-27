@@ -17,7 +17,7 @@ public class RecipeDetailViewModel
 
     #region Methods
 
-    /// <summary>Recipes the detail nav.</summary>
+    /// <summary>gets the recipe details upon user navigation to the recipe detail page.</summary>
     /// <param name="recipeId">The recipe identifier.</param>
     public async Task RecipeDetailNav(int recipeId, HttpClient client)
     {

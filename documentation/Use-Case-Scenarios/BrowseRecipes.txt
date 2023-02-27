@@ -5,7 +5,7 @@ Context - User has successfully logged in.
 PRIMARY FLOW
 1 - User is shown qualifying (all ingredients in pantry) recipe titles.
 2 - User selects browse all recipes
-3 - User is shown 20 recipes at a time sorted with most to least ingredients in pantry.
+3 - User is shown 20 recipes at a time sorted Alphabetically.
 
 NETWORK ERROR
 A1 - User is informed that an error has occured no recipes displayed.

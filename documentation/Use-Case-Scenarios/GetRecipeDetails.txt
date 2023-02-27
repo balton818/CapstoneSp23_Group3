@@ -4,10 +4,10 @@ Context - User has successfully logged in and found recipes.
 
 PRIMARY FLOW
 1 - User selects recipe.
-2 - User clicks view recipe details
+2 - User selects view recipe details
 3 - User is shown recipe details
 
 EMPTY PANTRY
 A1 - User does not select a recipe 
-A2 - User clicks view recipe details
+A2 - User selects view recipe details
 A3 - User is shown empty details
