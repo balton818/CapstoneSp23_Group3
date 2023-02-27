@@ -1,9 +1,8 @@
-﻿namespace RecipePlannerApi.Model
-{
-    public class Ingredient
-    {
-        public object name;
-        public object quantity;
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace RecipePlannerApi.Model {
+    [ExcludeFromCodeCoverage]
+    public class Ingredient {
         public int? IngredientId { get; set; }
         public string IngredientName { get; set; }
         public int Quantity { get; set; }

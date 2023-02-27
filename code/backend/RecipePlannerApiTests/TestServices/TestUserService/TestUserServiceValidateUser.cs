@@ -1,10 +1,9 @@
 using Moq;
 using RecipePlannerApi.Dao.Interface;
 using RecipePlannerApi.Dao.Request;
-using RecipePlannerApi.Model;
 using RecipePlannerApi.Service;
 
-namespace RecipePlannerApiTests {
+namespace RecipePlannerApiTests.TestServices.TestUserService {
     public class TestUserServiceValidateUser {
         [Fact]
         public void TestValidUserReturnsId() {

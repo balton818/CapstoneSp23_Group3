@@ -1,4 +1,8 @@
-﻿namespace RecipePlannerApi.Model {
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace RecipePlannerApi.Model {
+
+    [ExcludeFromCodeCoverage]
     public class Recipe {
 
         /// <summary>Gets or sets the identifier for recipe.</summary>

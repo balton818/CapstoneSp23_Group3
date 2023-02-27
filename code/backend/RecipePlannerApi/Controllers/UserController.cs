@@ -56,7 +56,7 @@ namespace RecipePlannerApi.Controllers
         }
 
         [HttpPost("update-pantry-item")]
-        public ActionResult UpdatePantryItem(PantryItem item) {
+        public ActionResult<PantryItem> UpdatePantryItem(PantryItem item) {
             try {
                 return Ok(this._userService.UpdatePantryItem(item));
             } catch (Exception e) {

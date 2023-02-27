@@ -1,6 +1,9 @@
-﻿namespace RecipePlannerApi.Api.Requests {
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace RecipePlannerApi.Api.Requests {
 
     /// <summary>Request class for searching recipes by ingredients</summary>
+    [ExcludeFromCodeCoverage]
     public class SearchRecipesByIngredientsRequest {
 
         /// <summary>Gets or sets the ingredients.</summary>

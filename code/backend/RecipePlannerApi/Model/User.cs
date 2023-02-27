@@ -1,5 +1,8 @@
-﻿namespace RecipePlannerApi.Model
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace RecipePlannerApi.Model
 {
+    [ExcludeFromCodeCoverage]
     public class User {
         /// <summary>Gets the id.</summary>
         /// <value>The id.</value>

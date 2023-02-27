@@ -1,8 +1,11 @@
 ﻿using RecipePlannerApi.Dao.Interface;
 using RecipePlannerApi.Model;
+using System.Diagnostics.CodeAnalysis;
 
 namespace RecipePlannerApi.Dao
 {
+
+    [ExcludeFromCodeCoverage]
     public class IngredientDao: Dao, IIngredientDao {
 
         /// <summary>Searches the ingredient.</summary>
