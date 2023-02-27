@@ -467,6 +467,7 @@
             <ComboBoxItem>Ml</ComboBoxItem>
             <ComboBoxItem>Oz</ComboBoxItem>
             <ComboBoxItem>g</ComboBoxItem>
+            <ComboBoxItem>Fluid Oz</ComboBoxItem>
         </ComboBox>
 
 

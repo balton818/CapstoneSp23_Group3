@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media;
 using System.Windows.Navigation;
 using Team3DesktopApp.Dal;
 using Team3DesktopApp.Model;
@@ -174,7 +175,7 @@ public class FoodieViewModel
         var ingredients = new List<string>();
         foreach (var ingredient in this.recipeDetailViewModel.RecipeInfo.Ingredients)
         {
-            ingredients.Add(ingredient.ingredientName + " " + ingredient.quantity);
+            ingredients.Add(ingredient.IngredientName + " " + ingredient.Quantity + " " + ingredient.Unit);
         }
 
         return ingredients;
@@ -187,12 +188,44 @@ public class FoodieViewModel
     public List<string> GetRecipeSteps()
     {
         var steps = new List<string>();
-        foreach (var step in this.recipeDetailViewModel.RecipeInfo.Steps)
+        if (this.recipeDetailViewModel.RecipeInfo.Steps.Count == 1)
         {
-            steps.Add(step.stepNumber + ". " + step.instructions);
+            return this.splitSteps();
+        }
+        else
+        {
+            foreach (var step in this.recipeDetailViewModel.RecipeInfo.Steps)
+            {
+                steps.Add(step.stepNumber + ". " + step.instructions);
+            }
+
+            return steps;
+        }
+
+    }
+
+    private List<string> splitSteps()
+    {
+        int count = 1;
+        var splitToSteps = new List<string>();
+        var steps = new List<string>();
+        splitToSteps.AddRange(this.recipeDetailViewModel.RecipeInfo.Steps[0].instructions.Split('.'));
+        foreach (var step in splitToSteps)
+        {
+            if (!string.IsNullOrEmpty(step))
+            {
+                steps.Add(count + ". " + step);
+                count++;
+            }
+
         }
 
         return steps;
+
+    }
+    public ImageSource GetRecipeImage()
+    {
+        return this.recipeDetailViewModel.RecipeInfo.Image;
     }
 
     /// <summary>Gets the recipe title.</summary>
@@ -201,8 +234,13 @@ public class FoodieViewModel
     /// </returns>
     public string GetRecipeTitle()
     {
+        if (string.IsNullOrEmpty(this.foundRecipeViewModel.SelectedRecipeTitle))
+        {
+            return this.browseRecipesViewModel.SelectedRecipeTitle;
+        }
         return this.foundRecipeViewModel.SelectedRecipeTitle;
     }
+
 
     #endregion
 
@@ -237,6 +275,9 @@ public class FoodieViewModel
         this.browseRecipesViewModel.CurrentPage = 0;
         this.browseRecipesViewModel.NumberOfPages = 0;
         this.browseRecipesViewModel.NumberOfRecipes = 0;
+        this.browseRecipesViewModel.AppliedDietType = "";
+        this.browseRecipesViewModel.AppliedRecipeType = "";
+        this.browseRecipesViewModel.SearchName = "";
     }
 
     public void DecrementPage()
@@ -276,6 +317,22 @@ public class FoodieViewModel
 
     public string GetPageInfo()
     {
-        return this.browseRecipesViewModel.CurrentPage + " of " + this.browseRecipesViewModel.NumberOfPages;
+        var numberOfPages = this.browseRecipesViewModel.NumberOfPages + 1;
+        return this.browseRecipesViewModel.CurrentPage + 1 + " of " + numberOfPages;
+    }
+
+    public void SetSearchName(string name)
+    {
+        this.browseRecipesViewModel.SearchName = name;
+    }
+
+    public string? GetSearchName()
+    {
+        return this.browseRecipesViewModel.SearchName;
+    }
+
+    public Tuple<string, string> GetFilters()
+    {
+        return new Tuple<string, string>(this.browseRecipesViewModel.AppliedRecipeType, this.browseRecipesViewModel.AppliedDietType);
     }
 }

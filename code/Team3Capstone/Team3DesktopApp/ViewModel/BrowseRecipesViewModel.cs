@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -30,6 +31,8 @@ namespace Team3DesktopApp.ViewModel
 
         public int CurrentPage { get; set; } = 0;
 
+        public string SearchName { get; set; } = "";
+
         #endregion
 
         #region Methods
@@ -44,10 +47,20 @@ namespace Team3DesktopApp.ViewModel
             this.Recipes = new List<Recipe>();
             var connection = new HttpClientConnection();
             var retrieved =
-                connection.BrowseRecipes(client, this.AppliedRecipeType, this.AppliedDietType, this.CurrentPage);
+                connection.BrowseRecipes(client, this.AppliedRecipeType, this.AppliedDietType, this.CurrentPage,
+                    this.SearchName);
 
-
-            this.Recipes.AddRange(retrieved.Result);
+            var recipes = JsonConvert.DeserializeObject<List<Recipe>>(retrieved.Result.GetValue("recipes").ToString());
+            this.NumberOfRecipes = (int)retrieved.Result.GetValue("totalNumberOfRecipes");
+            this.Recipes.AddRange(recipes);
+            if (this.NumberOfRecipes / 20 > 45)
+            {
+                this.NumberOfPages = 45;
+            }
+            else
+            {
+                this.NumberOfPages = this.NumberOfRecipes / 20;
+            }
 
 
             if (this.NumberOfRecipes == 0)
@@ -61,7 +74,6 @@ namespace Team3DesktopApp.ViewModel
 
         private void setRecipesInfo()
         {
-            this.NumberOfRecipes = this.Recipes.Count;
             this.NumberOfPages = this.NumberOfRecipes / 20;
             this.CurrentPage = 0;
         }

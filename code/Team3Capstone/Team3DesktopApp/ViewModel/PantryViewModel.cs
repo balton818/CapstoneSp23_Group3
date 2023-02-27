@@ -64,6 +64,8 @@ public class PantryViewModel
                 return UnitEnum.Grams;
             case "Oz":
                 return UnitEnum.Ounces;
+            case "Fluid Oz":
+                return UnitEnum.Fluid_Ounces;
             default:
                 return UnitEnum.None;
         }

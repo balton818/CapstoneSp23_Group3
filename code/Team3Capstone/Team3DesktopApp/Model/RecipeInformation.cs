@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Security.Permissions;
+using System.Windows.Media;
 
 namespace Team3DesktopApp.Model;
 
@@ -31,6 +33,8 @@ public class RecipeInformation
     ///     The steps.
     /// </value>
     public List<RecipeStep> Steps { get; set; }
+
+    public ImageSource Image { get; set; }
 
     #endregion
 }

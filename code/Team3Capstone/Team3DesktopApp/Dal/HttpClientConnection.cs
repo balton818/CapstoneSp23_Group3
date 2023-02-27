@@ -1,18 +1,20 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Controls;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Team3DesktopApp.Model;
 
 namespace Team3DesktopApp.Dal;
 
+/// <summary>
+///     The HttpClientConnection class
+///     this is used to connect the app to the backend.
+/// </summary>
 public class HttpClientConnection
 {
-
     #region Methods
 
     /// <summary>Validates the user via the database.</summary>
@@ -20,7 +22,7 @@ public class HttpClientConnection
     /// <param name="password">The password that the user has entered.</param>
     /// <param name="client"></param>
     /// <returns>
-    ///   the Users ID if login is successful, -1 if not.
+    ///     the Users ID if login is successful, -1 if not.
     /// </returns>
     public async Task<int> ValidateUser(string username, string password, HttpClient client)
     {
@@ -44,7 +46,7 @@ public class HttpClientConnection
     /// <param name="toCreate">The user that will be created on the server side.</param>
     /// <param name="client">the httpclient that facilitates the connection to the server.</param>
     /// <returns>
-    ///   the Users ID if login is successful, -1 if not.
+    ///     the Users ID if login is successful, -1 if not.
     /// </returns>
     public Task<int> RegisterUser(User toCreate, HttpClient client)
     {
@@ -71,7 +73,7 @@ public class HttpClientConnection
     /// <param name="userId">The user identifier for the database.</param>
     /// <param name="client">The client for the http connection.</param>
     /// <returns>
-    ///   the users list of pantry items if successful null otherwise
+    ///     the users list of pantry items if successful null otherwise
     /// </returns>
     public Task<List<PantryItem>> GetPantry(int userId, HttpClient client)
     {
@@ -99,7 +101,7 @@ public class HttpClientConnection
     /// <param name="toAdd">The pantry item to add to the users pantry.</param>
     /// <param name="client">The client used for the http connection.</param>
     /// <returns>
-    ///   the added pantry item if successful, null otherwise
+    ///     the added pantry item if successful, null otherwise
     /// </returns>
     public Task<PantryItem> AddPantryItem(PantryItem toAdd, HttpClient client)
     {
@@ -127,7 +129,7 @@ public class HttpClientConnection
     /// <param name="toEdit">The pantry item being edited.</param>
     /// <param name="client">The client to connect to the backend.</param>
     /// <returns>
-    ///   the edited pantry item if successful, null otherwise
+    ///     the edited pantry item if successful, null otherwise
     /// </returns>
     public Task<PantryItem> EditPantryItem(PantryItem toEdit, HttpClient client)
     {
@@ -155,7 +157,7 @@ public class HttpClientConnection
     /// <param name="userId">The user id of the logged in user.</param>
     /// <param name="client">The http connection client.</param>
     /// <returns>
-    ///   a list of recipes that the user isnt missing ingredients for
+    ///     a list of recipes that the user isnt missing ingredients for
     /// </returns>
     public Task<List<Recipe>> GetRecipes(int userId, HttpClient client)
     {
@@ -180,7 +182,7 @@ public class HttpClientConnection
     /// <param name="recipeId">The recipe id for database use.</param>
     /// <param name="client">The client for connecting.</param>
     /// <returns>
-    ///   the recipe detail information if successful, null otherwise
+    ///     the recipe detail information if successful, null otherwise
     /// </returns>
     public Task<RecipeInformation> GetRecipeDetail(int recipeId, HttpClient client)
     {
@@ -201,9 +203,12 @@ public class HttpClientConnection
         return Task.FromResult<RecipeInformation>(null);
     }
 
-    /// <summary>Removes the pantry item.</summary>
+    /// <summary>Removes the pantry item from the users pantry in the database.</summary>
     /// <param name="toRemove">the pantry item to remove.</param>
     /// <param name="client">The client for connecting.</param>
+    /// <returns>
+    /// true if success false otherwise
+    /// </returns>
     public Task<bool> RemovePantryItem(PantryItem toRemove, HttpClient client)
     {
         var pantryID = toRemove.PantryId;
@@ -225,15 +230,16 @@ public class HttpClientConnection
         }
 
         return Task.FromResult(false);
-
     }
 
-    #endregion
-
-
+    /// <summary>Gets the recipe types for filtering from the database.</summary>
+    /// <param name="client">The client used to connect to the backend.</param>
+    /// <returns>
+    ///   the list of recipe types or null if unsuccessful
+    /// </returns>
     public Task<List<string>> GetRecipeTypes(HttpClient client)
     {
-        var query = new Uri($"App/meal-types", UriKind.Relative);
+        var query = new Uri("App/meal-types", UriKind.Relative);
         var response = client.GetAsync(query);
         if (response.Result.IsSuccessStatusCode)
         {
@@ -248,9 +254,14 @@ public class HttpClientConnection
         return Task.FromResult<List<string>>(null);
     }
 
+    /// <summary>Gets the diet types for filtering from the data base.</summary>
+    /// <param name="client">The client used for connecting to the backend.</param>
+    /// <returns>
+    ///   the list of diet types if successful null if not
+    /// </returns>
     public Task<List<string>> GetDietTypes(HttpClient client)
     {
-        var query = new Uri($"App/diet", UriKind.Relative);
+        var query = new Uri("App/diet", UriKind.Relative);
         var response = client.GetAsync(query);
         if (response.Result.IsSuccessStatusCode)
         {
@@ -265,9 +276,20 @@ public class HttpClientConnection
         return Task.FromResult<List<string>>(null);
     }
 
-    public Task<List<Recipe>> BrowseRecipes(HttpClient client, string recipeType, string dietType, int page)
+    /// <summary>Browses the recipes available in the database.</summary>
+    /// <param name="client">The client used to connect.</param>
+    /// <param name="recipeType">Type of the recipe the recipe type used to filter results.</param>
+    /// <param name="dietType">Type of the diet used to filter results.</param>
+    /// <param name="page">The page of recipes the user is navigating to.</param>
+    /// <param name="name">The name the recipe name the user is filtering by.</param>
+    /// <returns>
+    ///   a list of recipes and their information if successful null otherwise
+    /// </returns>
+    public Task<JObject> BrowseRecipes(HttpClient client, string recipeType, string dietType, int page, string name)
     {
-        var query = new Uri($"Recipe/browse?Type=" + recipeType + "&Diet=" + dietType + "&PageNumber=" + page, UriKind.Relative);
+        var query = new Uri(
+            "Recipe/browse?Type=" + recipeType + "&Diet=" + dietType + "&PageNumber=" + page + "&Query=" + name,
+            UriKind.Relative);
         var response = client.GetAsync(query);
         Console.WriteLine(response);
         if (response.Result.IsSuccessStatusCode)
@@ -276,11 +298,12 @@ public class HttpClientConnection
             readTask.Wait();
 
             var result = readTask.Result;
-            JObject json = JObject.Parse(result);
-            var recipes = JsonConvert.DeserializeObject<List<Recipe>>(json.GetValue("recipes").ToString());
-            return Task.FromResult(recipes);
+            var json = JObject.Parse(result);
+            return Task.FromResult(json);
         }
 
-        return Task.FromResult<List<Recipe>>(null);
+        return Task.FromResult<JObject>(null);
     }
+
+    #endregion
 }

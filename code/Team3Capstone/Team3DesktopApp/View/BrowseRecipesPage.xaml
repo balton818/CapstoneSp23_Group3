@@ -461,7 +461,7 @@
                         RadiusY="1" />
                 </Canvas>
                 <TextBox
-                    Name="userNameTextBox"
+                    Name="searchNameTextBox"
                     Canvas.Left="7"
                     Canvas.Top="496"
                     Width="150"
@@ -562,12 +562,12 @@
                 </local:NavButton>
                 <local:NavButton
                     x:Name="prevPageButton"
-                    Canvas.Left="94"
+                    Canvas.Left="81"
                     Canvas.Top="438"
                     Width="55"
                     Height="31"
                     HorizontalAlignment="Left"
-                    VerticalAlignment="Top"
+                    VerticalAlignment="Center"
                     Background="#FFD6CCC2"
                     Click="PrevPageButton_OnClick"
                     Content="Prev"
@@ -583,14 +583,32 @@
                 </local:NavButton>
                 <TextBlock
                     x:Name="pageLabel"
-                    Canvas.Left="179"
+                    Canvas.Left="147"
                     Canvas.Top="445"
-                    Width="58"
+                    Width="69"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Center"
                     FontFamily="Song Myung"
                     FontSize="17"
-                    Foreground="#FFE8C547"><Span FontSize="14"><Run Text="1 of 20" /></Span></TextBlock>
+                    Foreground="#FFE8C547" Height="17"><Span FontSize="14"><Run Text="1 of 20" /></Span></TextBlock>
+                <local:NavButton
+                    x:Name="clearFilters"
+                    Width="90"
+                    Height="31"
+                    Visibility="Hidden"
+                    Background="#FFD6CCC2"
+                    Click="ClearFilters_OnClick"
+                    Content="Clear Filters"
+                    FontFamily="Song Myung"
+                    FontSize="15"
+                    ForceCursor="True" HorizontalAlignment="Left" Canvas.Left="305" Canvas.Top="436" VerticalAlignment="Center">
+                    <local:NavButton.Resources>
+                        <Style TargetType="{x:Type Border}">
+                            <Setter Property="CornerRadius" Value="5" />
+                        </Style>
+                    </local:NavButton.Resources>
+
+                </local:NavButton>
             </Canvas>
         </Canvas>
         <ListBox
@@ -614,7 +632,7 @@
             x:Name="nextPageButton"
             Width="55"
             Height="31"
-            Margin="258,441,0,0"
+            Margin="213,440,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Background="#FFD6CCC2"

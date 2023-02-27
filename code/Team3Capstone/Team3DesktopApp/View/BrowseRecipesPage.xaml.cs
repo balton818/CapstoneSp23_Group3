@@ -33,6 +33,21 @@ namespace Team3DesktopApp.View
             this.typeCombobox.ItemsSource = this.ViewModel.GetRecipeTypes();
             this.dietCombobox.ItemsSource = this.ViewModel.GetDietTypes();
             this.pageLabel.Text = this.ViewModel.GetPageInfo();
+            if (!string.IsNullOrEmpty(this.ViewModel.GetSearchName()))
+            {
+                this.searchNameTextBox.Text = this.ViewModel.GetSearchName();
+                this.clearFilters.Visibility = Visibility.Visible;
+            }
+            var filters = this.ViewModel.GetFilters();
+
+            if (!string.IsNullOrEmpty(filters.Item1) || !string.IsNullOrEmpty(filters.Item2))
+            {
+                this.typeCombobox.SelectedItem = filters.Item1;
+                this.dietCombobox.SelectedItem = filters.Item2;
+                this.clearFilters.Visibility = Visibility.Visible;
+            }
+
+
         }
 
         private void ViewDetail_Click(object sender, RoutedEventArgs e)
@@ -59,7 +74,10 @@ namespace Team3DesktopApp.View
 
         private void SearchByName_Click(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            this.ViewModel.SetSearchName(this.searchNameTextBox.Text);
+            this.recipeListBox.ItemsSource = this.ViewModel.BrowseRecipes();
+            this.pageLabel.Text = this.ViewModel.GetPageInfo();
+            this.clearFilters.Visibility = Visibility.Visible;
         }
 
         private void PrevPageButton_OnClick(object sender, RoutedEventArgs e)
@@ -78,10 +96,22 @@ namespace Team3DesktopApp.View
 
         private void ApplyButton_OnClick(object sender, RoutedEventArgs e)
         {
-            this.ViewModel.ResetBrowse();
             this.ViewModel.SetFilters(this.typeCombobox.Text, this.dietCombobox.Text);
             this.recipeListBox.ItemsSource = this.ViewModel.BrowseRecipes();
             this.pageLabel.Text = this.ViewModel.GetPageInfo();
+            this.clearFilters.Visibility = Visibility.Visible;
+        }
+
+        private void ClearFilters_OnClick(object sender, RoutedEventArgs e)
+        {
+            this.ViewModel.ResetBrowse();
+            this.clearFilters.Visibility = Visibility.Hidden;
+            this.recipeListBox.ItemsSource = this.ViewModel.BrowseRecipes();
+            this.pageLabel.Text = this.ViewModel.GetPageInfo();
+            this.searchNameTextBox.Text = string.Empty;
+            this.typeCombobox.SelectedItem = null;
+            this.dietCombobox.SelectedItem = null;
+
         }
     }
 }
