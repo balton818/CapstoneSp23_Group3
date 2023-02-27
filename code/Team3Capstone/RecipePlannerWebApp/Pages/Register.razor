@@ -24,6 +24,8 @@
         <input id="emailField" type="email" @bind="user.Email" placeholder="Enter Email Address" required />
 
         <button type="submit" id="submitButton" style="position:center">Submit</button>
+        <br />
+        <button style="position:center" @onclick="goToLogin">&#8672 Back</button>
     </div>
 </EditForm>
 
@@ -33,6 +35,9 @@
 
     private string passwordReentry { get; set; } = "";
 
+    /**
+     * Handles page initialization of the Register component
+     */
     private void RegisterUser()
     {       
         if (String.Equals(this.user.Password, this.passwordReentry))
@@ -66,19 +71,39 @@
         }
     }
 
+    /**
+     * Alerts the user in the event that an error occurred and
+     * displays the given message.
+     * @param message - the error message to be displayed to 
+     *      the user.
+     */
     private async void alertUser(string message)
     {
         await JsRuntime.InvokeVoidAsync("alert", message);
     }
 
+    /**
+     * Clears the password data fields
+     */
     private void clearPasswordFields()
     {
         this.user.Password = "";
         this.passwordReentry = "";
     }
 
+    /**
+     * Clears the username data field
+     */
     private void clearUsername()
     {
         this.user.Username = "";
+    }
+
+    /**
+     * Handles page navigation back to the Login page
+     */
+    private void goToLogin()
+    {
+        Nav.NavigateTo("/");
     }
 }

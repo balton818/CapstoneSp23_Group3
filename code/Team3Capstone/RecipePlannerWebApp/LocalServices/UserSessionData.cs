@@ -1,4 +1,5 @@
-﻿using RecipePlannerApi.Model;
+﻿using RecipePlannerApi.Api.Requests;
+using RecipePlannerApi.Model;
 
 namespace RecipePlannerWebApp.LocalServices
 {
@@ -9,5 +10,7 @@ namespace RecipePlannerWebApp.LocalServices
         public string? CurrentRecipeTitle { get; set; }
         public List<string>? RecipeIngredients { get; set; }
         public List<string>? RecipeSteps { get; set; }
+
+        public BrowseRecipeRequest? lastExplorePageRequest { get; set; }
     }
 }
