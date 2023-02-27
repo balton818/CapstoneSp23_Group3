@@ -42,8 +42,8 @@
                                 FontFamily="Song Myung"
                                 FontSize="16"
                                 TextWrapping="Wrap"
-                                Foreground="#FFE8C547" HorizontalAlignment="Left" VerticalAlignment="Center"
-                                Width="231">
+                                Foreground="#FFE8C547" HorizontalAlignment="Center" VerticalAlignment="Top"
+                                Width="297" Height="39">
                                 <Span FontSize="24">Recipe Title</Span>
                             </TextBlock>
                         </Canvas>
@@ -129,29 +129,37 @@
                         Canvas.Left="14"
                         Canvas.Top="140"
                         x:Name="ingredientList"
-                        Width="171"
+                        Width="169"
                         Height="147"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Center"
                         Background="#FF30323D"
                         BorderBrush="#FF30323D"
-                        Foreground="#FFE8C547" />
+                        Foreground="#FFE8C547"
+                        ScrollViewer.CanContentScroll="True"
+                        ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding }" TextWrapping="Wrap" HorizontalAlignment="Left"/>
+
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
                 </Canvas>
             </Canvas>
             <ListBox
                 x:Name="stepsList"
                 Background="#FF30323D"
                 BorderBrush="#FF30323D"
-                Foreground="#FFE8C547" Canvas.Left="10" Canvas.Top="342" Width="380" HorizontalAlignment="Center"
+                Foreground="#FFE8C547" Canvas.Left="10" Canvas.Top="342" Width="395" HorizontalAlignment="Left"
                 VerticalAlignment="Center"
-                Height="147"
-                ScrollViewer.CanContentScroll="True"
-                ScrollViewer.HorizontalScrollBarVisibility ="Hidden">
+                Height="146"
+                ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel  Width="340">
-                            <TextBlock Text="{Binding }" TextWrapping="Wrap" HorizontalAlignment="Left"/>
-                        </StackPanel>
+
+                        <TextBlock Text="{Binding }" TextWrapping="Wrap" HorizontalAlignment="Left"/>
+
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
@@ -169,7 +177,9 @@
                     <Canvas.Resources />
                 </Canvas>
             </Grid>
-            <local:NavMenu x:Name="navMenu" Margin="267,0,-38,404" />
+            <Image x:Name="recipeImage" HorizontalAlignment="Left" Height="149" VerticalAlignment="Top" Width="190" Canvas.Left="208" Canvas.Top="140"/>
+            <local:NavMenu Grid.ZIndex="1" x:Name="navMenu" Canvas.Left="306" Canvas.Top="10" />
         </Canvas>
+
     </Grid>
 </Page>

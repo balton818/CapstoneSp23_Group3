@@ -9,11 +9,11 @@ PRIMARY FLOW:
 
 ALTERNATE FLOW:
 > LOGOUT
-A2 - User clicks logout.
+A2 - User selects logout.
 A3 - User is directed to the login page.
 
 > NAVIGATE TO PANTRY
-B2 - User clicks 'pantry'.
+B2 - User selects 'pantry'.
 B3 - User is directed to the pantry page.
 
 > SERVER CONNECTION ERROR

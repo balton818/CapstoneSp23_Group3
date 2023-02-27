@@ -37,6 +37,8 @@ public partial class RecipeDetailPage : Page
         this.ingredientList.ItemsSource = this.ViewModel.GetRecipeIngredients();
         this.stepsList.ItemsSource = this.ViewModel.GetRecipeSteps();
         this.recipeTitleTextBlock.Text = this.ViewModel.GetRecipeTitle();
+        this.recipeImage.Source = this.ViewModel.GetRecipeImage();
+
     }
 
     #endregion

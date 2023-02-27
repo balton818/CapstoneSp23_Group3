@@ -162,7 +162,7 @@
                 </Canvas>
             </Canvas>
         </Canvas>
-        <TextBlock Name="errorMessage" Margin="126,292,126,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top"
+        <TextBlock Name="errorMessage" Margin="46,292,47,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top"
                    Foreground="#FFF80E0E" TextAlignment="Center" Height="16" />
 
 

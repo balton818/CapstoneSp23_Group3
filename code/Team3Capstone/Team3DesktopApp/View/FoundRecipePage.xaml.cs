@@ -39,7 +39,7 @@ public partial class FoundRecipePage : Page
             MessageBox.Show("Please select a recipe to view");
             return;
         }
-        this.ViewModel.RecipeDetailNav(this.recipeListBox.SelectedItem.ToString());
+        _ = this.ViewModel.RecipeDetailNavFound(this.recipeListBox.SelectedItem.ToString());
         var navButton = (NavButton)sender;
         this.navigateToPage(navButton.NavUri);
     }
@@ -54,4 +54,11 @@ public partial class FoundRecipePage : Page
     }
 
     #endregion
+
+    private void BrowseAllRecipes_OnClick(object sender, RoutedEventArgs e)
+    {
+        var navButton = (NavButton)sender;
+        this.ViewModel.ResetBrowse();
+        this.navigateToPage(navButton.NavUri);
+    }
 }

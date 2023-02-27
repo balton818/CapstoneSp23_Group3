@@ -350,12 +350,12 @@
 
                 <ListBox
                     x:Name="pantryListBox"
-                    Canvas.Left="13"
+                    Canvas.Left="4"
                     Canvas.Top="129"
-                    Width="387"
+                    Width="402"
                     Height="255"
                     HorizontalAlignment="Left"
-                    VerticalAlignment="Top"
+                    VerticalAlignment="Center"
                     Background="#30323d"
                     BorderBrush="#FF30323D"
                     FontFamily="Song Myung"
@@ -422,8 +422,8 @@
             </Canvas>
             <local:NavMenu
                 x:Name="navMenu"
-                Canvas.Left="241"
-                Canvas.Top="-4" />
+                Canvas.Left="303"
+                Canvas.Top="5" />
         </Canvas>
 
         <TextBlock
@@ -463,9 +463,11 @@
             <Run Text="Unit" /><LineBreak /><Run />
         </TextBlock>
         <ComboBox Style="{DynamicResource ComboBoxStyle}" Grid.Row="0" x:Name="measurementCombo"  HorizontalAlignment="Left" Foreground="#FF30323D" Margin="249,438,0,0" VerticalAlignment="Top" Width="65" Height="28" RenderTransformOrigin="0.474,0.504" BorderBrush="#FFE8C547" Background="#FFAA9888">
+            <ComboBoxItem>None</ComboBoxItem>
             <ComboBoxItem>Ml</ComboBoxItem>
             <ComboBoxItem>Oz</ComboBoxItem>
             <ComboBoxItem>g</ComboBoxItem>
+            <ComboBoxItem>Fluid Oz</ComboBoxItem>
         </ComboBox>
 
 

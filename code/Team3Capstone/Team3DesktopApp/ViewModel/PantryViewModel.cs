@@ -9,7 +9,7 @@ using Team3DesktopApp.Model;
 namespace Team3DesktopApp.ViewModel;
 
 /// <summary>
-///     <br />
+///     the viewmodel for the pantrypage
 /// </summary>
 public class PantryViewModel
 {
@@ -23,11 +23,11 @@ public class PantryViewModel
 
     #region Methods
 
-    /// <summary>Gets the pantry.</summary>
-    /// <param name="userId">The user identifier.</param>
-    /// <param name="client"></param>
+    /// <summary>Gets the pantry of the current user.</summary>
+    /// <param name="userId">The current user id.</param>
+    /// <param name="client"> the client used to connect to the backend</param>
     /// <returns>
-    ///     <br />
+    ///     the users previously entered pantry or an empty list
     /// </returns>
     public async Task<List<PantryItem>> GetPantry(int userId, HttpClient client)
     {
@@ -38,24 +38,43 @@ public class PantryViewModel
         return this.Pantry;
     }
 
-    /// <summary>Adds the ingredient.</summary>
-    /// <param name="userId">The user identifier.</param>
-    /// <param name="name">The name.</param>
-    /// <param name="quantity">The quantity.</param>
-    /// <param name="client"></param>
-    public async Task<PantryItem> AddIngredient(int userId, string name, int quantity, HttpClient client)
+    /// <summary>Adds the ingredient entered by the user.</summary>
+    /// <param name="userId">The currently logged in user.</param>
+    /// <param name="name">The name of the ingredient being added.</param>
+    /// <param name="quantity">The quantity of the addition.</param>
+    /// <param name="unit">The unit of measurement for the addition.</param>
+    /// <param name="client"> the client used to connect to the backend</param>
+    public async Task<PantryItem> AddIngredient(int userId, string name, int quantity, HttpClient client, string unit)
     {
         var pantryItem = new PantryItem();
         pantryItem.UserId = userId;
         pantryItem.IngredientName = name;
         pantryItem.Quantity = quantity;
+        pantryItem.UnitId = this.getUnit(unit);
         var connection = new HttpClientConnection();
         return await connection.AddPantryItem(pantryItem, client);
     }
 
+    private UnitEnum getUnit(string unit)
+    {
+        switch (unit)
+        {
+            case "Ml":
+                return UnitEnum.Milliliters;
+            case "g":
+                return UnitEnum.Grams;
+            case "Oz":
+                return UnitEnum.Ounces;
+            case "Fluid Oz":
+                return UnitEnum.Fluid_Ounces;
+            default:
+                return UnitEnum.None;
+        }
+    }
+
     /// <summary>Edits the ingredient amount.</summary>
-    /// <param name="name">The name.</param>
-    /// <param name="quantity">The quantity.</param>
+    /// <param name="name">The name of the ingredient being edited.</param>
+    /// <param name="quantity">The new quantity of the ingredient.</param>
     public async Task<PantryItem> EditIngredientAmount(string name, int quantity, HttpClient client)
     {
         this.getItem(name);
@@ -78,6 +97,13 @@ public class PantryViewModel
         return new PantryItem();
     }
 
+    /// <summary>Removes the ingredient from the users pantry.</summary>
+    /// <param name="name">The name of the ingredient.</param>
+    /// <param name="quantity">The quantity being removed.</param>
+    /// <param name="client">The client used to connect to the backend.</param>
+    /// <returns>
+    ///   true if the ingredient was removed successfully false otherwise
+    /// </returns>
     public Task<bool> RemoveIngredient(string name, int quantity, HttpClient client)
     {
 

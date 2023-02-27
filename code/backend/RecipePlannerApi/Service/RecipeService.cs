@@ -106,7 +106,7 @@ namespace RecipePlannerApi.Service
                 IngredientId = 14412,
                 IngredientName = "water",
                 Quantity = 100,
-                Unit = AppUnit.NONE
+                UnitId = AppUnit.NONE
             });
 
             return pantry;
@@ -142,10 +142,10 @@ namespace RecipePlannerApi.Service
                 return recipeIngredient.Quantity;
             }
 
-            var recipeQuantity = this._measurementService.Convert(recipeIngredient.Quantity, recipeIngredient.Unit, pantryIngredient.Unit);
+            var recipeQuantity = this._measurementService.Convert(recipeIngredient.Quantity, recipeIngredient.Unit, pantryIngredient.UnitId);
 
             if (recipeQuantity == null) {
-                var toUnitString = MeasurementService.AppUnitUnitInfo[pantryIngredient.Unit].Name;
+                var toUnitString = MeasurementService.AppUnitUnitInfo[pantryIngredient.UnitId].Name;
                 var result = this._recipeApi.ConvertAmount(new ConvertAmountRequest {
                     IngredientName = recipeIngredient.IngredientName,
                     SourceAmount = recipeIngredient.Quantity,
