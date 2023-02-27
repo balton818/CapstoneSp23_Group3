@@ -1,4 +1,7 @@
-﻿namespace RecipePlannerApi.Api.Requests {
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace RecipePlannerApi.Api.Requests {
+    [ExcludeFromCodeCoverage]
     public class BrowseRecipeRequest {
         public int UserId { get; set; }
         public string Query { get; set; }

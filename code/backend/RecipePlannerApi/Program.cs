@@ -7,9 +7,11 @@ using RecipePlannerApi.Dao;
 using RecipePlannerApi.Dao.Interface;
 using RecipePlannerApi.Service;
 using RecipePlannerApi.Service.Interface;
+using System.Diagnostics.CodeAnalysis;
 
 namespace RecipePlannerApi
 {
+    [ExcludeFromCodeCoverage]
     public class Program {
 
         public static void Main(string[] args) {

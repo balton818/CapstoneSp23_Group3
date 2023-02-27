@@ -1,4 +1,7 @@
-﻿namespace RecipePlannerApi.Model {
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace RecipePlannerApi.Model {
+    [ExcludeFromCodeCoverage]
     public class PantryItem {
         public int? PantryId { get; set; }
         public int? UserId { get; set; }

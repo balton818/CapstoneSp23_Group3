@@ -1,4 +1,7 @@
-﻿namespace RecipePlannerApi.Api.Requests {
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace RecipePlannerApi.Api.Requests {
+    [ExcludeFromCodeCoverage]
     public class ConvertAmountRequest {
         public string IngredientName { get; set; }
         public decimal SourceAmount { get; set; }

@@ -1,4 +1,7 @@
-﻿namespace RecipePlannerApi.Model {
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace RecipePlannerApi.Model {
+    [ExcludeFromCodeCoverage]
     public class RecipeInformation {
         public string Summary { get; set; }
         public string Image { get; set; }
