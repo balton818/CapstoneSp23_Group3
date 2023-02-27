@@ -2,9 +2,12 @@
 using RecipePlannerApi.Dao.Request;
 using RecipePlannerApi.Model;
 using System.Data;
+using System.Diagnostics.CodeAnalysis;
 
 namespace RecipePlannerApi.Dao
 {
+
+    [ExcludeFromCodeCoverage]
     public class UserDao: Dao, IUserDao {
 
         public IdDto ValidateUser(string username, string password) {

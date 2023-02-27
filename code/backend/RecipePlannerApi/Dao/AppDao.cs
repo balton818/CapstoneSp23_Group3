@@ -1,10 +1,12 @@
 ﻿using RecipePlannerApi.Dao.Interface;
 using RecipePlannerApi.Dao.Request;
+using System.Diagnostics.CodeAnalysis;
 using static RecipePlannerApi.Dao.Dao;
 using static RecipePlannerApi.Dao.UserDao;
 
 namespace RecipePlannerApi.Dao
 {
+    [ExcludeFromCodeCoverage]
     public class AppDao: Dao, IAppDao {
         public List<string> getAppCuisines() {
             CommandUpdate cmd = c => {
