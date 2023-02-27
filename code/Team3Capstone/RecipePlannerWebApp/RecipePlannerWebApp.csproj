@@ -11,10 +11,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Data\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Include="wwwroot\Assets\recipe-filler-image.png" />
   </ItemGroup>
 

@@ -31,6 +31,9 @@
         "drink", "fingerfood", "main course", "marinade", "salad", "sauce", "side dish", "snack", "soup" };
     private string mealTypeFilterSelection = "";
 
+    /**
+     * Handles initialization of the Recipes component
+     */
     protected override void OnInitialized()
     {
         Console.WriteLine("RECIPES -- Initializing...");
@@ -38,6 +41,7 @@
         if (recipes != null)
         {
             this.recipeResults = recipes;
+            this.currentUser.lastExplorePageRequest = null;
         }
         else
         {
@@ -45,6 +49,12 @@
         }
     }
 
+    /**
+     * Handles page navigation to show the details for the recipe
+     * that was clicked.
+     * @param recipeTitle - the recipe title
+     * @param recipeId - the recipe id
+     */
     private void goToRecipe(string recipeTitle, int recipeId)
     {
         Console.WriteLine("Recipe clicked: " + recipeId);

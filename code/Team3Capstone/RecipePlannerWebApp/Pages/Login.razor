@@ -35,6 +35,9 @@
 
     private string? LoginValidationResultMessage { get; set; }
 
+    /**
+     * Initializes the Login component
+     */
     protected override void OnInitialized()
     {
         Console.WriteLine("LOGIN -- Initializing...");
@@ -43,6 +46,10 @@
         userData.CurrentUser = new User();
     }
 
+    /**
+     * Handles user validation by performing some basic input validation
+     * before sending data to the user validation service.
+     */
     private void ValidateUser()
     {
 
@@ -71,6 +78,9 @@
         }
     }
 
+    /**
+     * Handles page navigation to the register page
+     */
     private void RegisterUser()
     {
         Nav.NavigateTo("/register");

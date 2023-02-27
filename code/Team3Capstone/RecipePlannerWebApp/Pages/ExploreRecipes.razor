@@ -89,6 +89,9 @@
 
     private List<Recipe> results = new List<Recipe>();
 
+    /**
+     * Initializes the ExploreRecipes component
+     */
     protected override void OnInitialized()
     {
         this.resultsFound = false;
@@ -103,6 +106,10 @@
         }
     }
 
+    /**
+     * Handles page navigation back to the Explore page from a
+     * recipe detail view page.
+     */
     private void returnFromDetailView()
     {
         this.repopulateFilters();
@@ -111,7 +118,11 @@
         this.hidePrevPageButton = this.pageNum == 1;
         this.hideNextPageButton = this.pageNum > 35 || !this.resultsFound;
     }
-
+    
+    /**
+     *  Handles populating the previous search filter values 
+     *  and re-sending the browse request.
+     */
     private void repopulateFilters()
     {
         this.searchParam = this.currentUserData.lastExplorePageRequest.Query;
@@ -121,6 +132,10 @@
         this.pageNum = this.currentUserData.lastExplorePageRequest.PageNumber + 1;
     }
 
+    /**
+     *  Handles building the request to browse recipes based
+     *  on user filtering
+     */
     private void browse()
     {
         try
@@ -147,12 +162,20 @@
         }
     }
 
+    /**
+     *  Handles page navigation to the specified recipe detail view
+     *  @param recipeTitle - the title of the recipe
+     *  @param recipeId - the recipe id
+     */
     private void goToRecipe(string recipeTitle, int recipeId)
     {
         Console.WriteLine("Recipe clicked: " + recipeId);
         Nav.NavigateTo("recipe-details/" + recipeTitle + "/" + recipeId);
     }
 
+    /**
+     *  Handles the 'show previous page' pagination functionality.
+     */
     private void viewPreviousPage()
     {
         if (this.pageNum > 1)
@@ -162,6 +185,9 @@
         }
     }
 
+    /**
+     *  Handles the 'show next page' pagination functionality.
+     */
     private void viewNextPage()
     {
         if (this.pageNum < 35)

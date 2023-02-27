@@ -33,6 +33,9 @@
 
     private string NewIngredientQuantity { get; set; }
 
+    /**
+     * Handles deletion of the Ingredient from the database
+     */
     private async void deleteIngredient()
     {
         bool confirmed = await JsRuntime.InvokeAsync<bool>("confirm", "Are you sure you want to delete this ingredient entirely from your pantry?"); // Confirm
@@ -43,8 +46,11 @@
             Nav.NavigateTo("/pantry", true);
         }
     }
-
     
+    /**
+     * Updates the quantity of the Ingredient to the amount
+     * specified by the user.
+     */
     private void updateIngredientQuantity()
     {
         Console.WriteLine("Updating " + this.IngredientName + " # " + this.IngredientId + " quantity to "

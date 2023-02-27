@@ -46,6 +46,9 @@
     private List<RecipePlannerApi.Model.Ingredient>? ingredients { get; set; } 
     private List<RecipePlannerApi.Model.RecipesStep>? steps { get; set; }
 
+    /**
+     * Handles initialization of the RecipeDetails component
+     */
     protected override void OnInitialized()
     {
         RecipeInformation info = RecipeService.GetRecipeInformation(Int32.Parse(this.RecipeId));
@@ -60,6 +63,11 @@
         }
     }
 
+    /**
+     * Handles page navigation back to either the Explore page or
+     * the Recipes page, depending on which page generated the 
+     * request for the detail view initially
+     */
     private void goBack()
     {
         if (this.currentUserData.lastExplorePageRequest != null)

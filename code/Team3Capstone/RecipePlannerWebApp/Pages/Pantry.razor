@@ -53,6 +53,9 @@
     private AppUnits newIngredientUnit { get; set; }
     private string IngredientToRemove { get; set; }
 
+    /**
+     * Handles initialization of the Pantry component
+     */
     protected override void OnInitialized()
     {
         Console.WriteLine("\nPANTRY -- Initializing...");
@@ -65,10 +68,12 @@
 
     }
 
+    /**
+     * Handles ingredient creation by sending user input to the
+     * addPantryItem endpoint
+     */
     private void addNewIngredient()
     {
-        Console.WriteLine("SELECTED UNIT -- " + this.newIngredientUnit);
-        
         try
         {
             PantryItem newItem = new PantryItem()
