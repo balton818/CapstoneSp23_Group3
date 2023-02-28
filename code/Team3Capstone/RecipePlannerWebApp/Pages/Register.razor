@@ -2,6 +2,7 @@
 
 @using RecipePlannerApi.Model;
 @using RecipePlannerApi.Service;
+@using RecipePlannerApi.Dao;
 @inject NavigationManager Nav;
 @inject IJSRuntime JsRuntime;
 
@@ -34,6 +35,7 @@
     public User user { get; set; } = new User();
 
     private string passwordReentry { get; set; } = "";
+    private UserService service { get; set; } = new UserService(new UserDao(), new PantryDao());
 
     /**
      * Handles page initialization of the Register component
@@ -44,7 +46,7 @@
         {
             try
             {
-                var regResult = UserService.CreateUser(this.user);
+                var regResult = this.service.CreateUser(this.user);
                 Console.WriteLine("REGISTER -- REG_RESULT " + regResult);
                 Nav.NavigateTo("/");
             }

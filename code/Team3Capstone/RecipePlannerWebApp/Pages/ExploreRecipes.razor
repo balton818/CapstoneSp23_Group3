@@ -2,8 +2,10 @@
 @layout MainLayout;
 @using RecipePlannerApi.Model;
 @using RecipePlannerApi.Service;
-@using RecipePlannerWebApp.LocalServices;
+@using RecipePlannerApi.Dao;
+@using RecipePlannerApi.Api;
 @using RecipePlannerApi.Api.Requests;
+@using RecipePlannerWebApp.LocalServices;
 @inject NavigationManager Nav;
 @inject UserSessionData currentUserData;
 
@@ -46,7 +48,7 @@
                 }
             </select>
         </div>
-        <button type="submit" class="apply-filter-button" @onclick="browse">Apply</button>
+        <button type="submit" class="apply-filter-button" @onclick="applyFilters">Apply</button>
     </div>
     <div class="recipe-list-area">
         <label hidden="@resultsFound" style="font-weight: bold">No results found.</label>
@@ -88,6 +90,7 @@
     private bool hideNextPageButton;
 
     private List<Recipe> results = new List<Recipe>();
+    private RecipeService service { get; set; } = new RecipeService(new UserService(new UserDao(), new PantryDao()), new IngredientDao(), new RecipeApi(), new MeasurementService());
 
     /**
      * Initializes the ExploreRecipes component
@@ -113,12 +116,12 @@
     private void returnFromDetailView()
     {
         this.repopulateFilters();
-        this.results = RecipeService.BrowseRecipes(this.currentUserData.lastExplorePageRequest).recipes;
+        this.results = this.service.BrowseRecipes(this.currentUserData.lastExplorePageRequest).recipes;
         this.resultsFound = this.results.Count > 0;
         this.hidePrevPageButton = this.pageNum == 1;
         this.hideNextPageButton = this.pageNum > 35 || !this.resultsFound;
     }
-    
+
     /**
      *  Handles populating the previous search filter values 
      *  and re-sending the browse request.
@@ -149,7 +152,7 @@
                     Type = this.mealTypeFilterSelection,
                     PageNumber = this.pageNum - 1
                 };
-            this.results = RecipeService.BrowseRecipes(request).recipes;
+            this.results = this.service.BrowseRecipes(request).recipes;
             this.resultsFound = this.results.Count > 0;
             this.hidePrevPageButton = this.pageNum == 1;
             this.hideNextPageButton = this.pageNum > 34 || !this.resultsFound;
@@ -160,6 +163,12 @@
             Console.WriteLine("\nSQL ERR -- ");
             Console.WriteLine(sqlEx.Message);
         }
+    }
+
+    private void applyFilters()
+    {
+        this.pageNum = 1;
+        this.browse();
     }
 
     /**

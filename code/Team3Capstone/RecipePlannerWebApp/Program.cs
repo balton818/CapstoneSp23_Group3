@@ -1,5 +1,7 @@
 
 using RecipePlannerWebApp.LocalServices;
+using RecipePlannerApi.Dao;
+using Org.OpenAPITools.Client;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,6 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<UserSessionData>();
+Configuration.ApiKey.Add("x-api-key", Connection.SpoonacularApiKey);
 
 var app = builder.Build();
 

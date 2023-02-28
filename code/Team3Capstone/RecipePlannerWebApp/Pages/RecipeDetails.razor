@@ -2,6 +2,8 @@
 @layout MainLayout
 @using RecipePlannerApi.Service;
 @using RecipePlannerApi.Model;
+@using RecipePlannerApi.Dao;
+@using RecipePlannerApi.Api;
 @inject IJSRuntime JsRuntime;
 @inject NavigationManager Nav;
 @using RecipePlannerWebApp.LocalServices;
@@ -19,7 +21,7 @@
         <ul>
             @foreach (var ingredient in this.ingredients)
             {
-                <li>@ingredient.IngredientName: @ingredient.Quantity</li>
+                <li>@ingredient.IngredientName: @ingredient.Quantity @ingredient.Unit</li>
             }
         </ul>
         <br />
@@ -45,13 +47,14 @@
 
     private List<RecipePlannerApi.Model.Ingredient>? ingredients { get; set; } 
     private List<RecipePlannerApi.Model.RecipesStep>? steps { get; set; }
+    private RecipeService service { get; set; } = new RecipeService(new UserService(new UserDao(), new PantryDao()), new IngredientDao(), new RecipeApi(), new MeasurementService());
 
     /**
      * Handles initialization of the RecipeDetails component
      */
     protected override void OnInitialized()
     {
-        RecipeInformation info = RecipeService.GetRecipeInformation(Int32.Parse(this.RecipeId));
+        RecipeInformation info = this.service.GetRecipeInformation(Int32.Parse(this.RecipeId));
         if (info != null)
         {
             this.ingredients = info?.Ingredients;
