@@ -138,7 +138,7 @@ namespace RecipePlannerApi.Service
         }
 
         private int? TryConvertQuantity(Ingredient recipeIngredient, PantryItem pantryIngredient) {
-            if (!this._measurementService.IsValidUnit(recipeIngredient.Unit)) {
+            if (!this._measurementService.IsValidUnit(recipeIngredient.Unit) || pantryIngredient.UnitId == AppUnit.NONE) {
                 return recipeIngredient.Quantity;
             }
 
