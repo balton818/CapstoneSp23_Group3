@@ -2,6 +2,7 @@
 @layout MainLayout;
 @using RecipePlannerApi.Model;
 @using RecipePlannerApi.Service;
+@using RecipePlannerApi.Dao;
 @using RecipePlannerWebApp.LocalServices;
 @inject NavigationManager Nav;
 @inject UserSessionData currentUserData;
@@ -24,7 +25,7 @@
             <input @bind="newIngredientQuantity" placeholder="Enter Quantity" required/>
             <label class="unit-dropdown" for="ingredient-units" />
             <select @bind="newIngredientUnit" name="ingredient-units" id="ingredient-units" selected="Select Unit">
-                @foreach (var unit in Enum.GetValues(typeof(AppUnits))) 
+                @foreach (var unit in Enum.GetValues(typeof(AppUnit))) 
                 {
                     <option >@unit</option>
                 }
@@ -50,8 +51,9 @@
     private List<PantryItem>? ingredients { get; set; }
     private string newIngredientName { get; set; }
     private string newIngredientQuantity { get; set; }
-    private AppUnits newIngredientUnit { get; set; }
+    private AppUnit newIngredientUnit { get; set; }
     private string IngredientToRemove { get; set; }
+    private UserService service { get; set; } = new UserService(new UserDao(), new PantryDao());
 
     /**
      * Handles initialization of the Pantry component
@@ -60,12 +62,7 @@
     {
         Console.WriteLine("\nPANTRY -- Initializing...");
         Console.WriteLine("User #" + currentUserData.CurrentUser.Id + " just logged in.");
-        this.ingredients = UserService.GetUserPantry(currentUserData.CurrentUser.Id);
-        foreach (var ingredient in this.ingredients) 
-        {
-            Console.WriteLine(ingredient.IngredientName + ": " + ingredient.Quantity + " " + ingredient.UnitId + " from pantry #" + ingredient.PantryId );
-        }
-
+        this.ingredients = this.service.GetUserPantry(currentUserData.CurrentUser.Id);
     }
 
     /**
@@ -83,7 +80,7 @@
                     UserId = currentUserData.CurrentUser.Id,
                     UnitId = this.newIngredientUnit
                 };
-            UserService.AddPantryItem(newItem);
+            this.service.AddPantryItem(newItem);
         } catch (System.Exception exc)
         {
             JsRuntime.InvokeVoidAsync("alert", "There was an error adding your new ingredient:\n" + exc.Message);

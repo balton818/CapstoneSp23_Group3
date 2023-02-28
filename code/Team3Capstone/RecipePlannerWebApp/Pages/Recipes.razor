@@ -2,6 +2,8 @@
 @layout MainLayout
 @using RecipePlannerApi.Service;
 @using RecipePlannerApi.Model;
+@using RecipePlannerApi.Api;
+@using RecipePlannerApi.Dao;
 @using RecipePlannerWebApp.LocalServices;
 @inject IJSRuntime JsRuntime;
 @inject NavigationManager Nav;
@@ -26,10 +28,11 @@
 </div>
 
 @code {
-    private List<Recipe> recipeResults { get; set; } 
+    private List<Recipe> recipeResults { get; set; } = new List<Recipe>();
     private string[] mealTypeFilters { get; set; } = new[] { "", "appetizer", "beverage", "bread", "breakfast", "dessert",
         "drink", "fingerfood", "main course", "marinade", "salad", "sauce", "side dish", "snack", "soup" };
     private string mealTypeFilterSelection = "";
+    private RecipeService service { get; set; } = new RecipeService(new UserService(new UserDao(), new PantryDao()), new IngredientDao(), new RecipeApi(), new MeasurementService());
 
     /**
      * Handles initialization of the Recipes component
@@ -37,16 +40,27 @@
     protected override void OnInitialized()
     {
         Console.WriteLine("RECIPES -- Initializing...");
-        List<Recipe> recipes = RecipeService.GetRecipesByUserPantry(currentUser.CurrentUser.Id);
-        if (recipes != null)
+        try
         {
-            this.recipeResults = recipes;
-            this.currentUser.lastExplorePageRequest = null;
+            List<Recipe> recipes = this.service.GetRecipesByUserPantry(this.currentUser.CurrentUser.Id);
+            if (recipes != null)
+            {
+                this.recipeResults = recipes;
+                this.currentUser.lastExplorePageRequest = null;
+            }
         }
-        else
+        catch (System.Data.SqlClient.SqlException sqlEx)
         {
             JsRuntime.InvokeAsync<bool>("alert", "Unable to fetch recipes.\nPlease try again later.");
+            Console.WriteLine("\nSQL ERR -- Err:\n" + sqlEx.Message);
+            Console.WriteLine(sqlEx.StackTrace);
+        } catch (System.Exception exc)
+        {
+            JsRuntime.InvokeAsync<bool>("alert", "Unable to fetch recipes.\nPlease try again later.");
+            Console.WriteLine("\nGEN ERR -- Err:\n" + exc.Message);
+            Console.WriteLine(exc.StackTrace);
         }
+
     }
 
     /**

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
@@ -12,6 +12,12 @@
 
   <ItemGroup>
     <None Include="wwwroot\Assets\recipe-filler-image.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="SpoonacularApi">
+      <HintPath>..\..\backend\RecipePlannerApi\SpoonacularApi.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

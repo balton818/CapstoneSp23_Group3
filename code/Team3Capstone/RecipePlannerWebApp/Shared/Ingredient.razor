@@ -1,5 +1,6 @@
 ﻿@using RecipePlannerApi.Model;
 @using RecipePlannerApi.Service;
+@using RecipePlannerApi.Dao;
 @using RecipePlannerWebApp.LocalServices;
 @inject NavigationManager Nav;
 @inject UserSessionData currentUser;
@@ -29,9 +30,10 @@
     public int? IngredientId { get; set; }
 
     [Parameter]
-    public AppUnits IngredientUnit { get; set; }
+    public AppUnit IngredientUnit { get; set; }
 
     private string NewIngredientQuantity { get; set; }
+    private UserService service { get; set; } = new UserService(new UserDao(), new PantryDao());
 
     /**
      * Handles deletion of the Ingredient from the database
@@ -42,7 +44,7 @@
         if (confirmed)
         {
             Console.WriteLine("Deleting " + this.IngredientName + " # " + this.IngredientId + " for user: " + currentUser.CurrentUser.Username);
-            UserService.RemovePantryItem(this.IngredientId ?? -1);
+            this.service.RemovePantryItem(this.IngredientId ?? -1);
             Nav.NavigateTo("/pantry", true);
         }
     }
@@ -55,7 +57,7 @@
     {
         Console.WriteLine("Updating " + this.IngredientName + " # " + this.IngredientId + " quantity to "
             + this.NewIngredientQuantity + " for user: " + currentUser.CurrentUser.Username);
-        UserService.UpdatePantryItem(new PantryItem()
+        this.service.UpdatePantryItem(new PantryItem()
             { PantryId = this.IngredientId,
                 UserId = currentUser.CurrentUser.Id,
                 IngredientName = this.IngredientName,

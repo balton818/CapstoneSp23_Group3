@@ -1,6 +1,7 @@
 ﻿@page "/"
 @using RecipePlannerApi.Model;
 @using RecipePlannerApi.Service;
+@using RecipePlannerApi.Dao;
 @using RecipePlannerWebApp.LocalServices;
 @inject NavigationManager Nav;
 @inject UserSessionData userData;
@@ -34,6 +35,7 @@
     public bool ValidFields { get; set; }
 
     private string? LoginValidationResultMessage { get; set; }
+    private UserService service { get; set; } = new UserService(new UserDao(), new PantryDao());
 
     /**
      * Initializes the Login component
@@ -56,7 +58,7 @@
         LoginValidationResultMessage = "";
         if (!String.IsNullOrEmpty(this.user?.Username) && !String.IsNullOrEmpty(this.user?.Password))
         {
-            int? result = UserService.ValidateUser(this.user);
+            int? result = this.service.ValidateUser(this.user.Username, this.user.Password);
             LoginValidationResultMessage = "";
             if (result != null)
             {
