@@ -1,4 +1,5 @@
 ﻿CREATE PROCEDURE [dbo].[create_meal]
+	@mealPlanId INT,
 	@dayOfWeek INT,
 	@mealType NVARCHAR(50),
 	@apiId INT,
@@ -12,7 +13,7 @@ AS
 		EXEC @recipeId = [dbo].[create_recipe] @apiId, @title, @imageUrl, @imageType
 
 	INSERT INTO [dbo].[meal] 
-	([day_of_week], [meal_type], [recipe_id]) VALUES (@dayOfWeek, @mealType, @recipeId)
+	([meal_plan_id],[day_of_week], [meal_type], [recipe_id]) VALUES (@mealPlanId, @dayOfWeek, @mealType, @recipeId)
 
 	DECLARE @mealId INT = SCOPE_IDENTITY()
 	EXEC [dbo].[get_meal] @mealId

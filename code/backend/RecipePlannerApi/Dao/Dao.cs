@@ -22,6 +22,16 @@ namespace RecipePlannerApi.Dao {
                 config.CreateMap<IDataReader, Ingredient>();
                 config.CreateMap<IDataReader, StringDto>();
                 config.CreateMap<StringDto, string>();
+                config.CreateMap<IDataReader, MealPlan>().ForMember(mealPlan => mealPlan.meals, m => m.Ignore());
+                config.CreateMap<IDataReader, Meal>().ForMember(meal => meal.dayOfWeek, d => d.AddTransform(d => d - 1))
+                .ForMember(meal => meal.recipe,
+                    r => r.MapFrom(reader => new Recipe 
+                    { 
+                        Id = (int?)reader["RecipeId"], 
+                        Image = reader["Image"].ToString(), 
+                        ImageType = reader["ImageType"].ToString(), 
+                        Title = reader["Title"].ToString() 
+                    }));
             }).CreateMapper();
 
             using (SqlConnection conn = new SqlConnection(Connection.ConnectionString)) {

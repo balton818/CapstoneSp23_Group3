@@ -9,6 +9,8 @@ namespace RecipePlannerApi.Model {
         /// <value>The identifier.</value>
         public int? Id { get; set; }
 
+        public int? ApiId { get; set; }
+
         /// <summary>Gets or sets the title.</summary>
         /// <value>The title.</value>
         public string Title { get; set; }

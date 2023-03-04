@@ -17,7 +17,7 @@ namespace RecipePlannerApi.Controllers
             this._recipeService = recipeService;
         }
 
-        [HttpGet("search")]
+        [HttpGet("test/search")]
         public ActionResult<List<SearchRecipesByIngredients200ResponseInner>> SearchRecipes([FromQuery] SearchRecipesByIngredientsRequest request) {
             try {
                 return Ok(this._recipeService.SearchRecipes(request));

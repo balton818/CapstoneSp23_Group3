@@ -93,8 +93,6 @@
     <Build Include="dbo\Stored Procedures\Meal Plan\get_meal_plan.sql" />
     <Build Include="dbo\Function\get_first_of_week.sql" />
     <Build Include="dbo\Stored Procedures\Meal Plan\create_meal.sql" />
-    <Build Include="dbo\Stored Procedures\Meal Plan\get_meals_by_date.sql" />
-    <Build Include="dbo\Stored Procedures\Meal Plan\update_meal_plan.sql" />
     <Build Include="dbo\Stored Procedures\Meal Plan\get_meal.sql" />
     <Build Include="dbo\Stored Procedures\Meal Plan\remove_meal.sql" />
     <Build Include="dbo\Tables\recipe.sql" />
@@ -102,6 +100,8 @@
     <Build Include="dbo\Stored Procedures\Recipe\get_recipe.sql" />
     <Build Include="dbo\Stored Procedures\Recipe\update_recipe.sql" />
     <Build Include="dbo\Stored Procedures\Recipe\delete_recipe.sql" />
+    <Build Include="dbo\Stored Procedures\Meal Plan\get_meal_plan_meals.sql" />
+    <Build Include="dbo\Stored Procedures\Meal Plan\update_meal.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="RecipePlannerDatabase.refactorlog" />

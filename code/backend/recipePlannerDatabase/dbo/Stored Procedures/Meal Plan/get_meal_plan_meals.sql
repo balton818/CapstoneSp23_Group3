@@ -1,11 +1,6 @@
-﻿CREATE PROCEDURE [dbo].[get_meals_by_date]
-	@date DATE
+﻿CREATE PROCEDURE [dbo].[get_meal_plan_meals]
+	@mealPlanId INT
 AS
-	DECLARE @firstOfWeek DATE = get_first_of_week(@date)
-	DECLARE @mealPlanId INT = 	(SELECT 
-									meal_plan_id
-								FROM [dbo].[meal_plan]
-								WHERE @firstOfWeek = meal_plan_date)
 	SELECT
 		m.meal_id 			AS mealId,
 		m.meal_plan_id 		AS mealPlanId,
