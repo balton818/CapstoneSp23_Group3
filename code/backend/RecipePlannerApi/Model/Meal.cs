@@ -1,9 +1,9 @@
 ﻿namespace RecipePlannerApi.Model {
     public class Meal {
-        public int? mealId { get; set; }
-        public int mealPlanId { get; set; }
-        public DayOfWeek dayOfWeek { get; set; }
-        public string mealType { get; set; }
-        public Recipe recipe { get; set; }
+        public int? MealId { get; set; }
+        public int MealPlanId { get; set; }
+        public DayOfWeek DayOfWeek { get; set; }
+        public MealType MealType { get; set; }
+        public Recipe Recipe { get; set; }
     }
 }

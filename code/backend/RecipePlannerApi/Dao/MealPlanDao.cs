@@ -19,13 +19,13 @@ namespace RecipePlannerApi.Dao
         public Meal CreateMeal(Meal meal) {
             CommandUpdate cmd = c => {
                 c.CommandType = System.Data.CommandType.StoredProcedure;
-                c.Parameters.AddWithValue("@mealPlanId", meal.mealPlanId);
-                c.Parameters.AddWithValue("@dayOfWeek", meal.dayOfWeek + 1);
-                c.Parameters.AddWithValue("@mealType", meal.mealType);
-                c.Parameters.AddWithValue("@apiId", meal.recipe.ApiId);
-                c.Parameters.AddWithValue("@title", meal.recipe.Title);
-                c.Parameters.AddWithValue("@imageUrl", meal.recipe.Image);
-                c.Parameters.AddWithValue("@imageType", meal.recipe.ImageType);
+                c.Parameters.AddWithValue("@mealPlanId", meal.MealPlanId);
+                c.Parameters.AddWithValue("@dayOfWeek", meal.DayOfWeek + 1);
+                c.Parameters.AddWithValue("@mealType", meal.MealType);
+                c.Parameters.AddWithValue("@apiId", meal.Recipe.ApiId);
+                c.Parameters.AddWithValue("@title", meal.Recipe.Title);
+                c.Parameters.AddWithValue("@imageUrl", meal.Recipe.Image);
+                c.Parameters.AddWithValue("@imageType", meal.Recipe.ImageType);
             };
 
             return execute<Meal>("create_meal", cmd).FirstOrDefault();
@@ -62,13 +62,13 @@ namespace RecipePlannerApi.Dao
         public Meal UpdateMealPlan(Meal meal) {
             CommandUpdate cmd = c => {
                 c.CommandType = System.Data.CommandType.StoredProcedure;
-                c.Parameters.AddWithValue("@mealPlanId", meal.mealPlanId);
-                c.Parameters.AddWithValue("@dayOfWeek", meal.dayOfWeek + 1);
-                c.Parameters.AddWithValue("@mealType", meal.mealType);
-                c.Parameters.AddWithValue("@apiId", meal.recipe.ApiId);
-                c.Parameters.AddWithValue("@title", meal.recipe.Title);
-                c.Parameters.AddWithValue("@imageUrl", meal.recipe.Image);
-                c.Parameters.AddWithValue("@imageType", meal.recipe.ImageType);
+                c.Parameters.AddWithValue("@mealPlanId", meal.MealPlanId);
+                c.Parameters.AddWithValue("@dayOfWeek", meal.DayOfWeek + 1);
+                c.Parameters.AddWithValue("@mealType", meal.MealType);
+                c.Parameters.AddWithValue("@apiId", meal.Recipe.ApiId);
+                c.Parameters.AddWithValue("@title", meal.Recipe.Title);
+                c.Parameters.AddWithValue("@imageUrl", meal.Recipe.Image);
+                c.Parameters.AddWithValue("@imageType", meal.Recipe.ImageType);
             };
 
             return execute<Meal>("update_meal", cmd).FirstOrDefault();

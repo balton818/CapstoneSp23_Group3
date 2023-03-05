@@ -2,9 +2,7 @@
 using Org.OpenAPITools.Model;
 using RecipePlannerApi.Api.Requests;
 using RecipePlannerApi.Model;
-using RecipePlannerApi.Service;
 using RecipePlannerApi.Service.Interface;
-using System.Linq.Expressions;
 
 namespace RecipePlannerApi.Controllers
 {
