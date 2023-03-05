@@ -36,39 +36,27 @@ public sealed partial class RegistrationPage : Page
 
     private async void RegisterButton_ClickAsync(object sender, RoutedEventArgs e)
     {
-        if (!string.IsNullOrWhiteSpace(this.unTextBox.Text) &&
-            !string.IsNullOrWhiteSpace(this.pwTextBox.Text) &&
-            !string.IsNullOrWhiteSpace(this.emailTextBox.Text) &&
-            !string.IsNullOrWhiteSpace(this.firstNameTextBox.Text) &&
-            !string.IsNullOrWhiteSpace(this.lastNameTextBox.Text) &&
-            !string.IsNullOrWhiteSpace(this.pwConfirmBox.Text))
+
+        if (!this.errorChecking())
         {
-            if (!this.errorChecking())
-            {
-                return;
-            }
-            var result = await ((this.ViewModel != null
-                ? this.ViewModel.RegisterUser(this.unTextBox.Text, this.pwTextBox.Text,
-                    this.emailTextBox.Text,
-                    this.firstNameTextBox.Text, this.lastNameTextBox.Text)
-                : null)!);
-            if (result < 0)
-            {
-                this.generalError.Text = "error registering user";
-                this.generalError.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                if (NavigationService != null)
-                {
-                    PageNavigation navigate = new PageNavigation(this.ViewModel);
-                    navigate.NavigateToPage(this.registerButton.NavUri, NavigationService);
-                }
-            }
+            return;
+        }
+
+        var result = await this.ViewModel?.RegisterUser(this.unTextBox.Text, this.pwTextBox.Text,
+            this.emailTextBox.Text,
+            this.firstNameTextBox.Text, this.lastNameTextBox.Text);
+        if (result < 0)
+        {
+            this.generalError.Text = "error registering user";
+            this.generalError.Visibility = Visibility.Visible;
         }
         else
         {
-            this.generalError.Visibility = Visibility.Visible;
+            if (NavigationService != null)
+            {
+                PageNavigation navigate = new PageNavigation(this.ViewModel);
+                navigate.NavigateToPage(this.registerButton.NavUri, NavigationService);
+            }
         }
     }
 
@@ -95,7 +83,7 @@ public sealed partial class RegistrationPage : Page
             this.pwError.Visibility = Visibility.Visible;
             errors++;
         }
-        if (String.IsNullOrEmpty(this.unTextBox.Text))
+        if (string.IsNullOrEmpty(this.unTextBox.Text))
         {
             this.unErrorLabel.Visibility = Visibility.Visible;
             errors++;
@@ -139,31 +127,4 @@ public sealed partial class RegistrationPage : Page
     }
 
     #endregion
-
-    private void SubmitButton_OnClick_(object sender, RoutedEventArgs e)
-    {
-        this.unErrorLabel.Visibility = Visibility.Collapsed;
-        this.pwError.Visibility = Visibility.Collapsed;
-        this.emailError.Visibility = Visibility.Collapsed;
-        this.nameError.Visibility = Visibility.Collapsed;
-        if (String.IsNullOrEmpty(this.unTextBox.Text))
-        {
-            this.errorLabel.Visibility = Visibility.Visible;
-            this.errorLabel.Text = "Please enter a username";
-        }
-
-        if (this.pwTextBox.Text.Equals(this.pwConfirmBox.Text))
-        {
-            this.regForm.Visibility = Visibility.Visible;
-            this.formTwo.Visibility = Visibility.Collapsed;
-            this.pwError.Visibility = Visibility.Collapsed;
-        }
-
-        else
-        {
-            this.pwError.Text = "Passwords do not match";
-            this.pwError.Visibility = Visibility.Visible;
-
-        }
-    }
 }
