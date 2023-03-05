@@ -586,22 +586,27 @@
                     Canvas.Left="147"
                     Canvas.Top="445"
                     Width="69"
+                    Height="17"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Center"
                     FontFamily="Song Myung"
                     FontSize="17"
-                    Foreground="#FFE8C547" Height="17"><Span FontSize="14"><Run Text="1 of 20" /></Span></TextBlock>
+                    Foreground="#FFE8C547"><Span FontSize="14"><Run Text="1 of 20" /></Span></TextBlock>
                 <local:NavButton
                     x:Name="clearFilters"
+                    Canvas.Left="305"
+                    Canvas.Top="436"
                     Width="90"
                     Height="31"
-                    Visibility="Hidden"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
                     Background="#FFD6CCC2"
                     Click="ClearFilters_OnClick"
                     Content="Clear Filters"
                     FontFamily="Song Myung"
                     FontSize="15"
-                    ForceCursor="True" HorizontalAlignment="Left" Canvas.Left="305" Canvas.Top="436" VerticalAlignment="Center">
+                    ForceCursor="True"
+                    Visibility="Hidden">
                     <local:NavButton.Resources>
                         <Style TargetType="{x:Type Border}">
                             <Setter Property="CornerRadius" Value="5" />

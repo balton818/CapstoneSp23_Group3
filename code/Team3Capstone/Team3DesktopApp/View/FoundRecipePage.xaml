@@ -62,17 +62,19 @@
                     <local:NavButton
                         x:Name="viewRecipeButton"
                         Canvas.Left="227"
-                        Canvas.Right="15"
                         Canvas.Top="416"
+                        Canvas.Right="15"
                         Width="171"
                         Height="66"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
                         Background="#FFD6CCC2"
                         Click="ViewDetail_Click"
                         Content="View Recipe Details"
-                        NavUri="/View/RecipeDetailPage.xaml"
                         FontFamily="Song Myung"
                         FontSize="18"
-                        ForceCursor="True" HorizontalAlignment="Left" VerticalAlignment="Top">
+                        ForceCursor="True"
+                        NavUri="/View/RecipeDetailPage.xaml">
                         <local:NavButton.Resources>
                             <Style TargetType="Border">
                                 <Setter Property="CornerRadius" Value="5" />
@@ -122,13 +124,15 @@
                     Canvas.Top="416"
                     Width="171"
                     Height="66"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
                     Background="#FFD6CCC2"
                     Click="BrowseAllRecipes_OnClick"
                     Content="Browse All Recipes"
-                    NavUri="/View/BrowseRecipesPage.xaml"
                     FontFamily="Song Myung"
                     FontSize="18"
-                    ForceCursor="True" HorizontalAlignment="Left" VerticalAlignment="Top">
+                    ForceCursor="True"
+                    NavUri="/View/BrowseRecipesPage.xaml">
                     <local:NavButton.Resources>
                         <Style TargetType="{x:Type Border}">
                             <Setter Property="CornerRadius" Value="5" />
@@ -155,6 +159,10 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <local:NavMenu x:Name="navMenu" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="306,8,0,0" />
+        <local:NavMenu
+            x:Name="navMenu"
+            Margin="306,8,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top" />
     </Grid>
 </Page>
