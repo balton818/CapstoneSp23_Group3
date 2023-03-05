@@ -4,6 +4,6 @@
         public DateTime? MealPlanDate { get; set; }
         public int UserId { get; set; }
 
-        public List<Meal> meals { get; set; }
+        public Dictionary<DayOfWeek, List<Meal>> meals { get; set; } = new Dictionary<DayOfWeek, List<Meal>>();
     }
 }

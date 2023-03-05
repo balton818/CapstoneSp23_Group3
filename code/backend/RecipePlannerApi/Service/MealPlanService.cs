@@ -20,9 +20,23 @@ namespace RecipePlannerApi.Service
                 mealPlan = this.mealPlanDao.CreateMealPlan(request);
             }
 
-            
+            if(mealPlan.MealPlanId == null) {
+                throw new MissingFieldException("meal plan is missing meal plan id from database");
+            }
+
+            var meals = this.mealPlanDao.GetMealPlanMeals(mealPlan.MealPlanId.Value);
+
+            foreach(var day in Enum.GetValues(typeof(DayOfWeek))) {
+                var dayMeals = meals.Where(meal => meal.DayOfWeek == (DayOfWeek)day).ToList();
+                mealPlan.meals.Add((DayOfWeek)day, dayMeals);
+            }
 
             return mealPlan;
+        }
+
+
+        public Meal AddMeal(Meal meal) {
+            return this.mealPlanDao.CreateMeal(meal);
         }
     }
 }

@@ -7,7 +7,7 @@ AS
 		m.day_of_week		AS DayOfWeek,	
 		m.meal_type 		AS MealType,
 		r.recipe_id 		AS RecipeId,
-		r.api_id			AS Api_id,
+		r.api_id			AS ApiId,
 		r.title				AS Title,
 		r.image_url 		AS ImageUrl,
 		r.image_type 		AS ImageType

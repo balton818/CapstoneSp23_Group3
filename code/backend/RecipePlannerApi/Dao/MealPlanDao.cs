@@ -1,4 +1,5 @@
 ﻿using RecipePlannerApi.Controllers.Requests;
+using RecipePlannerApi.Dao.Dto;
 using RecipePlannerApi.Dao.Interface;
 using RecipePlannerApi.Model;
 
@@ -28,7 +29,7 @@ namespace RecipePlannerApi.Dao
                 c.Parameters.AddWithValue("@imageType", meal.Recipe.ImageType);
             };
 
-            return execute<Meal>("create_meal", cmd).FirstOrDefault();
+            return new Meal(execute<MealDto>("create_meal", cmd).FirstOrDefault());
         }
 
         public MealPlan GetMealPlan(GetMealPlanRequest request) {
@@ -41,13 +42,13 @@ namespace RecipePlannerApi.Dao
             return execute<MealPlan>("get_meal_plan", cmd).FirstOrDefault();
         }
 
-        public List<Meal> GetMealsbyDate(int mealPlanId) {
+        public List<Meal> GetMealPlanMeals(int mealPlanId) {
             CommandUpdate cmd = c => {
                 c.CommandType = System.Data.CommandType.StoredProcedure;
                 c.Parameters.AddWithValue("@mealPlanId", mealPlanId);
             };
 
-            return execute<Meal>("get_meal_plan_meals", cmd);
+            return execute<MealDto>("get_meal_plan_meals", cmd).Select(m => new Meal(m)).ToList();
         }
 
         public void RemoveMeal(int mealId) {
@@ -71,7 +72,7 @@ namespace RecipePlannerApi.Dao
                 c.Parameters.AddWithValue("@imageType", meal.Recipe.ImageType);
             };
 
-            return execute<Meal>("update_meal", cmd).FirstOrDefault();
+            return new Meal(execute<MealDto>("update_meal", cmd).FirstOrDefault());
         }
 
 

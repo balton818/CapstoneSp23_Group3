@@ -23,5 +23,15 @@ namespace RecipePlannerApi.Controllers {
                 return BadRequest(e.Message);
             }
         }
+
+        [HttpGet("add-meal")]
+        public ActionResult<MealPlan> AddMeal([FromQuery] Meal meal) {
+            try {
+                return Ok(this.mealPlanService.AddMeal(meal));
+            } catch (Exception e) {
+
+                return BadRequest(e.Message);
+            }
+        }
     }
 }
