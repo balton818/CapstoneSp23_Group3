@@ -67,7 +67,7 @@ public sealed partial class RegistrationPage : Page
         this.pwError.Visibility = Visibility.Collapsed;
         this.emailError.Visibility = Visibility.Collapsed;
         this.nameError.Visibility = Visibility.Collapsed;
-        Regex emailPattern = new Regex("^'\'w +@[a - zA - Z_] +?'\'.[a-zA - Z]{ 2,3}$",
+        Regex emailPattern = new Regex("^\\w+@[a-zA-Z_]+?\\.[a-zA-Z]{2,3}$",
             RegexOptions.Compiled | RegexOptions.IgnoreCase);
         if (!this.pwTextBox.Text.Equals(this.pwConfirmBox.Text))
         {

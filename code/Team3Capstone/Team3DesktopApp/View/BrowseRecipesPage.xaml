@@ -537,7 +537,7 @@
                     Width="102"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Top"
-                    Content="Search by Name"
+                    Content="Search Term"
                     Foreground="#e8c547" />
                 <local:NavButton
                     x:Name="searchButton"

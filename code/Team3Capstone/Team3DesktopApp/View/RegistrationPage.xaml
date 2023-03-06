@@ -5,8 +5,9 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:view="clr-namespace:Team3DesktopApp.View"
-    mc:Ignorable="d">
-    <Canvas Name="registrationPage" Clip="{StaticResource clip0_10_117}">
+ 
+    mc:Ignorable="d" Width="418" Height="703">
+    <Canvas Name="registrationPage" >
         <Rectangle
                 Name="rect434"
                 Width="415"
@@ -82,7 +83,7 @@
                     <TextBox
                             Name="firstNameTextBox"
                             Canvas.Left="32"
-                            Canvas.Top="186"
+                            Canvas.Top="344"
                             Width="352"
                             Height="42"
                             HorizontalAlignment="Center"
@@ -107,7 +108,7 @@
                     <TextBox
                             Name="lastNameTextBox"
                             Canvas.Left="32"
-                            Canvas.Top="261"
+                            Canvas.Top="421"
                             Width="352"
                             Height="43"
                             HorizontalAlignment="Center"
@@ -132,7 +133,7 @@
                     <TextBox
                             Name="emailTextBox"
                             Canvas.Left="32"
-                            Canvas.Top="420"
+                            Canvas.Top="500"
                             Width="352"
                             Height="42"
                             HorizontalAlignment="Center"
@@ -288,7 +289,7 @@
                 <TextBox
                     Name="pwTextBox"
                     Canvas.Left="32"
-                    Canvas.Top="259"
+                    Canvas.Top="103"
                     Width="352"
                     Height="42"
                     HorizontalAlignment="Center"
@@ -313,13 +314,13 @@
                 <TextBox
                     Name="pwConfirmBox"
                     Canvas.Left="32"
-                    Canvas.Top="418"
+                    Canvas.Top="178"
                     Width="352"
                     Height="42"
                     Background="#FFD6CCC2"
                     BorderBrush="#FFE8C547"
                     FontFamily="Song Myung"
-                    FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Top" />
+                    FontSize="30" HorizontalAlignment="Left" VerticalAlignment="Center" />
                 <TextBlock
                     Name="pwConfirmLabel"
                     Canvas.Left="32"
