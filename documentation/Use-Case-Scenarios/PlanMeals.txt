@@ -1,0 +1,49 @@
+Plan Meals Use Case Scenario
+
+Context - User has successfully logged in and has clicked the Plan Meals button.
+
+PRIMARY FLOW
+1 - User is shown the current 14 day period sunday-saturday.
+2 - User selects a day
+3 - User selects a meal type.
+4 - User is navigated to recipe browsing page
+5 - User selects a recipe to add
+6 - User confirms date and type 
+7 - Meal plan is updated to contain recipe
+
+Alternative Flow(s)
+
+NO TYPE SELECTED
+A4 - User does not navigate to browsing page
+A5 - User selects Back
+A6 - User returns to 14 day period page
+
+NO DAY SELECTED
+A2 - User navigates away from planning page
+
+REMOVES PLANNED MEAL
+A3 - User Presses the x next to the planned meal
+A4 - User confirms removal of planned meal
+A5 - Meal plan is updated
+
+USER PLANS MEAL FROM RECIPE DETAILS
+A1 - User navigates to browse recipes
+A2 - User selects a recipe
+A3 - User chooses to view recipe details
+A4 - User selects add to meal plan
+A5 - User chooses a date and meal type for the recipe
+A6 - Users meal plan is updated with their selection
+
+MEAL IS ALREADY PLANNED FOR DAY AND TYPE OVERWRITE
+A6 - User is informed meal exists for given date and type
+A7 - User confirms to overwrite meal
+A8 - Meal plan is updated
+
+MEAL IS ALREADY PLANNED FOR DAY AND TYPE CANCEL
+A6 - User is informed meal exists for given date and type
+A7 - User does not confirm to overwrite meal
+A8 - Meal plan is updated
+
+BAD CONNECTION:
+a1 - system fails to connect to the server
+a2 - system informs the user of a connection issue
