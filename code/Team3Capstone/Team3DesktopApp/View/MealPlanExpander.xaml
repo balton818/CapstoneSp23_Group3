@@ -1,0 +1,196 @@
+﻿<UserControl
+    x:Class="Team3DesktopApp.View.MealPlanExpander"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Team3DesktopApp.View"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d" Height="403" Width="398">
+
+    <Grid>
+
+
+        <Expander
+            x:Name="expander"
+            Background="#30323d"
+            BorderBrush="#FFE8C547"
+            IsExpanded="True" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+            <Expander.HeaderTemplate>
+                <DataTemplate DataType="{x:Type local:MealPlanExpander}">
+                    <Grid Width="363">
+                        <TextBlock
+                            x:Name="dayHeader"
+                            DataContext="{Binding DataContext, RelativeSource={RelativeSource AncestorType={x:Type Expander}}}"
+                            Width="142"
+                            HorizontalAlignment="Left"
+                            FontSize="15"
+                            FontWeight="Bold"
+                            Foreground="#FFE8C547"
+                            Text="{Binding Date}" />
+                        <TextBlock
+                            x:Name="plannedLabel"
+                            Margin="147,0,140,0"
+                            DataContext="{Binding DataContext, RelativeSource={RelativeSource AncestorType={x:Type Expander}}}"
+                            FontSize="15"
+                            FontWeight="Bold"
+                            Foreground="#FFE8C547"
+                            Text="{Binding PlannedLabel}" />
+                    </Grid>
+                </DataTemplate>
+            </Expander.HeaderTemplate>
+            <Grid>
+
+                <Border BorderThickness="2" BorderBrush="#FFE8C547" Height="36" VerticalAlignment="Top" Margin="0,3,0,0">
+                    <TextBlock
+                        Foreground="#FFE8C547"
+                        Text="Breakfast" Width="396" Height="30" VerticalAlignment="Top" HorizontalAlignment="Center" FontSize="20" TextAlignment="Center" />
+                </Border>
+
+                <local:NavButton
+                    x:Name="addDinnerButton"
+                    Margin="150,283,150,0"
+                    Background="#30323d"
+                    BorderBrush="#30323d"
+                    FontSize="30"
+                    Visibility="Visible"
+                    NavUri="/View/BrowseRecipesPage.xaml"
+                    Click="addMealClick">
+                    <Button.Content>
+                        <TextBlock
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Top"
+                            Foreground="#FFE8C547"
+                            Text="+" />
+                    </Button.Content>
+                </local:NavButton>
+                <Button
+                    x:Name="removeDinnerButton"
+                    Margin="306,283,0,0"
+                    Background="#30323d"
+                    BorderBrush="#30323d"
+                    FontSize="30"
+                    Visibility="Hidden">
+                    <Button.Content>
+                        <TextBlock
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Top"
+                            Foreground="#FFE8C547"
+                            Text="x" />
+                    </Button.Content>
+                </Button>
+                <local:NavButton
+                    x:Name="dinnerDetailButton"
+                    DataContext="{Binding DataContext, RelativeSource={RelativeSource AncestorType={x:Type Expander}}}"
+                    Margin="0,283,150,0"
+                    Background="#30323d"
+                    BorderBrush="#30323d"
+                    NavUri="/View/RecipeDetailPage.xaml"
+                    FontSize="30"
+                    Visibility="Hidden">
+                    <Button.Content>
+                        <TextBlock
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Foreground="#FFE8C547"
+                            Text="{Binding DinnerName}" />
+                    </Button.Content>
+                </local:NavButton>
+                <Border BorderThickness="2" BorderBrush="#FFE8C547" Height="36" VerticalAlignment="Top" Margin="0,246,0,0">
+                    <TextBlock
+                        Foreground="#FFE8C547"
+                        Text="Dinner" Width="396" Height="30" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20" TextAlignment="Center" />
+                </Border>
+                <Border BorderThickness="2" BorderBrush="#FFE8C547" Height="36" VerticalAlignment="Top" Margin="0,125,0,0">
+                    <TextBlock
+                        Foreground="#FFE8C547"
+                        Text="Lunch" Width="396" Height="30" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20" TextAlignment="Center" />
+                </Border>
+                <local:NavButton
+            x:Name="addLunchButton"
+            Margin="150,161,150,122"
+            Background="#30323d"
+            BorderBrush="#30323d"
+            FontSize="30"
+            Visibility="Visible"
+            NavUri="/View/BrowseRecipesPage.xaml">
+                    <TextBlock
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Foreground="#FFE8C547"
+                Text="+" />
+                </local:NavButton>
+                <Button
+            x:Name="removeLunchButton"
+            Margin="306,161,0,122"
+            Background="#30323d"
+            BorderBrush="#30323d"
+            FontSize="30" Visibility="Hidden">
+                    <TextBlock
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top"
+                Foreground="#FFE8C547"
+                Text="x" />
+                </Button>
+                <local:NavButton
+            x:Name="LunchDetailButton"
+            DataContext="{Binding DataContext, RelativeSource={RelativeSource AncestorType={x:Type Expander}}}"
+            Margin="0,161,150,122"
+            Background="#30323d"
+            BorderBrush="#30323d"
+            NavUri="/View/RecipeDetailPage.xaml"
+            FontSize="30"
+            Visibility="Hidden">
+                    <TextBlock
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Foreground="#FFE8C547"
+                Text="{Binding LunchName}"/>
+                </local:NavButton>
+                <local:NavButton
+            x:Name="addBreakfastButton"
+            Margin="150,39,150,244"
+            Background="#30323d"
+            BorderBrush="#30323d"
+            Height="85"
+            FontSize="30"
+            Visibility="Visible"
+            NavUri="/View/BrowseRecipesPage.xaml">
+                    <TextBlock
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Foreground="#FFE8C547"
+                Text="+" />
+                </local:NavButton>
+                <Button
+            x:Name="breakfastRemoveButton"
+            Margin="306,39,0,244"
+            Background="#30323d"
+            BorderBrush="#30323d"
+            FontSize="30"
+            Visibility="Hidden">
+                    <TextBlock
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top"
+                Foreground="#FFE8C547"
+                Text="x" />
+                </Button>
+                <local:NavButton
+            x:Name="breakfastDetailButton"
+            Margin="0,39,150,244"
+            Background="#30323d"
+            BorderBrush="#30323d"
+            NavUri="/View/RecipeDetailPage.xaml"
+            DataContext="{Binding DataContext, RelativeSource={RelativeSource AncestorType={x:Type Expander}}}"
+            Visibility="Hidden"
+            FontSize="30">
+                    <TextBlock
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Foreground="#FFE8C547"
+                Text="{Binding BreakfastName}" />
+                </local:NavButton>
+            </Grid>
+        </Expander>
+
+    </Grid>
+</UserControl>

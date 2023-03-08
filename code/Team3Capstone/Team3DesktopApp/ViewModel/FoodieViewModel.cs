@@ -37,6 +37,8 @@ public class FoodieViewModel
     /// <value>The currently logged in user's pantry.</value>
     public List<PantryItem>? Pantry { get; set; }
 
+    public Tuple<string, string> PlanTypeAndDateToAdd { get; set; }
+
     #endregion
 
     #region Constructors
