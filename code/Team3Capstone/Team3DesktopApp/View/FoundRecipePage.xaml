@@ -161,8 +161,10 @@
         </ListBox>
         <local:NavMenu
             x:Name="navMenu"
-            Margin="306,8,0,0"
+            Width="162"
+            Margin="308,7,0,0"
             HorizontalAlignment="Left"
-            VerticalAlignment="Top" />
+            VerticalAlignment="Top"
+            Grid.ZIndex="1" />
     </Grid>
 </Page>

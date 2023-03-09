@@ -7,8 +7,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="RecipeDetailPage"
     d:DesignHeight="650"
-    mc:Ignorable="d" Width="418">
-    <Grid Margin="0,10,-11,-61">
+    mc:Ignorable="d" Width="407">
+    <Grid Margin="0,10,-12,-61">
         <Grid.RowDefinitions>
             <RowDefinition Height="643*" />
             <RowDefinition Height="129*" />
@@ -28,9 +28,9 @@
             <Canvas Name="mainCanvas" Clip="{StaticResource Clip0872}">
                 <Rectangle
                     Name="rect1005"
-                    Width="415"
+                    Width="422"
                     Height="574"
-                    Fill="#FF30323D" />
+                    Fill="#FF30323D" HorizontalAlignment="Left" VerticalAlignment="Center" />
                 <Canvas Name="foodieHeader">
                     <Canvas Name="navBar">
 
@@ -72,6 +72,29 @@
                     <Canvas />
                 </Canvas>
                 <Canvas>
+                    <local:NavButton
+                        x:Name="addToPlanButton"
+                        Canvas.Left="286"
+                        Canvas.Top="305"
+                        Canvas.Right="15"
+                        Width="108"
+                        Height="28"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Background="#FFD6CCC2"
+                        Click="addToPlan_OnClick"
+                        Content="Add to Plan"
+                        FontFamily="Song Myung"
+                        FontSize="18"
+                        ForceCursor="True"
+                        NavUri="/View/RecipeDetailPage.xaml">
+                        <local:NavButton.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="5" />
+                            </Style>
+                        </local:NavButton.Resources>
+
+                    </local:NavButton>
                     <Rectangle
                         Name="rectangle52"
                         Canvas.Top="501"
@@ -178,8 +201,18 @@
                 </Canvas>
             </Grid>
             <Image x:Name="recipeImage" HorizontalAlignment="Left" Height="149" VerticalAlignment="Top" Width="190" Canvas.Left="208" Canvas.Top="140"/>
-            <local:NavMenu Grid.ZIndex="1" x:Name="navMenu" Canvas.Left="306" Canvas.Top="10" />
+            <local:NavMenu
+                x:Name="navMenu"
+                Width="162"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Grid.ZIndex="1" Canvas.Left="297" />
         </Canvas>
-
+        <Grid x:Name="addToPlanePanel" Visibility="Hidden">
+            <Grid.Background>
+                <SolidColorBrush Opacity="0.5" Color="#30323d"/>
+            </Grid.Background>
+            <local:AddToPlanPanel Margin="106,132,107,133"></local:AddToPlanPanel>
+        </Grid>
     </Grid>
 </Page>

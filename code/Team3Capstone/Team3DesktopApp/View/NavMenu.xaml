@@ -5,8 +5,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:Team3DesktopApp.View"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    Width="183"
-    Height="194"
+    Width="186"
+    Height="239"
     mc:Ignorable="d">
     <Grid Margin="0,0,44,0" >
 
@@ -34,7 +34,7 @@
             x:Name="navGrid"
  
             Background="#30323d"
-            Visibility="Hidden" Margin="0,55,30,0">
+            Visibility="Hidden" Margin="0,55,10,0">
 
             <local:NavButton
                 x:Name="pantryButton"
@@ -49,7 +49,8 @@
                 FontSize="18"
                 ForceCursor="True"
                 NavUri="/View/PantryPage.xaml"
-                UseLayoutRounding="False" Margin="0,39,0,0">
+                UseLayoutRounding="False" Margin="0,40,0,0"
+                >
                 <local:NavButton.Resources>
                     <Style TargetType="Border">
                         <Setter Property="CornerRadius" Value="5" />
@@ -70,7 +71,7 @@
                 FontSize="18"
                 ForceCursor="True"
                 NavUri="/View/BrowseRecipesPage.xaml"
-                UseLayoutRounding="False" Margin="0,72,0,0">
+                UseLayoutRounding="False" Margin="0,106,0,0">
                 <local:NavButton.Resources>
                     <Style TargetType="Border">
                         <Setter Property="CornerRadius" Value="5" />
@@ -90,7 +91,28 @@
                 FontSize="18"
                 ForceCursor="True"
                 NavUri="/View/RecipePage.xaml"
-                UseLayoutRounding="False" Margin="0,6,0,0">
+                UseLayoutRounding="False" Margin="0,7,0,0">
+                <local:NavButton.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="5" />
+                    </Style>
+                </local:NavButton.Resources>
+
+            </local:NavButton>
+            <local:NavButton
+                x:Name="planButton"
+                Width="93"
+                Height="28"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top"
+                Background="#FFD6CCC2"
+                Click="NavButton_Click"
+                Content="Plan"
+                FontFamily="Song Myung"
+                FontSize="18"
+                ForceCursor="True"
+                NavUri="/View/MealPlanPage.xaml"
+                UseLayoutRounding="False" Margin="0,73,0,0">
                 <local:NavButton.Resources>
                     <Style TargetType="Border">
                         <Setter Property="CornerRadius" Value="5" />
@@ -111,7 +133,7 @@
                 FontSize="18"
                 ForceCursor="True"
                 NavUri="/View/LoginPage.xaml"
-                UseLayoutRounding="False" Margin="0,106,0,0">
+                UseLayoutRounding="False" Margin="0,139,0,0">
                 <local:NavButton.Resources>
                     <Style TargetType="Border">
                         <Setter Property="CornerRadius" Value="5" />

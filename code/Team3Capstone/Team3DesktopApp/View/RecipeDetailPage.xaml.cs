@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using System.Windows;
 using System.Windows.Controls;
 using Team3DesktopApp.ViewModel;
 
@@ -42,4 +43,9 @@ public partial class RecipeDetailPage : Page
     }
 
     #endregion
+
+    private void addToPlan_OnClick(object sender, RoutedEventArgs e)
+    {
+        throw new System.NotImplementedException();
+    }
 }
