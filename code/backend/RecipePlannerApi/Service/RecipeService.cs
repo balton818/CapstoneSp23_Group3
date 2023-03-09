@@ -2,7 +2,6 @@
 using RecipePlannerApi.Api.Interface;
 using RecipePlannerApi.Api.Requests;
 using RecipePlannerApi.Dao.Interface;
-using RecipePlannerApi.Dao.Request;
 using RecipePlannerApi.Model;
 using RecipePlannerApi.Service.Interface;
 

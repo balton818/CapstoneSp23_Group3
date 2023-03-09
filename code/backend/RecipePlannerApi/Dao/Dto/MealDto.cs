@@ -26,5 +26,6 @@ namespace RecipePlannerApi.Dao.Dto
         /// <summary>Gets or sets the type of the image.</summary>
         /// <value>The type of the image.</value>
         public string ImageType { get; set; }
+        public DateTime Date { get; set; }
     }
 }

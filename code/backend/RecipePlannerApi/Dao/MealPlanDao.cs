@@ -60,7 +60,7 @@ namespace RecipePlannerApi.Dao
             execute<Meal>("remove_meal", cmd);
         }
 
-        public Meal UpdateMealPlan(Meal meal) {
+        public Meal UpdateMeal(Meal meal) {
             CommandUpdate cmd = c => {
                 c.CommandType = System.Data.CommandType.StoredProcedure;
                 c.Parameters.AddWithValue("@mealPlanId", meal.MealPlanId);

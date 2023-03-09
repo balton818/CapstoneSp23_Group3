@@ -33,10 +33,26 @@ namespace RecipePlannerApi.Service
 
             return mealPlan;
         }
-
+        public MealPlan GetThisWeeksMealPlan(int userId) {
+            var date = DateTime.Now;
+            return this.GetMealPlan(new GetMealPlanRequest { Date = date, UserId = userId });
+        }
+        public MealPlan GetNextWeeksMealPlan(int userId) {
+            var date = DateTime.Now.AddDays(7);
+            return this.GetMealPlan(new GetMealPlanRequest { Date = date, UserId = userId });
+        }
 
         public Meal AddMeal(Meal meal) {
             return this.mealPlanDao.CreateMeal(meal);
         }
+
+        public Meal UpdateMeal(Meal meal) {
+            return this.mealPlanDao.UpdateMeal(meal);
+        }
+
+        public void RemoveMeal(int mealId) {
+            this.mealPlanDao.RemoveMeal(mealId);
+        }
+
     }
 }

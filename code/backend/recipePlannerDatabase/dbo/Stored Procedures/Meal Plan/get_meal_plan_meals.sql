@@ -15,4 +15,4 @@ AS
 	FROM meal m
 	JOIN recipe r on r.recipe_id = m.recipe_id
 	JOIN meal_plan mp on mp.meal_plan_id = m.meal_plan_id
-	WHERE meal_plan_id = @mealPlanId
+	WHERE m.meal_plan_id = @mealPlanId

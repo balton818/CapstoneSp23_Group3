@@ -7,5 +7,9 @@ namespace RecipePlannerApi.Service.Interface
     {
         Meal AddMeal(Meal meal);
         MealPlan GetMealPlan(GetMealPlanRequest request);
+        MealPlan GetNextWeeksMealPlan(int userId);
+        MealPlan GetThisWeeksMealPlan(int userId);
+        void RemoveMeal(int mealId);
+        Meal UpdateMeal(Meal meal);
     }
 }

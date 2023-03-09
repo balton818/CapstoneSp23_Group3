@@ -10,6 +10,6 @@ namespace RecipePlannerApi.Dao.Interface
         MealPlan GetMealPlan(GetMealPlanRequest request);
         List<Meal> GetMealPlanMeals(int mealPlanId);
         void RemoveMeal(int mealId);
-        Meal UpdateMealPlan(Meal meal);
+        Meal UpdateMeal(Meal meal);
     }
 }
