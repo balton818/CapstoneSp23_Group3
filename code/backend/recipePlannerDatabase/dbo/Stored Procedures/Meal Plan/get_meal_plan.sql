@@ -7,8 +7,8 @@ AS
 	
 	SELECT 
 		  meal_plan_id		AS MealPlanId
-		, meal_plan_date	AS MealPlanDate
+		, [start_date]	AS MealPlanDate
 		, [user_id]			AS UserId
 	FROM [dbo].[meal_plan]
-	WHERE meal_plan_date = @firstOfWeek
+	WHERE [start_date] = @firstOfWeek
 		AND [user_id] = @userId
