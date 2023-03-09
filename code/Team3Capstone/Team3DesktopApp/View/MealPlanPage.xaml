@@ -1,0 +1,164 @@
+﻿<Page x:Class="Team3DesktopApp.View.MealPlanPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Team3DesktopApp.View"
+      Width="418"
+      d:DesignHeight="650"
+      mc:Ignorable="d"
+      Title="MealPlanPage">
+
+    <Grid Margin="0,10,-11,-61">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="643*" />
+            <RowDefinition Height="129*" />
+        </Grid.RowDefinitions>
+        <Grid.RenderTransform>
+            <TransformGroup>
+                <ScaleTransform />
+                <SkewTransform />
+                <RotateTransform Angle="-0.186" />
+                <TranslateTransform />
+            </TransformGroup>
+        </Grid.RenderTransform>
+
+        <Canvas
+            Name="svg810"
+            Width="415"
+            Height="574">
+            <Canvas.RenderTransform>
+                <TranslateTransform X="0" Y="0" />
+            </Canvas.RenderTransform>
+            <Canvas.Resources />
+            <Canvas>
+                <Rectangle
+                    Name="rect721"
+                    Width="415"
+                    Height="574"
+                    Fill="#FF30323D" />
+                <Canvas Name="FooterTextBox">
+                    <TextBlock
+                        Name="Footer"
+                        Canvas.Left="9"
+                        Canvas.Top="524"
+                        FontFamily="Song Myung"
+                        FontSize="17"
+                        Foreground="#FFE8C547">
+                        <Span FontSize="14">Recipe Planner Irie/Alton/Wagner</Span>
+                    </TextBlock>
+                </Canvas>
+                <Canvas>
+                    <Rectangle
+                        Name="Rectangle5"
+                        Canvas.Top="501"
+                        Width="415"
+                        Height="2"
+                        Fill="#33E8C547"
+                        RadiusX="1"
+                        RadiusY="1" />
+                </Canvas>
+                <Canvas>
+
+
+                </Canvas>
+                <Canvas Name="FoodieHeader">
+
+                    <Canvas Name="HeaderTitle">
+                        <TextBlock
+                            Name="YourText"
+                            Canvas.Left="10"
+                            Canvas.Top="28"
+                            FontFamily="Song Myung"
+                            FontSize="24"
+                            Foreground="#FFE8C547">
+                            <Span FontSize="24">Meal Plan</Span>
+                        </TextBlock>
+
+                    </Canvas>
+                    <Canvas>
+                        <Rectangle
+                            Name="rect804"
+                            Width="415"
+                            Height="18"
+                            Fill="#FF30323D">
+                            <Rectangle.RenderTransform>
+                                <TranslateTransform X="0" Y="72" />
+                            </Rectangle.RenderTransform>
+                        </Rectangle>
+                        <Rectangle
+                            Name="Rectangle5_2"
+                            Canvas.Top="80"
+                            Width="415"
+                            Height="2"
+                            Fill="#33E8C547"
+                            RadiusX="1"
+                            RadiusY="1" />
+                    </Canvas>
+                </Canvas>
+                <local:NavButton
+                    x:Name="nextWeekButton"
+                    Canvas.Left="222"
+                    Canvas.Top="416"
+                    Width="171"
+                    Height="66"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    Background="#FFD6CCC2"
+                    Click="viewOtherWeekClick"
+                    Content="View Next Week"
+                    FontFamily="Song Myung"
+                    FontSize="18"
+                    ForceCursor="True"
+                    NavUri="/View/BrowseRecipesPage.xaml">
+                    <local:NavButton.Resources>
+                        <Style TargetType="{x:Type Border}">
+                            <Setter Property="CornerRadius" Value="5" />
+                        </Style>
+                    </local:NavButton.Resources>
+
+                </local:NavButton>
+            </Canvas>
+        </Canvas>
+        <ListBox
+            x:Name="weekOnePlanListBox"
+            Grid.Row="0"
+            Margin="14,97,8,193"
+            Background="#30323d"
+            BorderBrush="#FF30323D"
+            FontFamily="Song Myung"
+            FontSize="16"
+            Foreground="#FFE8C547"
+            ItemsSource="{Binding weekOne}"
+            ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding}" TextWrapping="Wrap" />
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <ListBox
+            x:Name="weekTwoPlanListBox"
+            Grid.Row="0"
+            Margin="14,97,8,193"
+            Background="#30323d"
+            BorderBrush="#FF30323D"
+            FontFamily="Song Myung"
+            FontSize="16"
+            Foreground="#FFE8C547"
+            ItemsSource="{Binding weekTwo}"
+            Visibility="Hidden"
+            ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding}" TextWrapping="Wrap" />
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <local:NavMenu
+            x:Name="navMenu"
+            Margin="306,8,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top" />
+    </Grid>
+</Page>
