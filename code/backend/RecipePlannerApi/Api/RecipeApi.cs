@@ -106,7 +106,7 @@ namespace RecipePlannerApi.Api
 
             foreach (var item in response.Results) {
                 recipes.Add(new Recipe() {
-                    Id = item.Id,
+                    ApiId = item.Id,
                     Image = item.Image,
                     ImageType = item.ImageType,
                     Title = item.Title

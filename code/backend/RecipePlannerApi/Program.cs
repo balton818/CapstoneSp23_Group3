@@ -1,8 +1,6 @@
-﻿using AutoMapper;
-using Org.OpenAPITools.Client;
+﻿using Org.OpenAPITools.Client;
 using RecipePlannerApi.Api;
 using RecipePlannerApi.Api.Interface;
-using RecipePlannerApi.Controllers;
 using RecipePlannerApi.Dao;
 using RecipePlannerApi.Dao.Interface;
 using RecipePlannerApi.Service;
@@ -29,11 +27,13 @@ namespace RecipePlannerApi
             builder.Services.AddScoped<IPantryDao, PantryDao>();
             builder.Services.AddScoped<IIngredientDao, IngredientDao>();
             builder.Services.AddScoped<IAppDao, AppDao>();
+            builder.Services.AddScoped<IMealPlanDao, MealPlanDao>();
 
             builder.Services.AddScoped<IUserService, UserService>();
             builder.Services.AddScoped<IAppService, AppService>();
             builder.Services.AddScoped<IRecipeService, RecipeService>();
             builder.Services.AddScoped<IMeasurementService, MeasurementService>();
+            builder.Services.AddScoped<IMealPlanService, MealPlanService>();
 
             builder.Services.AddScoped<IRecipeApi, RecipeApi>();
 

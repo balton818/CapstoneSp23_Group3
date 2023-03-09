@@ -2,9 +2,7 @@
 using Org.OpenAPITools.Model;
 using RecipePlannerApi.Api.Requests;
 using RecipePlannerApi.Model;
-using RecipePlannerApi.Service;
 using RecipePlannerApi.Service.Interface;
-using System.Linq.Expressions;
 
 namespace RecipePlannerApi.Controllers
 {
@@ -17,7 +15,7 @@ namespace RecipePlannerApi.Controllers
             this._recipeService = recipeService;
         }
 
-        [HttpGet("search")]
+        [HttpGet("test/search")]
         public ActionResult<List<SearchRecipesByIngredients200ResponseInner>> SearchRecipes([FromQuery] SearchRecipesByIngredientsRequest request) {
             try {
                 return Ok(this._recipeService.SearchRecipes(request));
