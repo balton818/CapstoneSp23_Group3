@@ -2,7 +2,6 @@
 using RecipePlannerApi.Api.Interface;
 using RecipePlannerApi.Api.Requests;
 using RecipePlannerApi.Dao.Interface;
-using RecipePlannerApi.Dao.Request;
 using RecipePlannerApi.Model;
 using RecipePlannerApi.Service.Interface;
 
@@ -45,7 +44,7 @@ namespace RecipePlannerApi.Service
                 }
 
                 var recipe = new Recipe() {
-                    Id = item.Id,
+                    ApiId = item.Id,
                     Image = item.Image,
                     ImageType = item.ImageType,
                     Title = item.Title
@@ -87,7 +86,7 @@ namespace RecipePlannerApi.Service
                 }
 
                 var recipe = new Recipe() {
-                    Id = item.Id,
+                    ApiId = item.Id,
                     Image = item.Image,
                     ImageType = item.ImageType,
                     Title = item.Title
@@ -176,7 +175,7 @@ namespace RecipePlannerApi.Service
 
 
         /// <summary>Gets the recipe information.</summary>
-        /// <param name="recipeId">The recipe identifier.</param>
+        /// <param name="recipeId">The recipe identifier for the api.</param>
         /// <returns>The information for the recipe</returns>
         public RecipeInformation GetRecipeInformation(int recipeId) {
             return this._recipeApi.GetRecipeInformation(recipeId);
