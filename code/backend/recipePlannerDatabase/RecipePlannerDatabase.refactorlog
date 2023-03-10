@@ -42,4 +42,39 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="meal_type" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="1f3acd33-3bed-40c6-b793-cd4f59868ff9" ChangeDateTime="03/01/2023 23:24:51">
+    <Property Name="ElementName" Value="[dbo].[meal_plan].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[meal_plan]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="meal_plan_id" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="5f515d7a-96c7-449a-b941-9248f8a238c1" ChangeDateTime="03/01/2023 23:30:05">
+    <Property Name="ElementName" Value="[dbo].[meal].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[meal]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="meal_plan_id" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="507bd106-1a68-4318-ba9f-957677369f5c" ChangeDateTime="03/03/2023 03:09:47">
+    <Property Name="ElementName" Value="[dbo].[recipe].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[recipe]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="recipe" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="344ea299-b476-4f5d-9002-5eefc67a4184" ChangeDateTime="03/03/2023 03:09:53">
+    <Property Name="ElementName" Value="[dbo].[recipe].[recipe]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[recipe]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="recipe_id" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="0f9be9eb-d03e-4eea-8d18-299e30caf657" ChangeDateTime="03/08/2023 23:52:58">
+    <Property Name="ElementName" Value="[dbo].[meal_plan].[meal_plan_date]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[meal_plan]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="[start_date]" />
+  </Operation>
 </Operations>
