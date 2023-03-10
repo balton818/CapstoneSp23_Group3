@@ -1,0 +1,33 @@
+﻿.right .header {
+    font-size: 60pt;
+    font-family: jsMath-cmbx10;
+    width: 280px;
+    margin-left: 60px;
+    padding-top: 16px;
+    color: #30323d;
+}
+
+.split {
+    height: 100%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    overflow-x: hidden;
+    padding-top: 20px;
+}
+
+.right {
+    right: 0;
+    width: 75%;
+    background-color: #d6ccc2;
+}
+
+.main-area {
+    overflow-y: auto;
+    margin-left: 60px;
+    bottom: 0;
+    height: 65%;
+    display: flex;
+    flex-direction: column;
+    row-gap: 15px;
+}

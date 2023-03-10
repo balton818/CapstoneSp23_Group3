@@ -1,0 +1,30 @@
+﻿@page "/planner"
+@layout MainLayout;
+@using RecipePlannerApi.Model;
+@using RecipePlannerApi.Service;
+@using RecipePlannerApi.Dao;
+@using RecipePlannerApi.Api;
+@using RecipePlannerApi.Api.Requests;
+@using RecipePlannerWebApp.LocalServices;
+@inject NavigationManager Nav;
+@inject UserSessionData currentUserData;
+
+<PageTitle>foodie - planner</PageTitle>
+<base href="~/" />
+<div class="split right">
+    <div class="header">
+        <span>planner</span>
+        <hr style="height: 2px; opacity: 100%" />
+    </div>
+    <div class="main-area">
+        @foreach (var day in this.daysOfWeek)
+        {
+            <MealPlanWidget DayOfWeek="@day" HasPlannedBreakfast="false" HasPlannedLunch="false" HasPlannedDinner="false"></MealPlanWidget>
+        }
+    </div>
+</div>
+
+@code {
+    private List<String> daysOfWeek { get; set; } = new List<String>() { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" };
+
+}

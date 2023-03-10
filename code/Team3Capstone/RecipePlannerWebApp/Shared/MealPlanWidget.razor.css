@@ -1,0 +1,8 @@
+﻿.flags {
+    display: flex;
+    flex-direction: row;
+}
+
+.widget {
+    font-size: 25pt;
+}

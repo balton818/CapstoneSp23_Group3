@@ -1,0 +1,22 @@
+﻿<div class="widget">
+    <h4>@this.DayOfWeek</h4>
+    <div class="flags">
+        <label hidden="@HasPlannedBreakfast">- B</label>
+        <label hidden="@HasPlannedLunch">- L</label>
+        <label hidden="@HasPlannedDinner">- D</label>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public String? DayOfWeek { get; set; }
+
+    [Parameter]
+    public bool HasPlannedBreakfast { get; set; }
+
+    [Parameter]
+    public bool HasPlannedLunch { get; set; }
+
+    [Parameter]
+    public bool HasPlannedDinner { get; set; }
+}
