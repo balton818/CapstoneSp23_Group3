@@ -53,6 +53,5 @@ namespace RecipePlannerApi.Service
         public void RemoveMeal(int mealId) {
             this.mealPlanDao.RemoveMeal(mealId);
         }
-
     }
 }

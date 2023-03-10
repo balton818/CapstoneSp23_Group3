@@ -54,7 +54,7 @@
         <label hidden="@resultsFound" style="font-weight: bold">No results found.</label>
         @foreach (var recipe in this.results)
         {
-            <div class="recipe-result" @onclick="() => goToRecipe(recipe.Title, recipe.Id ?? -1)">
+            <div class="recipe-result" @onclick="() => goToRecipe(recipe.Title, recipe.ApiId ?? 0)">
                 <img src="@recipe.Image" asp-append-version="true" style="width: 125px; height: 125px;" />
                 @recipe.Title
             </div>

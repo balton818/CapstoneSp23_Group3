@@ -12,5 +12,7 @@ namespace RecipePlannerWebApp.LocalServices
         public List<string>? RecipeSteps { get; set; }
 
         public BrowseRecipeRequest? lastExplorePageRequest { get; set; }
+
+        public Meal? SelectedMeal { get; set; }
     }
 }

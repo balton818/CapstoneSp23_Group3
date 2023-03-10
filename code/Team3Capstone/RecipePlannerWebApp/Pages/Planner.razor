@@ -16,15 +16,58 @@
         <span>planner</span>
         <hr style="height: 2px; opacity: 100%" />
     </div>
+    <div class="controls">
+        <InputRadioGroup @bind-Value="this.selectedWeek" class="controls">
+            <InputRadio TValue="Weeks" Value="@Weeks.WEEK1"></InputRadio>
+            <text>Week 1</text>
+            <InputRadio TValue="Weeks" Value="@Weeks.WEEK2"></InputRadio>
+            <text>Week 2</text>
+        </InputRadioGroup>
+        <button type="submit" @onclick="showMealPlan">Show Plan</button>
+    </div>
     <div class="main-area">
-        @foreach (var day in this.daysOfWeek)
+        <span>Showing meal plan starting on @this.determineDateRange().</span>
+        @foreach (DayOfWeek day in Enum.GetValues(typeof(System.DayOfWeek)))
         {
-            <MealPlanWidget DayOfWeek="@day" HasPlannedBreakfast="false" HasPlannedLunch="false" HasPlannedDinner="false"></MealPlanWidget>
+            <MealPlanWidget DayOfWeek="@day" Meals="@this.plan.meals[day]" MealPlan="this.plan"></MealPlanWidget>
         }
     </div>
 </div>
 
 @code {
-    private List<String> daysOfWeek { get; set; } = new List<String>() { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" };
 
+    private MealPlanService service = new MealPlanService(new MealPlanDao());
+    private MealPlan plan = new MealPlan();
+    private Weeks selectedWeek = Weeks.WEEK1;
+    private enum Weeks {WEEK1, WEEK2};
+
+    /**
+     * Initializes the Planner component
+     */
+    protected override void OnInitialized()
+    {
+        Console.WriteLine("PLANNER -- INITIALIZING");
+        this.showMealPlan();
+    }
+
+    private void showMealPlan()
+    {
+        if (selectedWeek == Weeks.WEEK1)
+        {
+            Console.WriteLine("Showing meal plan for this week");
+            this.plan = service.GetThisWeeksMealPlan(this.currentUserData.CurrentUser.Id);
+        }
+        else
+        {
+            Console.WriteLine("Showing meal plan for next week");
+            this.plan = service.GetNextWeeksMealPlan(this.currentUserData.CurrentUser.Id);
+        }
+    }
+
+    private string determineDateRange()
+    {
+        DateTime date = this.plan.MealPlanDate.Value;
+        string range = date.Month + "/" + date.Day + "/" + date.Year;
+        return range;
+    }
 }

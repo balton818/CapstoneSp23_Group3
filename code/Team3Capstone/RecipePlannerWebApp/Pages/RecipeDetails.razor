@@ -14,6 +14,10 @@
         <span>recipes</span>
         <hr style="height: 2px; opacity: 100%" />
     </div>
+    @if (this.currentUserData.SelectedMeal is not null)
+    {
+        <button style="margin-left: 60px" @onclick="addToMealPlan">Add to meal plan for @this.currentUserData.SelectedMeal?.MealType.ToString().ToLower(). </button>
+    }
     <div class="recipe-area">
         <h2 class="title" style="font-weight: bold">@RecipeTitle</h2>
         <br />
@@ -47,14 +51,15 @@
 
     private List<RecipePlannerApi.Model.Ingredient>? ingredients { get; set; } 
     private List<RecipePlannerApi.Model.RecipesStep>? steps { get; set; }
-    private RecipeService service { get; set; } = new RecipeService(new UserService(new UserDao(), new PantryDao()), new IngredientDao(), new RecipeApi(), new MeasurementService());
+    private RecipeService recipeService { get; set; } = new RecipeService(new UserService(new UserDao(), new PantryDao()), new IngredientDao(), new RecipeApi(), new MeasurementService());
+    private MealPlanService mealPlanService { get; set; } = new MealPlanService(new MealPlanDao());
 
     /**
      * Handles initialization of the RecipeDetails component
      */
     protected override void OnInitialized()
     {
-        RecipeInformation info = this.service.GetRecipeInformation(Int32.Parse(this.RecipeId));
+        RecipeInformation info = this.recipeService.GetRecipeInformation(Int32.Parse(this.RecipeId));
         if (info != null)
         {
             this.ingredients = info?.Ingredients;
@@ -81,6 +86,17 @@
         {
             Nav.NavigateTo("/recipes");
         }
+    }
+
+    private void addToMealPlan()
+    {
+        Console.WriteLine("Added meal to plan");
+        Meal newMeal = this.currentUserData.SelectedMeal;
+        RecipeInformation info = this.recipeService.GetRecipeInformation(Int32.Parse(this.RecipeId));
+        Recipe recipe = new Recipe() { Title = this.RecipeTitle, Image = info.Image, ApiId = Int32.Parse(this.RecipeId) };
+        newMeal.Recipe = recipe;
+        this.mealPlanService.UpdateMeal(newMeal);
+        Nav.NavigateTo("/planner");
     }
 
     //FUTUREPROOFING - DISREGARD

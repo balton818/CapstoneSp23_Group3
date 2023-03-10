@@ -26,8 +26,38 @@
     overflow-y: auto;
     margin-left: 60px;
     bottom: 0;
-    height: 65%;
+    height: 60%;
     display: flex;
     flex-direction: column;
     row-gap: 15px;
+}
+
+.controls {
+    display: flex;
+    flex-direction: row;
+    margin-left: 60px;
+    text-align: center;
+    align-items: center;
+}
+
+.controls > * {
+    margin: 5px;
+}
+
+::deep .widget {
+    border: 2px solid black;
+    width: 95%;
+    padding: 5px;
+}
+
+::deep .meals {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+::deep .meals > * {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }

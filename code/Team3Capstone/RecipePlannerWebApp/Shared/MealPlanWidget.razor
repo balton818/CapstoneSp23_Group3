@@ -1,22 +1,116 @@
-﻿<div class="widget">
-    <h4>@this.DayOfWeek</h4>
-    <div class="flags">
-        <label hidden="@HasPlannedBreakfast">- B</label>
-        <label hidden="@HasPlannedLunch">- L</label>
-        <label hidden="@HasPlannedDinner">- D</label>
+﻿@using RecipePlannerApi.Model;
+@using RecipePlannerWebApp.LocalServices;
+@inject NavigationManager Nav;
+@inject UserSessionData currentUserData;
+
+<div class="widget">
+    <h4 style="font-style:italic">@this.DayOfWeek.ToString()</h4>
+    <div class="meals">
+        <div id="plan">
+            <label>Breakfast</label>
+            @if (this.breakfast?.Recipe is not null)
+            {
+                <img src="@this.breakfast.Recipe.Image" width="75px" height="75px" @onclick="() => goToRecipe(this.breakfast.Recipe.Title, this.breakfast.Recipe.ApiId ?? 0)"/>
+            }
+            else
+            {
+                <img src="./Assets/add-new-item.jpg" width="75px" height="75px" @onclick="addBreakfast" />
+            }
+        </div>
+        <div id="plan">
+            <label>Lunch</label>
+            @if (this.lunch?.Recipe is not null)
+            {
+                <img src="@this.lunch.Recipe.Image" width="75px" height="75px" @onclick="() => goToRecipe(this.lunch.Recipe.Title, this.lunch.Recipe.ApiId ?? 0)" />
+            }
+            else
+            {
+                <img src="./Assets/add-new-item.jpg" width="75px" height="75px" @onclick="addLunch" />
+            }
+        </div>
+        <div id="plan">
+            <label>Dinner</label>
+            @if (this.dinner?.Recipe is not null)
+            {
+                <img src="@this.dinner.Recipe.Image" width="75px" height="75px" @onclick="() => goToRecipe(this.dinner.Recipe.Title, this.dinner.Recipe.ApiId ?? 0)" />
+            }
+            else
+            {
+                <img src="./Assets/add-new-item.jpg" width="75px" height="75px" @onclick="addDinner" />
+            }
+        </div>
+
     </div>
 </div>
 
 @code {
     [Parameter]
-    public String? DayOfWeek { get; set; }
+    public DayOfWeek? DayOfWeek { get; set; }
 
     [Parameter]
-    public bool HasPlannedBreakfast { get; set; }
+    public MealPlan? MealPlan { get; set; }
 
     [Parameter]
-    public bool HasPlannedLunch { get; set; }
+    public List<Meal> Meals { get; set; } = new List<Meal>();
 
-    [Parameter]
-    public bool HasPlannedDinner { get; set; }
+    private Meal breakfast { get; set; } = new Meal();
+    private Meal lunch { get; set; } = new Meal();
+    private Meal dinner { get; set; } = new Meal();
+
+    /**
+     * Initializes the Planner component
+     */
+    protected override void OnInitialized()
+    {
+        Console.WriteLine("MEAL WIDGET -- INITIALIZING");
+        Console.WriteLine("Meals: " + this.Meals.Count);
+        this.currentUserData.SelectedMeal = null;
+        foreach (var meal in this.Meals)
+        {
+            if (meal.MealType == MealType.BREAKFAST)
+            {
+                this.breakfast = meal;
+            }
+            else if (meal.MealType == MealType.LUNCH)
+            {
+                this.lunch = meal;
+            }
+            else if (meal.MealType == MealType.DINNER)
+            {
+                this.dinner = meal;
+            }
+        }
+    }
+
+    private void addBreakfast()
+    {
+        Console.WriteLine("Clicked add breakfast for " + this.DayOfWeek + ". Clicked by " + currentUserData.CurrentUser.Username);
+        this.currentUserData.SelectedMeal = this.breakfast;
+        Nav.NavigateTo("/explore");
+    }
+
+    private void addLunch()
+    {
+        Console.WriteLine("Clicked add lunch for " + this.DayOfWeek + ". Clicked by " + currentUserData.CurrentUser.Username);
+        this.currentUserData.SelectedMeal = this.lunch;
+        Nav.NavigateTo("/explore");
+    }
+
+    private void addDinner()
+    {
+        Console.WriteLine("Clicked add dinner for " + this.DayOfWeek + ". Clicked by " + currentUserData.CurrentUser.Username);
+        this.currentUserData.SelectedMeal = this.dinner;
+        Nav.NavigateTo("/explore");
+    }
+
+    /**
+     *  Handles page navigation to the specified recipe detail view
+     *  @param recipeTitle - the title of the recipe
+     *  @param recipeId - the recipe id
+     */
+    private void goToRecipe(string recipeTitle, int recipeId)
+    {
+        Console.WriteLine("Recipe clicked: " + recipeId);
+        Nav.NavigateTo("recipe-details/" + recipeTitle + "/" + recipeId);
+    }
 }
