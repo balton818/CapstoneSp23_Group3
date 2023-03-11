@@ -90,12 +90,21 @@
 
     private void addToMealPlan()
     {
-        Console.WriteLine("Added meal to plan");
         Meal newMeal = this.currentUserData.SelectedMeal;
         RecipeInformation info = this.recipeService.GetRecipeInformation(Int32.Parse(this.RecipeId));
-        Recipe recipe = new Recipe() { Title = this.RecipeTitle, Image = info.Image, ApiId = Int32.Parse(this.RecipeId) };
+        Recipe recipe = new Recipe() { Title = this.RecipeTitle, Image = info.Image, ApiId = Int32.Parse(this.RecipeId), ImageType = info.ImageType};
         newMeal.Recipe = recipe;
-        this.mealPlanService.UpdateMeal(newMeal);
+        if (this.currentUserData.NewMeal)
+        {
+            Console.WriteLine("Adding meal to plan for " + this.currentUserData.SelectedMeal.MealType + " on " + this.currentUserData.SelectedMeal.DayOfWeek);
+            this.mealPlanService.AddMeal(newMeal);
+        } else
+        {
+            Console.WriteLine("Updating mealplan for " + this.currentUserData.SelectedMeal.MealType + " on " + this.currentUserData.SelectedMeal.DayOfWeek);
+            this.mealPlanService.UpdateMeal(newMeal);
+        }
+        this.currentUserData.SelectedMeal = null;
+        this.currentUserData.NewMeal = false;
         Nav.NavigateTo("/planner");
     }
 

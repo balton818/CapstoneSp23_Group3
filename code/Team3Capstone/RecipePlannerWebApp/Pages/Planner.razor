@@ -29,7 +29,8 @@
         <span>Showing meal plan starting on @this.determineDateRange().</span>
         @foreach (DayOfWeek day in Enum.GetValues(typeof(System.DayOfWeek)))
         {
-            <MealPlanWidget DayOfWeek="@day" Meals="@this.plan.meals[day]" MealPlan="this.plan"></MealPlanWidget>
+            Console.WriteLine("-- Meals for " + day + ": " + this.plan.meals[day].Count);
+            <MealPlanWidget DayOfWeek="@day" MealPlan="this.plan"></MealPlanWidget>
         }
     </div>
 </div>

@@ -14,5 +14,6 @@ namespace RecipePlannerWebApp.LocalServices
         public BrowseRecipeRequest? lastExplorePageRequest { get; set; }
 
         public Meal? SelectedMeal { get; set; }
+        public bool NewMeal { get; set; }
     }
 }

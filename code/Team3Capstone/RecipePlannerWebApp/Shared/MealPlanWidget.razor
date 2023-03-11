@@ -10,7 +10,7 @@
             <label>Breakfast</label>
             @if (this.breakfast?.Recipe is not null)
             {
-                <img src="@this.breakfast.Recipe.Image" width="75px" height="75px" @onclick="() => goToRecipe(this.breakfast.Recipe.Title, this.breakfast.Recipe.ApiId ?? 0)"/>
+                <img src="./Assets/recipe-filler-image.png" width="75px" height="75px" @onclick="() => goToRecipe(this.breakfast.Recipe.Title, this.breakfast.Recipe.ApiId ?? 0)" />
             }
             else
             {
@@ -21,7 +21,7 @@
             <label>Lunch</label>
             @if (this.lunch?.Recipe is not null)
             {
-                <img src="@this.lunch.Recipe.Image" width="75px" height="75px" @onclick="() => goToRecipe(this.lunch.Recipe.Title, this.lunch.Recipe.ApiId ?? 0)" />
+                <img src="./Assets/recipe-filler-image.png" width="75px" height="75px" @onclick="() => goToRecipe(this.lunch.Recipe.Title, this.lunch.Recipe.ApiId ?? 0)" />
             }
             else
             {
@@ -32,7 +32,7 @@
             <label>Dinner</label>
             @if (this.dinner?.Recipe is not null)
             {
-                <img src="@this.dinner.Recipe.Image" width="75px" height="75px" @onclick="() => goToRecipe(this.dinner.Recipe.Title, this.dinner.Recipe.ApiId ?? 0)" />
+                <img src="./Assets/recipe-filler-image.png" width="75px" height="75px" @onclick="() => goToRecipe(this.dinner.Recipe.Title, this.dinner.Recipe.ApiId ?? 0)" />
             }
             else
             {
@@ -45,17 +45,16 @@
 
 @code {
     [Parameter]
-    public DayOfWeek? DayOfWeek { get; set; }
+    public DayOfWeek DayOfWeek { get; set; }
 
     [Parameter]
     public MealPlan? MealPlan { get; set; }
 
-    [Parameter]
-    public List<Meal> Meals { get; set; } = new List<Meal>();
+    private List<Meal> meals { get; set; } = new List<Meal>();
 
-    private Meal breakfast { get; set; } = new Meal();
-    private Meal lunch { get; set; } = new Meal();
-    private Meal dinner { get; set; } = new Meal();
+    private Meal breakfast { get; set; }
+    private Meal lunch { get; set; }
+    private Meal dinner { get; set; }
 
     /**
      * Initializes the Planner component
@@ -63,9 +62,13 @@
     protected override void OnInitialized()
     {
         Console.WriteLine("MEAL WIDGET -- INITIALIZING");
-        Console.WriteLine("Meals: " + this.Meals.Count);
+        this.meals = this.MealPlan.meals[this.DayOfWeek];
+        Console.WriteLine("Meals: " + this.meals.Count);
         this.currentUserData.SelectedMeal = null;
-        foreach (var meal in this.Meals)
+        this.breakfast = new Meal() { MealPlanId = this.MealPlan.MealPlanId ?? 0, Date = (DateTime)this.MealPlan.MealPlanDate, DayOfWeek = this.DayOfWeek, MealType = MealType.BREAKFAST };
+        this.lunch = new Meal() { MealPlanId = this.MealPlan.MealPlanId ?? 0, Date = (DateTime)this.MealPlan.MealPlanDate, DayOfWeek = this.DayOfWeek, MealType = MealType.LUNCH };
+        this.dinner = new Meal() { MealPlanId = this.MealPlan.MealPlanId ?? 0, Date = (DateTime)this.MealPlan.MealPlanDate, DayOfWeek = this.DayOfWeek, MealType = MealType.DINNER };
+        foreach (var meal in this.meals)
         {
             if (meal.MealType == MealType.BREAKFAST)
             {
@@ -86,6 +89,7 @@
     {
         Console.WriteLine("Clicked add breakfast for " + this.DayOfWeek + ". Clicked by " + currentUserData.CurrentUser.Username);
         this.currentUserData.SelectedMeal = this.breakfast;
+        this.currentUserData.NewMeal = true;
         Nav.NavigateTo("/explore");
     }
 
@@ -93,6 +97,7 @@
     {
         Console.WriteLine("Clicked add lunch for " + this.DayOfWeek + ". Clicked by " + currentUserData.CurrentUser.Username);
         this.currentUserData.SelectedMeal = this.lunch;
+        this.currentUserData.NewMeal = true;
         Nav.NavigateTo("/explore");
     }
 
@@ -100,6 +105,7 @@
     {
         Console.WriteLine("Clicked add dinner for " + this.DayOfWeek + ". Clicked by " + currentUserData.CurrentUser.Username);
         this.currentUserData.SelectedMeal = this.dinner;
+        this.currentUserData.NewMeal = true;
         Nav.NavigateTo("/explore");
     }
 
