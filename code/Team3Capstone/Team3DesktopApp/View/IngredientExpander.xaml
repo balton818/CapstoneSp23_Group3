@@ -47,7 +47,6 @@
                 </DataTemplate>
             </Expander.HeaderTemplate>
             <Grid>
-
                 <Button
                     x:Name="plusButton"
                     Margin="0,0,304,0"

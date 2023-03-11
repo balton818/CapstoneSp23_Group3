@@ -33,7 +33,8 @@ namespace Team3DesktopApp.View
 
         private void cancelClick(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            Grid parentGrid = (Grid)this.Parent;
+            parentGrid.Visibility = Visibility.Hidden;
         }
     }
 }

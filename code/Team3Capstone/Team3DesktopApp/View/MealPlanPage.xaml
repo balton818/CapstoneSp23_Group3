@@ -98,12 +98,12 @@
                 </Canvas>
                 <local:NavButton
                     x:Name="nextWeekButton"
-                    Canvas.Left="222"
-                    Canvas.Top="416"
-                    Width="171"
+                    Canvas.Left="114"
+                    Canvas.Top="429"
+                    Width="218"
                     Height="66"
                     HorizontalAlignment="Left"
-                    VerticalAlignment="Center"
+                    VerticalAlignment="Top"
                     Background="#FFD6CCC2"
                     Click="viewOtherWeekClick"
                     Content="View Next Week"
@@ -121,40 +121,28 @@
             </Canvas>
         </Canvas>
         <ListBox
-            x:Name="weekOnePlanListBox"
-            Grid.Row="0"
-            Margin="14,97,8,193"
+            x:Name="planListBox"
+            Width="409"
+            Height="322"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Top"
             Background="#30323d"
             BorderBrush="#FF30323D"
             FontFamily="Song Myung"
-            FontSize="16"
+            FontSize="36"
             Foreground="#FFE8C547"
-            ItemsSource="{Binding weekOne}"
-            ScrollViewer.HorizontalScrollBarVisibility="Disabled">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock Text="{Binding}" TextWrapping="Wrap" />
-                </DataTemplate>
-            </ListBox.ItemTemplate>
+            ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+            SelectionMode="Single" Margin="0,92,0,0" >
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="ClipToBounds" Value="True" />
+                    <Setter Property="MaxWidth" Value="409" />
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                    <Setter Property="VerticalContentAlignment" Value="Stretch" />
+                </Style>
+            </ListBox.ItemContainerStyle>
         </ListBox>
-        <ListBox
-            x:Name="weekTwoPlanListBox"
-            Grid.Row="0"
-            Margin="14,97,8,193"
-            Background="#30323d"
-            BorderBrush="#FF30323D"
-            FontFamily="Song Myung"
-            FontSize="16"
-            Foreground="#FFE8C547"
-            ItemsSource="{Binding weekTwo}"
-            Visibility="Hidden"
-            ScrollViewer.HorizontalScrollBarVisibility="Disabled">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock Text="{Binding}" TextWrapping="Wrap" />
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+
         <local:NavMenu
             x:Name="navMenu"
             Width="162"

@@ -305,5 +305,35 @@ public class HttpClientConnection
         return Task.FromResult<JObject>(null);
     }
 
+    public Task<MealPlan?> GetPlan(int userId, HttpClient client, bool currentWeek)
+    {
+        Uri query;
+        if (currentWeek)
+        {
+            query = new Uri(
+                "MealPlan/get-this-week?userId=" + userId, UriKind.Relative);
+        }
+        else
+        {
+            query = new Uri(
+                "MealPlan/get-next-week?userId=" + userId, UriKind.Relative);
+        }
+
+        var response = client.GetAsync(query);
+        Console.WriteLine(response);
+        if (response.Result.IsSuccessStatusCode)
+        {
+            var readTask = response.Result.Content.ReadAsStringAsync();
+            readTask.Wait();
+
+            var result = readTask.Result;
+            Console.WriteLine(result);
+            var recipe = JsonConvert.DeserializeObject<MealPlan>(result);
+            return Task.FromResult(recipe);
+        }
+
+        return Task.FromResult<MealPlan>(null);
+    }
+
     #endregion
 }

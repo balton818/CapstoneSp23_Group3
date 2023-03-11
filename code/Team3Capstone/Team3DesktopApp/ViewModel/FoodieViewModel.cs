@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Windows.Documents;
 using System.Windows.Media;
 using Team3DesktopApp.Dal;
 using Team3DesktopApp.Model;
@@ -22,6 +23,7 @@ public class FoodieViewModel
     private readonly RecipeDetailViewModel recipeDetailViewModel;
     private readonly PantryViewModel pantryViewModel;
     private readonly BrowseRecipesViewModel browseRecipesViewModel;
+    private readonly MealPlanViewModel mealPlanViewModel;
 
     #endregion
 
@@ -52,6 +54,7 @@ public class FoodieViewModel
         this.registrationViewModel = new RegistrationViewModel();
         this.pantryViewModel = new PantryViewModel();
         this.browseRecipesViewModel = new BrowseRecipesViewModel();
+        this.mealPlanViewModel = new MealPlanViewModel();
         this.ClientToSet = Client;
     }
 
@@ -377,6 +380,33 @@ public class FoodieViewModel
     {
         return new Tuple<string, string>(this.browseRecipesViewModel.AppliedRecipeType,
             this.browseRecipesViewModel.AppliedDietType);
+    }
+
+    public async Task GetPlans()
+    {
+        await this.mealPlanViewModel.getMealPlans(this.Userid, this.ClientToSet);
+    }
+
+    public Dictionary<MealType, string> GetMealPlan(bool currentWeek, DayOfWeek dayOfWeek)
+    {
+        var mealTitles = new Dictionary<MealType, string>();
+        List<Meal?> meals = this.mealPlanViewModel.getMealForDay(dayOfWeek, currentWeek);
+        if (meals.Count == 0)
+        {
+            mealTitles.Add(MealType.BREAKFAST, "");
+            mealTitles.Add(MealType.LUNCH, "");
+            mealTitles.Add(MealType.DINNER, "");
+        }
+        foreach (Meal? meal in meals)
+        {
+            if (meal is { Recipe: { } })
+            {
+                mealTitles.Add(meal.MealType, meal.Recipe.Title);
+            }
+        }
+
+
+        return mealTitles;
     }
 
     #endregion

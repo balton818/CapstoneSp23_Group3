@@ -13,6 +13,7 @@ public partial class RecipeDetailPage : Page
     #region Properties
 
     private FoodieViewModel? ViewModel { get; }
+    public Page PreviousPage { get; set; }
 
     #endregion
 
@@ -45,6 +46,11 @@ public partial class RecipeDetailPage : Page
     #endregion
 
     private void addToPlan_OnClick(object sender, RoutedEventArgs e)
+    {
+        this.addToPlanePanel.Visibility = Visibility.Visible;
+    }
+
+    private void backToPlan_OnClick(object sender, RoutedEventArgs e)
     {
         throw new System.NotImplementedException();
     }

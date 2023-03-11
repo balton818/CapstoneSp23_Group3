@@ -25,6 +25,7 @@ namespace Team3DesktopApp.View
         private readonly string FoundRecipeUri = "/View/RecipePage.xaml";
         private readonly string RecipeDetailUri = "/View/RecipeDetailPage.xaml";
         private readonly string BrowseRecipesUri = "/View/BrowseRecipesPage.xaml";
+        private readonly string MealPlanUri = "/View/MealPlanPage.xaml";
 
         /// <summary>Initializes a new instance of the <see cref="PageNavigation" /> class.</summary>
         /// <param name="viewModel">The view model.</param>
@@ -62,6 +63,11 @@ namespace Team3DesktopApp.View
             {
                 var browseRecipesPage = new BrowseRecipesPage(this.ViewModel);
                 navigationService.Navigate(browseRecipesPage);
+            }
+            else if (navUri.Equals(this.MealPlanUri))
+            {
+                var mealPlanPage = new MealPlanPage(this.ViewModel);
+                navigationService.Navigate(mealPlanPage);
             }
             else
             {

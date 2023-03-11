@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Team3DesktopApp.Model;
 using Team3DesktopApp.ViewModel;
 
 namespace Team3DesktopApp.View
@@ -42,11 +43,19 @@ namespace Team3DesktopApp.View
 
         public string PlannedLabel { get; set; } = "Planned - ";
 
-        public MealPlanExpander(FoodieViewModel viewModel)
+        public MealPlanExpander(FoodieViewModel viewModel, DayOfWeek day)
         {
             InitializeComponent();
             this.ViewModel = viewModel;
             this.DataContext = this;
+            this.Date = day.ToString();
+        }
+
+        public MealPlanExpander()
+        {
+            InitializeComponent();
+            this.DataContext = this;
+            this.Date = "Monday";
         }
 
         private void navigateToPage(string navUri)
@@ -79,6 +88,56 @@ namespace Team3DesktopApp.View
 
 
             this.navigateToPage(buttonPressed.NavUri);
+        }
+
+        public void DisableEnableBreakfast(bool active)
+        {
+            if (active)
+            {
+                this.addBreakfastButton.Visibility = Visibility.Hidden;
+                this.breakfastDetailButton.Visibility = Visibility.Visible;
+                this.breakfastRemoveButton.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                this.addBreakfastButton.Visibility = Visibility.Visible;
+                this.breakfastDetailButton.Visibility = Visibility.Hidden;
+                this.breakfastRemoveButton.Visibility = Visibility.Hidden;
+            }
+
+        }
+
+        public void DisableEnableLunch(bool active)
+        {
+            if (active)
+            {
+                this.addLunchButton.Visibility = Visibility.Hidden;
+                this.LunchDetailButton.Visibility = Visibility.Visible;
+                this.removeLunchButton.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                this.addLunchButton.Visibility = Visibility.Visible;
+                this.LunchDetailButton.Visibility = Visibility.Hidden;
+                this.removeLunchButton.Visibility = Visibility.Hidden;
+            }
+
+        }
+
+        public void DisableEnableDinner(bool active)
+        {
+            if (active)
+            {
+                this.addDinnerButton.Visibility = Visibility.Hidden;
+                this.dinnerDetailButton.Visibility = Visibility.Visible;
+                this.removeDinnerButton.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                this.addDinnerButton.Visibility = Visibility.Visible;
+                this.dinnerDetailButton.Visibility = Visibility.Hidden;
+                this.removeDinnerButton.Visibility = Visibility.Hidden;
+            }
         }
     }
 }

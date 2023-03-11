@@ -105,6 +105,29 @@
                         RadiusY="1" />
                 </Canvas>
                 <Canvas>
+                    <local:NavButton
+                        x:Name="backButton"
+                        Canvas.Left="291"
+                        Canvas.Top="522"
+                        Canvas.Right="15"
+                        Width="108"
+                        Height="28"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Background="#FFD6CCC2"
+                        Click="backToPlan_OnClick"
+                        Content="Back"
+                        FontFamily="Song Myung"
+                        FontSize="18"
+                        ForceCursor="True"
+                        NavUri="/View/RecipeDetailPage.xaml">
+                        <local:NavButton.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="5" />
+                            </Style>
+                        </local:NavButton.Resources>
+
+                    </local:NavButton>
                     <TextBlock
                         Name="textbox"
                         Canvas.Left="25"
