@@ -1,4 +1,6 @@
-﻿@using RecipePlannerApi.Model;
+﻿@using RecipePlannerApi.Dao;
+@using RecipePlannerApi.Model;
+@using RecipePlannerApi.Service;
 @using RecipePlannerWebApp.LocalServices;
 @inject NavigationManager Nav;
 @inject UserSessionData currentUserData;
@@ -10,7 +12,9 @@
             <label>Breakfast</label>
             @if (this.breakfast?.Recipe is not null)
             {
-                <img src="./Assets/recipe-filler-image.png" width="75px" height="75px" @onclick="() => goToRecipe(this.breakfast.Recipe.Title, this.breakfast.Recipe.ApiId ?? 0)" />
+                <img src="@this.breakfast.Recipe.Image" width="75px" height="75px" @onclick="() => goToRecipe(this.breakfast)" />
+                <button style="margin: 2px; padding: 5px; width: 75px;" @onclick="() => updateMeal(this.breakfast)">Change</button>
+                <button style="margin: 2px; padding: 5px; width: 75px;" @onclick="() => removeMeal(this.breakfast)">Remove</button>
             }
             else
             {
@@ -21,7 +25,9 @@
             <label>Lunch</label>
             @if (this.lunch?.Recipe is not null)
             {
-                <img src="./Assets/recipe-filler-image.png" width="75px" height="75px" @onclick="() => goToRecipe(this.lunch.Recipe.Title, this.lunch.Recipe.ApiId ?? 0)" />
+                <img src="@this.lunch.Recipe.Image" width="75px" height="75px" @onclick="() => goToRecipe(this.lunch)" />
+                <button style="margin: 2px; padding: 5px; width: 75px;" @onclick="() => updateMeal(this.lunch)">Change</button>
+                <button style="margin: 2px; padding: 5px; width: 75px;" @onclick="() => removeMeal(this.lunch)">Remove</button>
             }
             else
             {
@@ -32,7 +38,9 @@
             <label>Dinner</label>
             @if (this.dinner?.Recipe is not null)
             {
-                <img src="./Assets/recipe-filler-image.png" width="75px" height="75px" @onclick="() => goToRecipe(this.dinner.Recipe.Title, this.dinner.Recipe.ApiId ?? 0)" />
+                <img src="@this.dinner.Recipe.Image" width="75px" height="75px" @onclick="() => goToRecipe(this.dinner)" />
+                <button style="margin: 2px; padding: 5px; width: 75px;" @onclick="() => updateMeal(this.dinner)">Change</button>
+                <button style="margin: 2px; padding: 5px; width: 75px;" @onclick="() => removeMeal(this.dinner)">Remove</button>
             }
             else
             {
@@ -55,6 +63,7 @@
     private Meal breakfast { get; set; }
     private Meal lunch { get; set; }
     private Meal dinner { get; set; }
+    private MealPlanService mealService = new MealPlanService(new MealPlanDao());
 
     /**
      * Initializes the Planner component
@@ -114,9 +123,23 @@
      *  @param recipeTitle - the title of the recipe
      *  @param recipeId - the recipe id
      */
-    private void goToRecipe(string recipeTitle, int recipeId)
+    private void goToRecipe(Meal meal)
     {
-        Console.WriteLine("Recipe clicked: " + recipeId);
-        Nav.NavigateTo("recipe-details/" + recipeTitle + "/" + recipeId);
+        this.currentUserData.SelectedMeal = meal;
+        Console.WriteLine("Recipe clicked: " + meal.Recipe.ApiId);
+        Nav.NavigateTo("recipe-details/" + meal.Recipe.Title + "/" + meal.Recipe.ApiId);
+    }
+
+    private void updateMeal(Meal meal)
+    {
+        this.currentUserData.SelectedMeal = meal;
+        this.currentUserData.NewMeal = false;
+        Nav.NavigateTo("/explore");
+    }
+
+    private void removeMeal(Meal meal)
+    {
+        this.mealService.RemoveMeal(meal.MealId ?? 0);
+        Nav.NavigateTo("/planner", true);
     }
 }

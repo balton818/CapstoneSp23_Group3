@@ -16,7 +16,14 @@
     </div>
     @if (this.currentUserData.SelectedMeal is not null)
     {
-        <button style="margin-left: 60px" @onclick="addToMealPlan">Add to meal plan for @this.currentUserData.SelectedMeal?.MealType.ToString().ToLower(). </button>
+        if (this.currentUserData.NewMeal)
+        {
+            <button style="margin-left: 60px" @onclick="addToMealPlan">Add to meal plan for @this.currentUserData.SelectedMeal?.MealType.ToString().ToLower()</button>
+        } else
+        {
+            <button style="margin-left: 60px" @onclick="updateMealPlan">Update meal plan for @this.currentUserData.SelectedMeal?.MealType.ToString().ToLower()</button>
+        }
+
     }
     <div class="recipe-area">
         <h2 class="title" style="font-weight: bold">@RecipeTitle</h2>
@@ -78,7 +85,12 @@
      */
     private void goBack()
     {
-        if (this.currentUserData.lastExplorePageRequest != null)
+        if (this.currentUserData.SelectedMeal != null)
+        {
+            this.currentUserData.SelectedMeal = null;
+            Nav.NavigateTo("/planner");
+        }
+        else if (this.currentUserData.lastExplorePageRequest != null)
         {
             Nav.NavigateTo("/explore");
         }
@@ -93,16 +105,26 @@
         Meal newMeal = this.currentUserData.SelectedMeal;
         RecipeInformation info = this.recipeService.GetRecipeInformation(Int32.Parse(this.RecipeId));
         Recipe recipe = new Recipe() { Title = this.RecipeTitle, Image = info.Image, ApiId = Int32.Parse(this.RecipeId), ImageType = info.ImageType};
+        
         newMeal.Recipe = recipe;
-        if (this.currentUserData.NewMeal)
-        {
-            Console.WriteLine("Adding meal to plan for " + this.currentUserData.SelectedMeal.MealType + " on " + this.currentUserData.SelectedMeal.DayOfWeek);
-            this.mealPlanService.AddMeal(newMeal);
-        } else
-        {
-            Console.WriteLine("Updating mealplan for " + this.currentUserData.SelectedMeal.MealType + " on " + this.currentUserData.SelectedMeal.DayOfWeek);
-            this.mealPlanService.UpdateMeal(newMeal);
-        }
+        Console.WriteLine("Adding meal to plan for " + this.currentUserData.SelectedMeal.MealType + " on " + this.currentUserData.SelectedMeal.DayOfWeek);
+        this.mealPlanService.AddMeal(newMeal);
+
+        this.currentUserData.SelectedMeal = null;
+        this.currentUserData.NewMeal = false;
+        Nav.NavigateTo("/planner");
+    }
+
+    private void updateMealPlan()
+    {
+        Meal currMeal = this.currentUserData.SelectedMeal;
+        RecipeInformation info = this.recipeService.GetRecipeInformation(Int32.Parse(this.RecipeId));
+        Recipe recipe = new Recipe() { Title = this.RecipeTitle, Image = info.Image, ApiId = Int32.Parse(this.RecipeId), ImageType = info.ImageType };
+        currMeal.Recipe = recipe;
+
+        Console.WriteLine("Updating mealplan for " + this.currentUserData.SelectedMeal.MealType + " on " + this.currentUserData.SelectedMeal.DayOfWeek);
+        this.mealPlanService.UpdateMeal(currMeal);
+    
         this.currentUserData.SelectedMeal = null;
         this.currentUserData.NewMeal = false;
         Nav.NavigateTo("/planner");

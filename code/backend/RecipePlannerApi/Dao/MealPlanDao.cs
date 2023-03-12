@@ -63,7 +63,7 @@ namespace RecipePlannerApi.Dao
         public Meal UpdateMeal(Meal meal) {
             CommandUpdate cmd = c => {
                 c.CommandType = System.Data.CommandType.StoredProcedure;
-                c.Parameters.AddWithValue("@mealPlanId", meal.MealPlanId);
+                c.Parameters.AddWithValue("@mealId", meal.MealId);
                 c.Parameters.AddWithValue("@dayOfWeek", meal.DayOfWeek + 1);
                 c.Parameters.AddWithValue("@mealType", meal.MealType);
                 c.Parameters.AddWithValue("@apiId", meal.Recipe.ApiId);
@@ -74,9 +74,5 @@ namespace RecipePlannerApi.Dao
 
             return new Meal(execute<MealDto>("update_meal", cmd).FirstOrDefault());
         }
-
-
-
-
     }
 }
