@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Navigation;
+using Team3DesktopApp.Model;
 using Team3DesktopApp.ViewModel;
 
 namespace Team3DesktopApp.View
@@ -46,6 +47,8 @@ namespace Team3DesktopApp.View
             else if (navUri.Equals(this.FoundRecipeUri))
             {
                 var foundRecipePage = new FoundRecipePage(this.ViewModel);
+                this.ViewModel.PlanTypeAndDateToAdd = null;
+
                 navigationService.Navigate(foundRecipePage);
             }
             else if (navUri.Equals(this.RegistrationUri))
@@ -67,11 +70,13 @@ namespace Team3DesktopApp.View
             else if (navUri.Equals(this.MealPlanUri))
             {
                 var mealPlanPage = new MealPlanPage(this.ViewModel);
+                this.ViewModel.PlanTypeAndDateToAdd = null;
                 navigationService.Navigate(mealPlanPage);
             }
             else
             {
                 var pantryPage = new PantryPage(this.ViewModel);
+                this.ViewModel.PlanTypeAndDateToAdd = null;
                 navigationService.Navigate(pantryPage);
             }
         }

@@ -26,6 +26,7 @@
                         Content="Select Day"
                         Foreground="#d6ccc2" />
                     <RadioButton
+                        x:Name="sundayButton"
                         Margin="10,0,0,15"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
@@ -33,6 +34,7 @@
                         Foreground="#FFE8C547"
                         GroupName="DayGroup" />
                     <RadioButton
+                        x:Name="mondayButton"
                         Height="17"
                         Margin="10,0,0,15"
                         HorizontalAlignment="Left"
@@ -40,6 +42,7 @@
                         Foreground="#FFE8C547"
                         GroupName="DayGroup" />
                     <RadioButton
+                        x:Name="tuesdayButton"
                         Margin="10,0,0,15"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
@@ -47,6 +50,7 @@
                         Foreground="#FFE8C547"
                         GroupName="DayGroup" />
                     <RadioButton
+                        x:Name="wednesdayButton"
                         Margin="10,0,0,15"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
@@ -54,6 +58,7 @@
                         Foreground="#FFE8C547"
                         GroupName="DayGroup" />
                     <RadioButton
+                        x:Name="thursdayButton"
                         Margin="10,0,0,15"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
@@ -61,6 +66,7 @@
                         Foreground="#FFE8C547"
                         GroupName="DayGroup" />
                     <RadioButton
+                        x:Name="fridayButton"
                         Margin="10,0,0,15"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
@@ -68,6 +74,7 @@
                         Foreground="#FFE8C547"
                         GroupName="DayGroup" />
                     <RadioButton
+                        x:Name="saturdayButton"
                         Margin="10,0,0,15"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
@@ -97,6 +104,7 @@
                         Content="Select Meal"
                         Foreground="#d6ccc2" />
                     <RadioButton
+                        x:Name="breakfastButton"
                         Margin="18,0,0,15"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
@@ -104,6 +112,7 @@
                         Foreground="#FFE8C547"
                         GroupName="TypeGroup" />
                     <RadioButton
+                        x:Name="lunchButton"
                         Margin="18,0,0,15"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
@@ -111,6 +120,7 @@
                         Foreground="#FFE8C547"
                         GroupName="TypeGroup" />
                     <RadioButton
+                        x:Name="dinnerButton"
                         Margin="18,0,0,15"
                         Content="Dinner"
                         Foreground="#FFE8C547"
@@ -168,6 +178,7 @@
                         Content="Select Week"
                         Foreground="#d6ccc2" FontSize="11" />
                     <RadioButton
+                        x:Name="currentWeekButton"
                         Margin="10,18,0,0"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
@@ -175,6 +186,7 @@
                         Foreground="#FFE8C547"
                         GroupName="WeekGroup" />
                     <RadioButton
+                        x:Name="nextWeekButton"
                         Margin="113,18,0,0"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"

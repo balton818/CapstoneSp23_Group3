@@ -39,7 +39,7 @@ public class FoodieViewModel
     /// <value>The currently logged in user's pantry.</value>
     public List<PantryItem>? Pantry { get; set; }
 
-    public Tuple<string, string> PlanTypeAndDateToAdd { get; set; }
+    public Tuple<DayOfWeek?, MealType?> PlanTypeAndDateToAdd { get; set; }
 
     #endregion
 
@@ -160,9 +160,10 @@ public class FoodieViewModel
     {
         foreach (var recipe in recipes)
         {
-            if (recipe.Title.Equals(recipeName) && recipe.Id != null)
+            if (recipe.Title.Equals(recipeName) && recipe.ApiId != null)
             {
-                await this.recipeDetailViewModel.RecipeDetailNav((int)recipe.Id, this.ClientToSet);
+                this.recipeDetailViewModel.currentRecipe = recipe;
+                await this.recipeDetailViewModel.RecipeDetailNav((int)recipe.ApiId, this.ClientToSet);
             }
         }
 
@@ -391,23 +392,39 @@ public class FoodieViewModel
     {
         var mealTitles = new Dictionary<MealType, string>();
         List<Meal?> meals = this.mealPlanViewModel.getMealForDay(dayOfWeek, currentWeek);
-        if (meals.Count == 0)
-        {
-            mealTitles.Add(MealType.BREAKFAST, "");
-            mealTitles.Add(MealType.LUNCH, "");
-            mealTitles.Add(MealType.DINNER, "");
-        }
+
+        mealTitles.Add(MealType.BREAKFAST, "");
+        mealTitles.Add(MealType.LUNCH, "");
+        mealTitles.Add(MealType.DINNER, "");
+
+
         foreach (Meal? meal in meals)
         {
-            if (meal is { Recipe: { } })
-            {
-                mealTitles.Add(meal.MealType, meal.Recipe.Title);
-            }
+            mealTitles[meal.MealType] = meal.Recipe.Title;
+
         }
 
 
         return mealTitles;
     }
 
+
+    public bool GetCurrentWeek()
+    {
+        return this.mealPlanViewModel.CurrentWeek;
+    }
+
+    public void SetCurrentWeek(bool currentWeek)
+    {
+        this.mealPlanViewModel.CurrentWeek = currentWeek;
+    }
+
+
     #endregion
+
+    public void AddToMealPlan(bool? current)
+    {
+        this.mealPlanViewModel.AddToPlan(this.recipeDetailViewModel.currentRecipe, this.PlanTypeAndDateToAdd.Item1, this.PlanTypeAndDateToAdd.Item2, this.ClientToSet, current);
+    }
+
 }

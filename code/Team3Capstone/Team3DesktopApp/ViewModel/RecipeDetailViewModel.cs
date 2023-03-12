@@ -12,6 +12,7 @@ public class RecipeDetailViewModel
     /// <summary>Gets or sets the recipe information.</summary>
     /// <value>The recipe information.</value>
     public RecipeInformation RecipeInfo { get; set; }
+    public Recipe currentRecipe { get; set; }
 
     #endregion
 

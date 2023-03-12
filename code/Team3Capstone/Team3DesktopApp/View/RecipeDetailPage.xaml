@@ -120,7 +120,7 @@
                         FontFamily="Song Myung"
                         FontSize="18"
                         ForceCursor="True"
-                        NavUri="/View/RecipeDetailPage.xaml">
+                        NavUri="/View/BrowseRecipesPage.xaml">
                         <local:NavButton.Resources>
                             <Style TargetType="Border">
                                 <Setter Property="CornerRadius" Value="5" />
@@ -231,11 +231,11 @@
                 VerticalAlignment="Top"
                 Grid.ZIndex="1" Canvas.Left="297" />
         </Canvas>
-        <Grid x:Name="addToPlanePanel" Visibility="Hidden">
-            <Grid.Background>
+        <Grid Grid.ZIndex="0" x:Name="addToPlanePanel" Visibility="Visible">
+            <Grid.Background >
                 <SolidColorBrush Opacity="0.5" Color="#30323d"/>
             </Grid.Background>
-            <local:AddToPlanPanel Margin="106,132,107,133"></local:AddToPlanPanel>
+            <local:AddToPlanPanel Grid.ZIndex="1" x:Name="addPanel" Margin="106,66,96,152"></local:AddToPlanPanel>
         </Grid>
     </Grid>
 </Page>

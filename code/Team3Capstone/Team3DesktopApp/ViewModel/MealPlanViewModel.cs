@@ -14,6 +14,7 @@ namespace Team3DesktopApp.ViewModel
 
         public MealPlan? FirstWeekPlan { get; set; }
         public MealPlan? NextWeekPlan { get; set; }
+        public bool CurrentWeek { get; set; } = true;
 
         public async Task getMealPlans(int userId, HttpClient client)
         {
@@ -24,6 +25,7 @@ namespace Team3DesktopApp.ViewModel
 
         public List<Meal?> getMealForDay(DayOfWeek day, bool currentWeek)
         {
+            this.CurrentWeek = currentWeek;
             if (currentWeek)
             {
                 return this.FirstWeekPlan!.meals[day];
@@ -35,5 +37,28 @@ namespace Team3DesktopApp.ViewModel
 
         }
 
+        public void AddToPlan(Recipe recipe, DayOfWeek? day, MealType? type, HttpClient client, bool? current)
+        {
+            HttpClientConnection connection = new HttpClientConnection();
+            if (type != null && day != null)
+            {
+                Meal meal = new Meal
+                {
+                    MealType = (MealType)type,
+                    Recipe = recipe,
+                    DayOfWeek = (DayOfWeek)day
+                };
+
+                if (current == true)
+                {
+                    this.FirstWeekPlan = connection.AddToPlan((int)this.FirstWeekPlan.MealPlanId, client, meal).Result;
+
+                }
+                else
+                {
+                    this.NextWeekPlan = connection.AddToPlan((int)this.NextWeekPlan.MealPlanId, client, meal).Result;
+                }
+            }
+        }
     }
 }

@@ -35,7 +35,7 @@ namespace Team3DesktopApp.View
         /// <value>The name of the breakfast recipe.</value>
         public string DinnerName { get; set; }
 
-        public string Date { get; set; }
+        public DayOfWeek Date { get; set; }
 
         /// <summary>Gets or sets the view model.</summary>
         /// <value>The view model.</value>
@@ -48,14 +48,7 @@ namespace Team3DesktopApp.View
             InitializeComponent();
             this.ViewModel = viewModel;
             this.DataContext = this;
-            this.Date = day.ToString();
-        }
-
-        public MealPlanExpander()
-        {
-            InitializeComponent();
-            this.DataContext = this;
-            this.Date = "Monday";
+            this.Date = day;
         }
 
         private void navigateToPage(string navUri)
@@ -75,15 +68,15 @@ namespace Team3DesktopApp.View
             NavButton? buttonPressed = sender as NavButton;
             if (buttonPressed!.Name.Equals(this.addBreakfastButton.Name))
             {
-                this.ViewModel.PlanTypeAndDateToAdd = new Tuple<string, string>(this.Date, "Breakfast");
+                this.ViewModel.PlanTypeAndDateToAdd = new Tuple<DayOfWeek?, MealType?>(this.Date, MealType.BREAKFAST);
             }
             else if (buttonPressed.Name.Equals(this.addLunchButton.Name))
             {
-                this.ViewModel.PlanTypeAndDateToAdd = new Tuple<string, string>(this.Date, "Lunch");
+                this.ViewModel.PlanTypeAndDateToAdd = new Tuple<DayOfWeek?, MealType?>(this.Date, MealType.LUNCH);
             }
             else if (buttonPressed.Name.Equals(this.addDinnerButton.Name))
             {
-                this.ViewModel.PlanTypeAndDateToAdd = new Tuple<string, string>(this.Date, "Dinner");
+                this.ViewModel.PlanTypeAndDateToAdd = new Tuple<DayOfWeek?, MealType?>(this.Date, MealType.DINNER);
             }
 
 

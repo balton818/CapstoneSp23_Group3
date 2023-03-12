@@ -364,6 +364,8 @@
                     SelectionMode="Single">
                     <ListBox.ItemContainerStyle>
                         <Style TargetType="ListBoxItem">
+                            <Setter Property="ClipToBounds" Value="True" />
+                            <Setter Property="MaxWidth" Value="402"></Setter>
                             <Setter Property="HorizontalContentAlignment" Value="Stretch" />
                             <Setter Property="VerticalContentAlignment" Value="Stretch" />
                         </Style>

@@ -25,6 +25,7 @@ namespace Team3DesktopApp.View
         public FoodieViewModel ViewModel { get; set; }
 
         public bool CurrentWeek { get; private set; } = true;
+        private List<MealPlanExpander> expanders;
 
         public MealPlanPage(FoodieViewModel viewModel)
         {
@@ -32,26 +33,28 @@ namespace Team3DesktopApp.View
             this.ViewModel = viewModel;
             this.navMenu.Current = this;
             this.navMenu.FoodViewModel = this.ViewModel;
-            this.buildView().ConfigureAwait(true);
+            this.expanders = new List<MealPlanExpander>();
+            this.buildView().ConfigureAwait(false);
+
         }
 
         private async Task buildView()
         {
-            List<MealPlanExpander> expanders = new List<MealPlanExpander>();
             await this.ViewModel.GetPlans();
             foreach (DayOfWeek day in Enum.GetValues(typeof(DayOfWeek)))
             {
-                this.buildExpander(day, expanders);
+                this.buildExpander(day);
             }
 
-
+            this.planListBox.ItemsSource = this.expanders;
         }
 
-        private void buildExpander(DayOfWeek day, List<MealPlanExpander> expanders)
+        private void buildExpander(DayOfWeek day)
         {
             string plannedLabel = "";
             MealPlanExpander expander = new MealPlanExpander(this.ViewModel, day);
-            expander.Date = day.ToString();
+            expander.Date = day;
+            expander.Current = this;
             Dictionary<MealType, string> titles = this.ViewModel.GetMealPlan(this.CurrentWeek, day);
             foreach (MealType meal in Enum.GetValues(typeof(MealType)))
             {
@@ -75,12 +78,13 @@ namespace Team3DesktopApp.View
                     }
                 }
             }
-            expanders.Add(expander);
-            this.planListBox.ItemsSource = expanders;
+            expander.PlannedLabel = plannedLabel;
+            this.expanders.Add(expander);
+
         }
 
 
-        private async void viewOtherWeekClick(object sender, RoutedEventArgs e)
+        private void viewOtherWeekClick(object sender, RoutedEventArgs e)
         {
             if (this.CurrentWeek)
             {
@@ -90,9 +94,12 @@ namespace Team3DesktopApp.View
             else
             {
                 this.CurrentWeek = true;
+                this.nextWeekButton.Content = "View Next Week";
             }
-
-            await this.buildView();
+            this.expanders.Clear();
+            this.planListBox.ItemsSource = null;
+            this.buildView().ConfigureAwait(false);
+            //this.planListBox.ItemsSource = this.expanders;
         }
     }
 }

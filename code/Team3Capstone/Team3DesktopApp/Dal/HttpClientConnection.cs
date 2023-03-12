@@ -335,5 +335,67 @@ public class HttpClientConnection
         return Task.FromResult<MealPlan>(null);
     }
 
+    public Task<MealPlan?> AddToPlan(int planId, HttpClient client, Meal meal)
+    {
+        var query = new Uri(
+            "MealPlan/add-meal?MealPlanId=" + planId + "&DayOfWeek=" + meal.DayOfWeek + "&MealType=" + meal.MealType + "&Recipe.ApiId=" + meal.Recipe.ApiId + "&Recipe.Title=" + meal.Recipe.Title + "&Recipe.Image=" + meal.Recipe.Image + "&Recipe.ImageType=" + meal.Recipe.ImageType, UriKind.Relative);
+
+        var response = client.GetAsync(query);
+        Console.WriteLine(response);
+        if (response.Result.IsSuccessStatusCode)
+        {
+            var readTask = response.Result.Content.ReadAsStringAsync();
+            readTask.Wait();
+
+            var result = readTask.Result;
+            Console.WriteLine(result);
+            var recipe = JsonConvert.DeserializeObject<MealPlan>(result);
+            return Task.FromResult(recipe);
+        }
+
+        return Task.FromResult<MealPlan>(null);
+    }
+
+    public Task<Meal> UpdatePlan(int planId, HttpClient client, int planID, Meal meal)
+    {
+        var query = new Uri(
+            "MealPlan/update-meal?MealPlanId=" + planId + "&DayOfWeek=" + meal.DayOfWeek + "&MealType=" + meal.MealType + "&Recipe.ApiId=" + meal.Recipe.ApiId + "&Recipe.Title=" + meal.Recipe.Title + "&Recipe.Image=" + meal.Recipe.Image + "&Recipe.ImageType=" + meal.Recipe.ImageType, UriKind.Relative);
+
+        var response = client.GetAsync(query);
+        Console.WriteLine(response);
+        if (response.Result.IsSuccessStatusCode)
+        {
+            var readTask = response.Result.Content.ReadAsStringAsync();
+            readTask.Wait();
+
+            var result = readTask.Result;
+            Console.WriteLine(result);
+            var recipe = JsonConvert.DeserializeObject<Meal>(result);
+            return Task.FromResult(recipe);
+        }
+
+        return Task.FromResult<Meal>(null);
+    }
+
+    public Task<bool> RemoveMeal(int mealId, HttpClient client)
+    {
+        var query = new Uri(
+            "MealPlan/remove-meal?MealId=" + mealId, UriKind.Relative);
+        var response = client.GetAsync(query);
+        Console.WriteLine(response);
+        if (response.Result.IsSuccessStatusCode)
+        {
+            var readTask = response.Result.Content.ReadAsStringAsync();
+            readTask.Wait();
+
+            var result = readTask.Result;
+            Console.WriteLine(result);
+            return Task.FromResult<bool>(true);
+        }
+
+        return Task.FromResult<bool>(false);
+    }
+
+
     #endregion
 }

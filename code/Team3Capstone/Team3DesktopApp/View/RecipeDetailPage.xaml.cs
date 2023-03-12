@@ -13,7 +13,6 @@ public partial class RecipeDetailPage : Page
     #region Properties
 
     private FoodieViewModel? ViewModel { get; }
-    public Page PreviousPage { get; set; }
 
     #endregion
 
@@ -27,6 +26,7 @@ public partial class RecipeDetailPage : Page
         this.ViewModel = viewModel;
         this.navMenu.FoodViewModel = this.ViewModel;
         this.navMenu.Current = this;
+        this.addPanel.ViewModel = this.ViewModel;
         this.setPage();
     }
 
@@ -48,10 +48,18 @@ public partial class RecipeDetailPage : Page
     private void addToPlan_OnClick(object sender, RoutedEventArgs e)
     {
         this.addToPlanePanel.Visibility = Visibility.Visible;
+        if (this.ViewModel.PlanTypeAndDateToAdd != null)
+        {
+            this.addPanel.SetOptions(this.ViewModel.GetCurrentWeek(), this.ViewModel.PlanTypeAndDateToAdd.Item1, this.ViewModel.PlanTypeAndDateToAdd.Item2);
+
+        }
     }
 
     private void backToPlan_OnClick(object sender, RoutedEventArgs e)
     {
-        throw new System.NotImplementedException();
+        if (NavigationService != null)
+        {
+            NavigationService.GoBack();
+        }
     }
 }
