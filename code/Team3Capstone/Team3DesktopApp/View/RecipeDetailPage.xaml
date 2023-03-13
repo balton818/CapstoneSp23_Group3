@@ -231,7 +231,7 @@
                 VerticalAlignment="Top"
                 Grid.ZIndex="1" Canvas.Left="297" />
         </Canvas>
-        <Grid Grid.ZIndex="0" x:Name="addToPlanePanel" Visibility="Visible">
+        <Grid Grid.ZIndex="0" x:Name="addToPlanePanel" Visibility="Hidden">
             <Grid.Background >
                 <SolidColorBrush Opacity="0.5" Color="#30323d"/>
             </Grid.Background>

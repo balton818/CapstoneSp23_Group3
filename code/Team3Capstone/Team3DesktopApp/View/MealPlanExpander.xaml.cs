@@ -132,5 +132,46 @@ namespace Team3DesktopApp.View
                 this.removeDinnerButton.Visibility = Visibility.Hidden;
             }
         }
+
+        private void removeMealClick(object sender, RoutedEventArgs e)
+        {
+            if (sender.Equals(this.breakfastRemoveButton))
+            {
+                this.ViewModel.RemoveMealFromPlan(this.BreakfastName, this.Date, MealType.BREAKFAST);
+            }
+
+            else if (sender.Equals(this.removeLunchButton))
+            {
+                this.ViewModel.RemoveMealFromPlan(this.LunchName, this.Date, MealType.LUNCH);
+            }
+
+            else if (sender.Equals(this.removeDinnerButton))
+
+            {
+                this.ViewModel.RemoveMealFromPlan(this.DinnerName, this.Date, MealType.DINNER);
+            }
+            this.navigateToPage("/View/MealPlanPage.xaml");
+
+        }
+
+        private void mealDetailClick(object sender, RoutedEventArgs e)
+        {
+            if (sender.Equals(this.breakfastDetailButton))
+            {
+                this.ViewModel.RecipeDetailNavPlan(this.BreakfastName, this.Date, MealType.BREAKFAST);
+            }
+
+            else if (sender.Equals(this.LunchDetailButton))
+            {
+                this.ViewModel.RecipeDetailNavPlan(this.LunchName, this.Date, MealType.LUNCH);
+            }
+
+            else if (sender.Equals(this.dinnerDetailButton))
+
+            {
+                this.ViewModel.RecipeDetailNavPlan(this.DinnerName, this.Date, MealType.DINNER);
+            }
+            this.navigateToPage("/View/RecipeDetailPage.xaml");
+        }
     }
 }

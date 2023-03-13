@@ -356,10 +356,10 @@ public class HttpClientConnection
         return Task.FromResult<MealPlan>(null);
     }
 
-    public Task<Meal> UpdatePlan(int planId, HttpClient client, int planID, Meal meal)
+    public Task<Meal> UpdatePlan(int planId, HttpClient client, Meal meal)
     {
         var query = new Uri(
-            "MealPlan/update-meal?MealPlanId=" + planId + "&DayOfWeek=" + meal.DayOfWeek + "&MealType=" + meal.MealType + "&Recipe.ApiId=" + meal.Recipe.ApiId + "&Recipe.Title=" + meal.Recipe.Title + "&Recipe.Image=" + meal.Recipe.Image + "&Recipe.ImageType=" + meal.Recipe.ImageType, UriKind.Relative);
+            "MealPlan/update-meal?MealId" + meal.MealId + "MealPlanId=" + planId + "&DayOfWeek=" + meal.DayOfWeek + "&MealType=" + meal.MealType + "&Recipe.ApiId=" + meal.Recipe.ApiId + "&Recipe.Title=" + meal.Recipe.Title + "&Recipe.Image=" + meal.Recipe.Image + "&Recipe.ImageType=" + meal.Recipe.ImageType, UriKind.Relative);
 
         var response = client.GetAsync(query);
         Console.WriteLine(response);
@@ -377,7 +377,7 @@ public class HttpClientConnection
         return Task.FromResult<Meal>(null);
     }
 
-    public Task<bool> RemoveMeal(int mealId, HttpClient client)
+    public Task<bool> RemoveMeal(int? mealId, HttpClient client)
     {
         var query = new Uri(
             "MealPlan/remove-meal?MealId=" + mealId, UriKind.Relative);

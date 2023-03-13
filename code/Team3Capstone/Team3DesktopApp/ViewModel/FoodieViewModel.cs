@@ -56,6 +56,7 @@ public class FoodieViewModel
         this.browseRecipesViewModel = new BrowseRecipesViewModel();
         this.mealPlanViewModel = new MealPlanViewModel();
         this.ClientToSet = Client;
+        this.mealPlanViewModel.getMealPlans(this.Userid, this.ClientToSet).ConfigureAwait(true);
     }
 
     #endregion
@@ -164,9 +165,17 @@ public class FoodieViewModel
             {
                 this.recipeDetailViewModel.currentRecipe = recipe;
                 await this.recipeDetailViewModel.RecipeDetailNav((int)recipe.ApiId, this.ClientToSet);
+
             }
         }
 
+        return this.recipeDetailViewModel.RecipeInfo;
+    }
+
+    public async Task<RecipeInformation> RecipeDetailNavPlan(string recipeName, DayOfWeek day, MealType type)
+    {
+        var recipe = this.mealPlanViewModel.getRecipe(recipeName, day, type);
+        await this.recipeDetailViewModel.RecipeDetailNav((int)recipe.ApiId, this.ClientToSet);
         return this.recipeDetailViewModel.RecipeInfo;
     }
 
@@ -414,12 +423,6 @@ public class FoodieViewModel
         return this.mealPlanViewModel.CurrentWeek;
     }
 
-    public void SetCurrentWeek(bool currentWeek)
-    {
-        this.mealPlanViewModel.CurrentWeek = currentWeek;
-    }
-
-
     #endregion
 
     public void AddToMealPlan(bool? current)
@@ -427,4 +430,24 @@ public class FoodieViewModel
         this.mealPlanViewModel.AddToPlan(this.recipeDetailViewModel.currentRecipe, this.PlanTypeAndDateToAdd.Item1, this.PlanTypeAndDateToAdd.Item2, this.ClientToSet, current);
     }
 
+    public void RemoveMealFromPlan(string mealToRemove, DayOfWeek dayOfWeek, MealType mealType)
+    {
+        this.mealPlanViewModel.RemoveMealFromPlan(this.ClientToSet, mealToRemove, dayOfWeek, mealType);
+    }
+
+    public DateOnly getPlanDate(bool currentWeek)
+    {
+        return this.mealPlanViewModel.GetDate(currentWeek);
+    }
+
+    public bool MealPlanContainsRecipe(MealType mealType, DayOfWeek day, bool current)
+    {
+        this.GetPlans().ConfigureAwait(true);
+        return this.mealPlanViewModel.CheckForRecipe(mealType, day, current);
+    }
+
+    public void UpdatePlan(bool? current)
+    {
+        this.mealPlanViewModel.UpdatePlan(this.recipeDetailViewModel.currentRecipe, this.PlanTypeAndDateToAdd.Item1, this.PlanTypeAndDateToAdd.Item2, this.ClientToSet, current);
+    }
 }

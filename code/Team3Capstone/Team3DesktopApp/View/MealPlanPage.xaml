@@ -66,11 +66,12 @@
 
                     <Canvas Name="HeaderTitle">
                         <TextBlock
-                            Name="YourText"
+                            Name="planHeader"
                             Canvas.Left="10"
+                            TextWrapping="Wrap"
                             Canvas.Top="28"
                             FontFamily="Song Myung"
-                            FontSize="24"
+                            FontSize="20"
                             Foreground="#FFE8C547">
                             <Span FontSize="24">Meal Plan</Span>
                         </TextBlock>

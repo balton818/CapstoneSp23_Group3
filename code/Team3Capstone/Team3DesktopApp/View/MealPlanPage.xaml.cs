@@ -34,7 +34,10 @@ namespace Team3DesktopApp.View
             this.navMenu.Current = this;
             this.navMenu.FoodViewModel = this.ViewModel;
             this.expanders = new List<MealPlanExpander>();
-            this.buildView().ConfigureAwait(false);
+            this.buildView().ConfigureAwait(true);
+            var date = this.ViewModel.getPlanDate(this.CurrentWeek);
+            var nextDate = date.AddDays(6);
+            this.planHeader.Text = " Meal Plan for " + date.Month + "/" + date.Day + " - " + nextDate.Month + "/" + nextDate.Day; ;
 
         }
 
@@ -60,7 +63,7 @@ namespace Team3DesktopApp.View
             {
                 if (!string.IsNullOrEmpty(titles[meal]))
                 {
-                    plannedLabel += meal.ToString().Substring(0, 1) + " / ";
+                    plannedLabel += meal.ToString().Substring(0, 1) + " ";
                     if (meal.Equals(MealType.BREAKFAST))
                     {
                         expander.BreakfastName = titles[meal];
@@ -86,20 +89,26 @@ namespace Team3DesktopApp.View
 
         private void viewOtherWeekClick(object sender, RoutedEventArgs e)
         {
+            var date = new DateOnly();
             if (this.CurrentWeek)
             {
                 this.CurrentWeek = false;
                 this.nextWeekButton.Content = "Back to Current Week";
+                date = this.ViewModel.getPlanDate(this.CurrentWeek);
             }
             else
             {
                 this.CurrentWeek = true;
                 this.nextWeekButton.Content = "View Next Week";
+                date = this.ViewModel.getPlanDate(this.CurrentWeek);
             }
+
+            var nextDate = date.AddDays(6);
             this.expanders.Clear();
             this.planListBox.ItemsSource = null;
             this.buildView().ConfigureAwait(false);
-            //this.planListBox.ItemsSource = this.expanders;
+            this.planHeader.Text = " Meal Plan for " + date.Month + "/" + date.Day + " - " + nextDate.Month + "/" + nextDate.Day;
+
         }
     }
 }

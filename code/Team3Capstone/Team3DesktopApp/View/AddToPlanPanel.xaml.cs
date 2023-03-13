@@ -33,9 +33,29 @@ namespace Team3DesktopApp.View
             var mealType = this.parseType();
             var day = this.parseDay();
             var current = this.parseCurrentWeek();
-            if (mealType == null || day == null || current == null)
+            string messageBoxText = "This recipe is already in your meal plan. Would you like to Overwrite it?";
+            MessageBoxButton button = MessageBoxButton.YesNo;
+            MessageBoxImage icon = MessageBoxImage.Warning;
+            string caption = "Overwrite?";
+            MessageBoxResult result;
+            if (mealType == null || day == null)
             {
                 MessageBox.Show("Please select a meal type, day, and week.");
+            }
+            else if (this.ViewModel.MealPlanContainsRecipe(mealType.Value, day.Value, current.Value))
+            {
+
+                result = MessageBox.Show(messageBoxText, caption, button, icon, MessageBoxResult.Yes);
+                if (result == MessageBoxResult.Yes)
+                {
+                    var typeAndDate = new Tuple<DayOfWeek?, MealType?>(day, mealType);
+
+                    this.ViewModel.PlanTypeAndDateToAdd = typeAndDate;
+                    this.ViewModel.UpdatePlan(current);
+                    Grid parentGrid = (Grid)this.Parent;
+                    parentGrid.Visibility = Visibility.Hidden;
+                }
+
             }
             else
             {
