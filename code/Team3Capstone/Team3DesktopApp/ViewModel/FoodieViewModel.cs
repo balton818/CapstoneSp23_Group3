@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -307,6 +308,7 @@ public class FoodieViewModel
         this.browseRecipesViewModel.NumberOfRecipes = 0;
         this.browseRecipesViewModel.AppliedDietType = "";
         this.browseRecipesViewModel.AppliedRecipeType = "";
+        this.browseRecipesViewModel.AppliedCuisineType = "";
         this.browseRecipesViewModel.SearchName = "";
     }
 
@@ -350,10 +352,12 @@ public class FoodieViewModel
     /// <summary>Sets the filters to browse recipes with.</summary>
     /// <param name="typeComboboxText">The recipe type combobox text.</param>
     /// <param name="dietComboboxText">The diet combobox text.</param>
-    public void SetFilters(string typeComboboxText, string dietComboboxText)
+    /// <param name="cuisinesString"></param>
+    public void SetFilters(string typeComboboxText, string dietComboboxText, string cuisinesString)
     {
         this.browseRecipesViewModel.AppliedRecipeType = typeComboboxText;
         this.browseRecipesViewModel.AppliedDietType = dietComboboxText;
+        this.browseRecipesViewModel.AppliedCuisineType = cuisinesString;
     }
 
     /// <summary>Gets the browsing page information.</summary>
@@ -449,5 +453,15 @@ public class FoodieViewModel
     public void UpdatePlan(bool? current)
     {
         this.mealPlanViewModel.UpdatePlan(this.recipeDetailViewModel.currentRecipe, this.PlanTypeAndDateToAdd.Item1, this.PlanTypeAndDateToAdd.Item2, this.ClientToSet, current);
+    }
+
+    public List<string> GetCuisineTypes()
+    {
+        var cuisineTypes = new List<string>();
+        var connection = new HttpClientConnection();
+        var retrieved = connection.GetCuisineTypes(this.ClientToSet);
+        cuisineTypes.AddRange(retrieved.Result);
+        cuisineTypes.Add("");
+        return cuisineTypes;
     }
 }

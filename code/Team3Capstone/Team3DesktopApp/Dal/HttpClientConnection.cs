@@ -277,18 +277,21 @@ public class HttpClientConnection
     }
 
     /// <summary>Browses the recipes available in the database.</summary>
+    /// <param name="userId"></param>
     /// <param name="client">The client used to connect.</param>
     /// <param name="recipeType">Type of the recipe the recipe type used to filter results.</param>
     /// <param name="dietType">Type of the diet used to filter results.</param>
     /// <param name="page">The page of recipes the user is navigating to.</param>
     /// <param name="name">The name the recipe name the user is filtering by.</param>
+    /// <param name="appliedCuisineType"></param>
     /// <returns>
     ///   a list of recipes and their information if successful null otherwise
     /// </returns>
-    public Task<JObject> BrowseRecipes(int userId, HttpClient client, string recipeType, string dietType, int page, string name)
+    public Task<JObject> BrowseRecipes(int userId, HttpClient client, string recipeType, string dietType, int page,
+        string name, string appliedCuisineType)
     {
         var query = new Uri(
-            "Recipe/browse?Type=" + recipeType + "&UserId=" + userId + "&Diet=" + dietType + "&PageNumber=" + page + "&Query=" + name,
+            "Recipe/browse?Type=" + recipeType + "&UserId=" + userId + "&Diet=" + dietType + "&PageNumber=" + page + "&Query=" + name + "&Cuisine=" + appliedCuisineType,
             UriKind.Relative);
         var response = client.GetAsync(query);
         Console.WriteLine(response);
@@ -398,4 +401,21 @@ public class HttpClientConnection
 
 
     #endregion
+
+    public Task<List<string>> GetCuisineTypes(HttpClient client)
+    {
+        var query = new Uri("App/cuisines", UriKind.Relative);
+        var response = client.GetAsync(query);
+        if (response.Result.IsSuccessStatusCode)
+        {
+            var readTask = response.Result.Content.ReadAsStringAsync();
+            readTask.Wait();
+
+            var result = readTask.Result;
+            var cuisineTypes = JsonConvert.DeserializeObject<List<string>>(result);
+            return Task.FromResult(cuisineTypes);
+        }
+
+        return Task.FromResult<List<string>>(null);
+    }
 }

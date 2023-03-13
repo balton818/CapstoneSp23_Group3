@@ -27,15 +27,16 @@ namespace Team3DesktopApp.ViewModel
         public List<Meal?> getMealForDay(DayOfWeek day, bool currentWeek)
         {
             this.CurrentWeek = currentWeek;
-            if (currentWeek)
+            if (currentWeek && this.FirstWeekPlan != null)
             {
                 return this.FirstWeekPlan!.meals[day];
             }
-            else
+            else if (this.NextWeekPlan != null)
             {
                 return this.NextWeekPlan!.meals[day];
             }
 
+            return new List<Meal?>();
         }
 
         public void AddToPlan(Recipe recipe, DayOfWeek? day, MealType? type, HttpClient client, bool? current)
@@ -154,12 +155,27 @@ namespace Team3DesktopApp.ViewModel
 
         public DateOnly GetDate(bool currentWeek)
         {
-            if (currentWeek)
+            DateTime sundayDate;
+            sundayDate = DateTime.Now.Subtract(new TimeSpan((int)DateTime.Now.DayOfWeek, 0, 0, 0));
+            if (currentWeek && this.FirstWeekPlan != null)
             {
                 return DateOnly.FromDateTime(this.FirstWeekPlan.MealPlanDate);
             }
+            else if (!currentWeek && this.NextWeekPlan != null)
+            {
+                return DateOnly.FromDateTime(this.NextWeekPlan.MealPlanDate);
+            }
+            else if (currentWeek)
+            {
+                return DateOnly.FromDateTime(sundayDate);
+            }
+            else
+            {
 
-            return DateOnly.FromDateTime(this.NextWeekPlan.MealPlanDate);
+                return DateOnly.FromDateTime(sundayDate.AddDays(7));
+            }
+
+
 
         }
 

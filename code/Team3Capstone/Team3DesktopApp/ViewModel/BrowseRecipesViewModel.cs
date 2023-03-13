@@ -49,6 +49,8 @@ namespace Team3DesktopApp.ViewModel
         /// <value>The name to search by.</value>
         public string SearchName { get; set; } = "";
 
+        public string AppliedCuisineType { get; set; }
+
         #endregion
 
         #region Methods
@@ -64,7 +66,7 @@ namespace Team3DesktopApp.ViewModel
             var connection = new HttpClientConnection();
             var retrieved =
                 connection.BrowseRecipes(userId, client, this.AppliedRecipeType, this.AppliedDietType, this.CurrentPage,
-                    this.SearchName);
+                    this.SearchName, this.AppliedCuisineType);
 
             var recipes = JsonConvert.DeserializeObject<List<Recipe>>(retrieved.Result.GetValue("recipes").ToString());
             this.NumberOfRecipes = (int)retrieved.Result.GetValue("totalNumberOfRecipes");

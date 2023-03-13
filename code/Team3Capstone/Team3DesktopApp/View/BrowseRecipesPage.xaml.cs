@@ -22,6 +22,9 @@ namespace Team3DesktopApp.View
     public partial class BrowseRecipesPage : Page
     {
         private FoodieViewModel ViewModel { get; }
+        private List<string> RecipeTypes { get; set; }
+        private List<string> DietTypes { get; set; }
+        private List<string> CuisineTypes { get; set; }
 
         /// <summary>Initializes a new instance of the <see cref="BrowseRecipesPage" /> class.</summary>
         /// <param name="viewModel">The view model. This is the main view model that has a single instance so data is persistent</param>
@@ -34,8 +37,13 @@ namespace Team3DesktopApp.View
             this.ViewModel.BrowseRecipes();
             this.recipeListBox.ItemsSource = this.ViewModel.BrowseRecipes();
             this.typeCombobox.ItemsSource = this.ViewModel.GetRecipeTypes();
+            this.RecipeTypes = this.ViewModel.GetRecipeTypes();
+            this.DietTypes = this.ViewModel.GetDietTypes();
             this.dietCombobox.ItemsSource = this.ViewModel.GetDietTypes();
             this.pageLabel.Text = this.ViewModel.GetPageInfo();
+            this.typeList.ItemsSource = this.RecipeTypes;
+            this.diestList.ItemsSource = this.DietTypes;
+            this.cuisineList.ItemsSource = this.ViewModel.GetCuisineTypes();
             if (!string.IsNullOrEmpty(this.ViewModel.GetSearchName()))
             {
                 this.searchNameTextBox.Text = this.ViewModel.GetSearchName();
@@ -52,6 +60,7 @@ namespace Team3DesktopApp.View
 
 
         }
+
 
         private void ViewDetail_Click(object sender, RoutedEventArgs e)
         {
@@ -99,9 +108,16 @@ namespace Team3DesktopApp.View
 
         private void ApplyButton_OnClick(object sender, RoutedEventArgs e)
         {
-            this.ViewModel.SetFilters(this.typeCombobox.Text, this.dietCombobox.Text);
+            var typesToFilter = this.typeList.SelectedItems.Cast<string>().ToList();
+            var dietsToFilter = this.diestList.SelectedItems.Cast<string>().ToList();
+            var cuisinesToFilter = this.cuisineList.SelectedItems.Cast<string>().ToList();
+            var typeString = String.Join(",", typesToFilter.Select(x => x.ToString()).ToArray());
+            var dietsString = String.Join(",", dietsToFilter.Select(x => x.ToString()).ToArray());
+            var cuisinesString = String.Join(",", cuisinesToFilter.Select(x => x.ToString()).ToArray());
+            this.ViewModel.SetFilters(typeString, dietsString, cuisinesString);
             this.recipeListBox.ItemsSource = this.ViewModel.BrowseRecipes();
             this.pageLabel.Text = this.ViewModel.GetPageInfo();
+            this.filterPanel.Visibility = Visibility.Hidden;
             this.clearFilters.Visibility = Visibility.Visible;
         }
 
@@ -112,9 +128,20 @@ namespace Team3DesktopApp.View
             this.recipeListBox.ItemsSource = this.ViewModel.BrowseRecipes();
             this.pageLabel.Text = this.ViewModel.GetPageInfo();
             this.searchNameTextBox.Text = string.Empty;
-            this.typeCombobox.SelectedItem = null;
-            this.dietCombobox.SelectedItem = null;
+            this.typeList.SelectedItems.Clear();
+            this.diestList.SelectedItems.Clear();
+            this.cuisineList.SelectedItems.Clear();
 
+        }
+
+        private void ShowFilterResults_Click(object sender, RoutedEventArgs e)
+        {
+            this.filterPanel.Visibility = Visibility.Visible;
+        }
+
+        private void CancelButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            this.filterPanel.Visibility = Visibility.Hidden;
         }
     }
 }
