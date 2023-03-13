@@ -85,12 +85,12 @@
      */
     private void goBack()
     {
-        if (this.currentUserData.SelectedMeal != null)
+        if (this.currentUserData.SelectedMeal != null && !this.currentUserData.NewMeal)
         {
             this.currentUserData.SelectedMeal = null;
             Nav.NavigateTo("/planner");
         }
-        else if (this.currentUserData.lastExplorePageRequest != null)
+        else if (this.currentUserData.lastExplorePageRequest != null || this.currentUserData.NewMeal)
         {
             Nav.NavigateTo("/explore");
         }
