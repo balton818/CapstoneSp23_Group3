@@ -135,22 +135,47 @@ namespace Team3DesktopApp.View
 
         private void removeMealClick(object sender, RoutedEventArgs e)
         {
+
+            string messageBoxText = "Confirm removal of " + MealType.BREAKFAST + " recipe?";
+            MessageBoxButton button = MessageBoxButton.YesNo;
+            MessageBoxImage icon = MessageBoxImage.Warning;
+            string caption = "Remove?";
+            MessageBoxResult result;
             if (sender.Equals(this.breakfastRemoveButton))
             {
-                this.ViewModel.RemoveMealFromPlan(this.BreakfastName, this.Date, MealType.BREAKFAST);
+                result = MessageBox.Show(messageBoxText, caption, button, icon);
+                if (result == MessageBoxResult.Yes)
+                {
+                    this.ViewModel.RemoveMealFromPlan(this.BreakfastName, this.Date, MealType.BREAKFAST);
+                    this.navigateToPage("/View/MealPlanPage.xaml");
+                }
+
             }
 
             else if (sender.Equals(this.removeLunchButton))
             {
-                this.ViewModel.RemoveMealFromPlan(this.LunchName, this.Date, MealType.LUNCH);
+                messageBoxText = "Confirm removal of " + MealType.LUNCH + " recipe?";
+                result = MessageBox.Show(messageBoxText, caption, button, icon);
+                if (result == MessageBoxResult.Yes)
+                {
+                    this.ViewModel.RemoveMealFromPlan(this.LunchName, this.Date, MealType.LUNCH);
+                    this.navigateToPage("/View/MealPlanPage.xaml");
+                }
+
             }
 
             else if (sender.Equals(this.removeDinnerButton))
 
             {
-                this.ViewModel.RemoveMealFromPlan(this.DinnerName, this.Date, MealType.DINNER);
+                messageBoxText = "Confirm removal of " + MealType.DINNER + " recipe?";
+                result = MessageBox.Show(messageBoxText, caption, button, icon);
+                if (result == MessageBoxResult.Yes)
+                {
+                    this.ViewModel.RemoveMealFromPlan(this.DinnerName, this.Date, MealType.DINNER);
+                    this.navigateToPage("/View/MealPlanPage.xaml");
+                }
             }
-            this.navigateToPage("/View/MealPlanPage.xaml");
+
 
         }
 
