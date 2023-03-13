@@ -23,7 +23,7 @@
     <div id="filter-options">
         <div class="filter">
             <label for="filter-selector">Meal Type</label>
-            <select @bind="mealTypeFilterSelection" name="filter-selector" >
+            <select @bind="mealTypeFilterSelection" name="filter-selector" size="4">
                 @foreach (var filter in this.mealTypeFilters)
                 {
                     <option>@filter</option>
@@ -32,7 +32,7 @@
         </div>
         <div class="filter">
             <label for="filter-selector2">Cuisine</label>
-            <select @bind="cuisineFilterSelection" name="filter-selector2">
+            <select @bind="cuisineFilterSelection" name="filter-selector2" size="4">
                 @foreach (var filter in this.cuisineFilters)
                 {
                     <option>@filter</option>
@@ -41,7 +41,7 @@
         </div>
         <div class="filter">
             <label for="filter-selector3">Dietary Restriction</label>
-            <select @bind="dietaryRestrictionFilterSelection" name="filter-selector3">
+            <select @bind="@dietaryRestrictionFilterSelections" name="filter-selector3" size="4" multiple>
                 @foreach (var filter in this.dietaryRestrictionFilters)
                 {
                     <option>@filter</option>
@@ -83,6 +83,7 @@
     private string mealTypeFilterSelection = "";
     private string cuisineFilterSelection = "";
     private string dietaryRestrictionFilterSelection = "";
+    private string[] dietaryRestrictionFilterSelections = new[] { "" };
     private string searchParam = "";
     private int pageNum = 1;
     private bool resultsFound;
@@ -167,6 +168,8 @@
 
     private void applyFilters()
     {
+        string selection = String.Join(", ", this.dietaryRestrictionFilterSelections);
+        this.dietaryRestrictionFilterSelection = selection;
         this.pageNum = 1;
         this.browse();
     }

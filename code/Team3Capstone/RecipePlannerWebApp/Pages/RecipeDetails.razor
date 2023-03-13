@@ -19,11 +19,11 @@
         if (this.currentUserData.NewMeal)
         {
             <button style="margin-left: 60px" @onclick="addToMealPlan">Add to meal plan for @this.currentUserData.SelectedMeal?.MealType.ToString().ToLower()</button>
-        } else
+        } 
+        else if (this.currentUserData.UpdateMeal)
         {
             <button style="margin-left: 60px" @onclick="updateMealPlan">Update meal plan for @this.currentUserData.SelectedMeal?.MealType.ToString().ToLower()</button>
         }
-
     }
     <div class="recipe-area">
         <h2 class="title" style="font-weight: bold">@RecipeTitle</h2>
@@ -112,6 +112,7 @@
 
         this.currentUserData.SelectedMeal = null;
         this.currentUserData.NewMeal = false;
+        this.currentUserData.UpdateMeal = false;
         Nav.NavigateTo("/planner");
     }
 
@@ -127,6 +128,7 @@
     
         this.currentUserData.SelectedMeal = null;
         this.currentUserData.NewMeal = false;
+        this.currentUserData.UpdateMeal = false;
         Nav.NavigateTo("/planner");
     }
 

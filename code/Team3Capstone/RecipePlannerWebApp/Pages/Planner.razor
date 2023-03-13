@@ -18,12 +18,12 @@
     </div>
     <div class="controls">
         <InputRadioGroup @bind-Value="this.selectedWeek" class="controls">
-            <InputRadio TValue="Weeks" Value="@Weeks.WEEK1"></InputRadio>
+            <InputRadio TValue="UserSessionData.Weeks" Value="@UserSessionData.Weeks.WEEK1"></InputRadio>
             <text>Week 1</text>
-            <InputRadio TValue="Weeks" Value="@Weeks.WEEK2"></InputRadio>
+            <InputRadio TValue="UserSessionData.Weeks" Value="@UserSessionData.Weeks.WEEK2"></InputRadio>
             <text>Week 2</text>
         </InputRadioGroup>
-        <button type="submit" @onclick="showMealPlan">Show Plan</button>
+        <button type="submit" @onclick="setPlanWeek">Show Plan</button>
     </div>
     <div class="main-area">
         <span>Showing meal plan starting on @this.determineDateRange().</span>
@@ -39,8 +39,7 @@
 
     private MealPlanService service = new MealPlanService(new MealPlanDao());
     private MealPlan plan = new MealPlan();
-    private Weeks selectedWeek = Weeks.WEEK1;
-    private enum Weeks {WEEK1, WEEK2};
+    private UserSessionData.Weeks selectedWeek { get; set; }
 
     /**
      * Initializes the Planner component
@@ -48,12 +47,14 @@
     protected override void OnInitialized()
     {
         Console.WriteLine("PLANNER -- INITIALIZING");
+        this.selectedWeek = this.currentUserData.SelectedWeek;
         this.showMealPlan();
     }
 
     private void showMealPlan()
     {
-        if (selectedWeek == Weeks.WEEK1)
+
+        if (selectedWeek == UserSessionData.Weeks.WEEK1)
         {
             Console.WriteLine("Showing meal plan for this week");
             this.plan = service.GetThisWeeksMealPlan(this.currentUserData.CurrentUser.Id);
@@ -63,6 +64,12 @@
             Console.WriteLine("Showing meal plan for next week");
             this.plan = service.GetNextWeeksMealPlan(this.currentUserData.CurrentUser.Id);
         }
+    }
+
+    private void setPlanWeek()
+    {
+        this.currentUserData.SelectedWeek = this.selectedWeek;
+        Nav.NavigateTo("/planner", true);
     }
 
     private string determineDateRange()

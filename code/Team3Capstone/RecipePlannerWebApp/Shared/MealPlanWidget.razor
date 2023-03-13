@@ -115,6 +115,7 @@
         Console.WriteLine("Clicked add dinner for " + this.DayOfWeek + ". Clicked by " + currentUserData.CurrentUser.Username);
         this.currentUserData.SelectedMeal = this.dinner;
         this.currentUserData.NewMeal = true;
+        this.currentUserData.UpdateMeal = false;
         Nav.NavigateTo("/explore");
     }
 
@@ -134,6 +135,7 @@
     {
         this.currentUserData.SelectedMeal = meal;
         this.currentUserData.NewMeal = false;
+        this.currentUserData.UpdateMeal = true;
         Nav.NavigateTo("/explore");
     }
 
