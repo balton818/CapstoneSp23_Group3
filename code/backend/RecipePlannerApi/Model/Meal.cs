@@ -1,6 +1,8 @@
 ﻿using RecipePlannerApi.Dao.Dto;
+using System.Diagnostics.CodeAnalysis;
 
 namespace RecipePlannerApi.Model {
+    [ExcludeFromCodeCoverage]
     public class Meal {
         public int? MealId { get; set; }
         public int MealPlanId { get; set; }
@@ -12,6 +14,9 @@ namespace RecipePlannerApi.Model {
         public Meal() { }
         
         public Meal(MealDto mealDto) {
+            if (mealDto == null) {
+                throw new ArgumentNullException("a meal did not come back from database");
+            }
             this.MealId = mealDto.MealId;
             this.MealPlanId = mealDto.MealPlanId;
             this.DayOfWeek = mealDto.DayOfWeek;

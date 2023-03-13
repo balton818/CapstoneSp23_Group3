@@ -12,12 +12,34 @@ namespace RecipePlannerApiTests.TestServices.TestMealPlanService {
             var mealPlanDao = new Mock<IMealPlanDao>();
 
             mealPlanDao.Setup(x => x.GetMealPlanMeals(It.IsAny<int>())).Returns(new List<Meal>());
-            mealPlanDao.Setup(x => x.GetMealPlan(It.IsAny<GetMealPlanRequest>())).Returns(new MealPlan());
+            mealPlanDao.Setup(x => x.GetMealPlan(It.IsAny<GetMealPlanRequest>())).Returns(new MealPlan { MealPlanId = 1});
             var service = new MealPlanService(mealPlanDao.Object);
 
             var result = service.GetNextWeeksMealPlan(1);
 
             Assert.NotNull(result);
+        }
+
+        [Fact]
+        public void TestMealPlanIdNotReturnedFromDao() {
+            var mealPlanDao = new Mock<IMealPlanDao>();
+
+            mealPlanDao.Setup(x => x.GetMealPlanMeals(It.IsAny<int>())).Returns(new List<Meal>());
+            mealPlanDao.Setup(x => x.GetMealPlan(It.IsAny<GetMealPlanRequest>())).Returns(new MealPlan());
+            var service = new MealPlanService(mealPlanDao.Object);
+
+            Assert.Throws<MissingFieldException>(() => service.GetNextWeeksMealPlan(1));
+        }
+
+        [Fact]
+        public void TestNullMealPlanReturnedFromDao() {
+            var mealPlanDao = new Mock<IMealPlanDao>();
+
+            mealPlanDao.Setup(x => x.GetMealPlanMeals(It.IsAny<int>())).Returns(new List<Meal>());
+            mealPlanDao.Setup(x => x.GetMealPlan(It.IsAny<GetMealPlanRequest>())).Returns(value: null);
+            var service = new MealPlanService(mealPlanDao.Object);
+
+            Assert.Throws<ArgumentNullException>(() => service.GetNextWeeksMealPlan(1));
         }
     }
 }

@@ -1,12 +1,6 @@
 ﻿using Moq;
 using RecipePlannerApi.Dao.Interface;
-using RecipePlannerApi.Model;
 using RecipePlannerApi.Service;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RecipePlannerApiTests.TestServices.TestMealPlanService {
     public class TestRemoveMeal {

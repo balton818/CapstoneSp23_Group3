@@ -14,15 +14,24 @@ namespace RecipePlannerApi.Service
         }
 
         public MealPlan GetMealPlan(GetMealPlanRequest request) {
+            if(request == null) {
+                throw new ArgumentNullException("request cannot be null");
+            }
+
             var mealPlan = this.mealPlanDao.GetMealPlan(request);
 
             if (mealPlan == null) {
                 mealPlan = this.mealPlanDao.CreateMealPlan(request);
             }
 
-            if(mealPlan.MealPlanId == null) {
-                throw new MissingFieldException("meal plan is missing meal plan id from database");
+            if(mealPlan == null) {
+                throw new ArgumentNullException("error getting or creating meal plan");
             }
+
+            if(mealPlan.MealPlanId == null) {
+                throw new MissingFieldException("meal plan id is missing from meal plan object");
+            }
+
 
             var meals = this.mealPlanDao.GetMealPlanMeals(mealPlan.MealPlanId.Value);
 
@@ -43,15 +52,89 @@ namespace RecipePlannerApi.Service
         }
 
         public Meal AddMeal(Meal meal) {
+            this.ValidateAddMeal(meal);
             return this.mealPlanDao.CreateMeal(meal);
         }
 
         public Meal UpdateMeal(Meal meal) {
+            this.ValidateUpdateMeal(meal);
             return this.mealPlanDao.UpdateMeal(meal);
         }
 
         public void RemoveMeal(int mealId) {
+            if(mealId == 0) {
+                throw new ArgumentException("meal id must be greater that 0");
+            }
+
             this.mealPlanDao.RemoveMeal(mealId);
+        }
+
+        private void ValidateAddMeal(Meal meal) {
+            if (meal == null) {
+                throw new ArgumentNullException("meal cannot be null");
+            }
+
+            if (meal.MealPlanId == 0) {
+                throw new ArgumentException("meal plan Id must be greater than 0");
+            }
+
+            if (!Enum.IsDefined(meal.MealType)) {
+                throw new ArgumentException(meal.MealType + " is not a valid meal type");
+            }
+
+            if (!Enum.IsDefined(meal.DayOfWeek)) {
+                throw new ArgumentException(meal.DayOfWeek + " is not a valid day of the week");
+            }
+
+            if(meal.Recipe == null) {
+                throw new ArgumentNullException("recipe cannot be null");
+            }
+
+            if (string.IsNullOrEmpty(meal.Recipe.ImageType)) {
+                throw new ArgumentException("image type cannot be null or empty");
+            }
+
+            if (string.IsNullOrEmpty(meal.Recipe.Image)) {
+                throw new ArgumentException("image cannot be null or empty");
+            }
+
+            if (string.IsNullOrEmpty(meal.Recipe.Title)) {
+                throw new ArgumentException("title cannot be null or empty");
+            }
+        }
+
+        private void ValidateUpdateMeal(Meal meal) {
+            if (meal == null) {
+                throw new ArgumentNullException("meal cannot be null");
+            }
+
+            if (meal.MealId == 0) {
+                throw new ArgumentException("meal plan Id must be greater than 0");
+            }
+
+            if (!Enum.IsDefined(meal.MealType)) {
+                throw new ArgumentException(meal.MealType + " is not a valid meal type");
+            }
+
+            if (!Enum.IsDefined(meal.DayOfWeek)) {
+                throw new ArgumentException(meal.DayOfWeek + " is not a valid day of the week");
+            }
+
+            if (meal.Recipe == null) {
+                throw new ArgumentNullException("recipe cannot be null");
+            }
+
+            if (string.IsNullOrEmpty(meal.Recipe.ImageType)) {
+                throw new ArgumentException("image type cannot be null or empty");
+            }
+
+            if (string.IsNullOrEmpty(meal.Recipe.Image)) {
+                throw new ArgumentException("image cannot be null or empty");
+            }
+
+            if (string.IsNullOrEmpty(meal.Recipe.Title)) {
+                throw new ArgumentException("title cannot be null or empty");
+            }
         }
 
     }

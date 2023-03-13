@@ -4,11 +4,6 @@ using RecipePlannerApi.Controllers.Requests;
 using RecipePlannerApi.Controllers;
 using RecipePlannerApi.Model;
 using RecipePlannerApi.Service.Interface;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RecipePlannerApiTests.TestControllers {
     public class TestMealPlanControllerBadRequest {
@@ -87,7 +82,7 @@ namespace RecipePlannerApiTests.TestControllers {
 
             var result = controller.RemoveMeal(1);
 
-            Assert.IsType<BadRequestObjectResult>(result.Result);
+            Assert.IsType<BadRequestObjectResult>(result);
         }
     }
 }

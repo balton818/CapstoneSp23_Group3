@@ -11,7 +11,7 @@ namespace RecipePlannerApiTests.TestApi {
             var api = new Mock<IRecipesApi>();
 
             api.Setup(x => x.SearchRecipes(It.IsAny<SearchRecipeRequest>()))
-                .Returns(new SearchRecipes200Response());
+                .Returns(new SearchRecipes200Response { Results = new List<SearchRecipes200ResponseResultsInner>()});
 
             var service = new RecipeApi(api.Object);
 

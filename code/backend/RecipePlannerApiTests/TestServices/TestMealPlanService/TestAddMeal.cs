@@ -78,6 +78,21 @@ namespace RecipePlannerApiTests.TestServices.TestMealPlanService {
         }
 
         [Fact]
+        public void TestNullRecipe() {
+            var mealPlanDao = new Mock<IMealPlanDao>();
+
+            mealPlanDao.Setup(x => x.CreateMeal(It.IsAny<Meal>())).Returns(new Meal());
+            var service = new MealPlanService(mealPlanDao.Object);
+            var meal = new Meal {
+                MealPlanId = 1,
+                DayOfWeek = DayOfWeek.Monday,
+                MealType = MealType.BREAKFAST,
+                Recipe = null
+            };
+            Assert.Throws <ArgumentNullException>(() => service.AddMeal(meal));
+        }
+
+        [Fact]
         public void TestRecipeApiIdZero() {
             var mealPlanDao = new Mock<IMealPlanDao>();
 
