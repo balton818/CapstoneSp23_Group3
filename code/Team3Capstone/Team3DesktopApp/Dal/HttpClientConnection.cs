@@ -356,10 +356,10 @@ public class HttpClientConnection
         return Task.FromResult<MealPlan>(null);
     }
 
-    public Task<Meal> UpdatePlan(int planId, HttpClient client, Meal meal)
+    public Task<Meal> UpdatePlan(int? mealId, HttpClient client, Meal meal)
     {
         var query = new Uri(
-            "MealPlan/update-meal?MealId" + meal.MealId + "MealPlanId=" + planId + "&DayOfWeek=" + meal.DayOfWeek + "&MealType=" + meal.MealType + "&Recipe.ApiId=" + meal.Recipe.ApiId + "&Recipe.Title=" + meal.Recipe.Title + "&Recipe.Image=" + meal.Recipe.Image + "&Recipe.ImageType=" + meal.Recipe.ImageType, UriKind.Relative);
+            "MealPlan/update-meal?MealId=" + mealId + "&DayOfWeek=" + meal.DayOfWeek + "&MealType=" + meal.MealType + "&Recipe.ApiId=" + meal.Recipe.ApiId + "&Recipe.Title=" + meal.Recipe.Title + "&Recipe.Image=" + meal.Recipe.Image + "&Recipe.ImageType=" + meal.Recipe.ImageType, UriKind.Relative);
 
         var response = client.GetAsync(query);
         Console.WriteLine(response);

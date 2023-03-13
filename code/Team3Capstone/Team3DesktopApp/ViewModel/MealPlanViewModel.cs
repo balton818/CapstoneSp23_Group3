@@ -74,14 +74,17 @@ namespace Team3DesktopApp.ViewModel
                     DayOfWeek = (DayOfWeek)day
                 };
 
+                List<Meal> meals = this.getMealForDay((DayOfWeek)day, (bool)current);
+                var mealToReplace = getMealId(meals, (MealType)type);
+
                 if (current == true)
                 {
-                    _ = connection.UpdatePlan((int)this.FirstWeekPlan.MealPlanId, client, meal).Result;
+                    _ = connection.UpdatePlan(mealToReplace, client, meal).Result;
 
                 }
                 else
                 {
-                    _ = connection.UpdatePlan((int)this.NextWeekPlan.MealPlanId, client, meal).Result;
+                    _ = connection.UpdatePlan(mealToReplace, client, meal).Result;
                 }
 
             }
