@@ -1,4 +1,7 @@
-﻿namespace RecipePlannerApi.Model {
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace RecipePlannerApi.Model {
+    [ExcludeFromCodeCoverage]
     public class MealPlan {
         public int? MealPlanId { get; set; }
         public DateTime? MealPlanDate { get; set; }

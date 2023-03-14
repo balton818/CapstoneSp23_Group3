@@ -5,5 +5,7 @@
 	@imageType NVARCHAR(50)
 AS
 	INSERT INTO [dbo].[recipe] (api_id, title, image_url, image_type) VALUES (@apiId, @title, @imageUrl, @imageType)
-	SELECT SCOPE_IDENTITY()
+	DECLARE @recipeId INT = SCOPE_IDENTITY()
+	EXEC [dbo].[get_recipe] @recipeId
+	return @recipeId
 
