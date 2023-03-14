@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using Team3DesktopApp.ViewModel;
@@ -35,35 +36,82 @@ public sealed partial class RegistrationPage : Page
 
     private async void RegisterButton_ClickAsync(object sender, RoutedEventArgs e)
     {
-        if (!string.IsNullOrWhiteSpace(this.unTextBox.Text) &&
-            !string.IsNullOrWhiteSpace(this.pwTextBox.Text) &&
-            !string.IsNullOrWhiteSpace(this.emailTextBox.Text) &&
-            !string.IsNullOrWhiteSpace(this.firstNameTextBox.Text) &&
-            !string.IsNullOrWhiteSpace(this.lastNameTextBox.Text))
+
+        if (!this.errorChecking())
         {
-            var result = await ((this.ViewModel != null
-                ? this.ViewModel.RegisterUser(this.unTextBox.Text, this.pwTextBox.Text,
-                    this.emailTextBox.Text,
-                    this.firstNameTextBox.Text, this.lastNameTextBox.Text)
-                : null)!);
-            if (result < 0)
-            {
-                this.errorLabel.Text = "error registering user";
-                this.errorLabel.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                if (NavigationService != null)
-                {
-                    PageNavigation navigate = new PageNavigation(this.ViewModel);
-                    navigate.NavigateToPage(this.registerButton.NavUri, NavigationService);
-                }
-            }
+            return;
+        }
+
+        var result = await this.ViewModel?.RegisterUser(this.unTextBox.Text, this.pwTextBox.Text,
+            this.emailTextBox.Text,
+            this.firstNameTextBox.Text, this.lastNameTextBox.Text);
+        if (result < 0)
+        {
+            this.generalError.Text = "error registering user";
+            this.generalError.Visibility = Visibility.Visible;
         }
         else
         {
-            this.errorLabel.Visibility = Visibility.Visible;
+            if (NavigationService != null)
+            {
+                PageNavigation navigate = new PageNavigation(this.ViewModel);
+                navigate.NavigateToPage(this.registerButton.NavUri, NavigationService);
+            }
         }
+    }
+
+    private bool errorChecking()
+    {
+        var errors = 0;
+        this.unErrorLabel.Visibility = Visibility.Collapsed;
+        this.pwError.Visibility = Visibility.Collapsed;
+        this.emailError.Visibility = Visibility.Collapsed;
+        this.nameError.Visibility = Visibility.Collapsed;
+        Regex emailPattern = new Regex("^\\w+@[a-zA-Z_]+?\\.[a-zA-Z]{2,3}$",
+            RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        if (!this.pwTextBox.Text.Equals(this.pwConfirmBox.Text))
+        {
+            this.pwError.Text = "Passwords do not match";
+            this.pwError.Visibility = Visibility.Visible;
+            errors++;
+
+        }
+
+        if (string.IsNullOrEmpty(this.pwTextBox.Text) || string.IsNullOrEmpty(this.pwConfirmBox.Text))
+        {
+            this.pwError.Text = "Password Cannot be empty";
+            this.pwError.Visibility = Visibility.Visible;
+            errors++;
+        }
+        if (string.IsNullOrEmpty(this.unTextBox.Text))
+        {
+            this.unErrorLabel.Visibility = Visibility.Visible;
+            errors++;
+        }
+        if (string.IsNullOrEmpty(this.firstNameTextBox.Text) || string.IsNullOrEmpty(this.lastNameTextBox.Text))
+        {
+            this.nameError.Visibility = Visibility.Visible;
+            this.nameError.Text = "Name fields cannot be empty";
+            errors++;
+        }
+        if (string.IsNullOrEmpty(this.emailTextBox.Text))
+        {
+            this.emailError.Visibility = Visibility.Visible;
+            this.emailError.Text = "Email cannot be empty";
+            errors++;
+        }
+        if (!emailPattern.IsMatch(this.emailTextBox.Text))
+        {
+            this.emailError.Visibility = Visibility.Visible;
+            this.emailError.Text = "Email is not valid";
+            errors++;
+        }
+
+        if (errors > 0)
+        {
+            return false;
+        }
+        return true;
     }
 
     /// <summary>Handles the Click event of the BackButton_OnClickButton control.</summary>
@@ -79,29 +127,4 @@ public sealed partial class RegistrationPage : Page
     }
 
     #endregion
-
-    private void SubmitButton_OnClick_(object sender, RoutedEventArgs e)
-    {
-        this.errorLabel.Visibility = Visibility.Collapsed;
-        this.pwError.Visibility = Visibility.Collapsed;
-        if (String.IsNullOrEmpty(this.unTextBox.Text))
-        {
-            this.errorLabel.Visibility = Visibility.Visible;
-            this.errorLabel.Text = "Please enter a username";
-        }
-
-        if (this.pwTextBox.Text.Equals(this.pwConfirmBox.Text))
-        {
-            this.regForm.Visibility = Visibility.Visible;
-            this.formTwo.Visibility = Visibility.Collapsed;
-            this.pwError.Visibility = Visibility.Collapsed;
-        }
-
-        else
-        {
-            this.pwError.Text = "Passwords do not match";
-            this.pwError.Visibility = Visibility.Visible;
-
-        }
-    }
 }

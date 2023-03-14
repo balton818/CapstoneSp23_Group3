@@ -34,7 +34,10 @@ public class PantryViewModel
         this.Pantry = new List<PantryItem>();
         var connection = new HttpClientConnection();
         var retrieved = await connection.GetPantry(userId, client);
-        this.Pantry.AddRange(retrieved);
+        if (retrieved != null)
+        {
+            this.Pantry.AddRange(retrieved);
+        }
         return this.Pantry;
     }
 

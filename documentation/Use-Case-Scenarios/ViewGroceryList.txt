@@ -1,0 +1,12 @@
+View Grocery List Use Case Scenario
+
+Context - User has successfully logged in and has clicked the Plan Meals button.
+
+PRIMARY FLOW
+1 - User selects view grocery list
+2 - User is shown a list of ingredients (currently not in pantry/insufficient amount) and measurements needed to make their planned meals
+
+Alternative Flow(s)
+
+NO MEALS PLANNED
+A2 - User is informed no list can be generated as they have no meals planned.
