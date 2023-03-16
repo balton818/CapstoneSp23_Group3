@@ -50,7 +50,7 @@
             </Canvas>
             <Canvas Name="title">
                 <TextBlock
-                        Name="EnterYourInfoBelow"
+                        Name="enterYourInfoBelow"
                         Canvas.Left="10"
                         Canvas.Top="28"
                         FontFamily="Song Myung"
@@ -180,7 +180,7 @@
             </Canvas>
         </Canvas>
         <TextBlock
-                Name="Textbox"
+                Name="textbox"
                 Canvas.Left="16"
                 Canvas.Top="655"
                 FontFamily="Song Myung"

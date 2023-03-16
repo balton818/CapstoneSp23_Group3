@@ -1,18 +1,16 @@
-﻿using System;
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 using System.Text.RegularExpressions;
 using System.Windows;
-using System.Windows.Controls;
 using Team3DesktopApp.ViewModel;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
 namespace Team3DesktopApp.View;
-[ExcludeFromCodeCoverage]
 /// <summary>
 ///     An empty page that can be used on its own or navigated to within a Frame.
 /// </summary>
-public sealed partial class RegistrationPage : Page
+[ExcludeFromCodeCoverage]
+public sealed partial class RegistrationPage
 {
     #region Properties
 
@@ -24,7 +22,7 @@ public sealed partial class RegistrationPage : Page
 
     /// <summary>Initializes a new instance of the <see cref="RegistrationPage" /> class.</summary>
     /// <param name="viewModel">The view model.</param>
-    public RegistrationPage(FoodieViewModel viewModel)
+    public RegistrationPage(FoodieViewModel? viewModel)
     {
         this.InitializeComponent();
         this.ViewModel = viewModel;
@@ -44,7 +42,7 @@ public sealed partial class RegistrationPage : Page
 
         var result = await this.ViewModel?.RegisterUser(this.unTextBox.Text, this.pwTextBox.Text,
             this.emailTextBox.Text,
-            this.firstNameTextBox.Text, this.lastNameTextBox.Text);
+            this.firstNameTextBox.Text, this.lastNameTextBox.Text)!;
         if (result < 0)
         {
             this.generalError.Text = "error registering user";
@@ -54,6 +52,7 @@ public sealed partial class RegistrationPage : Page
         {
             if (NavigationService != null)
             {
+                this.ViewModel.Userid = result;
                 PageNavigation navigate = new PageNavigation(this.ViewModel);
                 navigate.NavigateToPage(this.registerButton.NavUri, NavigationService);
             }

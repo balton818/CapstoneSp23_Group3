@@ -24,14 +24,12 @@
                             Text="{Binding Date}" Margin="10,0,139,0" />
                         <TextBlock
                             x:Name="plannedLabel"
-                   
+
                             DataContext="{Binding DataContext, RelativeSource={RelativeSource AncestorType={x:Type Expander}}}"
                             FontSize="15"
                             FontWeight="Bold"
                             Foreground="#FFE8C547"
-                            Text="{Binding PlannedLabel}" Margin="138,2,0,3" RenderTransformOrigin="0.5,0.5" >
-
-                        </TextBlock>
+                            Text="{Binding PlannedLabel}" Margin="138,2,0,3" RenderTransformOrigin="0.5,0.5" />
                     </Grid>
                 </DataTemplate>
             </Expander.HeaderTemplate>
@@ -55,7 +53,7 @@
 
                 <local:NavButton
                     x:Name="addDinnerButton"
-                    
+
                     Background="#30323d"
                     BorderBrush="#30323d"
                     Click="addMealClick"
@@ -68,7 +66,7 @@
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
                             Foreground="#FFE8C547"
-                            Text="+"/>
+                            Text="+" />
                     </Button.Content>
                 </local:NavButton>
                 <Button
@@ -148,10 +146,10 @@
                     Visibility="Visible" RenderTransformOrigin="0.5,0.5">
                     <local:NavButton.RenderTransform>
                         <TransformGroup>
-                            <ScaleTransform ScaleY="-1"/>
-                            <SkewTransform/>
-                            <RotateTransform/>
-                            <TranslateTransform/>
+                            <ScaleTransform ScaleY="-1" />
+                            <SkewTransform />
+                            <RotateTransform />
+                            <TranslateTransform />
                         </TransformGroup>
                     </local:NavButton.RenderTransform>
                     <TextBlock
@@ -162,7 +160,7 @@
                 </local:NavButton>
                 <Button
                     x:Name="removeLunchButton"
-                    
+
                     Background="#30323d"
                     BorderBrush="#30323d"
                     FontSize="20"
@@ -171,10 +169,10 @@
                     Visibility="Hidden" Margin="245,111,0,70" RenderTransformOrigin="0.5,0.5">
                     <Button.RenderTransform>
                         <TransformGroup>
-                            <ScaleTransform ScaleY="-1"/>
-                            <SkewTransform/>
-                            <RotateTransform/>
-                            <TranslateTransform/>
+                            <ScaleTransform ScaleY="-1" />
+                            <SkewTransform />
+                            <RotateTransform />
+                            <TranslateTransform />
                         </TransformGroup>
                     </Button.RenderTransform>
                     <TextBlock
@@ -184,7 +182,7 @@
                         Text="x" />
                 </Button>
                 <local:NavButton
-                    x:Name="LunchDetailButton"
+                    x:Name="lunchDetailButton"
                     Click="mealDetailClick"
                     Margin="0,110,128,73"
                     Background="#30323d"

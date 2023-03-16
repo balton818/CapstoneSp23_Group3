@@ -1,18 +1,33 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Team3DesktopApp.Model
+namespace Team3DesktopApp.Model;
+
+/// <summary>
+///     Meal class for defining a meal object for the meal planner
+/// </summary>
+public class Meal
 {
-    public class Meal
-    {
-        public int? MealId { get; set; }
-        public int MealPlanId { get; set; }
-        public DateTime Date { get; set; }
-        public DayOfWeek DayOfWeek { get; set; }
-        public MealType MealType { get; set; }
-        public Recipe? Recipe { get; set; }
-    }
+    #region Properties
+
+    /// <summary>Gets or sets the meal id</summary>
+    /// <value>The meal identifier.</value>
+    public int? MealId { get; set; }
+
+    /// <summary>Gets or sets the date.</summary>
+    /// <value>The date.</value>
+    public DateTime Date { get; set; }
+
+    /// <summary>Gets or sets the day of week.</summary>
+    /// <value>The day of week.</value>
+    public DayOfWeek DayOfWeek { get; set; }
+
+    /// <summary>Gets or sets the type of the meal.</summary>
+    /// <value>The type of the meal.</value>
+    public MealType MealType { get; set; }
+
+    /// <summary>Gets or sets the recipe.</summary>
+    /// <value>The recipe.</value>
+    public Recipe? Recipe { get; set; }
+
+    #endregion
 }

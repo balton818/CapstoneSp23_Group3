@@ -37,9 +37,9 @@
                     Width="415"
                     Height="574"
                     Fill="#FF30323D" />
-                <Canvas Name="FooterTextBox">
+                <Canvas Name="footerTextBox">
                     <TextBlock
-                        Name="Footer"
+                        Name="footer"
                         Canvas.Left="9"
                         Canvas.Top="524"
                         FontFamily="Song Myung"
@@ -50,7 +50,7 @@
                 </Canvas>
                 <Canvas>
                     <Rectangle
-                        Name="Rectangle5"
+                        Name="rectangle5"
                         Canvas.Top="501"
                         Width="415"
                         Height="2"
@@ -62,9 +62,9 @@
 
 
                 </Canvas>
-                <Canvas Name="FoodieHeader">
+                <Canvas Name="foodieHeader">
 
-                    <Canvas Name="HeaderTitle">
+                    <Canvas Name="headerTitle">
                         <TextBlock
                             Name="planHeader"
                             Canvas.Left="10"
@@ -88,7 +88,7 @@
                             </Rectangle.RenderTransform>
                         </Rectangle>
                         <Rectangle
-                            Name="Rectangle5_2"
+                            Name="rectangle52"
                             Canvas.Top="80"
                             Width="415"
                             Height="2"
@@ -122,7 +122,7 @@
             </Canvas>
         </Canvas>
         <ListBox
-            x:Name="planListBox"
+            Grid.Row="0" x:Name="planListBox"
             Width="409"
             Height="322"
             HorizontalAlignment="Center"
@@ -145,7 +145,7 @@
         </ListBox>
 
         <local:NavMenu
-            x:Name="navMenu"
+            Grid.Row="0" x:Name="navMenu"
             Width="162"
             Margin="308,7,0,0"
             HorizontalAlignment="Left"

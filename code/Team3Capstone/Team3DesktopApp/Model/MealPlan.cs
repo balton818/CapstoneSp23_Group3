@@ -1,16 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Team3DesktopApp.Model
+namespace Team3DesktopApp.Model;
+
+/// <summary>
+///     Meal plan class defines a meal plan for the planner
+/// </summary>
+public class MealPlan
 {
-    public class MealPlan
-    {
-        public int? MealPlanId { get; set; }
-        public DateTime MealPlanDate { get; set; }
-        public int UserId { get; set; }
-        public Dictionary<DayOfWeek, List<Meal?>> meals { get; set; } = new Dictionary<DayOfWeek, List<Meal?>>();
-    }
+    #region Properties
+
+    /// <summary>Gets or sets the meal plan id.</summary>
+    /// <value>The meal plan id.</value>
+    public int? MealPlanId { get; set; }
+
+    /// <summary>Gets or sets the meal plan date.</summary>
+    /// <value>The meal plan date.</value>
+    public DateTime MealPlanDate { get; set; }
+
+    /// <summary>Gets or sets the user id.</summary>
+    /// <value>The user identifier.</value>
+    public int UserId { get; set; }
+
+    /// <summary>Gets or sets the collection of meals.</summary>
+    /// <value>The meals currently planned.</value>
+    public Dictionary<DayOfWeek, List<Meal?>> Meals { get; set; } = new();
+
+    #endregion
 }

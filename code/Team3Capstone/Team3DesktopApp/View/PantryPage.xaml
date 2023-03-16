@@ -340,7 +340,7 @@
                     </Rectangle.RenderTransform>
                 </Rectangle>
                 <Rectangle
-                    Name="Rectangle5"
+                    Name="rectangle5"
                     Canvas.Top="80"
                     Width="415"
                     Height="2"
@@ -373,8 +373,8 @@
                 </ListBox>
 
 
-                <Canvas Name="IngredientCompClosed">
-                    <Canvas Name="Ingredient_2" />
+                <Canvas Name="ingredientCompClosed">
+                    <Canvas Name="ingredient2" />
                 </Canvas>
 
 
@@ -436,7 +436,7 @@
             Text="Ingredient Name"
             TextWrapping="Wrap" />
         <TextBlock
-            Height="21"
+            Grid.Row="0" Height="21"
             Margin="155,424,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
@@ -445,7 +445,7 @@
             <Run Text="Amount" /><LineBreak /><Run />
         </TextBlock>
         <TextBlock
-            Name="errorText"
+            Grid.Row="0" Name="errorText"
             Width="178"
             Margin="101,398,0,0"
             HorizontalAlignment="Left"

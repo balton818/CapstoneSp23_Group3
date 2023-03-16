@@ -91,10 +91,10 @@ public class HttpClientConnection
             var result = readTask.Result;
             Console.WriteLine(result);
             var pantry = JsonConvert.DeserializeObject<List<PantryItem>>(result);
-            return Task.FromResult(pantry);
+            return Task.FromResult(pantry)!;
         }
 
-        return Task.FromResult<List<PantryItem>>(null);
+        return Task.FromResult<List<PantryItem>>(null!);
     }
 
     /// <summary>Adds the pantry item.</summary>
@@ -119,10 +119,10 @@ public class HttpClientConnection
             readTask.Wait();
 
             var result = readTask.Result;
-            return Task.FromResult(JsonConvert.DeserializeObject<PantryItem>(result));
+            return Task.FromResult(JsonConvert.DeserializeObject<PantryItem>(result))!;
         }
 
-        return Task.FromResult<PantryItem>(null);
+        return Task.FromResult<PantryItem>(null!);
     }
 
     /// <summary>Edits the pantry item.</summary>
@@ -147,10 +147,10 @@ public class HttpClientConnection
             readTask.Wait();
 
             var result = readTask.Result;
-            return Task.FromResult(JsonConvert.DeserializeObject<PantryItem>(result));
+            return Task.FromResult(JsonConvert.DeserializeObject<PantryItem>(result))!;
         }
 
-        return Task.FromResult<PantryItem>(null);
+        return Task.FromResult<PantryItem>(null!);
     }
 
     /// <summary>Gets the recipes that match the user pantry.</summary>
@@ -172,10 +172,10 @@ public class HttpClientConnection
             var result = readTask.Result;
             Console.WriteLine(result);
             var recipes = JsonConvert.DeserializeObject<List<Recipe>>(result);
-            return Task.FromResult(recipes);
+            return Task.FromResult(recipes)!;
         }
 
-        return Task.FromResult<List<Recipe>>(null);
+        return Task.FromResult<List<Recipe>>(null!);
     }
 
     /// <summary>Gets the recipe detail.</summary>
@@ -197,22 +197,22 @@ public class HttpClientConnection
             var result = readTask.Result;
             Console.WriteLine(result);
             var recipe = JsonConvert.DeserializeObject<RecipeInformation>(result);
-            return Task.FromResult(recipe);
+            return Task.FromResult(recipe)!;
         }
 
-        return Task.FromResult<RecipeInformation>(null);
+        return Task.FromResult<RecipeInformation>(null!);
     }
 
     /// <summary>Removes the pantry item from the users pantry in the database.</summary>
     /// <param name="toRemove">the pantry item to remove.</param>
     /// <param name="client">The client for connecting.</param>
     /// <returns>
-    /// true if success false otherwise
+    ///     true if success false otherwise
     /// </returns>
     public Task<bool> RemovePantryItem(PantryItem toRemove, HttpClient client)
     {
-        var pantryID = toRemove.PantryId;
-        var query = new Uri("User/remove-pantry-item/" + pantryID, UriKind.Relative);
+        var pantryId = toRemove.PantryId;
+        var query = new Uri("User/remove-pantry-item/" + pantryId, UriKind.Relative);
         var json = JsonConvert.SerializeObject(toRemove);
 
         var data = new StringContent(json, Encoding.UTF8, "application/json");
@@ -225,7 +225,6 @@ public class HttpClientConnection
             var readTask = response.Result.Content.ReadAsStringAsync();
             readTask.Wait();
 
-            var result = readTask.Result;
             return Task.FromResult(true);
         }
 
@@ -235,7 +234,7 @@ public class HttpClientConnection
     /// <summary>Gets the recipe types for filtering from the database.</summary>
     /// <param name="client">The client used to connect to the backend.</param>
     /// <returns>
-    ///   the list of recipe types or null if unsuccessful
+    ///     the list of recipe types or null if unsuccessful
     /// </returns>
     public Task<List<string>> GetRecipeTypes(HttpClient client)
     {
@@ -248,16 +247,16 @@ public class HttpClientConnection
 
             var result = readTask.Result;
             var recipeTypes = JsonConvert.DeserializeObject<List<string>>(result);
-            return Task.FromResult(recipeTypes);
+            return Task.FromResult(recipeTypes)!;
         }
 
-        return Task.FromResult<List<string>>(null);
+        return Task.FromResult<List<string>>(null!);
     }
 
     /// <summary>Gets the diet types for filtering from the data base.</summary>
     /// <param name="client">The client used for connecting to the backend.</param>
     /// <returns>
-    ///   the list of diet types if successful null if not
+    ///     the list of diet types if successful null if not
     /// </returns>
     public Task<List<string>> GetDietTypes(HttpClient client)
     {
@@ -270,10 +269,10 @@ public class HttpClientConnection
 
             var result = readTask.Result;
             var dietTypes = JsonConvert.DeserializeObject<List<string>>(result);
-            return Task.FromResult(dietTypes);
+            return Task.FromResult(dietTypes)!;
         }
 
-        return Task.FromResult<List<string>>(null);
+        return Task.FromResult<List<string>>(null!);
     }
 
     /// <summary>Browses the recipes available in the database.</summary>
@@ -285,13 +284,19 @@ public class HttpClientConnection
     /// <param name="name">The name the recipe name the user is filtering by.</param>
     /// <param name="appliedCuisineType"></param>
     /// <returns>
-    ///   a list of recipes and their information if successful null otherwise
+    ///     a list of recipes and their information if successful null otherwise
     /// </returns>
     public Task<JObject> BrowseRecipes(int userId, HttpClient client, string recipeType, string dietType, int page,
-        string name, string appliedCuisineType)
+        string name, string? appliedCuisineType)
     {
+        if (appliedCuisineType == null)
+        {
+            appliedCuisineType = "";
+        }
+
         var query = new Uri(
-            "Recipe/browse?Type=" + recipeType + "&UserId=" + userId + "&Diet=" + dietType + "&PageNumber=" + page + "&Query=" + name + "&Cuisine=" + appliedCuisineType,
+            "Recipe/browse?Type=" + recipeType + "&UserId=" + userId + "&Diet=" + dietType + "&PageNumber=" + page +
+            "&Query=" + name + "&Cuisine=" + appliedCuisineType,
             UriKind.Relative);
         var response = client.GetAsync(query);
         Console.WriteLine(response);
@@ -305,9 +310,16 @@ public class HttpClientConnection
             return Task.FromResult(json);
         }
 
-        return Task.FromResult<JObject>(null);
+        return Task.FromResult<JObject>(null!);
     }
 
+    /// <summary>Gets the meal plan for the passed in information.</summary>
+    /// <param name="userId">The user id the plan belongs to.</param>
+    /// <param name="client">The client to connect to the backend with.</param>
+    /// <param name="currentWeek">if set to <c>true</c> get plan for[current week] else next week.</param>
+    /// <returns>
+    ///     the meal plan if successful null otherwise
+    /// </returns>
     public Task<MealPlan?> GetPlan(int userId, HttpClient client, bool currentWeek)
     {
         Uri query;
@@ -335,13 +347,22 @@ public class HttpClientConnection
             return Task.FromResult(recipe);
         }
 
-        return Task.FromResult<MealPlan>(null);
+        return Task.FromResult<MealPlan>(null!)!;
     }
 
+    /// <summary>Adds to plan.</summary>
+    /// <param name="planId">The plan identifier.</param>
+    /// <param name="client">The client.</param>
+    /// <param name="meal">The meal.</param>
+    /// <returns>
+    ///     <br />
+    /// </returns>
     public Task<MealPlan?> AddToPlan(int planId, HttpClient client, Meal meal)
     {
         var query = new Uri(
-            "MealPlan/add-meal?MealPlanId=" + planId + "&DayOfWeek=" + meal.DayOfWeek + "&MealType=" + meal.MealType + "&Recipe.ApiId=" + meal.Recipe.ApiId + "&Recipe.Title=" + meal.Recipe.Title + "&Recipe.Image=" + meal.Recipe.Image + "&Recipe.ImageType=" + meal.Recipe.ImageType, UriKind.Relative);
+            "MealPlan/add-meal?MealPlanId=" + planId + "&DayOfWeek=" + meal.DayOfWeek + "&MealType=" + meal.MealType +
+            "&Recipe.ApiId=" + meal.Recipe!.ApiId + "&Recipe.Title=" + meal.Recipe.Title + "&Recipe.Image=" +
+            meal.Recipe.Image + "&Recipe.ImageType=" + meal.Recipe.ImageType, UriKind.Relative);
 
         var response = client.GetAsync(query);
         Console.WriteLine(response);
@@ -359,10 +380,19 @@ public class HttpClientConnection
         return Task.FromResult<MealPlan>(null);
     }
 
+    /// <summary>Updates the plan when a meal already is planned.</summary>
+    /// <param name="mealId">The meal id for the new meal.</param>
+    /// <param name="client">The client to connect to the backend.</param>
+    /// <param name="meal">The meal to be added to the plan.</param>
+    /// <returns>
+    ///     the recipe added
+    /// </returns>
     public Task<Meal> UpdatePlan(int? mealId, HttpClient client, Meal meal)
     {
         var query = new Uri(
-            "MealPlan/update-meal?MealId=" + mealId + "&DayOfWeek=" + meal.DayOfWeek + "&MealType=" + meal.MealType + "&Recipe.ApiId=" + meal.Recipe.ApiId + "&Recipe.Title=" + meal.Recipe.Title + "&Recipe.Image=" + meal.Recipe.Image + "&Recipe.ImageType=" + meal.Recipe.ImageType, UriKind.Relative);
+            "MealPlan/update-meal?MealId=" + mealId + "&DayOfWeek=" + meal.DayOfWeek + "&MealType=" + meal.MealType +
+            "&Recipe.ApiId=" + meal.Recipe.ApiId + "&Recipe.Title=" + meal.Recipe.Title + "&Recipe.Image=" +
+            meal.Recipe.Image + "&Recipe.ImageType=" + meal.Recipe.ImageType, UriKind.Relative);
 
         var response = client.GetAsync(query);
         Console.WriteLine(response);
@@ -374,12 +404,18 @@ public class HttpClientConnection
             var result = readTask.Result;
             Console.WriteLine(result);
             var recipe = JsonConvert.DeserializeObject<Meal>(result);
-            return Task.FromResult(recipe);
+            return Task.FromResult(recipe)!;
         }
 
         return Task.FromResult<Meal>(null);
     }
 
+    /// <summary>Removes the meal from the plan.</summary>
+    /// <param name="mealId">The meal Id for the back end.</param>
+    /// <param name="client">The client to connect to the backend.</param>
+    /// <returns>
+    ///     true if meal is removed false otherwise
+    /// </returns>
     public Task<bool> RemoveMeal(int? mealId, HttpClient client)
     {
         var query = new Uri(
@@ -393,15 +429,17 @@ public class HttpClientConnection
 
             var result = readTask.Result;
             Console.WriteLine(result);
-            return Task.FromResult<bool>(true);
+            return Task.FromResult(true);
         }
 
-        return Task.FromResult<bool>(false);
+        return Task.FromResult(false);
     }
 
-
-    #endregion
-
+    /// <summary>Gets the cuisine types.</summary>
+    /// <param name="client">The client to connect to the back end.</param>
+    /// <returns>
+    ///     the collection of cuisine types that can be applied as filters
+    /// </returns>
     public Task<List<string>> GetCuisineTypes(HttpClient client)
     {
         var query = new Uri("App/cuisines", UriKind.Relative);
@@ -413,9 +451,11 @@ public class HttpClientConnection
 
             var result = readTask.Result;
             var cuisineTypes = JsonConvert.DeserializeObject<List<string>>(result);
-            return Task.FromResult(cuisineTypes);
+            return Task.FromResult(cuisineTypes)!;
         }
 
         return Task.FromResult<List<string>>(null);
     }
+
+    #endregion
 }

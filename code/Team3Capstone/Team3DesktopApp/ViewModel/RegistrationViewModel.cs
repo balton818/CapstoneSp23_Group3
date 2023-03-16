@@ -6,6 +6,9 @@ using Team3DesktopApp.Model;
 
 namespace Team3DesktopApp.ViewModel;
 
+/// <summary>
+///   The registration page view model
+/// </summary>
 public class RegistrationViewModel
 {
     #region Methods

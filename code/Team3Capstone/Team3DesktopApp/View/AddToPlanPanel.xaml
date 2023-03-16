@@ -10,10 +10,8 @@
     BorderBrush="#d6ccc2"
     BorderThickness="2"
     mc:Ignorable="d">
-    <Border
-        BorderBrush="#d6ccc2"
-        BorderThickness="1">
-        <Grid Background="#30323d" Margin="0,0,-1,-1">
+    <Border BorderBrush="#d6ccc2" BorderThickness="1">
+        <Grid Margin="0,0,-1,-1" Background="#30323d">
             <Border
                 Margin="0,68,100,0"
                 BorderBrush="#d6ccc2"
@@ -176,7 +174,8 @@
                         HorizontalAlignment="Center"
                         VerticalAlignment="Top"
                         Content="Select Week"
-                        Foreground="#d6ccc2" FontSize="11" />
+                        FontSize="11"
+                        Foreground="#d6ccc2" />
                     <RadioButton
                         x:Name="currentWeekButton"
                         Margin="10,18,0,0"

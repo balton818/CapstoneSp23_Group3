@@ -15,34 +15,40 @@
         <Expander
             x:Name="expander"
             Background="#30323d"
-            IsExpanded="False" BorderBrush="#FFE8C547">
+            BorderBrush="#FFE8C547"
+            IsExpanded="False">
             <Expander.HeaderTemplate>
                 <DataTemplate DataType="local:IngredientExpander">
                     <Grid Width="363">
                         <TextBlock
                             x:Name="ingredientHeader"
+                            Width="142"
+                            HorizontalAlignment="Left"
                             DataContext="{Binding DataContext, RelativeSource={RelativeSource AncestorType={x:Type Expander}}}"
                             FontSize="15"
                             FontWeight="Bold"
-                            Text="{Binding IngredientName}"
-                            Foreground="#FFE8C547" HorizontalAlignment="Left" Width="142"/>
+                            Foreground="#FFE8C547"
+                            Text="{Binding IngredientName}" />
                         <TextBlock
                             x:Name="ingredientAmount"
-                            DataContext="{Binding DataContext, RelativeSource={RelativeSource AncestorType={x:Type Expander}}}"
                             Margin="147,0,140,0"
+                            DataContext="{Binding DataContext, RelativeSource={RelativeSource AncestorType={x:Type Expander}}}"
                             FontSize="15"
                             FontWeight="Bold"
-                            Text="{Binding IngredientAmount}"
-                            Foreground="#FFE8C547" />
+                            Foreground="#FFE8C547"
+                            Text="{Binding IngredientAmount}" />
                         <TextBlock
                             x:Name="UnitTextBox"
-                            DataContext="{Binding DataContext, RelativeSource={RelativeSource AncestorType={x:Type Expander}}}"
-                  
-                            FontSize="15"
+                            Width="107"
+                            Height="20"
+                            Margin="246,0,0,0"
                             HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            DataContext="{Binding DataContext, RelativeSource={RelativeSource AncestorType={x:Type Expander}}}"
+                            FontSize="15"
                             FontWeight="Bold"
-                            Text="{Binding IngredientUnit}"
-                            Foreground="#FFE8C547" Height="20" VerticalAlignment="Center" Width="107" Margin="246,0,0,0" />
+                            Foreground="#FFE8C547"
+                            Text="{Binding IngredientUnit}" />
                     </Grid>
                 </DataTemplate>
             </Expander.HeaderTemplate>
@@ -52,8 +58,8 @@
                     Margin="0,0,304,0"
                     Background="#30323d"
                     BorderBrush="#30323d"
-                    FontSize="30"
-                    Click="PlusButton_OnClick">
+                    Click="PlusButton_OnClick"
+                    FontSize="30">
                     <Button.Content>
                         <TextBlock
                             HorizontalAlignment="Left"
@@ -63,12 +69,12 @@
                     </Button.Content>
                 </Button>
                 <Button
+                    x:Name="removeButton"
                     Margin="297,0,10,0"
                     Background="#30323d"
                     BorderBrush="#30323d"
-                    FontSize="30"
-                    x:Name="removeButton"
-                    Click="RemoveButton_OnClick">
+                    Click="RemoveButton_OnClick"
+                    FontSize="30">
                     <Button.Content>
                         <TextBlock
                             HorizontalAlignment="Center"
@@ -78,12 +84,12 @@
                     </Button.Content>
                 </Button>
                 <Button
+                    x:Name="minusButton"
                     Margin="153,0,153,0"
                     Background="#30323d"
                     BorderBrush="#30323d"
-                    FontSize="30"
-                    x:Name="minusButton"
-                    Click="MinusButton_OnClick">
+                    Click="MinusButton_OnClick"
+                    FontSize="30">
                     <Button.Content>
                         <TextBlock
                             HorizontalAlignment="Left"
