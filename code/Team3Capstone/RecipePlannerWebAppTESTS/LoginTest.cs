@@ -2,6 +2,7 @@ using Bunit;
 using RecipePlannerWebApp.Pages;
 using Microsoft.Extensions.DependencyInjection;
 using RecipePlannerApi.Model;
+using RecipePlannerWebApp.LocalServices;
 
 namespace RecipePlannerWebAppTESTS
 {
@@ -11,7 +12,8 @@ namespace RecipePlannerWebAppTESTS
 		public void TestLoginInitializesProperly()
 		{
 			using var ctx = new TestContext();
-			var loginComp = ctx.RenderComponent<Login>();
+			ctx.Services.AddSingleton(new UserSessionData());
+            var loginComp = ctx.RenderComponent<Login>();
 
 			var loginMessage = "";
 			Assert.Equal(loginMessage, loginComp.Find($"#loginResultMessage").TextContent);
@@ -21,9 +23,11 @@ namespace RecipePlannerWebAppTESTS
 		public void TestLoginValidationDoesNotAllowEmptyFields()
 		{
 			using var ctx = new TestContext();
-			var loginComp = ctx.RenderComponent<Login>();
+            ctx.Services.AddSingleton(new UserSessionData());
+            var loginComp = ctx.RenderComponent<Login>();
+            
 
-			var loginButton = loginComp.Find($"#loginButton");
+            var loginButton = loginComp.Find($"#loginButton");
 			loginButton.Click();
 
 			Assert.Equal("Please enter a username and password", loginComp.Find($"#loginResultMessage").TextContent);
@@ -33,11 +37,12 @@ namespace RecipePlannerWebAppTESTS
 		public void TestLoginValidationFailsOnInvalidUserData()
 		{
 			using var ctx = new TestContext();
-			User testUser = new User { Username = "blah", Password = "blah" };
+            User testUser = new User { Username = "blah", Password = "blah" };
+            ctx.Services.AddSingleton(new UserSessionData() { CurrentUser = testUser });
 
-			var loginComp = ctx.RenderComponent<Login>(parameters => parameters.Add(p => p.user, testUser));
+            var loginComp = ctx.RenderComponent<Login>(parameters => parameters.Add(p => p.user, testUser));
 
-			var loginButton = loginComp.Find($"#loginButton");
+            var loginButton = loginComp.Find($"#loginButton");
 			loginButton.Click();
 
 			Assert.Equal("Invalid Credentials", loginComp.Find($"#loginResultMessage").TextContent);
@@ -47,11 +52,12 @@ namespace RecipePlannerWebAppTESTS
 		public void TestLoginValidationSuccess()
 		{
 			using var ctx = new TestContext();
-			User testUser = new User { Username = "test", Password = "test" };
+            User testUser = new User { Username = "ba", Password = "ab" };
+            ctx.Services.AddSingleton(new UserSessionData() { CurrentUser = testUser });
 
-			var loginComp = ctx.RenderComponent<Login>(parameters => parameters.Add(p => p.user, testUser));
+            var loginComp = ctx.RenderComponent<Login>(builder => { builder.Add(c => c.user, testUser);});
 
-			var loginButton = loginComp.Find($"#loginButton");
+            var loginButton = loginComp.Find($"#loginButton");
 			loginButton.Click();
 
 			Assert.True(loginComp.Instance.ValidFields);

@@ -1,0 +1,6 @@
+Hey Dr. Corley!
+
+I just wanted to say really fast that I still haven't figured out how to exclude certain classes and files from the coverage report, which is why there are so many pages at 0% coverage. I will add more tests for the views later, but hopefully the ones for Login and Register are sufficient to demonstrate the coverage report generation.
+
+Thank you for your patience!
+-Ben Alton
