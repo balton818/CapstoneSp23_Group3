@@ -22,11 +22,14 @@ public class FoodieViewModel
     private readonly RecipeDetailViewModel recipeDetailViewModel;
     private readonly PantryViewModel pantryViewModel;
     private readonly BrowseRecipesViewModel browseRecipesViewModel;
+    private readonly MealPlanViewModel mealPlanViewModel;
 
     #endregion
 
     #region Properties
 
+    /// <summary>Gets or sets the client to set.</summary>
+    /// <value>The client to set.</value>
     public HttpClient ClientToSet { get; set; }
 
     /// <summary>Gets or sets the userid.</summary>
@@ -36,6 +39,10 @@ public class FoodieViewModel
     /// <summary>Gets or sets the pantry.</summary>
     /// <value>The currently logged in user's pantry.</value>
     public List<PantryItem>? Pantry { get; set; }
+
+    /// <summary>Gets or sets the plan type and date to add.</summary>
+    /// <value>The plan type and date to add.</value>
+    public Tuple<DayOfWeek?, MealType?>? PlanTypeAndDateToAdd { get; set; }
 
     #endregion
 
@@ -50,7 +57,9 @@ public class FoodieViewModel
         this.registrationViewModel = new RegistrationViewModel();
         this.pantryViewModel = new PantryViewModel();
         this.browseRecipesViewModel = new BrowseRecipesViewModel();
+        this.mealPlanViewModel = new MealPlanViewModel();
         this.ClientToSet = Client;
+        this.mealPlanViewModel.GetMealPlans(this.Userid, this.ClientToSet).ConfigureAwait(true);
     }
 
     #endregion
@@ -82,7 +91,7 @@ public class FoodieViewModel
     {
         var recipes = new List<PantryItem>();
 
-        recipes.AddRange(await this.pantryViewModel.GetPantry(this.Userid, this.ClientToSet));
+        recipes.AddRange((await this.pantryViewModel.GetPantry(this.Userid, this.ClientToSet))!);
         return recipes;
     }
 
@@ -90,10 +99,10 @@ public class FoodieViewModel
     /// <returns>
     ///     A list of recipes that the user can currently cook based on their pantry ingredients
     /// </returns>
-    public List<string> GetRecipes()
+    public List<string?> GetRecipes()
     {
-        var recipeNames = new List<string>();
-        foreach (var recipe in this.foundRecipeViewModel.GetRecipes(this.Userid, this.ClientToSet))
+        var recipeNames = new List<string?>();
+        foreach (var recipe in this.foundRecipeViewModel.GetRecipes(this.Userid, this.ClientToSet)!)
         {
             recipeNames.Add(recipe.Title);
         }
@@ -124,7 +133,7 @@ public class FoodieViewModel
     /// <returns>
     ///     the added pantryItem or null if unsuccessful
     /// </returns>
-    public async Task<PantryItem> AddIngredient(string name, int quantity, string unit)
+    public async Task<PantryItem> AddIngredient(string? name, int quantity, string unit)
     {
         return await this.pantryViewModel.AddIngredient(this.Userid, name, quantity, this.ClientToSet, unit);
     }
@@ -134,7 +143,7 @@ public class FoodieViewModel
     /// <returns>
     ///     The recipe information if successful ie the steps, ingredients etc. null otherwise
     /// </returns>
-    public async Task<RecipeInformation> RecipeDetailNavFound(string recipeName)
+    public async Task<RecipeInformation> RecipeDetailNavFound(string? recipeName)
     {
         this.foundRecipeViewModel.SelectedRecipeTitle = recipeName;
         return await this.recipeInformation(recipeName, this.foundRecipeViewModel.Recipes);
@@ -145,30 +154,51 @@ public class FoodieViewModel
     /// <returns>
     ///     The recipe information if successful ie the steps, ingredients etc. null otherwise
     /// </returns>
-    public async Task<RecipeInformation> RecipeDetailNavBrowse(string recipeName)
+    public async Task<RecipeInformation> RecipeDetailNavBrowse(string? recipeName)
     {
         this.browseRecipesViewModel.SelectedRecipeTitle = recipeName;
         return await this.recipeInformation(recipeName, this.browseRecipesViewModel.Recipes);
     }
 
-    private async Task<RecipeInformation> recipeInformation(string recipeName, List<Recipe> recipes)
+    private async Task<RecipeInformation> recipeInformation(string? recipeName, List<Recipe>? recipes)
     {
-        foreach (var recipe in recipes)
+        if (recipes != null)
         {
-            if (recipe.Title.Equals(recipeName) && recipe.Id != null)
+            foreach (var recipe in recipes)
             {
-                await this.recipeDetailViewModel.RecipeDetailNav((int)recipe.Id, this.ClientToSet);
+                if (recipe.Title!.Equals(recipeName) && recipe.ApiId != null)
+                {
+                    this.recipeDetailViewModel.CurrentRecipe = recipe;
+                    await this.recipeDetailViewModel.RecipeDetailNav((int)recipe.ApiId, this.ClientToSet);
+                }
             }
         }
 
-        return this.recipeDetailViewModel.RecipeInfo;
+        return this.recipeDetailViewModel.RecipeInfo!;
+    }
+
+    /// <summary>Allows for navigation to recipe detail from the meal planner.</summary>
+    /// <param name="day">The day the recipe exists on.</param>
+    /// <param name="type">The type of meal the recipe is.</param>
+    /// <returns>
+    ///     the recipe info for the given plan
+    /// </returns>
+    public async Task<RecipeInformation> RecipeDetailNavPlan(DayOfWeek day, MealType type)
+    {
+        var recipe = this.mealPlanViewModel.GetRecipe(day, type);
+        if (recipe.ApiId != null)
+        {
+            await this.recipeDetailViewModel.RecipeDetailNav((int)recipe.ApiId, this.ClientToSet);
+        }
+
+        return this.recipeDetailViewModel.RecipeInfo!;
     }
 
     /// <summary>Edits the Pantry ingredient in the users pantry.</summary>
     /// <param name="ingredientName">Name of the ingredient.</param>
     /// <param name="ingredientAmount">The ingredient amount.</param>
     /// <returns> the edited item if successful null otherwise </returns>
-    public async Task<PantryItem> EditIngredient(string ingredientName, int ingredientAmount)
+    public async Task<PantryItem> EditIngredient(string? ingredientName, int ingredientAmount)
     {
         return await this.pantryViewModel.EditIngredientAmount(ingredientName, ingredientAmount, this.ClientToSet);
     }
@@ -180,7 +210,7 @@ public class FoodieViewModel
     public List<string> GetRecipeIngredients()
     {
         var ingredients = new List<string>();
-        foreach (var ingredient in this.recipeDetailViewModel.RecipeInfo.Ingredients)
+        foreach (var ingredient in this.recipeDetailViewModel.RecipeInfo!.Ingredients!)
         {
             ingredients.Add(ingredient.IngredientName + " " + ingredient.Quantity + " " + ingredient.Unit);
         }
@@ -195,14 +225,14 @@ public class FoodieViewModel
     public List<string> GetRecipeSteps()
     {
         var steps = new List<string>();
-        if (this.recipeDetailViewModel.RecipeInfo.Steps.Count == 1)
+        if (this.recipeDetailViewModel.RecipeInfo!.Steps!.Count == 1)
         {
             return this.splitSteps();
         }
 
         foreach (var step in this.recipeDetailViewModel.RecipeInfo.Steps)
         {
-            steps.Add(step.stepNumber + ". " + step.instructions);
+            steps.Add(step.StepNumber + ". " + step.Instructions);
         }
 
         return steps;
@@ -213,7 +243,7 @@ public class FoodieViewModel
         var count = 1;
         var splitToSteps = new List<string>();
         var steps = new List<string>();
-        splitToSteps.AddRange(this.recipeDetailViewModel.RecipeInfo.Steps[0].instructions.Split('.'));
+        splitToSteps.AddRange(this.recipeDetailViewModel.RecipeInfo.Steps[0].Instructions.Split('.'));
         foreach (var step in splitToSteps)
         {
             if (!string.IsNullOrEmpty(step))
@@ -230,16 +260,16 @@ public class FoodieViewModel
     /// <returns>
     ///     the image source for the selected recipe
     /// </returns>
-    public ImageSource GetRecipeImage()
+    public ImageSource? GetRecipeImage()
     {
-        return this.recipeDetailViewModel.RecipeInfo.Image;
+        return this.recipeDetailViewModel.RecipeInfo!.Image;
     }
 
     /// <summary>Gets the recipe title.</summary>
     /// <returns>
     ///     the recipe titile
     /// </returns>
-    public string GetRecipeTitle()
+    public string? GetRecipeTitle()
     {
         if (string.IsNullOrEmpty(this.foundRecipeViewModel.SelectedRecipeTitle))
         {
@@ -255,7 +285,7 @@ public class FoodieViewModel
     /// <returns>
     ///     true if successful false otherwise
     /// </returns>
-    public Task<bool> RemoveIngredient(string ingredientName, int ingredientAmount)
+    public Task<bool> RemoveIngredient(string? ingredientName, int ingredientAmount)
     {
         return this.pantryViewModel.RemoveIngredient(ingredientName, ingredientAmount, this.ClientToSet);
     }
@@ -264,10 +294,10 @@ public class FoodieViewModel
     /// <returns>
     ///     a list of recipe names that match the search and filtering criteria
     /// </returns>
-    public List<string> BrowseRecipes()
+    public List<string?> BrowseRecipes()
     {
-        var recipeNames = new List<string>();
-        foreach (var recipe in this.browseRecipesViewModel.BrowseRecipes(this.ClientToSet, this.Userid))
+        var recipeNames = new List<string?>();
+        foreach (var recipe in this.browseRecipesViewModel.BrowseRecipes(this.ClientToSet, this.Userid)!)
         {
             recipeNames.Add(recipe.Title);
         }
@@ -292,6 +322,7 @@ public class FoodieViewModel
         this.browseRecipesViewModel.NumberOfRecipes = 0;
         this.browseRecipesViewModel.AppliedDietType = "";
         this.browseRecipesViewModel.AppliedRecipeType = "";
+        this.browseRecipesViewModel.AppliedCuisineType = "";
         this.browseRecipesViewModel.SearchName = "";
     }
 
@@ -335,10 +366,12 @@ public class FoodieViewModel
     /// <summary>Sets the filters to browse recipes with.</summary>
     /// <param name="typeComboboxText">The recipe type combobox text.</param>
     /// <param name="dietComboboxText">The diet combobox text.</param>
-    public void SetFilters(string typeComboboxText, string dietComboboxText)
+    /// <param name="cuisinesString"></param>
+    public void SetFilters(string typeComboboxText, string dietComboboxText, string? cuisinesString)
     {
         this.browseRecipesViewModel.AppliedRecipeType = typeComboboxText;
         this.browseRecipesViewModel.AppliedDietType = dietComboboxText;
+        this.browseRecipesViewModel.AppliedCuisineType = cuisinesString;
     }
 
     /// <summary>Gets the browsing page information.</summary>
@@ -375,6 +408,112 @@ public class FoodieViewModel
     {
         return new Tuple<string, string>(this.browseRecipesViewModel.AppliedRecipeType,
             this.browseRecipesViewModel.AppliedDietType);
+    }
+
+    /// <summary>Gets the plans.</summary>
+    public async Task GetPlans()
+    {
+        await this.mealPlanViewModel.GetMealPlans(this.Userid, this.ClientToSet);
+    }
+
+    /// <summary>Gets the meals planned on the current day for the current week.</summary>
+    /// <param name="currentWeek">if set to <c>true</c> [current week] else next week.</param>
+    /// <param name="dayOfWeek">The day of week to get the meals for.</param>
+    /// <returns>
+    ///     a dictionary of meal types and recipe titles.
+    /// </returns>
+    public Dictionary<MealType, string?> GetMealPlan(bool currentWeek, DayOfWeek dayOfWeek)
+    {
+        var mealTitles = new Dictionary<MealType, string?>();
+        var meals = this.mealPlanViewModel.GetMealForDay(dayOfWeek, currentWeek);
+
+        mealTitles.Add(MealType.Breakfast, "");
+        mealTitles.Add(MealType.Lunch, "");
+        mealTitles.Add(MealType.Dinner, "");
+
+        foreach (var meal in meals)
+        {
+            if (meal!.Recipe != null)
+            {
+                mealTitles[meal.MealType] = meal.Recipe.Title;
+            }
+        }
+
+        return mealTitles;
+    }
+
+    /// <summary>Gets the current week bool.</summary>
+    /// <returns>
+    ///     true if user has current week selected, false otherwise
+    /// </returns>
+    public bool GetCurrentWeek()
+    {
+        return this.mealPlanViewModel.CurrentWeek;
+    }
+
+    /// <summary>Adds recipe to meal plan.</summary>
+    /// <param name="current">indicates if the current week is selected.</param>
+    public void AddToMealPlan(bool? current)
+    {
+        this.mealPlanViewModel.AddToPlan(this.recipeDetailViewModel.CurrentRecipe!, this.PlanTypeAndDateToAdd!.Item1,
+            this.PlanTypeAndDateToAdd.Item2, this.ClientToSet, current);
+    }
+
+    /// <summary>Removes the meal from plan.</summary>
+    /// <param name="mealToRemove">The name of the meal to remove.</param>
+    /// <param name="dayOfWeek">The day of week.</param>
+    /// <param name="mealType">Type of the meal.</param>
+    public void RemoveMealFromPlan(string? mealToRemove, DayOfWeek dayOfWeek, MealType mealType)
+    {
+        this.mealPlanViewModel.RemoveMealFromPlan(this.ClientToSet, mealToRemove, dayOfWeek, mealType);
+    }
+
+    /// <summary>Gets the date range for the current week.</summary>
+    /// <param name="currentWeek">if set to <c>true</c> [current week] false next week.</param>
+    /// <returns>
+    ///     the sunday-saturday date range
+    /// </returns>
+    public DateOnly GetPlanDate(bool currentWeek)
+    {
+        return this.mealPlanViewModel.GetDate(currentWeek);
+    }
+
+    /// <summary>Checks if theres a recipe planned for the given week type and day</summary>
+    /// <param name="mealType">Type of the meal.</param>
+    /// <param name="day">The day.</param>
+    /// <param name="current">if set to <c>true</c> [current].</param>
+    /// <returns>
+    ///     true if a recipe exists for the given info false otherwise
+    /// </returns>
+    public bool MealPlanContainsRecipe(MealType mealType, DayOfWeek day, bool current)
+    {
+        this.GetPlans().ConfigureAwait(true);
+        return this.mealPlanViewModel.CheckForRecipe(mealType, day);
+    }
+
+    /// <summary>Updates the plan if it is being overwritten.</summary>
+    /// <param name="current">indicates the current week selected.</param>
+    public void UpdatePlan(bool? current)
+    {
+        if (this.recipeDetailViewModel.CurrentRecipe != null && this.PlanTypeAndDateToAdd != null)
+        {
+            this.mealPlanViewModel.UpdatePlan(this.recipeDetailViewModel.CurrentRecipe, this.PlanTypeAndDateToAdd.Item1,
+                this.PlanTypeAndDateToAdd.Item2, this.ClientToSet, current);
+        }
+    }
+
+    /// <summary>Gets the cuisine types from the data base to filter with.</summary>
+    /// <returns>
+    ///     a collection of cuisine types
+    /// </returns>
+    public List<string>? GetCuisineTypes()
+    {
+        var cuisineTypes = new List<string>();
+        var connection = new HttpClientConnection();
+        var retrieved = connection.GetCuisineTypes(this.ClientToSet);
+        cuisineTypes.AddRange(retrieved.Result);
+        cuisineTypes.Add("");
+        return cuisineTypes;
     }
 
     #endregion

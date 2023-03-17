@@ -5,22 +5,22 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:view="clr-namespace:Team3DesktopApp.View"
- 
+
     mc:Ignorable="d" Width="418" Height="703">
-    <Canvas Name="registrationPage" >
+    <Canvas Name="registrationPage">
         <Rectangle
-                Name="rect434"
-                Width="415"
-                Height="702"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Top"
-                Fill="#FF30323D" />
+            Name="rect434"
+            Width="415"
+            Height="702"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Top"
+            Fill="#FF30323D" />
         <Canvas Name="heading">
             <Rectangle
-                    Name="rect436"
-                    Width="415"
-                    Height="72"
-                    Fill="#FF30323D">
+                Name="rect436"
+                Width="415"
+                Height="72"
+                Fill="#FF30323D">
                 <Rectangle.RenderTransform>
                     <TranslateTransform X="0" Y="-1" />
                 </Rectangle.RenderTransform>
@@ -28,18 +28,18 @@
             <Canvas Name="pageItems">
                 <Canvas Name="filledButtonLogout">
                     <view:NavButton
-                            x:Name="backButton"
-                            Canvas.Left="337"
-                            Canvas.Top="16"
-                            Width="69"
-                            Height="44"
-                            Background="#FFD6CCC2"
-                            Click="BackButton_OnClickButton_Click"
-                            Content="Back"
-                            FontFamily="Song Myung"
-                            FontSize="18"
-                            ForceCursor="True"
-                            NavUri="/View/LoginPage.xaml">
+                        x:Name="backButton"
+                        Canvas.Left="337"
+                        Canvas.Top="16"
+                        Width="69"
+                        Height="44"
+                        Background="#FFD6CCC2"
+                        Click="BackButton_OnClickButton_Click"
+                        Content="Back"
+                        FontFamily="Song Myung"
+                        FontSize="18"
+                        ForceCursor="True"
+                        NavUri="/View/LoginPage.xaml">
                         <view:NavButton.Resources>
                             <Style TargetType="Border">
                                 <Setter Property="CornerRadius" Value="5" />
@@ -50,126 +50,126 @@
             </Canvas>
             <Canvas Name="title">
                 <TextBlock
-                        Name="EnterYourInfoBelow"
-                        Canvas.Left="10"
-                        Canvas.Top="28"
-                        FontFamily="Song Myung"
-                        FontSize="24"
-                        Foreground="#FFE8C547">
-                        <Span FontSize="24">Enter Your Info Below</Span>
+                    Name="enterYourInfoBelow"
+                    Canvas.Left="10"
+                    Canvas.Top="28"
+                    FontFamily="Song Myung"
+                    FontSize="24"
+                    Foreground="#FFE8C547">
+                    <Span FontSize="24">Enter Your Info Below</Span>
                 </TextBlock>
             </Canvas>
         </Canvas>
         <Rectangle
-                Name="dividerHead"
-                Canvas.Top="79"
-                Width="415"
-                Height="2"
-                Fill="#33E8C547"
-                RadiusX="1"
-                RadiusY="1" />
+            Name="dividerHead"
+            Canvas.Top="79"
+            Width="415"
+            Height="2"
+            Fill="#33E8C547"
+            RadiusX="1"
+            RadiusY="1" />
         <Rectangle
-                Name="dividerFoot"
-                Canvas.Top="612"
-                Width="415"
-                Height="2"
-                Fill="#33E8C547"
-                RadiusX="1"
-                RadiusY="1" HorizontalAlignment="Center" VerticalAlignment="Top" />
+            Name="dividerFoot"
+            Canvas.Top="612"
+            Width="415"
+            Height="2"
+            Fill="#33E8C547"
+            RadiusX="1"
+            RadiusY="1" HorizontalAlignment="Center" VerticalAlignment="Top" />
         <Canvas Name="regForm" Visibility="Visible">
             <Canvas>
 
                 <Canvas Name="firstNameCanvas">
                     <TextBox
-                            Name="firstNameTextBox"
-                            Canvas.Left="32"
-                            Canvas.Top="344"
-                            Width="352"
-                            Height="42"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Top"
-                            Background="#FFD6CCC2"
-                            BorderBrush="#FFE8C547"
-                            FontFamily="Song Myung"
-                            FontSize="30" />
+                        Name="firstNameTextBox"
+                        Canvas.Left="32"
+                        Canvas.Top="344"
+                        Width="352"
+                        Height="42"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Top"
+                        Background="#FFD6CCC2"
+                        BorderBrush="#FFE8C547"
+                        FontFamily="Song Myung"
+                        FontSize="30" />
                     <TextBlock
-                            Name="something3"
-                            Canvas.Left="32"
-                            Canvas.Top="324"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Top"
-                            FontFamily="Song Myung"
-                            FontSize="17"
-                            Foreground="#FF898989">
-                            <Span FontSize="17">First Name</Span>
+                        Name="something3"
+                        Canvas.Left="32"
+                        Canvas.Top="324"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Top"
+                        FontFamily="Song Myung"
+                        FontSize="17"
+                        Foreground="#FF898989">
+                        <Span FontSize="17">First Name</Span>
                     </TextBlock>
                 </Canvas>
                 <Canvas Name="lastNameCan">
                     <TextBox
-                            Name="lastNameTextBox"
-                            Canvas.Left="32"
-                            Canvas.Top="421"
-                            Width="352"
-                            Height="43"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Top"
-                            Background="#FFD6CCC2"
-                            BorderBrush="#FFE8C547"
-                            FontFamily="Song Myung"
-                            FontSize="30" />
+                        Name="lastNameTextBox"
+                        Canvas.Left="32"
+                        Canvas.Top="421"
+                        Width="352"
+                        Height="43"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Top"
+                        Background="#FFD6CCC2"
+                        BorderBrush="#FFE8C547"
+                        FontFamily="Song Myung"
+                        FontSize="30" />
                     <TextBlock
-                            Name="something4"
-                            Canvas.Left="32"
-                            Canvas.Top="401"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Top"
-                            FontFamily="Song Myung"
-                            FontSize="17"
-                            Foreground="#FF898989">
-                            <Span FontSize="17">Last Name</Span>
+                        Name="something4"
+                        Canvas.Left="32"
+                        Canvas.Top="401"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Top"
+                        FontFamily="Song Myung"
+                        FontSize="17"
+                        Foreground="#FF898989">
+                        <Span FontSize="17">Last Name</Span>
                     </TextBlock>
                 </Canvas>
                 <Canvas Name="emailCan">
                     <TextBox
-                            Name="emailTextBox"
-                            Canvas.Left="32"
-                            Canvas.Top="500"
-                            Width="352"
-                            Height="42"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Top"
-                            Background="#FFD6CCC2"
-                            BorderBrush="#FFE8C547"
-                            FontFamily="Song Myung"
-                            FontSize="30" />
+                        Name="emailTextBox"
+                        Canvas.Left="32"
+                        Canvas.Top="500"
+                        Width="352"
+                        Height="42"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Top"
+                        Background="#FFD6CCC2"
+                        BorderBrush="#FFE8C547"
+                        FontFamily="Song Myung"
+                        FontSize="30" />
                     <TextBlock
-                            Name="something5"
-                            Canvas.Left="32"
-                            Canvas.Top="480"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Top"
-                            FontFamily="Song Myung"
-                            FontSize="17"
-                            Foreground="#FF898989">
-                            <Span FontSize="17">Email</Span>
+                        Name="something5"
+                        Canvas.Left="32"
+                        Canvas.Top="480"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Top"
+                        FontFamily="Song Myung"
+                        FontSize="17"
+                        Foreground="#FF898989">
+                        <Span FontSize="17">Email</Span>
                     </TextBlock>
                 </Canvas>
                 <Canvas Name="regCanvasButton">
                     <view:NavButton
-                            x:Name="registerButton"
-                            Canvas.Left="118"
-                            Canvas.Top="563"
-                            Width="188"
-                            Height="34"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Top"
-                            Background="#FFD6CCC2"
-                            Click="RegisterButton_ClickAsync"
-                            Content="Register"
-                            FontFamily="Song Myung"
-                            FontSize="18"
-                            ForceCursor="True"
-                            NavUri="/View/RecipePage.xaml">
+                        x:Name="registerButton"
+                        Canvas.Left="118"
+                        Canvas.Top="563"
+                        Width="188"
+                        Height="34"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Background="#FFD6CCC2"
+                        Click="RegisterButton_ClickAsync"
+                        Content="Register"
+                        FontFamily="Song Myung"
+                        FontSize="18"
+                        ForceCursor="True"
+                        NavUri="/View/RecipePage.xaml">
                         <view:NavButton.Resources>
                             <Style TargetType="Border">
                                 <Setter Property="CornerRadius" Value="5" />
@@ -180,13 +180,13 @@
             </Canvas>
         </Canvas>
         <TextBlock
-                Name="Textbox"
-                Canvas.Left="16"
-                Canvas.Top="655"
-                FontFamily="Song Myung"
-                FontSize="17"
-                Foreground="#FFE8C547">
-                <Span FontSize="14">Recipe Planner Irie/Alton/Wagner</Span>
+            Name="textbox"
+            Canvas.Left="16"
+            Canvas.Top="655"
+            FontFamily="Song Myung"
+            FontSize="17"
+            Foreground="#FFE8C547">
+            <Span FontSize="14">Recipe Planner Irie/Alton/Wagner</Span>
         </TextBlock>
         <TextBlock
             x:Name="unErrorLabel"
@@ -199,7 +199,9 @@
             FontSize="16"
             Foreground="#FFFB1212"
             TextWrapping="Wrap"
-            Visibility="Hidden" ><Run Text="Username Error"/><LineBreak/><Run/></TextBlock>
+            Visibility="Hidden">
+            <Run Text="Username Error" /><LineBreak /><Run />
+        </TextBlock>
         <TextBlock
             x:Name="pwError"
             Canvas.Left="119"
@@ -330,7 +332,7 @@
                     Foreground="#FF898989" HorizontalAlignment="Center" VerticalAlignment="Top">
                     <Span FontSize="17">Confirm Password</Span>
                 </TextBlock>
-                <Canvas Name="submit"/>
+                <Canvas Name="submit" />
             </Canvas>
         </Canvas>
 
