@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Windows;
 using System.Windows.Controls;
 using Team3DesktopApp.Model;
@@ -9,6 +10,7 @@ namespace Team3DesktopApp.View;
 /// <summary>
 ///     Interaction logic for AddToPlanPanel.xaml
 /// </summary>
+[ExcludeFromCodeCoverage]
 public partial class AddToPlanPanel
 {
     #region Properties

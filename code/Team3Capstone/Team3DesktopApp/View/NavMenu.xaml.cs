@@ -4,6 +4,7 @@ using System.Windows.Controls;
 using Team3DesktopApp.ViewModel;
 
 namespace Team3DesktopApp.View;
+
 /// <summary>
 ///     Interaction logic for NavMenu.xaml
 ///     Custom control for hamburger navigation menu
@@ -41,7 +42,7 @@ public partial class NavMenu
         var current = this.Current;
         if (current is { NavigationService: { } })
         {
-            PageNavigation navigate = new PageNavigation(this.FoodViewModel);
+            var navigate = new PageNavigation(this.FoodViewModel);
             var page = this.Current;
             if (page is { NavigationService: { } })
             {

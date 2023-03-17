@@ -7,7 +7,7 @@ using Team3DesktopApp.Model;
 namespace Team3DesktopApp.ViewModel;
 
 /// <summary>
-///   The registration page view model
+///     The registration page view model
 /// </summary>
 public class RegistrationViewModel
 {

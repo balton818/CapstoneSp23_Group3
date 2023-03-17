@@ -18,10 +18,6 @@ public class MealPlan
     /// <value>The meal plan date.</value>
     public DateTime MealPlanDate { get; set; }
 
-    /// <summary>Gets or sets the user id.</summary>
-    /// <value>The user identifier.</value>
-    public int UserId { get; set; }
-
     /// <summary>Gets or sets the collection of meals.</summary>
     /// <value>The meals currently planned.</value>
     public Dictionary<DayOfWeek, List<Meal?>> Meals { get; set; } = new();

@@ -6,7 +6,7 @@ using Team3DesktopApp.Dal;
 namespace Team3DesktopApp.ViewModel;
 
 /// <summary>
-///   login view model class serves as the view model for the login page
+///     login view model class serves as the view model for the login page
 /// </summary>
 public class LoginViewModel
 {

@@ -7,7 +7,7 @@ using Team3DesktopApp.Model;
 namespace Team3DesktopApp.ViewModel
 {
     /// <summary>
-    ///   <br />
+    ///   Browse Recipes View Model serves as the view model for the browse recipe page
     /// </summary>
     public class BrowseRecipesViewModel
     {

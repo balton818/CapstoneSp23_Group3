@@ -24,33 +24,4 @@ public class Pantry
     }
 
     #endregion
-
-    #region Methods
-
-    /// <summary>Adds the ingredient.</summary>
-    /// <param name="ingredient">The ingredient.</param>
-    public void AddIngredient(PantryItem ingredient)
-    {
-        this.Ingredients.Add(ingredient);
-    }
-
-    /// <summary>Gets the ingredient.</summary>
-    /// <param name="name">The name.</param>
-    /// <returns>
-    ///     The ingredient with the given name, or null if no ingredient with that name exists.
-    /// </returns>
-    public Ingredient? GetIngredient(string name)
-    {
-        foreach (Ingredient ingredient in this.Ingredients)
-        {
-            if (ingredient.IngredientName == name)
-            {
-                return ingredient;
-            }
-        }
-
-        return null;
-    }
-
-    #endregion
 }

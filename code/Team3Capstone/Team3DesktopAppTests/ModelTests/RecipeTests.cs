@@ -1,24 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Team3DesktopApp.Model;
+﻿using Team3DesktopApp.Model;
 
-namespace Team3DesktopAppTests.ModelTests
+namespace Team3DesktopAppTests.ModelTests;
+
+[TestClass]
+public class RecipeTests
 {
-    [TestClass]
-    public class RecipeTests
+    #region Methods
+
+    [TestMethod]
+    public void CreateRecipe()
     {
-        [TestMethod]
-        public void CreateRecipe()
-        {
-            Recipe testRecipe = new Recipe();
-            testRecipe.Id = 1;
-            testRecipe.Title = "Test";
-            Assert.IsNotNull(testRecipe);
-            Assert.AreEqual(1, testRecipe.Id);
-            Assert.AreEqual("Test", testRecipe.Title);
-        }
+        var testRecipe = new Recipe();
+        testRecipe.Id = 1;
+        testRecipe.ApiId = 1;
+        testRecipe.Title = "Test";
+        testRecipe.Image = "test";
+        testRecipe.ImageType = "test";
+        Assert.IsNotNull(testRecipe);
+        Assert.AreEqual(1, testRecipe.Id);
+        Assert.AreEqual(1, testRecipe.ApiId);
+        Assert.AreEqual("Test", testRecipe.Title);
+        Assert.AreEqual("test", testRecipe.Image);
+        Assert.AreEqual("test", testRecipe.ImageType);
     }
+
+    #endregion
 }

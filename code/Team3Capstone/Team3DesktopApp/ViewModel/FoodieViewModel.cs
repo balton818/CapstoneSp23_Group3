@@ -122,7 +122,6 @@ public class FoodieViewModel
     public async Task<int> RegisterUser(string username, string password, string email, string firstName,
         string lastName)
     {
-
         return await this.registrationViewModel.RegisterAsync(username, password, email, firstName, lastName,
             this.ClientToSet);
     }
@@ -182,7 +181,7 @@ public class FoodieViewModel
     /// <param name="day">The day the recipe exists on.</param>
     /// <param name="type">The type of meal the recipe is.</param>
     /// <returns>
-    ///   the recipe info for the given plan
+    ///     the recipe info for the given plan
     /// </returns>
     public async Task<RecipeInformation> RecipeDetailNavPlan(DayOfWeek day, MealType type)
     {
@@ -263,7 +262,6 @@ public class FoodieViewModel
     /// </returns>
     public ImageSource? GetRecipeImage()
     {
-
         return this.recipeDetailViewModel.RecipeInfo!.Image;
     }
 
@@ -422,19 +420,18 @@ public class FoodieViewModel
     /// <param name="currentWeek">if set to <c>true</c> [current week] else next week.</param>
     /// <param name="dayOfWeek">The day of week to get the meals for.</param>
     /// <returns>
-    ///   a dictionary of meal types and recipe titles.
+    ///     a dictionary of meal types and recipe titles.
     /// </returns>
     public Dictionary<MealType, string?> GetMealPlan(bool currentWeek, DayOfWeek dayOfWeek)
     {
         var mealTitles = new Dictionary<MealType, string?>();
-        List<Meal?> meals = this.mealPlanViewModel.GetMealForDay(dayOfWeek, currentWeek);
+        var meals = this.mealPlanViewModel.GetMealForDay(dayOfWeek, currentWeek);
 
         mealTitles.Add(MealType.Breakfast, "");
         mealTitles.Add(MealType.Lunch, "");
         mealTitles.Add(MealType.Dinner, "");
 
-
-        foreach (Meal? meal in meals)
+        foreach (var meal in meals)
         {
             if (meal!.Recipe != null)
             {
@@ -442,27 +439,24 @@ public class FoodieViewModel
             }
         }
 
-
         return mealTitles;
     }
 
-
     /// <summary>Gets the current week bool.</summary>
     /// <returns>
-    ///   true if user has current week selected, false otherwise
+    ///     true if user has current week selected, false otherwise
     /// </returns>
     public bool GetCurrentWeek()
     {
         return this.mealPlanViewModel.CurrentWeek;
     }
 
-    #endregion
-
     /// <summary>Adds recipe to meal plan.</summary>
     /// <param name="current">indicates if the current week is selected.</param>
     public void AddToMealPlan(bool? current)
     {
-        this.mealPlanViewModel.AddToPlan(this.recipeDetailViewModel.CurrentRecipe!, this.PlanTypeAndDateToAdd!.Item1, this.PlanTypeAndDateToAdd.Item2, this.ClientToSet, current);
+        this.mealPlanViewModel.AddToPlan(this.recipeDetailViewModel.CurrentRecipe!, this.PlanTypeAndDateToAdd!.Item1,
+            this.PlanTypeAndDateToAdd.Item2, this.ClientToSet, current);
     }
 
     /// <summary>Removes the meal from plan.</summary>
@@ -477,7 +471,7 @@ public class FoodieViewModel
     /// <summary>Gets the date range for the current week.</summary>
     /// <param name="currentWeek">if set to <c>true</c> [current week] false next week.</param>
     /// <returns>
-    ///   the sunday-saturday date range
+    ///     the sunday-saturday date range
     /// </returns>
     public DateOnly GetPlanDate(bool currentWeek)
     {
@@ -489,7 +483,7 @@ public class FoodieViewModel
     /// <param name="day">The day.</param>
     /// <param name="current">if set to <c>true</c> [current].</param>
     /// <returns>
-    ///   true if a recipe exists for the given info false otherwise
+    ///     true if a recipe exists for the given info false otherwise
     /// </returns>
     public bool MealPlanContainsRecipe(MealType mealType, DayOfWeek day, bool current)
     {
@@ -510,7 +504,7 @@ public class FoodieViewModel
 
     /// <summary>Gets the cuisine types from the data base to filter with.</summary>
     /// <returns>
-    ///   a collection of cuisine types
+    ///     a collection of cuisine types
     /// </returns>
     public List<string>? GetCuisineTypes()
     {
@@ -521,4 +515,6 @@ public class FoodieViewModel
         cuisineTypes.Add("");
         return cuisineTypes;
     }
+
+    #endregion
 }

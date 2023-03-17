@@ -3,6 +3,7 @@ using System.Windows;
 using Team3DesktopApp.ViewModel;
 
 namespace Team3DesktopApp.View;
+
 /// <summary>
 ///     Interaction logic for RecipeDetailPage.xaml
 /// </summary>
@@ -45,15 +46,13 @@ public partial class RecipeDetailPage
         }
     }
 
-    #endregion
-
     private void addToPlan_OnClick(object sender, RoutedEventArgs e)
     {
         this.addToPlanePanel.Visibility = Visibility.Visible;
         if (this.ViewModel != null && this.ViewModel.PlanTypeAndDateToAdd != null)
         {
-            this.addPanel.SetOptions(this.ViewModel.GetCurrentWeek(), this.ViewModel.PlanTypeAndDateToAdd.Item1, this.ViewModel.PlanTypeAndDateToAdd.Item2);
-
+            this.addPanel.SetOptions(this.ViewModel.GetCurrentWeek(), this.ViewModel.PlanTypeAndDateToAdd.Item1,
+                this.ViewModel.PlanTypeAndDateToAdd.Item2);
         }
     }
 
@@ -64,4 +63,6 @@ public partial class RecipeDetailPage
             NavigationService.GoBack();
         }
     }
+
+    #endregion
 }

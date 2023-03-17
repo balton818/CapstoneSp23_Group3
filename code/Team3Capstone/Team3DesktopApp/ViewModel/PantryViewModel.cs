@@ -101,11 +101,10 @@ public class PantryViewModel
     /// <param name="quantity">The quantity being removed.</param>
     /// <param name="client">The client used to connect to the backend.</param>
     /// <returns>
-    ///   true if the ingredient was removed successfully false otherwise
+    ///     true if the ingredient was removed successfully false otherwise
     /// </returns>
     public Task<bool> RemoveIngredient(string? name, int quantity, HttpClient client)
     {
-
         var pantryItem = this.getItem(name);
         pantryItem.Quantity = quantity;
         var connection = new HttpClientConnection();

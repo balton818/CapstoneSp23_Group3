@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Windows;
 using System.Windows.Controls;
 using Team3DesktopApp.Model;
@@ -9,6 +10,7 @@ namespace Team3DesktopApp.View;
 /// <summary>
 ///     Interaction logic for MealPlanExpander.xaml
 /// </summary>
+[ExcludeFromCodeCoverage]
 public partial class MealPlanExpander
 {
     #region Properties
@@ -174,7 +176,6 @@ public partial class MealPlanExpander
 
     private void removeMealClick(object sender, RoutedEventArgs e)
     {
-
         if (sender.Equals(this.breakfastRemoveButton))
         {
             this.removalRoutine(MealType.Breakfast, this.BreakfastName!);
@@ -182,9 +183,7 @@ public partial class MealPlanExpander
 
         else if (sender.Equals(this.removeLunchButton))
         {
-
             this.removalRoutine(MealType.Lunch, this.LunchName!);
-
         }
 
         else if (sender.Equals(this.removeDinnerButton))

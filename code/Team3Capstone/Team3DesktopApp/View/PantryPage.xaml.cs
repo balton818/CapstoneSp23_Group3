@@ -4,16 +4,13 @@ using System.Windows;
 using Team3DesktopApp.ViewModel;
 
 namespace Team3DesktopApp.View;
+
 /// <summary>
 ///     Interaction logic for PantryPage.xaml
 /// </summary>
 [ExcludeFromCodeCoverage]
 public partial class PantryPage
 {
-    #region Data members
-
-    #endregion
-
     #region Properties
 
     /// <summary>Gets or sets the view model.</summary>
@@ -40,15 +37,18 @@ public partial class PantryPage
     #region Methods
 
     /// <summary>
-    /// Handles the OnClick event of the AddIngredientButton control.
-    ///    Adds an ingredient to the pantry.</summary>
+    ///     Handles the OnClick event of the AddIngredientButton control.
+    ///     Adds an ingredient to the pantry.
+    /// </summary>
     /// <param name="sender">The source of the event.</param>
     /// <param name="e">The <see cref="RoutedEventArgs" /> instance containing the event data.</param>
     private async void AddIngredientButton_OnClick(object sender, RoutedEventArgs e)
     {
         if (!string.IsNullOrEmpty(this.ingredientNameTextBox.Text) && !string.IsNullOrEmpty(this.quantityTextBox.Text))
         {
-            if (MessageBox.Show("Confirm addition of " + this.ingredientNameTextBox.Text + " " + this.quantityTextBox.Text + " " + this.measurementCombo.Text + "?",
+            if (MessageBox.Show(
+                    "Confirm addition of " + this.ingredientNameTextBox.Text + " " + this.quantityTextBox.Text + " " +
+                    this.measurementCombo.Text + "?",
                     "Ingredient Addition",
                     MessageBoxButton.YesNo,
                     MessageBoxImage.Question) == MessageBoxResult.Yes)
@@ -65,7 +65,6 @@ public partial class PantryPage
                 this.ingredientNameTextBox.Text = "";
                 this.quantityTextBox.Text = "";
             }
-
         }
         else
         {
@@ -81,12 +80,12 @@ public partial class PantryPage
             var currentContents = this.ViewModel.GetPantry().Result;
             foreach (var current in currentContents)
             {
-                var ingredientExpander = new IngredientExpander(current.IngredientName, current.Quantity, current.UnitId.ToString(), this.ViewModel);
+                var ingredientExpander = new IngredientExpander(current.IngredientName, current.Quantity,
+                    current.UnitId.ToString(), this.ViewModel);
                 ingredientExpander.Current = this;
                 pantry.Add(ingredientExpander);
             }
         }
-
 
         this.pantryListBox.ItemsSource = pantry;
     }

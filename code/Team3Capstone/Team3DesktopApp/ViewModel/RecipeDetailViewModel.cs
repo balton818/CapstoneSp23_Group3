@@ -6,7 +6,7 @@ using Team3DesktopApp.Model;
 namespace Team3DesktopApp.ViewModel;
 
 /// <summary>
-///   the view model for the recipe detail page
+///     the view model for the recipe detail page
 /// </summary>
 public class RecipeDetailViewModel
 {
@@ -31,7 +31,6 @@ public class RecipeDetailViewModel
     {
         var connection = new HttpClientConnection();
         this.RecipeInfo = await connection.GetRecipeDetail(recipeId, client);
-
     }
 
     #endregion

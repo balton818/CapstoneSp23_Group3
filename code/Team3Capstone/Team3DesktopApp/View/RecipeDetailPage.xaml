@@ -186,7 +186,7 @@
                         ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding }" TextWrapping="Wrap" HorizontalAlignment="Left"/>
+                                <TextBlock Text="{Binding }" TextWrapping="Wrap" HorizontalAlignment="Left" />
 
                             </DataTemplate>
                         </ListBox.ItemTemplate>
@@ -204,7 +204,7 @@
                 <ListBox.ItemTemplate>
                     <DataTemplate>
 
-                        <TextBlock Text="{Binding }" TextWrapping="Wrap" HorizontalAlignment="Left"/>
+                        <TextBlock Text="{Binding }" TextWrapping="Wrap" HorizontalAlignment="Left" />
 
                     </DataTemplate>
                 </ListBox.ItemTemplate>
@@ -223,7 +223,8 @@
                     <Canvas.Resources />
                 </Canvas>
             </Grid>
-            <Image x:Name="recipeImage" HorizontalAlignment="Left" Height="149" VerticalAlignment="Top" Width="190" Canvas.Left="208" Canvas.Top="140"/>
+            <Image x:Name="recipeImage" HorizontalAlignment="Left" Height="149" VerticalAlignment="Top" Width="190"
+                   Canvas.Left="208" Canvas.Top="140" />
             <local:NavMenu
                 x:Name="navMenu"
                 Width="162"
@@ -232,10 +233,10 @@
                 Grid.ZIndex="1" Canvas.Left="297" />
         </Canvas>
         <Grid Grid.ZIndex="0" x:Name="addToPlanePanel" Visibility="Hidden">
-            <Grid.Background >
-                <SolidColorBrush Opacity="0.5" Color="#30323d"/>
+            <Grid.Background>
+                <SolidColorBrush Opacity="0.5" Color="#30323d" />
             </Grid.Background>
-            <local:AddToPlanPanel Grid.ZIndex="1" x:Name="addPanel" Margin="106,66,96,152"></local:AddToPlanPanel>
+            <local:AddToPlanPanel Grid.ZIndex="1" x:Name="addPanel" Margin="106,66,96,152" />
         </Grid>
     </Grid>
 </Page>
