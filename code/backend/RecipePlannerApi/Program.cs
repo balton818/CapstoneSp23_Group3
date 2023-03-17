@@ -1,4 +1,5 @@
-﻿using Org.OpenAPITools.Client;
+﻿using com.spoonacular;
+using Org.OpenAPITools.Client;
 using RecipePlannerApi.Api;
 using RecipePlannerApi.Api.Interface;
 using RecipePlannerApi.Dao;
@@ -22,6 +23,7 @@ namespace RecipePlannerApi
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            builder.Services.AddScoped<IRecipesApi, RecipesApi>();
 
             builder.Services.AddScoped<IUserDao, UserDao>();
             builder.Services.AddScoped<IPantryDao, PantryDao>();

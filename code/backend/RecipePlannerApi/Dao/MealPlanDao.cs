@@ -2,9 +2,11 @@
 using RecipePlannerApi.Dao.Dto;
 using RecipePlannerApi.Dao.Interface;
 using RecipePlannerApi.Model;
+using System.Diagnostics.CodeAnalysis;
 
 namespace RecipePlannerApi.Dao
 {
+    [ExcludeFromCodeCoverage]
     public class MealPlanDao : Dao, IMealPlanDao {
 
         public MealPlan CreateMealPlan(GetMealPlanRequest request) {

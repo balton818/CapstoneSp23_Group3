@@ -3,8 +3,6 @@ using Org.OpenAPITools.Client;
 using Org.OpenAPITools.Model;
 using RecipePlannerApi.Api.Interface;
 using RecipePlannerApi.Api.Requests;
-using RecipePlannerApi.Dao;
-using RecipePlannerApi.Dao.Request;
 using RecipePlannerApi.Model;
 
 namespace RecipePlannerApi.Api
@@ -12,12 +10,12 @@ namespace RecipePlannerApi.Api
     /// <summary>Wrapper class for the spoonacular api</summary>
     public class RecipeApi: IRecipeApi
     {
-        private readonly RecipesApi recipesApi;
+        private readonly IRecipesApi api;
 
         /// <summary>Initializes the <see cref="RecipeApi" /> class.</summary>
-        public RecipeApi()
+        public RecipeApi(IRecipesApi api)
         {
-            this.recipesApi = new RecipesApi();
+            this.api = api;
         }
 
 
@@ -29,7 +27,7 @@ namespace RecipePlannerApi.Api
         /// </returns>
         public List<SearchRecipesByIngredients200ResponseInner> SearchRecipesByIngredients(SearchRecipesByIngredientsRequest request)
         {
-            return recipesApi.SearchRecipesByIngredients(request.ingredients, request.number, request.limitLicense, request.ranking, request.ignorePantry);
+            return api.SearchRecipesByIngredients(request.ingredients, request.number, request.limitLicense, request.ranking, request.ignorePantry);
         }
 
 
@@ -40,7 +38,7 @@ namespace RecipePlannerApi.Api
         /// </returns>
         public RecipeInformation GetRecipeInformation(int recipeId)
         {
-            var info = recipesApi.GetRecipeInformation(recipeId, false);
+            var info = api.GetRecipeInformation(recipeId, false);
             var ingredients = new List<Ingredient>();
             var instructions = GetRecipeInstructions(recipeId);
             foreach (var item in info?.ExtendedIngredients)
@@ -72,7 +70,7 @@ namespace RecipePlannerApi.Api
         /// </returns>
         public List<RecipesStep> GetRecipeInstructions(int recipeId)
         {
-            var analyzedInsturctions = recipesApi.GetAnalyzedRecipeInstructions(recipeId, false).FirstOrDefault();
+            var analyzedInsturctions = api.GetAnalyzedRecipeInstructions(recipeId, false).FirstOrDefault();
             var instructions = new List<RecipesStep>();
             if (analyzedInsturctions != null)
             {
@@ -101,7 +99,7 @@ namespace RecipePlannerApi.Api
                 number = perPage
             };
 
-            var response = recipesApi.SearchRecipes(searchRequest);
+            var response = api.SearchRecipes(searchRequest);
             var recipes = new List<Recipe>();
 
             foreach (var item in response.Results) {
@@ -121,7 +119,7 @@ namespace RecipePlannerApi.Api
         }
 
         public decimal? ConvertAmount(ConvertAmountRequest request) {
-            var response = this.recipesApi.ConvertAmounts(request.IngredientName, request.SourceAmount, request.SourceUnit, request.TargetUnit);
+            var response = this.api.ConvertAmounts(request.IngredientName, request.SourceAmount, request.SourceUnit, request.TargetUnit);
 
             return response.TargetAmount;
         }

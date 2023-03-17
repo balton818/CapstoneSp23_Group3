@@ -1,7 +1,9 @@
 ﻿using RecipePlannerApi.Model;
+using System.Diagnostics.CodeAnalysis;
 
 namespace RecipePlannerApi.Dao.Dto
 {
+    [ExcludeFromCodeCoverage]
     public class MealDto
     {
         public int? MealId { get; set; }
