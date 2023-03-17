@@ -8,37 +8,44 @@ namespace RecipePlannerApi.Service
         private readonly IUserDao _userDao;
         private readonly IPantryDao _pantryDao;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UserService"/> class.
+        /// </summary>
+        /// <param name="userDao">The user DAO.</param>
+        /// <param name="pantryDao">The pantry DAO.</param>
         public UserService(IUserDao userDao, IPantryDao pantryDao) {
             this._userDao = userDao;
             this._pantryDao = pantryDao;
         }
 
-        /// <summary>Validates the user.</summary>
-        /// <param name="user">The user.</param>
-        /// <returns>
-        ///   <br />
-        /// </returns>
+        /// <summary>
+        /// Validates the user.
+        /// </summary>
+        /// <param name="username">The username.</param>
+        /// <param name="password">The password.</param>
+        /// <returns><br /></returns>
         public int? ValidateUser(string username, string password) {
             return this._userDao.ValidateUser(username, password)?.Id;
         }
 
-        /// <summary>Creates the user.</summary>
+        /// <summary>
+        /// Creates the user.
+        /// </summary>
         /// <param name="user">The user.</param>
-        /// <returns>
-        ///   <br />
-        /// </returns>
+        /// <returns><br /></returns>
         public int? CreateUser(User user) {
             return this._userDao.CreateUser(user);
         }
 
 
-        /// <summary>Adds the pantry item.</summary>
+        /// <summary>
+        /// Adds the pantry item.
+        /// </summary>
         /// <param name="item">The item.</param>
         /// <returns>The added pantry item</returns>
         /// <exception cref="System.ArgumentNullException">pantry item cannot be null</exception>
-        /// <exception cref="System.ArgumentException">ingredient name cannot be null or empty and must be less than or equal to 20 characters
-        /// or
-        /// user id cannot be null</exception>
+        /// <exception cref="System.ArgumentException">ingredient name cannot be null or empty and must be less than or equal to 40 characters</exception>
+        /// <exception cref="System.ArgumentException">user id cannot be null or zero</exception>
         public PantryItem AddPantryItem(PantryItem item) {
             if(item == null) {
                 throw new ArgumentNullException("pantry item cannot be null");
@@ -56,9 +63,12 @@ namespace RecipePlannerApi.Service
         }
 
 
-        /// <summary>Gets the user pantry.</summary>
+        /// <summary>
+        /// Gets the user pantry.
+        /// </summary>
         /// <param name="userId">The user identifier.</param>
         /// <returns>The pantry for the user</returns>
+        /// <exception cref="System.ArgumentException">user id cannot be less than 1</exception>
         public List<PantryItem> GetUserPantry(int userId) {
             if (userId <= 0) {
                 throw new ArgumentException("user id cannot be less than 1");
@@ -68,12 +78,14 @@ namespace RecipePlannerApi.Service
         }
 
 
-        /// <summary>Updates the pantry item.</summary>
+        /// <summary>
+        /// Updates the pantry item.
+        /// </summary>
         /// <param name="item">The item.</param>
         /// <returns>The updated pantry item</returns>
-        /// <exception cref="System.ArgumentException">ingredient name cannot be null or empty and must be less than or equal to 20 characters
-        /// or
-        /// pantry id cannot be null</exception>
+        /// <exception cref="System.ArgumentNullException">pantry item cannot be null</exception>
+        /// <exception cref="System.ArgumentException">ingredient name cannot be null or empty and must be less than or equal to 20 characters</exception>
+        /// <exception cref="System.ArgumentException">pantry id cannot be null</exception>
         public PantryItem UpdatePantryItem(PantryItem item) {
             if (item == null) {
                 throw new ArgumentNullException("pantry item cannot be null");
@@ -91,8 +103,11 @@ namespace RecipePlannerApi.Service
         }
 
 
-        /// <summary>Removes the pantry item.</summary>
+        /// <summary>
+        /// Removes the pantry item.
+        /// </summary>
         /// <param name="pantryId">The pantry identifier.</param>
+        /// <exception cref="System.ArgumentException">pantry id cannot be less than 1</exception>
         public void RemovePantryItem(int pantryId) {
             if (pantryId <= 0) {
                 throw new ArgumentException("pantry id cannot be less than 1");

@@ -12,6 +12,12 @@ namespace RecipePlannerApi.Dao {
     [ExcludeFromCodeCoverage]
     public abstract class Dao {
         public delegate void CommandUpdate(SqlCommand cmd);
+
+        /// <summary>Executes the specified stored proc.</summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="storedProc">The stored proc.</param>
+        /// <param name="updateCmd">The update command.</param>
+        /// <returns>List&lt;T&gt;.</returns>
         public List<T> execute<T>(string storedProc, CommandUpdate updateCmd) {
 
             var mapper = new MapperConfiguration(config => {
