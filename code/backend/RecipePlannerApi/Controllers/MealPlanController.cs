@@ -25,7 +25,7 @@ namespace RecipePlannerApi.Controllers {
         }
 
         [HttpGet("add-meal")]
-        public ActionResult<MealPlan> AddMeal([FromQuery] Meal meal) {
+        public ActionResult<Meal> AddMeal([FromQuery] Meal meal) {
             try {
                 return Ok(this.mealPlanService.AddMeal(meal));
             } catch (Exception e) {
@@ -55,7 +55,7 @@ namespace RecipePlannerApi.Controllers {
         }
 
         [HttpGet("update-meal")]
-        public ActionResult<MealPlan> UpdateMeal([FromQuery] Meal meal) {
+        public ActionResult<Meal> UpdateMeal([FromQuery] Meal meal) {
             try {
                 return Ok(this.mealPlanService.UpdateMeal(meal));
             } catch (Exception e) {
@@ -65,7 +65,7 @@ namespace RecipePlannerApi.Controllers {
         }
 
         [HttpGet("remove-meal")]
-        public ActionResult<MealPlan> RemoveMeal([FromQuery] int mealId) {
+        public ActionResult RemoveMeal([FromQuery] int mealId) {
             try {
                 this.mealPlanService.RemoveMeal(mealId);
                 return Ok();

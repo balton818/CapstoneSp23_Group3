@@ -7,6 +7,9 @@ using UnitsNet.Units;
 namespace RecipePlannerApi.Service
 {
     public class MeasurementService: IMeasurementService {
+        /// <summary>
+        /// The dictionary to convert AppUnit into UnitInfo
+        /// </summary>
         public static readonly Dictionary<AppUnit, UnitInfo> AppUnitUnitInfo = new Dictionary<AppUnit, UnitInfo>() {
             { AppUnit.MILLILITERS,  Quantity.GetUnitInfo(VolumeUnit.Milliliter) },
             { AppUnit.GRAMS,  Quantity.GetUnitInfo(MassUnit.Gram) },
@@ -21,6 +24,13 @@ namespace RecipePlannerApi.Service
             { AppUnit.FLUID_OUNCES, Volume.Info}
         };
 
+        /// <summary>
+        /// Converts the specified quantity to the specified unit.
+        /// </summary>
+        /// <param name="quantity">The quantity.</param>
+        /// <param name="fromUnit">From unit.</param>
+        /// <param name="toUnit">To unit.</param>
+        /// <returns>System.Nullable&lt;System.Int32&gt;.</returns>
         public int? Convert(decimal quantity, string fromUnit, AppUnit toUnit) {
             if (!AppUnitUnitInfo.ContainsKey(toUnit)) {
                 return null;
@@ -39,6 +49,11 @@ namespace RecipePlannerApi.Service
             }
         }
 
+        /// <summary>
+        /// Determines whether the specified unit is valid unit.
+        /// </summary>
+        /// <param name="unit">The unit.</param>
+        /// <returns><c>true</c> if the specified unit is valid unit; otherwise, <c>false</c>.</returns>
         public bool IsValidUnit(string unit) {
             double result;
             return UnitConverter.TryConvertByName(1, "Mass", unit, AppUnitUnitInfo[AppUnit.GRAMS].Name, out result)

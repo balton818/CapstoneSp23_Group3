@@ -5,10 +5,12 @@ namespace RecipePlannerApi.Model {
     [ExcludeFromCodeCoverage]
     public class Recipe {
 
-        /// <summary>Gets or sets the identifier for recipe.</summary>
+        /// <summary>Gets or sets the identifier for recipe in the database.</summary>
         /// <value>The identifier.</value>
         public int? RecipeId { get; set; }
 
+        /// <summary>Gets or sets the API identifier for Spoonacular api.</summary>
+        /// <value>The API identifier.</value>
         public int? ApiId { get; set; }
 
         /// <summary>Gets or sets the title.</summary>

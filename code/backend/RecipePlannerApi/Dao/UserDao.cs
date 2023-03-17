@@ -10,6 +10,12 @@ namespace RecipePlannerApi.Dao
     [ExcludeFromCodeCoverage]
     public class UserDao: Dao, IUserDao {
 
+        /// <summary>
+        /// Validates the user's username and password.
+        /// </summary>
+        /// <param name="username">The username.</param>
+        /// <param name="password">The password.</param>
+        /// <returns>IdDto the user's id.</returns>
         public IdDto ValidateUser(string username, string password) {
             CommandUpdate cmd = c => {
                 c.CommandType = CommandType.StoredProcedure;
@@ -20,6 +26,11 @@ namespace RecipePlannerApi.Dao
             return execute<IdDto>("dbo.validate_user", cmd).FirstOrDefault();
         }
 
+        /// <summary>
+        /// Creates a new user.
+        /// </summary>
+        /// <param name="user">The user.</param>
+        /// <returns>System.Nullable&lt;System.Int32&gt; The user's id.</returns>
         public int? CreateUser(User user) {
             CommandUpdate cmd = c => {
                 c.CommandType = CommandType.StoredProcedure;
