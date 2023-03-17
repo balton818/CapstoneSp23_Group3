@@ -1,11 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Team3BlazorWebApp.Pages
 {
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     [IgnoreAntiforgeryToken]
+    [ExcludeFromCodeCoverage]
     public class ErrorModel : PageModel
     {
         public string? RequestId { get; set; }
