@@ -1,7 +1,7 @@
 ﻿namespace Team3DesktopApp.Model;
 
 /// <summary>
-/// Defines a single recipe step
+///     Defines a single recipe step
 /// </summary>
 public class RecipeStep
 {
@@ -13,7 +13,7 @@ public class RecipeStep
     /// <value>
     ///     The step number.
     /// </value>
-    public int stepNumber { get; set; }
+    public int StepNumber { get; set; }
 
     /// <summary>
     ///     Gets or sets the instructions for the associated step.
@@ -21,7 +21,7 @@ public class RecipeStep
     /// <value>
     ///     The instructions for a step.
     /// </value>
-    public string instructions { get; set; }
+    public string? Instructions { get; set; }
 
     #endregion
 }

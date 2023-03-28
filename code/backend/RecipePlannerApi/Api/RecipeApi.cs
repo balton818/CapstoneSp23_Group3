@@ -86,6 +86,13 @@ namespace RecipePlannerApi.Api
             return instructions;
         }
 
+        /// <summary>Searches for the specified amount of recipes per page that match the filters in the request taking into account the ingredients the passed ingredients</summary>
+        /// <param name="request">The request to browse recipes.</param>
+        /// <param name="ingredients">The ingredients to inform what which recipes to bring back.</param>
+        /// <param name="perPage">The amount of recipes to return per page.</param>
+        /// <returns>
+        ///   <br />
+        /// </returns>
         public BrowseRecipeResponse BrowseRecipes(BrowseRecipeRequest request, string ingredients, int perPage) {
             var searchRequest = new SearchRecipeRequest() {
                 query = request.Query,
@@ -118,6 +125,9 @@ namespace RecipePlannerApi.Api
             };
         }
 
+        /// <summary>Converts measurement amounts with the Spoonacular api.</summary>
+        /// <param name="request">The request to convert measurement amounts.</param>
+        /// <returns>The conversion result if the is one</returns>
         public decimal? ConvertAmount(ConvertAmountRequest request) {
             var response = this.api.ConvertAmounts(request.IngredientName, request.SourceAmount, request.SourceUnit, request.TargetUnit);
 
