@@ -1,0 +1,32 @@
+Pantry Page Use Case Scenario (Mobile)
+
+Context - User has successfully logged in and clicked the My Pantry button from the Main Page
+
+Primary Flow
+1 - Current Pantry contents is displayed to user.
+2 - User selects ingredient 
+3 - User presses edit button to adjust quantity
+4 - User confirms adjustment and pantry is updated.
+
+
+Alternative Flow(s)
+ADD NEW INGREDIENT
+A2 - User selects add ingredient
+A3 - User enters new ingredient and quantity.
+A4 - User Selects Save 
+A5 - User confirms quantity and pantry is updated.
+
+CANCEL ADJUSTMENT/ADDITION
+A4 - User cancels quantity adjustment and no changes are made. 
+
+BACK
+A2 - User presses back button and returns to main page.
+
+INGREDIENT EXISTS
+B5 - User is informed that ingredient already exist at X quantity in their pantry.
+B6 - User is asked if they would like to adjust quantity of already existing ingredient.
+B7- User confirms changes and Pantry is updated.
+
+INGREDIENT EXISTS CANCEL
+A7 - User selects cancel and no updates are made
+A8 - User returns to add ingredient window
