@@ -1,7 +1,7 @@
 ﻿CREATE PROCEDURE [dbo].[update_meal]
 	@mealId INT,
 	@dayOfWeek INT,
-	@mealType NVARCHAR(50),
+	@mealType INT,
 	@apiId INT,
 	@title NVARCHAR(150),
 	@imageUrl NVARCHAR(150),

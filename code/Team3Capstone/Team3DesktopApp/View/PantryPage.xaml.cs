@@ -1,32 +1,21 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Navigation;
 using Team3DesktopApp.ViewModel;
 
 namespace Team3DesktopApp.View;
-[ExcludeFromCodeCoverage]
+
 /// <summary>
 ///     Interaction logic for PantryPage.xaml
 /// </summary>
-public partial class PantryPage : Page
+[ExcludeFromCodeCoverage]
+public partial class PantryPage
 {
-    #region Data members
-
-    private IngredientExpander? expander;
-    private int selectedQuantity;
-    private string selectedName;
-
-    #endregion
-
     #region Properties
 
     /// <summary>Gets or sets the view model.</summary>
     /// <value>The view model.</value>
-    public FoodieViewModel ViewModel { get; set; }
+    public FoodieViewModel? ViewModel { get; set; }
 
     #endregion
 
@@ -34,7 +23,7 @@ public partial class PantryPage : Page
 
     /// <summary>Initializes a new instance of the <see cref="PantryPage" /> class.</summary>
     /// <param name="viewModel">The view model.</param>
-    public PantryPage(FoodieViewModel viewModel)
+    public PantryPage(FoodieViewModel? viewModel)
     {
         this.InitializeComponent();
         this.ViewModel = viewModel;
@@ -47,8 +36,9 @@ public partial class PantryPage : Page
 
     #region Methods
 
-    /// <summary>Handles the OnClick event of the AddIngredientButton control.
-    ///    Adds an ingredient to the pantry.</summary>
+    /// <summary>
+    ///     Handles the OnClick event of the AddIngredientButton control.
+    ///     Adds an ingredient to the pantry.
     /// </summary>
     /// <param name="sender">The source of the event.</param>
     /// <param name="e">The <see cref="RoutedEventArgs" /> instance containing the event data.</param>
@@ -56,18 +46,25 @@ public partial class PantryPage : Page
     {
         if (!string.IsNullOrEmpty(this.ingredientNameTextBox.Text) && !string.IsNullOrEmpty(this.quantityTextBox.Text))
         {
-            if (MessageBox.Show("Confirm addition of " + this.ingredientNameTextBox.Text + " " + this.quantityTextBox.Text + " " + this.measurementCombo.Text + "?",
+            if (MessageBox.Show(
+                    "Confirm addition of " + this.ingredientNameTextBox.Text + " " + this.quantityTextBox.Text + " " +
+                    this.measurementCombo.Text + "?",
                     "Ingredient Addition",
                     MessageBoxButton.YesNo,
                     MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
-                await this.ViewModel.AddIngredient(this.ingredientNameTextBox.Text, int.Parse(this.quantityTextBox.Text), this.measurementCombo.Text);
+                var foodieViewModel = this.ViewModel;
+                if (foodieViewModel != null)
+                {
+                    await foodieViewModel.AddIngredient(this.ingredientNameTextBox.Text,
+                        int.Parse(this.quantityTextBox.Text), this.measurementCombo.Text);
+                }
+
                 this.buildView();
                 this.errorText.Visibility = Visibility.Hidden;
                 this.ingredientNameTextBox.Text = "";
                 this.quantityTextBox.Text = "";
             }
-
         }
         else
         {
@@ -78,12 +75,16 @@ public partial class PantryPage : Page
     private void buildView()
     {
         var pantry = new List<IngredientExpander>();
-        var currentContents = this.ViewModel.GetPantry().Result;
-        foreach (var current in currentContents)
+        if (this.ViewModel != null)
         {
-            var ingredientExpander = new IngredientExpander(current.IngredientName, current.Quantity, current.UnitId.ToString(), this.ViewModel);
-            ingredientExpander.current = this;
-            pantry.Add(ingredientExpander);
+            var currentContents = this.ViewModel.GetPantry().Result;
+            foreach (var current in currentContents)
+            {
+                var ingredientExpander = new IngredientExpander(current.IngredientName, current.Quantity,
+                    current.UnitId.ToString(), this.ViewModel);
+                ingredientExpander.Current = this;
+                pantry.Add(ingredientExpander);
+            }
         }
 
         this.pantryListBox.ItemsSource = pantry;

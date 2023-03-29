@@ -1,20 +1,20 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Windows;
-using System.Windows.Navigation;
 using Team3DesktopApp.ViewModel;
 
 namespace Team3DesktopApp.View;
-[ExcludeFromCodeCoverage]
+
 /// <summary>
-///     Interaction logic for LoginPage.xaml
+///     The login page view
 /// </summary>
+[ExcludeFromCodeCoverage]
 public partial class LoginPage
 {
     #region Properties
 
     /// <summary>Gets the view model.</summary>
     /// <value>The view model.</value>
-    private FoodieViewModel ViewModel { get; }
+    private FoodieViewModel? ViewModel { get; }
 
     #endregion
 
@@ -33,32 +33,33 @@ public partial class LoginPage
 
     private async void LoginButton_Click(object sender, RoutedEventArgs e)
     {
-        int id = await this.ViewModel.Login(this.userNameTextBox.Text, this.passwordTextBox.Text);
-        if (id >= 0)
+        var foodieViewModel = this.ViewModel;
+        if (foodieViewModel != null)
         {
-            if (NavigationService != null)
+            var id = await foodieViewModel.Login(this.userNameTextBox.Text, this.passwordTextBox.Text);
+            if (id >= 0)
             {
-                PageNavigation navigate = new PageNavigation(this.ViewModel);
-                navigate.NavigateToPage(this.loginButton.NavUri, NavigationService);
+                if (NavigationService != null)
+                {
+                    var navigate = new PageNavigation(foodieViewModel);
+                    navigate.NavigateToPage(this.loginButton.NavUri, NavigationService);
+                }
             }
-        }
-        else
-        {
-            this.errorMessage.Text = "Username or password is incorrect";
+            else
+            {
+                this.errorMessage.Text = "Username or password is incorrect";
+            }
         }
     }
 
     private void RegisterButton_Click(object sender, RoutedEventArgs e)
     {
-
         if (NavigationService != null)
         {
-            PageNavigation navigate = new PageNavigation(this.ViewModel);
+            var navigate = new PageNavigation(this.ViewModel);
             navigate.NavigateToPage(this.registerButton.NavUri, NavigationService);
         }
     }
-
-
 
     #endregion
 }

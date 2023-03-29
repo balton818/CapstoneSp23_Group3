@@ -1,21 +1,26 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Navigation;
 using Team3DesktopApp.ViewModel;
 
 namespace Team3DesktopApp.View;
-[ExcludeFromCodeCoverage]
+
 /// <summary>
 ///     Interaction logic for NavMenu.xaml
 ///     Custom control for hamburger navigation menu
 /// </summary>
-public partial class NavMenu : UserControl
+[ExcludeFromCodeCoverage]
+public partial class NavMenu
 {
     #region Properties
 
-    public FoodieViewModel FoodViewModel { get; set; }
-    public Page Current { get; set; }
+    /// <summary>Gets or sets the food view model.</summary>
+    /// <value>The main view model for the app.</value>
+    public FoodieViewModel? FoodViewModel { get; set; }
+
+    /// <summary>Gets or sets the current page displayed.</summary>
+    /// <value>The current page the nav menu exists on</value>
+    public Page? Current { get; set; }
 
     #endregion
 
@@ -34,10 +39,15 @@ public partial class NavMenu : UserControl
     private void NavButton_Click(object sender, RoutedEventArgs e)
     {
         var navButton = (NavButton)sender;
-        if (this.Current.NavigationService != null)
+        var current = this.Current;
+        if (current is { NavigationService: { } })
         {
-            PageNavigation navigate = new PageNavigation(this.FoodViewModel);
-            navigate.NavigateToPage(navButton.NavUri, this.Current.NavigationService);
+            var navigate = new PageNavigation(this.FoodViewModel);
+            var page = this.Current;
+            if (page is { NavigationService: { } })
+            {
+                navigate.NavigateToPage(navButton.NavUri, page.NavigationService);
+            }
         }
     }
 

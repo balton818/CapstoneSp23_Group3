@@ -5,7 +5,7 @@ using System.Windows.Controls;
 namespace Team3DesktopApp.View;
 
 /// <summary>
-/// Custom nav button to make wpf page navigation easier
+///     Custom nav button to make wpf page navigation easier
 /// </summary>
 /// <seealso cref="System.Windows.Controls.Button" />
 [ExcludeFromCodeCoverage]
