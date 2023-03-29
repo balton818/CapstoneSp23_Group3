@@ -65,4 +65,9 @@ public partial class RecipeDetailPage
     }
 
     #endregion
+
+    private void mealPrepared_OnClick(object sender, RoutedEventArgs e)
+    {
+        throw new System.NotImplementedException();
+    }
 }

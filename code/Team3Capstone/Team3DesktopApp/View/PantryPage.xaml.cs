@@ -46,12 +46,10 @@ public partial class PantryPage
     {
         if (!string.IsNullOrEmpty(this.ingredientNameTextBox.Text) && !string.IsNullOrEmpty(this.quantityTextBox.Text))
         {
-            if (MessageBox.Show(
+            if (StylizedMessageBox.ShowBox(
                     "Confirm addition of " + this.ingredientNameTextBox.Text + " " + this.quantityTextBox.Text + " " +
                     this.measurementCombo.Text + "?",
-                    "Ingredient Addition",
-                    MessageBoxButton.YesNo,
-                    MessageBoxImage.Question) == MessageBoxResult.Yes)
+                    "Ingredient Addition") == "1")
             {
                 var foodieViewModel = this.ViewModel;
                 if (foodieViewModel != null)
