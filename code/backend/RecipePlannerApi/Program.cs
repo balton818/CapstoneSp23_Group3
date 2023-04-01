@@ -30,12 +30,14 @@ namespace RecipePlannerApi
             builder.Services.AddScoped<IIngredientDao, IngredientDao>();
             builder.Services.AddScoped<IAppDao, AppDao>();
             builder.Services.AddScoped<IMealPlanDao, MealPlanDao>();
+            builder.Services.AddScoped<IShoppingListDao, ShoppingListDao>();
 
             builder.Services.AddScoped<IUserService, UserService>();
             builder.Services.AddScoped<IAppService, AppService>();
             builder.Services.AddScoped<IRecipeService, RecipeService>();
             builder.Services.AddScoped<IMeasurementService, MeasurementService>();
             builder.Services.AddScoped<IMealPlanService, MealPlanService>();
+            builder.Services.AddScoped<IShoppingListService, ShoppingListService>();
 
             builder.Services.AddScoped<IRecipeApi, RecipeApi>();
 
