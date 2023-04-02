@@ -87,14 +87,14 @@ namespace RecipePlannerApi.Service
             if (string.IsNullOrEmpty(unit)) {
                 return false;
             }
-            double result;
             unit = FormatUnit(unit);
             return CheckUnit(unit);
         }
 
         private string FormatUnit(string unit) {
             unit = unit.ToLower();
-            unit = unit.Last().Equals("s") ? unit[1..] : unit;
+            var isPlural = unit.Last().ToString().Equals("s");
+            unit = isPlural ? unit[..^1] : unit;
             return unit;
         }
 
