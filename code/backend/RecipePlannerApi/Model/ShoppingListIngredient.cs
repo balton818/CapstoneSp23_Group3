@@ -1,5 +1,5 @@
 ﻿namespace RecipePlannerApi.Model {
-    public class ShoppingListIngredient {
+    public class ShoppingListIngredient: Ingredient {
 
         /// <summary>Gets or sets the shopping list identifier.</summary>
         /// <value>The shopping list identifier.</value>
@@ -8,18 +8,6 @@
         /// <summary>Gets or sets the user identifier.</summary>
         /// <value>The user identifier.</value>
         public int UserId { get; set; }
-
-        /// <summary>
-        /// Gets or sets the name of the ingredient.
-        /// </summary>
-        /// <value>The name of the ingredient.</value>
-        public string IngredientName { get; set; }
-
-        /// <summary>
-        /// Gets or sets the quantity of ingredients.
-        /// </summary>
-        /// <value>The quantity.</value>
-        public int Quantity { get; set; }
 
         /// <summary>
         /// Gets or sets the quantity unit.

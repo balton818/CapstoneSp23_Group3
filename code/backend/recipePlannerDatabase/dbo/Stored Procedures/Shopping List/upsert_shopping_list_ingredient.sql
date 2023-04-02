@@ -2,6 +2,7 @@ CREATE PROCEDURE [dbo].[upsert_shopping_list_ingredient]
   @userId INT
   , @shoppingListId INT = NULL
   , @ingredientName NVARCHAR(40)
+  , @ingredientId INT = NULL
   , @quantity INT
   , @unitId INT
 AS
@@ -12,6 +13,7 @@ AS
       (
           [user_id]
           ,[ingredient_name]
+          ,[ingredient_id]
           ,[quantity]
           ,[unit_id]
       )
@@ -19,6 +21,7 @@ AS
       (
           @userId
           , @ingredientName
+          , @ingredientId
           , @quantity
           , @unitId
       )
@@ -28,6 +31,7 @@ AS
     UPDATE [dbo].[shopping_list] 
     SET
       [ingredient_name] = @ingredientName
+      ,[ingredient_id] = @ingredientId
       ,[quantity] = @quantity
       ,[unit_id] = @unitId
     WHERE shopping_list_id = @shoppingListId

@@ -91,8 +91,8 @@ namespace RecipePlannerApi.Service
                 throw new ArgumentNullException("pantry item cannot be null");
             }
 
-            if (item.IngredientName == null || item.IngredientName.Length == 0 || item.IngredientName.Length >= 20) {
-                throw new ArgumentException("ingredient name cannot be null or empty and must be less than or equal to 20 characters");
+            if (item.IngredientName == null || item.IngredientName.Length == 0 || item.IngredientName.Length >= 40) {
+                throw new ArgumentException("ingredient name cannot be null or empty and must be less than or equal to 40 characters");
             }
 
             if (item.PantryId == null) {
@@ -102,6 +102,21 @@ namespace RecipePlannerApi.Service
             return this._pantryDao.UpdatePantryItem(item);
         }
 
+        public List<PantryItem> UpdatePantryItems(List<PantryItem> items, int userId) {
+            if (items == null) {
+                throw new ArgumentNullException("items list cannot be null");
+            }
+
+            foreach (var item in items) {
+                if(item.PantryId == null) {
+                    AddPantryItem(item);
+                } else {
+                    UpdatePantryItem(item);
+                }
+            }
+
+            return GetUserPantry(userId);
+        }
 
         /// <summary>
         /// Removes the pantry item.

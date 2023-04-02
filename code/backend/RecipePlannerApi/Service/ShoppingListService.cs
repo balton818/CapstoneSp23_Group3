@@ -5,11 +5,9 @@ using RecipePlannerApi.Service.Interface;
 namespace RecipePlannerApi.Service
 {
     public class ShoppingListService : IShoppingListService {
-        private readonly IUserDao _userDao;
         private readonly IShoppingListDao _shoppingListDao;
 
-        public ShoppingListService(IUserDao userDao, IShoppingListDao shoppingListDao) {
-            _userDao = userDao;
+        public ShoppingListService(IShoppingListDao shoppingListDao) {
             _shoppingListDao = shoppingListDao;
         }
 
@@ -33,6 +31,35 @@ namespace RecipePlannerApi.Service
             }
 
             return _shoppingListDao.GetShoppingList(userId);
+        }
+
+        public List<ShoppingListIngredient> AddToShoppingList(List<ShoppingListIngredient> toAddList, int userId) {
+            var shoppingList = this.GetShoppingList(userId);
+            foreach (var ingredient in toAddList) {
+                var listIngredient = shoppingList.Find(i => i.IngredientId == ingredient.IngredientId || i.IngredientName == ingredient.IngredientName);
+                if(listIngredient != null) {
+                    ingredient.ShoppingListId = listIngredient.ShoppingListId;
+                    ingredient.Quantity += ingredient.Quantity;
+                }
+            }
+
+            toAddList = toAddList.Where(i => i.Quantity > 1).ToList();
+
+            foreach(var ingredient in toAddList) {
+                this.UpsertShoppingListIngredient(ingredient);
+            }
+
+            return this.GetShoppingList(userId);
+        }
+
+        public void DeleteAllFromShoppingList(List<ShoppingListIngredient> ingredients) {
+            foreach (var ingredient in ingredients) {
+                if(ingredient.ShoppingListId == null) {
+                    continue;
+                }
+
+                this.DeleteShoppingListIngredient(ingredient.ShoppingListId.Value);
+            }
         }
     }
 }
