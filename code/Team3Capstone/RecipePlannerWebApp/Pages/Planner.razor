@@ -6,6 +6,7 @@
 @using RecipePlannerApi.Api;
 @using RecipePlannerApi.Api.Requests;
 @using RecipePlannerWebApp.LocalServices;
+@using RecipePlannerWebApp.Components;
 @inject NavigationManager Nav;
 @inject UserSessionData currentUserData;
 
@@ -24,6 +25,7 @@
             <text>Week 2</text>
         </InputRadioGroup>
         <button type="submit" @onclick="setPlanWeek">Show Plan</button>
+        <button type="submit" @onclick="goToGroceryList">View Grocery List</button>
     </div>
     <div class="main-area">
         <span>Showing meal plan starting on @this.determineDateRange().</span>
@@ -77,5 +79,10 @@
         DateTime date = this.plan.MealPlanDate.Value;
         string range = date.Month + "/" + date.Day + "/" + date.Year;
         return range;
+    }
+
+    private void goToGroceryList()
+    {
+        Nav.NavigateTo("/groceries");
     }
 }

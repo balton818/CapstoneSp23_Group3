@@ -1,5 +1,6 @@
 ﻿@page "/recipes"
 @layout MainLayout
+@using RecipePlannerApi.Api.Interface;
 @using RecipePlannerApi.Service;
 @using RecipePlannerApi.Model;
 @using RecipePlannerApi.Api;
@@ -32,7 +33,7 @@
     private string[] mealTypeFilters { get; set; } = new[] { "", "appetizer", "beverage", "bread", "breakfast", "dessert",
         "drink", "fingerfood", "main course", "marinade", "salad", "sauce", "side dish", "snack", "soup" };
     private string mealTypeFilterSelection = "";
-    private RecipeService service { get; set; } = new RecipeService(new UserService(new UserDao(), new PantryDao()), new IngredientDao(), new RecipeApi(), new MeasurementService());
+    private RecipeService service { get; set; } = new RecipeService(new UserService(new UserDao(), new PantryDao()), new IngredientDao(), new RecipeApi(new com.spoonacular.RecipesApi()), new MeasurementService());
 
     /**
      * Handles initialization of the Recipes component

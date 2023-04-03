@@ -1,0 +1,34 @@
+﻿@page "/groceries"
+@layout MainLayout
+@using RecipePlannerApi.Service;
+@using RecipePlannerApi.Model;
+@using RecipePlannerApi.Dao;
+@using RecipePlannerApi.Api;
+@inject IJSRuntime JsRuntime;
+@inject NavigationManager Nav;
+@using RecipePlannerWebApp.LocalServices;
+@inject UserSessionData currentUserData;
+
+<PageTitle>foodie - groceries</PageTitle>
+<div class="split right">
+    <div class="header">
+        <span>planner</span>
+        <hr style="height: 2px; opacity: 100%" />
+    </div>
+    <div class="controls">
+        <button onclick="goBack">&#8672 Back</button>
+    </div>
+</div>
+
+
+@code {
+    /**
+     * Handles page navigation back to either the Explore page or
+     * the Recipes page, depending on which page generated the
+     * request for the detail view initially
+     */
+    private void goBack()
+    {
+        Nav.NavigateTo("/planner");
+    }
+}

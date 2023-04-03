@@ -22,22 +22,3 @@
     width: 75%;
     background-color: #d6ccc2;
 }
-
-/* If you want the content centered horizontally and vertically */
-.centered {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-}
-
-.recipe-area {
-    overflow-y: auto;
-    margin-left: 60px;
-    bottom: 0;
-    height: 60%;
-    overflow-wrap: break-word;
-    word-break: break-word;
-    padding-right: 5%;
-}
