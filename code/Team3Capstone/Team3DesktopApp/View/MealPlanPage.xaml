@@ -96,9 +96,9 @@
                 </Canvas>
                 <local:NavButton
                     x:Name="nextWeekButton"
-                    Canvas.Left="114"
-                    Canvas.Top="429"
-                    Width="218"
+                    Canvas.Left="17"
+                    Canvas.Top="423"
+                    Width="174"
                     Height="66"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Top"
@@ -109,6 +109,26 @@
                     FontSize="18"
                     ForceCursor="True"
                     NavUri="/View/BrowseRecipesPage.xaml">
+                    <local:NavButton.Resources>
+                        <Style TargetType="{x:Type Border}">
+                            <Setter Property="CornerRadius" Value="5" />
+                        </Style>
+                    </local:NavButton.Resources>
+
+                </local:NavButton>
+                <local:NavButton
+                    x:Name="viewGroceryListButton"
+                    Canvas.Left="226"
+                    Canvas.Top="422"
+                    Width="174"
+                    Height="66"
+                    Background="#FFD6CCC2"
+                    Click="groceryListClick"
+                    Content="View Grocery List"
+                    FontFamily="Song Myung"
+                    FontSize="18"
+                    ForceCursor="True"
+                    NavUri="Grocery" HorizontalAlignment="Left" VerticalAlignment="Top">
                     <local:NavButton.Resources>
                         <Style TargetType="{x:Type Border}">
                             <Setter Property="CornerRadius" Value="5" />
@@ -147,6 +167,6 @@
             Margin="308,7,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Grid.ZIndex="1" />
+            Grid.ZIndex="1" Height="268" />
     </Grid>
 </Page>

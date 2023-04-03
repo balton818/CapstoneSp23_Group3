@@ -457,5 +457,115 @@ public class HttpClientConnection
         return Task.FromResult<List<string>>(null);
     }
 
+    /// <summary>Gets the grocery list for the current user.</summary>
+    /// <param name="userId">The user identifier for the database.</param>
+    /// <param name="client">The client for the http connection.</param>
+    /// <returns>
+    ///     the users list of grocery items if successful null otherwise
+    /// </returns>
+    public Task<List<GroceryListItem>> GetGroceryList(int userId, HttpClient client)
+    {
+        var query = new Uri($"User/get-shopping-list/{userId}", UriKind.Relative);
+        Console.WriteLine(query);
+        var json = JsonConvert.SerializeObject(userId);
+        var data = new StringContent(json, Encoding.UTF8, "application/json");
+        var response = client.PostAsync(query, data);
+        Console.WriteLine(response);
+        if (response.Result.IsSuccessStatusCode)
+        {
+            var readTask = response.Result.Content.ReadAsStringAsync();
+            readTask.Wait();
+
+            var result = readTask.Result;
+            Console.WriteLine(result);
+            var groceryList = JsonConvert.DeserializeObject<List<GroceryListItem>>(result);
+            return Task.FromResult(groceryList)!;
+        }
+
+        return Task.FromResult<List<GroceryListItem>>(null!);
+    }
+
+    /// <summary>Adds the grocery item.</summary>
+    /// <param name="toAdd">The grocery item to add to the users pantry.</param>
+    /// <param name="client">The client used for the http connection.</param>
+    /// <returns>
+    ///     the added grocery item if successful, null otherwise
+    /// </returns>
+    public Task<GroceryListItem> AddGroceryItem(GroceryListItem toAdd, HttpClient client)
+    {
+        var query = new Uri("User/add-shopping-list-ingredient", UriKind.Relative);
+        var json = JsonConvert.SerializeObject(toAdd);
+
+        var data = new StringContent(json, Encoding.UTF8, "application/json");
+
+        var response = client.PostAsync(query, data);
+
+        Console.WriteLine(response.Result);
+        if (response.Result.IsSuccessStatusCode)
+        {
+            var readTask = response.Result.Content.ReadAsStringAsync();
+            readTask.Wait();
+
+            var result = readTask.Result;
+            return Task.FromResult(JsonConvert.DeserializeObject<GroceryListItem>(result))!;
+        }
+
+        return Task.FromResult<GroceryListItem>(null!);
+    }
+
+    /// <summary>Edits the grocery item.</summary>
+    /// <param name="toEdit">The grocery item being edited.</param>
+    /// <param name="client">The client to connect to the backend.</param>
+    /// <returns>
+    ///     the edited grocery item if successful, null otherwise
+    /// </returns>
+    public Task<GroceryListItem> EditGroceryItem(GroceryListItem toEdit, HttpClient client)
+    {
+        var query = new Uri("User/update-shopping-list-ingredient", UriKind.Relative);
+        var json = JsonConvert.SerializeObject(toEdit);
+
+        var data = new StringContent(json, Encoding.UTF8, "application/json");
+
+        var response = client.PostAsync(query, data);
+
+        Console.WriteLine(response.Result);
+        if (response.Result.IsSuccessStatusCode)
+        {
+            var readTask = response.Result.Content.ReadAsStringAsync();
+            readTask.Wait();
+
+            var result = readTask.Result;
+            return Task.FromResult(JsonConvert.DeserializeObject<GroceryListItem>(result))!;
+        }
+
+        return Task.FromResult<GroceryListItem>(null!);
+    }
+    /// <summary>Removes the grocery item from the users grocery list in the database.</summary>
+    /// <param name="toRemove">the grocery item to remove.</param>
+    /// <param name="client">The client for connecting.</param>
+    /// <returns>
+    ///     true if success false otherwise
+    /// </returns>
+    public Task<bool> RemoveGroceryItem(GroceryListItem toRemove, HttpClient client)
+    {
+        var groceryListId = toRemove.ShoppingListId;
+        var query = new Uri("User/remove-shopping-list-item/" + groceryListId, UriKind.Relative);
+        var json = JsonConvert.SerializeObject(toRemove);
+
+        var data = new StringContent(json, Encoding.UTF8, "application/json");
+
+        var response = client.PostAsync(query, data);
+
+        Console.WriteLine(response.Result);
+        if (response.Result.IsSuccessStatusCode)
+        {
+            var readTask = response.Result.Content.ReadAsStringAsync();
+            readTask.Wait();
+
+            return Task.FromResult(true);
+        }
+
+        return Task.FromResult(false);
+    }
     #endregion
 }

@@ -23,6 +23,7 @@ public class FoodieViewModel
     private readonly PantryViewModel pantryViewModel;
     private readonly BrowseRecipesViewModel browseRecipesViewModel;
     private readonly MealPlanViewModel mealPlanViewModel;
+    private readonly GroceryListViewModel groceryListViewModel;
 
     #endregion
 
@@ -58,6 +59,7 @@ public class FoodieViewModel
         this.pantryViewModel = new PantryViewModel();
         this.browseRecipesViewModel = new BrowseRecipesViewModel();
         this.mealPlanViewModel = new MealPlanViewModel();
+        this.groceryListViewModel = new GroceryListViewModel();
         this.ClientToSet = Client;
         this.mealPlanViewModel.GetMealPlans(this.Userid, this.ClientToSet).ConfigureAwait(true);
     }
@@ -517,4 +519,12 @@ public class FoodieViewModel
     }
 
     #endregion
+
+    public async Task<List<GroceryListItem>> GetGroceryList()
+    {
+        var groceryList = new List<GroceryListItem>();
+
+        groceryList.AddRange((await this.groceryListViewModel.GetGroceryList(this.Userid, this.ClientToSet))!);
+        return groceryList;
+    }
 }

@@ -251,7 +251,7 @@
                 Width="162"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Top"
-                Grid.ZIndex="1" Canvas.Left="297" Canvas.Top="10" />
+                Grid.ZIndex="1" Canvas.Left="297" Canvas.Top="10" Height="277" />
         </Canvas>
         <Grid Grid.ZIndex="0" x:Name="addToPlanePanel" Visibility="Hidden">
             <Grid.Background>

@@ -31,6 +31,9 @@ public partial class IngredientExpander
     /// <value>The current Page the expander exists on.</value>
     public Page? Current { get; set; }
 
+    public bool SelectedForPurchase { get; private set; }
+
+
     #endregion
 
     #region Constructors
@@ -52,7 +55,6 @@ public partial class IngredientExpander
     #endregion
 
     #region Methods
-
     private async void PlusButton_OnClick(object sender, RoutedEventArgs e)
     {
         this.IngredientAmount++;
