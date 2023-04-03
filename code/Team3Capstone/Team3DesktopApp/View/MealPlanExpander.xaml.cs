@@ -229,4 +229,9 @@ public partial class MealPlanExpander
     }
 
     #endregion
+
+    private void AddToGroceryClick(object sender, RoutedEventArgs e)
+    {
+        throw new NotImplementedException();
+    }
 }

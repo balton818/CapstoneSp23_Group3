@@ -135,9 +135,21 @@ public class FoodieViewModel
     /// <returns>
     ///     the added pantryItem or null if unsuccessful
     /// </returns>
-    public async Task<PantryItem> AddIngredient(string? name, int quantity, string unit)
+    public async Task<PantryItem> AddPantryIngredient(string? name, int quantity, string unit)
     {
         return await this.pantryViewModel.AddIngredient(this.Userid, name, quantity, this.ClientToSet, unit);
+    }
+
+    /// <summary>Adds an ingredient to the user's grocery list.</summary>
+    /// <param name="name">The name of the ingredient being added.</param>
+    /// <param name="quantity">The quantity being added</param>
+    /// <param name="unit">The unit of measurement for the quantity being added.</param>
+    /// <returns>
+    ///     the added pantryItem or null if unsuccessful
+    /// </returns>
+    public async Task<GroceryListItem> AddGroceryIngredient(string? name, int quantity, string unit)
+    {
+        return await this.groceryListViewModel.AddIngredient(this.Userid, name, quantity, this.ClientToSet, unit);
     }
 
     /// <summary>The logic to display the recipe details upon user navigation from the Found recipes page</summary>
@@ -200,9 +212,18 @@ public class FoodieViewModel
     /// <param name="ingredientName">Name of the ingredient.</param>
     /// <param name="ingredientAmount">The ingredient amount.</param>
     /// <returns> the edited item if successful null otherwise </returns>
-    public async Task<PantryItem> EditIngredient(string? ingredientName, int ingredientAmount)
+    public async Task<PantryItem> EditPantryIngredient(string? ingredientName, int ingredientAmount)
     {
         return await this.pantryViewModel.EditIngredientAmount(ingredientName, ingredientAmount, this.ClientToSet);
+    }
+
+    /// <summary>Edits the grocery ingredient in the users grocery list.</summary>
+    /// <param name="ingredientName">Name of the ingredient.</param>
+    /// <param name="ingredientAmount">The ingredient amount.</param>
+    /// <returns> the edited item if successful null otherwise </returns>
+    public async Task<GroceryListItem> EditGroceryIngredient(string? ingredientName, int ingredientAmount)
+    {
+        return await this.groceryListViewModel.EditIngredientAmount(ingredientName, ingredientAmount, this.ClientToSet);
     }
 
     /// <summary>Gets the recipe ingredients form the recipe information.</summary>
@@ -287,10 +308,19 @@ public class FoodieViewModel
     /// <returns>
     ///     true if successful false otherwise
     /// </returns>
-    public Task<bool> RemoveIngredient(string? ingredientName, int ingredientAmount)
+    public Task<bool> RemoveIngredient(string? ingredientName, int ingredientAmount, bool isPantry)
     {
-        return this.pantryViewModel.RemoveIngredient(ingredientName, ingredientAmount, this.ClientToSet);
+        if (isPantry)
+        {
+            return this.pantryViewModel.RemoveIngredient(ingredientName, ingredientAmount, this.ClientToSet);
+        }
+        else
+        {
+            return this.groceryListViewModel.RemoveIngredient(ingredientName, ingredientAmount, this.ClientToSet);
+        }
+
     }
+
 
     /// <summary>Gets a list of recipes agnostic of users pantry items.</summary>
     /// <returns>

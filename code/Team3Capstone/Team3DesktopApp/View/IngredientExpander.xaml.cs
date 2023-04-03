@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Windows;
 using System.Windows.Controls;
+using Castle.Components.DictionaryAdapter.Xml;
 using Team3DesktopApp.ViewModel;
 
 namespace Team3DesktopApp.View;
@@ -31,7 +32,9 @@ public partial class IngredientExpander
     /// <value>The current Page the expander exists on.</value>
     public Page? Current { get; set; }
 
-    public bool SelectedForPurchase { get; private set; }
+    public bool SelectedForPurchase { get; set; }
+
+    public bool IsGrocery { get; set; }
 
 
     #endregion
@@ -43,13 +46,15 @@ public partial class IngredientExpander
     /// <param name="amount">The amount of the ingredient.</param>
     /// <param name="measure"> The unit of measure for the ingredient</param>
     /// <param name="viewModel">The view model.</param>
-    public IngredientExpander(string? name, int amount, string measure, FoodieViewModel? viewModel)
+    public IngredientExpander(string? name, int amount, string measure, FoodieViewModel? viewModel, bool isGrocery)
     {
         this.InitializeComponent();
         this.IngredientName = name;
         this.IngredientAmount = amount;
         this.IngredientUnit = measure;
         this.ViewModel = viewModel;
+        this.IsGrocery = isGrocery;
+
     }
 
     #endregion
@@ -59,12 +64,29 @@ public partial class IngredientExpander
     {
         this.IngredientAmount++;
         var foodieViewModel = this.ViewModel;
-        if (foodieViewModel != null)
+        if (foodieViewModel != null && !this.IsGrocery)
         {
-            await foodieViewModel.EditIngredient(this.IngredientName, this.IngredientAmount);
+            await foodieViewModel.EditPantryIngredient(this.IngredientName, this.IngredientAmount);
+        }
+        else
+        {
+            await foodieViewModel.EditGroceryIngredient(this.IngredientName, this.IngredientAmount);
         }
 
-        this.navigateToPage("View/PantryPage.xaml");
+        this.expanderNavigation();
+
+    }
+
+    private void expanderNavigation()
+    {
+        if (!this.IsGrocery)
+        {
+            this.navigateToPage("View/PantryPage.xaml");
+        }
+        else
+        {
+            this.navigateToPage("Grocery");
+        }
     }
 
     private async void MinusButton_OnClick(object sender, RoutedEventArgs e)
@@ -73,12 +95,16 @@ public partial class IngredientExpander
         {
             this.IngredientAmount--;
             var foodieViewModel = this.ViewModel;
-            if (foodieViewModel != null)
+            if (foodieViewModel != null && !this.IsGrocery)
             {
-                await foodieViewModel.EditIngredient(this.IngredientName, this.IngredientAmount);
+                await foodieViewModel.EditPantryIngredient(this.IngredientName, this.IngredientAmount);
+            }
+            else
+            {
+                await foodieViewModel.EditGroceryIngredient(this.IngredientName, this.IngredientAmount);
             }
 
-            this.navigateToPage("View/PantryPage.xaml");
+            this.expanderNavigation();
         }
     }
 
@@ -91,8 +117,8 @@ public partial class IngredientExpander
         {
             if (this.ViewModel != null)
             {
-                this.ViewModel.RemoveIngredient(this.IngredientName, this.IngredientAmount);
-                this.navigateToPage("View/PantryPage.xaml");
+                this.ViewModel.RemoveIngredient(this.IngredientName, this.IngredientAmount, !this.IsGrocery);
+                this.expanderNavigation();
             }
         }
     }

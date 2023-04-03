@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Windows;
 using Team3DesktopApp.Model;
@@ -18,7 +19,7 @@ public partial class ExpanderListPage
     /// <value>The view model.</value>
     public FoodieViewModel? ViewModel { get; set; }
 
-    public bool IsPantry { get; set; } = true;
+    public bool IsGrocery { get; set; }
 
     private List<PantryItem> pantryList;
     private List<GroceryListItem> groceryList;
@@ -29,10 +30,11 @@ public partial class ExpanderListPage
 
     /// <summary>Initializes a new instance of the <see cref="PantryPage" /> class.</summary>
     /// <param name="viewModel">The view model.</param>
-    public ExpanderListPage(FoodieViewModel? viewModel)
+    public ExpanderListPage(FoodieViewModel? viewModel, bool isPantry)
     {
         this.InitializeComponent();
         this.ViewModel = viewModel;
+        this.IsGrocery = !isPantry;
         this.navMenu.FoodViewModel = this.ViewModel;
         this.navMenu.Current = this;
         this.buildView();
@@ -58,9 +60,14 @@ public partial class ExpanderListPage
                     "Ingredient Addition") == "1")
             {
                 var foodieViewModel = this.ViewModel;
-                if (foodieViewModel != null)
+                if (foodieViewModel != null && !this.IsGrocery)
                 {
-                    await foodieViewModel.AddIngredient(this.ingredientNameTextBox.Text,
+                    await foodieViewModel.AddPantryIngredient(this.ingredientNameTextBox.Text,
+                        int.Parse(this.quantityTextBox.Text), this.measurementCombo.Text);
+                }
+                else
+                {
+                    await foodieViewModel.AddGroceryIngredient(this.ingredientNameTextBox.Text,
                         int.Parse(this.quantityTextBox.Text), this.measurementCombo.Text);
                 }
 
@@ -81,7 +88,7 @@ public partial class ExpanderListPage
         var expanders = new List<IngredientExpander>();
         if (this.ViewModel != null)
         {
-            if (this.IsPantry)
+            if (!this.IsGrocery)
             {
                 this.headerTitle.Text = "My Pantry";
                 this.purchaseSelectedButton.Visibility = Visibility.Hidden;
@@ -106,7 +113,7 @@ public partial class ExpanderListPage
         foreach (var current in this.groceryList)
         {
             var ingredientExpander = new IngredientExpander(current.IngredientName, current.Quantity,
-                current.UnitId.ToString(), this.ViewModel);
+                current.UnitId.ToString(), this.ViewModel, true);
             ingredientExpander.Current = this;
             expanders.Add(ingredientExpander);
         }
@@ -118,7 +125,7 @@ public partial class ExpanderListPage
         foreach (var current in this.pantryList)
         {
             var ingredientExpander = new IngredientExpander(current.IngredientName, current.Quantity,
-                current.UnitId.ToString(), this.ViewModel);
+                current.UnitId.ToString(), this.ViewModel, false);
             ingredientExpander.Current = this;
             expanders.Add(ingredientExpander);
         }
@@ -128,6 +135,6 @@ public partial class ExpanderListPage
 
     private void PurchaseSelectedButton_OnClick(object sender, RoutedEventArgs e)
     {
-        throw new System.NotImplementedException();
+        Console.WriteLine("TODO");
     }
 }

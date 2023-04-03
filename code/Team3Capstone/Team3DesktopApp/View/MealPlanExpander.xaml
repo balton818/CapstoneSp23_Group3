@@ -5,7 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:Team3DesktopApp.View"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d" d:DesignHeight="241" d:DesignWidth="295">
+    mc:Ignorable="d" d:DesignHeight="241" Width="384">
 
     <Grid>
         <Expander
@@ -14,14 +14,15 @@
             IsExpanded="False">
             <Expander.HeaderTemplate>
                 <DataTemplate DataType="local:MealPlanExpander">
-                    <Grid Width="277">
+                    <Grid Width="366">
+
                         <TextBlock
                             x:Name="dayHeader"
                             DataContext="{Binding DataContext, RelativeSource={RelativeSource AncestorType={x:Type Expander}}}"
                             FontSize="15"
                             FontWeight="Bold"
                             Foreground="#FFE8C547"
-                            Text="{Binding Date}" Margin="10,0,139,0" />
+                            Text="{Binding Date}" Margin="5,0,155,0" />
                         <TextBlock
                             x:Name="plannedLabel"
 
@@ -29,7 +30,7 @@
                             FontSize="15"
                             FontWeight="Bold"
                             Foreground="#FFE8C547"
-                            Text="{Binding PlannedLabel}" Margin="138,2,0,3" RenderTransformOrigin="0.5,0.5" />
+                            Text="{Binding PlannedLabel}" Margin="124,5,94,0" RenderTransformOrigin="0.5,0.5" />
                     </Grid>
                 </DataTemplate>
             </Expander.HeaderTemplate>

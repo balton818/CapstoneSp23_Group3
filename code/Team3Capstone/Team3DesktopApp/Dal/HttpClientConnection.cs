@@ -549,7 +549,7 @@ public class HttpClientConnection
     public Task<bool> RemoveGroceryItem(GroceryListItem toRemove, HttpClient client)
     {
         var groceryListId = toRemove.ShoppingListId;
-        var query = new Uri("User/remove-shopping-list-item/" + groceryListId, UriKind.Relative);
+        var query = new Uri("User/remove-shopping-list-ingredient/" + groceryListId, UriKind.Relative);
         var json = JsonConvert.SerializeObject(toRemove);
 
         var data = new StringContent(json, Encoding.UTF8, "application/json");

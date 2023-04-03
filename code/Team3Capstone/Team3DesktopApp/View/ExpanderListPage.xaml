@@ -454,9 +454,9 @@
                 <ListBox
                     x:Name="expanderListBox"
                     Canvas.Left="4"
-                    Canvas.Top="129"
-                    Width="402"
-                    Height="255"
+                    Canvas.Top="92"
+                    Width="408"
+                    Height="292"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Center"
                     Background="#30323d"
@@ -501,29 +501,45 @@
                 <TextBox
                     Name="ingredientNameTextBox"
                     Canvas.Left="10"
-                    Canvas.Top="438"
+                    Canvas.Top="429"
                     Width="119"
                     Height="28"
                     Background="#d6ccc2"
-                    BorderBrush="#FFE8C547" />
+                    BorderBrush="#FFE8C547" HorizontalAlignment="Center" VerticalAlignment="Top" />
                 <TextBox
                     Name="quantityTextBox"
                     Canvas.Left="145"
-                    Canvas.Top="439"
+                    Canvas.Top="429"
                     Width="83"
                     Height="28"
                     Background="#d6ccc2"
-                    BorderBrush="#FFE8C547" />
+                    BorderBrush="#FFE8C547" HorizontalAlignment="Center" VerticalAlignment="Top" />
 
                 <Button
                     Name="addIngredientButton"
-                    Canvas.Left="320"
-                    Canvas.Top="438"
+                    Canvas.Left="325"
+                    Canvas.Top="427"
                     Width="78"
                     Height="28"
                     Background="#D6CCC2"
                     Click="AddIngredientButton_OnClick"
                     Content="Add" HorizontalAlignment="Left" VerticalAlignment="Top" BorderBrush="#e8c547" />
+                <local:NavButton
+                    x:Name="purchaseSelectedButton"
+                    Background="#d6ccc2"
+                    Click="PurchaseSelectedButton_OnClick"
+                    Content="Purchase Selected"
+                    FontFamily="Song Myung"
+                    FontSize="18"
+                    ForceCursor="True"
+                    Visibility="Visible"
+                    Margin="117,470,108,86">
+                    <local:NavButton.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="5" />
+                        </Style>
+                    </local:NavButton.Resources>
+                </local:NavButton>
             </Canvas>
             <local:NavMenu
                 x:Name="navMenu"
@@ -532,7 +548,7 @@
         </Canvas>
 
         <TextBlock
-            Margin="19,424,0,0"
+            Margin="19,413,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Foreground="#FFE8C547"
@@ -540,7 +556,7 @@
             TextWrapping="Wrap" />
         <TextBlock
             Grid.Row="0" Height="21"
-            Margin="155,424,0,0"
+            Margin="147,413,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Foreground="#FFE8C547"
@@ -560,31 +576,15 @@
             Visibility="Hidden" />
         <TextBlock
             Height="21"
-            Margin="253,423,0,0"
+            Margin="253,413,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Foreground="#FFE8C547"
             TextWrapping="Wrap">
             <Run Text="Unit" /><LineBreak /><Run />
         </TextBlock>
-        <local:NavButton
-            x:Name="purchaseSelectedButton"
-            Background="#d6ccc2"
-            Click="PurchaseSelectedButton_OnClick"
-            Content="Purchase Selected"
-            FontFamily="Song Myung"
-            FontSize="18"
-            ForceCursor="True"
-            Visibility="Hidden"
-            Margin="113,477,112,79">
-            <local:NavButton.Resources>
-                <Style TargetType="Border">
-                    <Setter Property="CornerRadius" Value="5" />
-                </Style>
-            </local:NavButton.Resources>
-        </local:NavButton>
         <ComboBox Style="{DynamicResource ComboBoxStyle}" Grid.Row="0" x:Name="measurementCombo"
-                  HorizontalAlignment="Left" Foreground="#FF30323D" Margin="249,438,0,0" VerticalAlignment="Top"
+                  HorizontalAlignment="Left" Foreground="#FF30323D" Margin="247,428,0,0" VerticalAlignment="Top"
                   Width="65" Height="28" RenderTransformOrigin="0.474,0.504" BorderBrush="#FFE8C547"
                   Background="#FFAA9888">
             <ComboBoxItem>None</ComboBoxItem>

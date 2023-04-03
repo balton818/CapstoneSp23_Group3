@@ -117,6 +117,28 @@
 
                 </local:NavButton>
                 <local:NavButton
+                    x:Name="addGroceriesButton"
+                    Canvas.Left="112"
+                    Canvas.Top="363"
+                    Width="195"
+                    Height="42"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Background="#FFD6CCC2"
+                    Click="addGroceriesNeeded"
+                    Content="Generate Grocery List"
+                    FontFamily="Song Myung"
+                    FontSize="18"
+                    ForceCursor="True"
+                    NavUri="/View/BrowseRecipesPage.xaml">
+                    <local:NavButton.Resources>
+                        <Style TargetType="{x:Type Border}">
+                            <Setter Property="CornerRadius" Value="5" />
+                        </Style>
+                    </local:NavButton.Resources>
+
+                </local:NavButton>
+                <local:NavButton
                     x:Name="viewGroceryListButton"
                     Canvas.Left="226"
                     Canvas.Top="422"
@@ -141,7 +163,7 @@
         <ListBox
             Grid.Row="0" x:Name="planListBox"
             Width="409"
-            Height="322"
+            Height="253"
             HorizontalAlignment="Center"
             VerticalAlignment="Top"
             Background="#30323d"

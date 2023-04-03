@@ -83,10 +83,7 @@ public class PageNavigation
         }
         else if (navUri.Equals(this.groceryUri) && this.ViewModel != null)
         {
-            var groceryPage = new ExpanderListPage(this.ViewModel)
-            {
-                IsPantry = false
-            };
+            var groceryPage = new ExpanderListPage(this.ViewModel, false);
 
             this.ViewModel.PlanTypeAndDateToAdd = null;
 
@@ -94,11 +91,7 @@ public class PageNavigation
         }
         else if (this.ViewModel != null)
         {
-            var pantryPage = new ExpanderListPage(this.ViewModel)
-            {
-                IsPantry = true
-            };
-
+            var pantryPage = new ExpanderListPage(this.ViewModel, true);
             this.ViewModel.PlanTypeAndDateToAdd = null;
 
             navigationService.Navigate(pantryPage);

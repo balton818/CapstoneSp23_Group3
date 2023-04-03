@@ -154,4 +154,9 @@ public partial class MealPlanPage
         NavButton clicked = (NavButton)sender;
         this.navigateToPage(clicked.NavUri);
     }
+
+    private void addGroceriesNeeded(object sender, RoutedEventArgs e)
+    {
+        throw new NotImplementedException();
+    }
 }
