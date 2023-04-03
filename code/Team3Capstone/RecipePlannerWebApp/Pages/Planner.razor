@@ -18,13 +18,13 @@
         <hr style="height: 2px; opacity: 100%" />
     </div>
     <div class="controls">
-        <InputRadioGroup @bind-Value="this.selectedWeek" class="controls">
+        <InputRadioGroup ValueChanged="@((e) => setPlanWeek(e))" TValue="UserSessionData.Weeks" ValueExpression="() => selectedWeek" Value="@selectedWeek">
             <InputRadio TValue="UserSessionData.Weeks" Value="@UserSessionData.Weeks.WEEK1"></InputRadio>
             <text>Week 1</text>
             <InputRadio TValue="UserSessionData.Weeks" Value="@UserSessionData.Weeks.WEEK2"></InputRadio>
             <text>Week 2</text>
         </InputRadioGroup>
-        <button type="submit" @onclick="setPlanWeek">Show Plan</button>
+        
         <button type="submit" @onclick="goToGroceryList">View Grocery List</button>
     </div>
     <div class="main-area">
@@ -68,9 +68,11 @@
         }
     }
 
-    private void setPlanWeek()
+    private void setPlanWeek(object sender)
     {
+        this.selectedWeek = (UserSessionData.Weeks)sender;
         this.currentUserData.SelectedWeek = this.selectedWeek;
+        //this.currentUserData.SelectedWeek = (UserSessionData.Weeks)sender;
         Nav.NavigateTo("/planner", true);
     }
 
