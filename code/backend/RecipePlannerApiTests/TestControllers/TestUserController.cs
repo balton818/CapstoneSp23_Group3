@@ -9,11 +9,12 @@ namespace RecipePlannerApiTests.TestControllers {
         [Fact]
         public void TestValidateUser() {
             var userService = new Mock<IUserService>();
+            var shoppingService = new Mock<IShoppingListService>();
 
             userService.Setup(x => x.ValidateUser(It.IsAny<string>(), It.IsAny<string>()))
                 .Returns(1);
 
-            var controller = new UserController(userService.Object);
+            var controller = new UserController(userService.Object, shoppingService.Object);
 
             var result = controller.ValidateUser("username", "password");
 
@@ -23,11 +24,12 @@ namespace RecipePlannerApiTests.TestControllers {
         [Fact]
         public void TestCreateUser() {
             var userService = new Mock<IUserService>();
+            var shoppingService = new Mock<IShoppingListService>();
 
             userService.Setup(x => x.CreateUser(It.IsAny<User>()))
                 .Returns(1);
 
-            var controller = new UserController(userService.Object);
+            var controller = new UserController(userService.Object, shoppingService.Object);
 
             var result = controller.CreateUser(new User());
 
@@ -37,11 +39,12 @@ namespace RecipePlannerApiTests.TestControllers {
         [Fact]
         public void TestGetUserPantry() {
             var userService = new Mock<IUserService>();
+            var shoppingService = new Mock<IShoppingListService>();
 
             userService.Setup(x => x.GetUserPantry(It.IsAny<int>()))
                 .Returns(new List<PantryItem>());
 
-            var controller = new UserController(userService.Object);
+            var controller = new UserController(userService.Object, shoppingService.Object);
 
             var result = controller.GetPantry(1);
 
@@ -51,11 +54,12 @@ namespace RecipePlannerApiTests.TestControllers {
         [Fact]
         public void TestAddPantryItem() {
             var userService = new Mock<IUserService>();
+            var shoppingService = new Mock<IShoppingListService>();
 
             userService.Setup(x => x.AddPantryItem(It.IsAny<PantryItem>()))
                 .Returns(new PantryItem());
 
-            var controller = new UserController(userService.Object);
+            var controller = new UserController(userService.Object, shoppingService.Object);
 
             var result = controller.AddPantryItem(new PantryItem());
 
@@ -65,11 +69,12 @@ namespace RecipePlannerApiTests.TestControllers {
         [Fact]
         public void TestUpdatePantryItem() {
             var userService = new Mock<IUserService>();
+            var shoppingService = new Mock<IShoppingListService>();
 
             userService.Setup(x => x.UpdatePantryItem(It.IsAny<PantryItem>()))
                 .Returns(new PantryItem());
 
-            var controller = new UserController(userService.Object);
+            var controller = new UserController(userService.Object, shoppingService.Object);
 
             var result = controller.UpdatePantryItem(new PantryItem());
 
@@ -79,10 +84,11 @@ namespace RecipePlannerApiTests.TestControllers {
         [Fact]
         public void TestRemovePantryItem() {
             var userService = new Mock<IUserService>();
+            var shoppingService = new Mock<IShoppingListService>();
 
             userService.Setup(x => x.RemovePantryItem(It.IsAny<int>()));
 
-            var controller = new UserController(userService.Object);
+            var controller = new UserController(userService.Object, shoppingService.Object);
 
             var result = controller.RemovePantryItem(1);
 

@@ -47,5 +47,6 @@ namespace RecipePlannerApi.Service.Interface
         /// <summary>Removes the pantry item.</summary>
         /// <param name="pantry_id">The pantry identifier.</param>
         public void RemovePantryItem(int pantry_id);
+        List<PantryItem> UpdatePantryItems(List<PantryItem> items, int userId);
     }
 }

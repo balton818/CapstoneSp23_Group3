@@ -15,10 +15,11 @@ namespace RecipePlannerApiTests.TestServices.TestRecipeService {
             var ingredientDao = new Mock<IIngredientDao>();
             var recipeApi = new Mock<IRecipeApi>();
             var measurementService = new Mock<IMeasurementService>();
+            var shoppingService = new Mock<IShoppingListService>();
 
             recipeApi.Setup(x => x.SearchRecipesByIngredients(It.IsAny<SearchRecipesByIngredientsRequest>()))
                 .Returns(new List<SearchRecipesByIngredients200ResponseInner>());
-            var service = new RecipeService(userService.Object, ingredientDao.Object, recipeApi.Object, measurementService.Object);
+            var service = new RecipeService(userService.Object, ingredientDao.Object, recipeApi.Object, measurementService.Object, shoppingService.Object);
 
             var result = service.SearchRecipes(new SearchRecipesByIngredientsRequest());
 

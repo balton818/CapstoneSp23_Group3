@@ -18,6 +18,7 @@ namespace RecipePlannerApiTests.TestServices.TestRecipeService
             var ingredientDao = new Mock<IIngredientDao>();
             var recipeApi = new Mock<IRecipeApi>();
             var measurementService = new Mock<IMeasurementService>();
+            var shoppingService = new Mock<IShoppingListService>();
 
             var apiReturn = new List<SearchRecipesByIngredients200ResponseInner>(){
                 new SearchRecipesByIngredients200ResponseInner() {
@@ -48,7 +49,7 @@ namespace RecipePlannerApiTests.TestServices.TestRecipeService
                 .Returns(new List<PantryItem> { new PantryItem { IngredientName = "apple", Quantity = 5, UnitId = AppUnit.NONE }, new PantryItem { IngredientName = "pear", Quantity = 5, UnitId = AppUnit.NONE } });
             recipeApi.Setup(x => x.SearchRecipesByIngredients(It.IsAny<SearchRecipesByIngredientsRequest>()))
                 .Returns(apiReturn);
-            var service = new RecipeService(userService.Object, ingredientDao.Object, recipeApi.Object, measurementService.Object);
+            var service = new RecipeService(userService.Object, ingredientDao.Object, recipeApi.Object, measurementService.Object, shoppingService.Object);
 
             var result = service.GetRecipesByUserPantry(1);
 

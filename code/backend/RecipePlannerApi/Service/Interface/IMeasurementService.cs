@@ -15,6 +15,8 @@ namespace RecipePlannerApi.Service.Interface
         /// <param name="toUnit">To unit.</param>
         /// <returns>System.Nullable&lt;System.Int32&gt;.</returns>
         public int? Convert(decimal quantity, string fromUnit, AppUnit toUnit);
+        Tuple<int, AppUnit> Convert(decimal quantity, string fromUnit);
+
         /// <summary>
         /// Determines whether the specified unit is valid unit.
         /// </summary>
