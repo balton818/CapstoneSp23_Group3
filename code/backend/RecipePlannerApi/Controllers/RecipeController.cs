@@ -73,5 +73,42 @@ namespace RecipePlannerApi.Controllers
                 return BadRequest(e.Message);
             }
         }
+
+        [HttpPost("add-to-shopping-list-by-ingredients")]
+        public ActionResult<List<ShoppingListIngredient>> AddRecipeIngredientsToShoppingList(List<Ingredient> ingredients, int userId) {
+            try {
+                return Ok(this._recipeService.AddRecipeIngredientsToShoppingList(ingredients, userId));
+            } catch (Exception e) {
+                return BadRequest(e.Message);
+            }
+        }
+
+        [HttpPost("add-to-shopping-list-by-recipe-ids")]
+        public ActionResult<List<ShoppingListIngredient>> AddRecipeIngredientsToShoppingList(List<int> recipeIds, int userId) {
+            try {
+                return Ok(this._recipeService.AddRecipeIngredientsToShoppingList(recipeIds, userId));
+            } catch (Exception e) {
+                return BadRequest(e.Message);
+            }
+        }
+
+        [HttpPost("use-ingredients")]
+        public ActionResult<List<ShoppingListIngredient>> UseIngredients(List<Ingredient> ingredients, int userId) {
+            try {
+                return Ok(this._recipeService.UseIngredients(ingredients, userId));
+            } catch (Exception e) {
+                return BadRequest(e.Message);
+            }
+        }
+
+        [HttpPost("buy-ingredients")]
+        public ActionResult<List<ShoppingListIngredient>> BuyIngredients(List<ShoppingListIngredient> ingredients, int userId) {
+            try {
+                return Ok(this._recipeService.BuyIngredients(ingredients, userId));
+            } catch (Exception e) {
+                return BadRequest(e.Message);
+            }
+        }
+
     }
 }

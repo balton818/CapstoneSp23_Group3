@@ -10,6 +10,7 @@ namespace RecipePlannerApi.Dao
                 c.Parameters.AddWithValue("@userId", item.UserId);
                 c.Parameters.AddWithValue("@shoppingListId", item.ShoppingListId);
                 c.Parameters.AddWithValue("@ingredientName", item.IngredientName);
+                c.Parameters.AddWithValue("@ingredientId", item.IngredientId);
                 c.Parameters.AddWithValue("@quantity", item.Quantity);
                 c.Parameters.AddWithValue("@unitId", (int)item.UnitId);
             };

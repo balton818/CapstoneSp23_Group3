@@ -12,12 +12,14 @@ namespace RecipePlannerApi.Service
         private readonly IIngredientDao _ingredientDao;
         private readonly IRecipeApi _recipeApi;
         private readonly IMeasurementService _measurementService;
+        private readonly IShoppingListService _shoppingListService;
 
-        public RecipeService(IUserService userService, IIngredientDao ingredientDao, IRecipeApi recipeApi, IMeasurementService measurementService) {
+        public RecipeService(IUserService userService, IIngredientDao ingredientDao, IRecipeApi recipeApi, IMeasurementService measurementService, IShoppingListService shoppingListService) {
             this._userService = userService;
             this._ingredientDao = ingredientDao;
             this._recipeApi = recipeApi;
             this._measurementService = measurementService;
+            this._shoppingListService = shoppingListService;
         }
 
         /// <summary>Searches recipes by ingredients in api.</summary>
@@ -136,7 +138,7 @@ namespace RecipePlannerApi.Service
             return true;
         }
 
-        private int? TryConvertQuantity(Ingredient recipeIngredient, PantryItem pantryIngredient) {
+        private int TryConvertQuantity(Ingredient recipeIngredient, PantryItem pantryIngredient) {
             if (!this._measurementService.IsValidUnit(recipeIngredient.Unit) || pantryIngredient.UnitId == AppUnit.NONE) {
                 return recipeIngredient.Quantity;
             }
@@ -155,18 +157,30 @@ namespace RecipePlannerApi.Service
                 recipeQuantity = result != null ? (int)Math.Ceiling(result.Value) : recipeIngredient.Quantity;
             }
 
+            return recipeQuantity.Value;
+        }
+
+        private Tuple<int, AppUnit> TryConvertQuantity(Ingredient recipeIngredient) {
+            if (!this._measurementService.IsValidUnit(recipeIngredient.Unit)) {
+                return Tuple.Create(recipeIngredient.Quantity, AppUnit.NONE);
+            }
+
+            var recipeQuantity = this._measurementService.Convert(recipeIngredient.Quantity, recipeIngredient.Unit);
+
             return recipeQuantity;
         }
 
         private PantryItem GetMatchingPantryItem(List<PantryItem> pantry, Ingredient recipeIngredient) {
-            PantryItem pantryIngredient;
-            pantryIngredient = pantry.Find(i => recipeIngredient.IngredientId == i.IngredientId);
-            if (pantryIngredient == null) {
-                pantryIngredient = pantry.Find(i => recipeIngredient.IngredientName.ToLower().Contains(i.IngredientName.ToLower()));
-                pantryIngredient = pantryIngredient ?? pantry.Find(i => i.IngredientName.ToLower().Contains(i.IngredientName.ToLower()));
+            if(pantry == null || pantry.Count < 0 || recipeIngredient == null) {
+                return null;
             }
 
-            if (recipeIngredient.IngredientId != null) {
+            PantryItem pantryIngredient;
+            pantryIngredient = pantry.Find(i => recipeIngredient.IngredientId == i.IngredientId);
+            pantryIngredient ??= pantry.Find(i => recipeIngredient.IngredientName.ToLower().Contains(i.IngredientName.ToLower()));
+            pantryIngredient ??= pantry.Find(i => i.IngredientName.ToLower().Contains(recipeIngredient.IngredientName.ToLower()));
+
+            if (recipeIngredient.IngredientId != null && pantryIngredient != null) {
                 pantryIngredient.IngredientId = recipeIngredient.IngredientId;
             }
             return pantryIngredient;
@@ -188,6 +202,88 @@ namespace RecipePlannerApi.Service
             var ingredients = string.Join(",", pantry.Select(item => item.IngredientName).ToList());
    
             return this._recipeApi.BrowseRecipes(request, ingredients, 20);
+        }
+
+        public List<ShoppingListIngredient> AddRecipeIngredientsToShoppingList(List<Ingredient> ingredients, int userId) {
+            var pantry = _userService.GetUserPantry(userId);
+            var shoppingList = new List<ShoppingListIngredient>();
+            foreach (var ingredient in ingredients) {
+                var pantryItem = this.GetMatchingPantryItem(pantry, ingredient);
+                int ingredientQuantity;
+                AppUnit unit;
+                if (pantryItem != null) {
+                    ingredientQuantity = TryConvertQuantity(ingredient, pantryItem);
+                    unit = pantryItem.UnitId;
+                } else {
+                    var quantity = TryConvertQuantity(ingredient);
+                    ingredientQuantity = quantity.Item1;
+                    unit = quantity.Item2;
+                }
+
+                shoppingList.Add(new ShoppingListIngredient() {
+                    UserId = userId,
+                    IngredientName = ingredient.IngredientName,
+                    IngredientId = ingredient.IngredientId,
+                    Quantity = ingredientQuantity,
+                    UnitId = unit
+                });
+            }
+
+            return this._shoppingListService.AddToShoppingList(shoppingList, userId);
+        }
+
+        public List<ShoppingListIngredient> AddRecipeIngredientsToShoppingList(List<int> recipeIds, int userId) {
+            var ingredients = _recipeApi.GetRecipeIngredientsBulk(recipeIds);
+
+            return this.AddRecipeIngredientsToShoppingList(ingredients, userId);
+        }
+
+        public List<PantryItem> UseIngredients(List<Ingredient> ingredients, int userId) {
+            var pantry = this.GetUserPantry(userId);
+
+            List<PantryItem> usedItems = new List<PantryItem>();
+            foreach (var ingredient in ingredients) {
+                var pantryItem = this.GetMatchingPantryItem(pantry, ingredient);
+                int ingredientQuantity;
+                if (pantryItem != null) {
+                    ingredientQuantity = TryConvertQuantity(ingredient, pantryItem);
+                    pantryItem.Quantity -= ingredientQuantity;
+                    if (pantryItem.Quantity < 0) {
+                        pantryItem.Quantity = 0;
+                    }
+
+                    usedItems.Add(pantryItem);
+                }
+            }
+
+            return this._userService.UpdatePantryItems(usedItems, userId);
+        }
+
+        public object BuyIngredients(List<ShoppingListIngredient> ingredients, int userId) {
+            var pantry = this.GetUserPantry(userId);
+
+            List<PantryItem> newPantryItems = new List<PantryItem>();
+            foreach (var ingredient in ingredients) {
+                var pantryItem = this.GetMatchingPantryItem(pantry, ingredient);
+                if (pantryItem != null) {
+                    pantryItem.Quantity += ingredient.Quantity;
+
+                    newPantryItems.Add(pantryItem);
+                } else {
+                    newPantryItems.Add(new PantryItem {
+                        IngredientId = ingredient.IngredientId,
+                        IngredientName = ingredient.IngredientName,
+                        UnitId = ingredient.UnitId,
+                        Quantity = ingredient.Quantity,
+                        UserId = userId
+                    });
+                }
+            }
+
+            var newPantry = this._userService.UpdatePantryItems(newPantryItems, userId);
+
+            this._shoppingListService.DeleteAllFromShoppingList(ingredients);
+            return newPantry;
         }
     }
 }

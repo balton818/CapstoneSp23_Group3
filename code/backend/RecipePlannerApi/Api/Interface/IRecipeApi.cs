@@ -44,5 +44,6 @@ namespace RecipePlannerApi.Api.Interface
         /// <param name="request">The request to convert measurement amounts.</param>
         /// <returns>The conversion result if the is one</returns>
         public decimal? ConvertAmount(ConvertAmountRequest request);
+        List<Ingredient> GetRecipeIngredientsBulk(List<int> recipeIds);
     }
 }

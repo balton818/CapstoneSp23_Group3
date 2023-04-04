@@ -133,5 +133,35 @@ namespace RecipePlannerApi.Api
 
             return response.TargetAmount;
         }
+
+        /// <summary>Gets the recipe information.</summary>
+        /// <param name="recipeId">The recipe identifier.</param>
+        /// <returns>
+        ///   <para>The information for the recipe</para>
+        /// </returns>
+        public List<Ingredient> GetRecipeIngredientsBulk(List<int> recipeIds) {
+            var ids = String.Join(",", recipeIds);
+            var bulkInfo = api.GetRecipeInformationBulk(ids, false);
+
+            var ingredients = new List<Ingredient>();
+            foreach(var info in bulkInfo) {
+                foreach (var item in info?.ExtendedIngredients) {
+                    var existingIngredient = ingredients.Find(i => i.IngredientId == item.Id);
+                    if (existingIngredient != null) {
+                        existingIngredient.Quantity += (int)Math.Ceiling(item.Measures.Metric.Amount.GetValueOrDefault());
+                    } else {
+                        var ingredient = new Ingredient() {
+                            IngredientId = item.Id,
+                            IngredientName = item.Name,
+                            Quantity = (int)Math.Ceiling(item.Measures.Metric.Amount.GetValueOrDefault()),
+                            Unit = item.Measures.Metric.UnitLong
+                        };
+                        ingredients.Add(ingredient);
+                    }
+                }
+            }
+
+            return ingredients;
+        }
     }
 }
