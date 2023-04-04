@@ -35,6 +35,13 @@
 
     <div class="recipe-area">
         <div hidden="@this.hideControls" class="controls">
+            <label for="days">Choose a week:</label>
+            <select name="days" id="days" @bind="@this.selectedWeek">
+                <option></option>
+                <option value="Week1">Week 1</option>
+                <option value="Week2">Week 2</option>
+            </select>
+
             <label for="days">Choose a day:</label>
             <select name="days" id="days" @bind="@this.selectedDay">
                 <option></option>
@@ -42,13 +49,6 @@
                 {
                     <option value="@day">@day</option>
                 }
-            </select>
-
-            <label for="days">Choose a week:</label>
-            <select name="days" id="days" @bind="@this.selectedWeek">
-                <option></option>
-                <option value="Week1">Week 1</option>
-                <option value="Week2">Week 2</option>
             </select>
 
             <label for="days">Choose a meal:</label>

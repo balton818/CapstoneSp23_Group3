@@ -172,8 +172,6 @@ namespace RecipePlannerApi.Service
             return pantryIngredient;
         }
 
-
-
         /// <summary>Gets the recipe information.</summary>
         /// <param name="recipeId">The recipe identifier for the api.</param>
         /// <returns>The information for the recipe</returns>

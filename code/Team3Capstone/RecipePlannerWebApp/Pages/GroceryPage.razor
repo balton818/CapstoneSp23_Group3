@@ -16,12 +16,37 @@
         <hr style="height: 2px; opacity: 100%" />
     </div>
     <div class="controls">
-        <button onclick="goBack">&#8672 Back</button>
+        <button @onclick="goBack">&#8672 Back</button>
+    </div>
+    <div class="shopping-list">
+        <ul>
+        @foreach (ShoppingListIngredient item in this.shoppingList)
+        {
+            <li>@item.IngredientName: @item.Quantity @item.UnitId.ToString()</li>
+        }
+        </ul>
     </div>
 </div>
 
 
 @code {
+    private List<ShoppingListIngredient> shoppingList = new List<ShoppingListIngredient>();
+    private ShoppingListService groceryService = new ShoppingListService(new UserDao(), new ShoppingListDao());
+
+    /**
+     * Initializes the GroceryPage component
+     */
+    protected override void OnInitialized()
+    {
+        Console.WriteLine("Grocery Page -- INITIALIZING");
+        this.shoppingList = groceryService.GetShoppingList(5);
+        Console.WriteLine(" -- Ingredients:\n");
+        foreach (var item in this.shoppingList)
+        {
+            Console.WriteLine(item.IngredientName + ": " + item.Quantity + " " + item.UnitId.ToString());
+        }
+    }
+
     /**
      * Handles page navigation back to either the Explore page or
      * the Recipes page, depending on which page generated the

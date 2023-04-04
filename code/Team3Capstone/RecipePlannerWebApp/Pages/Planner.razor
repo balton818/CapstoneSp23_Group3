@@ -24,7 +24,6 @@
             <InputRadio TValue="UserSessionData.Weeks" Value="@UserSessionData.Weeks.WEEK2"></InputRadio>
             <text>Week 2</text>
         </InputRadioGroup>
-        
         <button type="submit" @onclick="goToGroceryList">View Grocery List</button>
     </div>
     <div class="main-area">
@@ -72,7 +71,6 @@
     {
         this.selectedWeek = (UserSessionData.Weeks)sender;
         this.currentUserData.SelectedWeek = this.selectedWeek;
-        //this.currentUserData.SelectedWeek = (UserSessionData.Weeks)sender;
         Nav.NavigateTo("/planner", true);
     }
 
