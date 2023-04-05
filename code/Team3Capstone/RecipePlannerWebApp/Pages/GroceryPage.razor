@@ -88,7 +88,6 @@
                 this.selectedIngredients.Add(item, false);
             }
         }
-        this.currentUserData.userShoppingSelection = this.selectedIngredients;
         this.hideButtons = this.shoppingList.Count == 0;
     }
 
@@ -118,16 +117,18 @@
         try
         {
             this.recipeService.BuyIngredients(ingredients, this.currentUserData.CurrentUser.Id);
+
+            this.currentUserData.userShoppingSelection.Clear();
+            Console.WriteLine(" -- Done buying groceries");
+            Nav.NavigateTo("/groceries", true);
         }
         catch (System.Data.SqlClient.SqlException sqlEx)
         {
             Console.WriteLine(" -- Err: " + sqlEx.Message + "\n" + sqlEx.StackTrace);
         }
-        finally
+        catch (System.Exception ex)
         {
-            this.currentUserData.userShoppingSelection.Clear();
-            Console.WriteLine(" -- Done buying groceries");
-            Nav.NavigateTo("/groceries", true);
+            Console.WriteLine(" -- Err: " + ex.Message + "\n" + ex.StackTrace);
         }
     }
 
@@ -150,7 +151,6 @@
             this.currentUserData.userShoppingSelection.Clear();
             Nav.NavigateTo("/groceries", true);
         }
-
     }
 
     private async void addNewIngredient()

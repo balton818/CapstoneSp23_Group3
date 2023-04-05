@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using RecipePlannerApi.Model;
 using RecipePlannerWebApp.LocalServices;
 
-namespace RecipePlannerWebAppTESTS
+namespace RecipePlannerWebAppTESTS.PageTests
 {
     public class RegisterTest
     {
