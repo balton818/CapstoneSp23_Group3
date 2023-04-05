@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -54,29 +54,70 @@
     <SSDTExists Condition="Exists('$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets')">True</SSDTExists>
     <VisualStudioVersion Condition="'$(SSDTExists)' == ''">11.0</VisualStudioVersion>
   </PropertyGroup>
-  <Import Condition="'$(SQLDBExtensionsRefPath)' != ''" Project="$(SQLDBExtensionsRefPath)\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
-  <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <Import Condition="'$(NetCoreBuild)' != 'true' AND '$(SQLDBExtensionsRefPath)' != ''" Project="$(SQLDBExtensionsRefPath)\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <Import Condition="'$(NetCoreBuild)' != 'true' AND '$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
   <ItemGroup>
     <Folder Include="Properties" />
     <Folder Include="dbo\" />
     <Folder Include="dbo\Tables\" />
     <Folder Include="dbo\Stored Procedures" />
+    <Folder Include="dbo\Scripts" />
+    <Folder Include="dbo\Stored Procedures\User" />
+    <Folder Include="dbo\Stored Procedures\Pantry" />
+    <Folder Include="dbo\Stored Procedures\Meal Plan" />
+    <Folder Include="dbo\Function" />
+    <Folder Include="dbo\Stored Procedures\Recipe" />
+    <Folder Include="dbo\Stored Procedures\Shopping List\" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\user.sql" />
-    <Build Include="dbo\Stored Procedures\validate_user.sql" />
-    <Build Include="dbo\Stored Procedures\create_user.sql" />
     <Build Include="dbo\Tables\pantry.sql" />
-    <Build Include="dbo\Stored Procedures\add_pantry_item.sql" />
-    <Build Include="dbo\Stored Procedures\remove_pantry_item.sql" />
-    <Build Include="dbo\Stored Procedures\update_pantry_item.sql" />
-    <Build Include="dbo\Stored Procedures\get_pantry_item.sql" />
-    <Build Include="dbo\Stored Procedures\get_user_pantry.sql" />
     <Build Include="dbo\Tables\measurment_unit.sql" />
     <Build Include="dbo\Tables\ingredient.sql" />
     <Build Include="dbo\Stored Procedures\search_ingredient.sql" />
+    <Build Include="dbo\Tables\cuisine.sql" />
+    <Build Include="dbo\Tables\diet.sql" />
+    <Build Include="dbo\Tables\meal_type.sql" />
+    <Build Include="dbo\Stored Procedures\get_cuisines.sql" />
+    <Build Include="dbo\Stored Procedures\get_diets.sql" />
+    <Build Include="dbo\Stored Procedures\get_meal_types.sql" />
+    <Build Include="dbo\Stored Procedures\User\create_user.sql" />
+    <Build Include="dbo\Stored Procedures\User\validate_user.sql" />
+    <Build Include="dbo\Stored Procedures\Pantry\update_pantry_item.sql" />
+    <Build Include="dbo\Stored Procedures\Pantry\remove_pantry_item.sql" />
+    <Build Include="dbo\Stored Procedures\Pantry\get_user_pantry.sql" />
+    <Build Include="dbo\Stored Procedures\Pantry\get_pantry_item.sql" />
+    <Build Include="dbo\Stored Procedures\Pantry\add_pantry_item.sql" />
+    <Build Include="dbo\Tables\meal_plan.sql" />
+    <Build Include="dbo\Tables\meal.sql" />
+    <Build Include="dbo\Stored Procedures\Meal Plan\create_meal_plan.sql" />
+    <Build Include="dbo\Stored Procedures\Meal Plan\get_meal_plan.sql" />
+    <Build Include="dbo\Function\get_first_of_week.sql" />
+    <Build Include="dbo\Stored Procedures\Meal Plan\create_meal.sql" />
+    <Build Include="dbo\Stored Procedures\Meal Plan\get_meal.sql" />
+    <Build Include="dbo\Stored Procedures\Meal Plan\remove_meal.sql" />
+    <Build Include="dbo\Tables\recipe.sql" />
+    <Build Include="dbo\Stored Procedures\Recipe\create_recipe.sql" />
+    <Build Include="dbo\Stored Procedures\Recipe\get_recipe.sql" />
+    <Build Include="dbo\Stored Procedures\Recipe\update_recipe.sql" />
+    <Build Include="dbo\Stored Procedures\Recipe\delete_recipe.sql" />
+    <Build Include="dbo\Stored Procedures\Meal Plan\get_meal_plan_meals.sql" />
+    <Build Include="dbo\Stored Procedures\Meal Plan\update_meal.sql" />
+    <Build Include="dbo\Tables\shopping_list.sql" />
+    <Build Include="dbo\Stored Procedures\Shopping List\upsert_shopping_list_ingredient.sql" />
+    <Build Include="dbo\Stored Procedures\Shopping List\get_shopping_list_ingredient.sql" />
+    <Build Include="dbo\Stored Procedures\Shopping List\delete_shopping_list_ingredient.sql" />
+    <Build Include="dbo\Stored Procedures\Shopping List\get_shopping_list.sql" />
+    <Build Include="dbo\Stored Procedures\Meal Plan\get_meal_plan_api_recipes.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="RecipePlannerDatabase.refactorlog" />
   </ItemGroup>
+  <Import Condition="'$(NetCoreBuild)' == 'true'" Project="$(NETCoreTargetsPath)\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <ItemGroup>
+    <PackageReference Condition="'$(NetCoreBuild)' == 'true'" Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.0" PrivateAssets="All" />
+  </ItemGroup>
+  <Target Name="BeforeBuild">
+    <Delete Files="$(BaseIntermediateOutputPath)\project.assets.json" />
+  </Target>
 </Project>

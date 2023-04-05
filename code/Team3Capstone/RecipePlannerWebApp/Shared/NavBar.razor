@@ -1,4 +1,6 @@
 ﻿@inject NavigationManager Nav;
+@using RecipePlannerWebApp.LocalServices;
+@inject UserSessionData currentUserData;
 
 <link href="RecipePlannerWebApp.styles.css" rel="stylesheet">
 
@@ -16,6 +18,16 @@
         <div class="nav-item">
             <NavLink href="recipes">
                 <span class="nav-item" aria-hidden="true">recipes</span>
+            </NavLink>
+        </div>
+        <div class="nav-item">
+            <NavLink href="explore">
+                <span class="nav-item" aria-hidden="true">explore</span>
+            </NavLink>
+        </div>
+        <div class="nav-item">
+            <NavLink href="planner">
+                <span class="nav-item" aria-hidden="true">planner</span>
             </NavLink>
         </div>
     </nav>
@@ -111,8 +123,19 @@
 </style>
 
 @code {
+    /**
+     * Handles user logout functionality
+     */
     public void LogoutUser()
     {
+        this.clearUserSessionData();
         Nav.NavigateTo("/");
+    }
+
+    private void clearUserSessionData()
+    {
+        this.currentUserData.CurrentUser = null;
+        this.currentUserData.CurrentRecipeTitle = null;
+        this.currentUserData.lastExplorePageRequest = null;
     }
 }

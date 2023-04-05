@@ -1,27 +1,37 @@
-﻿using System.Data.SqlClient;
-using AutoMapper;
-using System.Data;
-using RecipePlannerApi.Model;
-using Microsoft.Extensions.Configuration;
+﻿using RecipePlannerApi.Dao.Interface;
 using RecipePlannerApi.Dao.Request;
-using AutoMapper.Data;
+using RecipePlannerApi.Model;
+using System.Data;
+using System.Diagnostics.CodeAnalysis;
 
-namespace RecipePlannerApi.Dao {
-    public class UserDao: Dao {
+namespace RecipePlannerApi.Dao
+{
 
-        public delegate void CommandUpdate(SqlCommand cmd);
+    [ExcludeFromCodeCoverage]
+    public class UserDao: Dao, IUserDao {
 
-        public static IdDto ValidateUser(User user) {
+        /// <summary>
+        /// Validates the user's username and password.
+        /// </summary>
+        /// <param name="username">The username.</param>
+        /// <param name="password">The password.</param>
+        /// <returns>IdDto the user's id.</returns>
+        public IdDto ValidateUser(string username, string password) {
             CommandUpdate cmd = c => {
                 c.CommandType = CommandType.StoredProcedure;
-                c.Parameters.AddWithValue("@username", user.Username);
-                c.Parameters.AddWithValue("@password", user.Password);
+                c.Parameters.AddWithValue("@username", username);
+                c.Parameters.AddWithValue("@password", password);
             };
 
             return execute<IdDto>("dbo.validate_user", cmd).FirstOrDefault();
         }
 
-        public static int? CreateUser(User user) {
+        /// <summary>
+        /// Creates a new user.
+        /// </summary>
+        /// <param name="user">The user.</param>
+        /// <returns>System.Nullable&lt;System.Int32&gt; The user's id.</returns>
+        public int? CreateUser(User user) {
             CommandUpdate cmd = c => {
                 c.CommandType = CommandType.StoredProcedure;
                 c.Parameters.AddWithValue("@username", user.Username);

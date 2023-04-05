@@ -1,6 +1,6 @@
+TRUNCATE table [dbo].[ingredient]
 Insert into ingredient (ingredient_name, ingredient_id) VALUES ('5 spice powder',1002002)
 ,('eggs', 1123)
-,('pecan', 10012142)
 ,('acorn squash',11482)
 ,('adobo sauce',6979)
 ,('agave nectar',19912)

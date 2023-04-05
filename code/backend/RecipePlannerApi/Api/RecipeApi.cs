@@ -1,23 +1,21 @@
 ﻿using com.spoonacular;
 using Org.OpenAPITools.Client;
 using Org.OpenAPITools.Model;
+using RecipePlannerApi.Api.Interface;
 using RecipePlannerApi.Api.Requests;
-using RecipePlannerApi.Dao;
-using RecipePlannerApi.Dao.Request;
 using RecipePlannerApi.Model;
-using System.Runtime.CompilerServices;
 
 namespace RecipePlannerApi.Api
 {
     /// <summary>Wrapper class for the spoonacular api</summary>
-    public static class RecipeApi
+    public class RecipeApi: IRecipeApi
     {
-        private static RecipesApi recipesApi = new RecipesApi();
+        private readonly IRecipesApi api;
 
         /// <summary>Initializes the <see cref="RecipeApi" /> class.</summary>
-        static RecipeApi()
+        public RecipeApi(IRecipesApi api)
         {
-            Configuration.ApiKey.Add("x-api-key", Connection.SpoonacularApiKey);
+            this.api = api;
         }
 
 
@@ -27,9 +25,9 @@ namespace RecipePlannerApi.Api
         ///   Responce from api
         ///   <br />
         /// </returns>
-        public static List<SearchRecipesByIngredients200ResponseInner> SearchRecipesByIngredients(SearchRecipesByIngredientsRequest request)
+        public List<SearchRecipesByIngredients200ResponseInner> SearchRecipesByIngredients(SearchRecipesByIngredientsRequest request)
         {
-            return recipesApi.SearchRecipesByIngredients(request.ingredients, request.number, request.limitLicense, request.ranking, request.ignorePantry);
+            return api.SearchRecipesByIngredients(request.ingredients, request.number, request.limitLicense, request.ranking, request.ignorePantry);
         }
 
 
@@ -38,9 +36,9 @@ namespace RecipePlannerApi.Api
         /// <returns>
         ///   <para>The information for the recipe</para>
         /// </returns>
-        public static RecipeInformation GetRecipeInformation(int recipeId)
+        public RecipeInformation GetRecipeInformation(int recipeId)
         {
-            var info = recipesApi.GetRecipeInformation(recipeId, false);
+            var info = api.GetRecipeInformation(recipeId, false);
             var ingredients = new List<Ingredient>();
             var instructions = GetRecipeInstructions(recipeId);
             foreach (var item in info?.ExtendedIngredients)
@@ -50,15 +48,17 @@ namespace RecipePlannerApi.Api
                     IngredientId = item.Id,
                     IngredientName = item.Name,
                     Quantity = (int)Math.Ceiling(item.Amount.Value),
+                    Unit = item.Unit
                 };
                 ingredients.Add(ingredient);
             }
 
-            return new RecipeInformation
-            {
+            return new RecipeInformation {
                 Summary = info.Summary,
                 Ingredients = ingredients,
-                Steps = instructions
+                Steps = instructions,
+                Image = info.Image,
+                ImageType = info.ImageType
             };
         }
 
@@ -68,9 +68,9 @@ namespace RecipePlannerApi.Api
         /// <returns>
         ///   <para>The instructionsfor the recipe</para>
         /// </returns>
-        public static List<RecipesStep> GetRecipeInstructions(int recipeId)
+        public List<RecipesStep> GetRecipeInstructions(int recipeId)
         {
-            var analyzedInsturctions = recipesApi.GetAnalyzedRecipeInstructions(recipeId, false).FirstOrDefault();
+            var analyzedInsturctions = api.GetAnalyzedRecipeInstructions(recipeId, false).FirstOrDefault();
             var instructions = new List<RecipesStep>();
             if (analyzedInsturctions != null)
             {
@@ -84,6 +84,84 @@ namespace RecipePlannerApi.Api
                 }
             }
             return instructions;
+        }
+
+        /// <summary>Searches for the specified amount of recipes per page that match the filters in the request taking into account the ingredients the passed ingredients</summary>
+        /// <param name="request">The request to browse recipes.</param>
+        /// <param name="ingredients">The ingredients to inform what which recipes to bring back.</param>
+        /// <param name="perPage">The amount of recipes to return per page.</param>
+        /// <returns>
+        ///   <br />
+        /// </returns>
+        public BrowseRecipeResponse BrowseRecipes(BrowseRecipeRequest request, string ingredients, int perPage) {
+            var searchRequest = new SearchRecipeRequest() {
+                query = request.Query,
+                cuisine = request.Cuisine,
+                diet = request.Diet,
+                type = request.Type,
+                offset = request.PageNumber * perPage,
+                limitLicense = false,
+                sort = "min-missing-ingredients",
+                addRecipeInformation = false,
+                number = perPage
+            };
+
+            var response = api.SearchRecipes(searchRequest);
+            var recipes = new List<Recipe>();
+
+            foreach (var item in response.Results) {
+                recipes.Add(new Recipe() {
+                    ApiId = item.Id,
+                    Image = item.Image,
+                    ImageType = item.ImageType,
+                    Title = item.Title
+                });
+            }
+
+            return new BrowseRecipeResponse() {
+                recipes = recipes,
+                page = response.Offset / perPage,
+                totalNumberOfRecipes = response.TotalResults
+            };
+        }
+
+        /// <summary>Converts measurement amounts with the Spoonacular api.</summary>
+        /// <param name="request">The request to convert measurement amounts.</param>
+        /// <returns>The conversion result if the is one</returns>
+        public decimal? ConvertAmount(ConvertAmountRequest request) {
+            var response = this.api.ConvertAmounts(request.IngredientName, request.SourceAmount, request.SourceUnit, request.TargetUnit);
+
+            return response.TargetAmount;
+        }
+
+        /// <summary>Gets the recipe information.</summary>
+        /// <param name="recipeId">The recipe identifier.</param>
+        /// <returns>
+        ///   <para>The information for the recipe</para>
+        /// </returns>
+        public List<Ingredient> GetRecipeIngredientsBulk(List<int> recipeIds) {
+            var ids = String.Join(",", recipeIds);
+            var bulkInfo = api.GetRecipeInformationBulk(ids, false);
+
+            var ingredients = new List<Ingredient>();
+            foreach(var info in bulkInfo) {
+                foreach (var item in info?.ExtendedIngredients) {
+                    var existingIngredient = ingredients.Find(i => i.IngredientId == item.Id);
+                    if (existingIngredient != null) {
+                        existingIngredient.Quantity += (int)Math.Ceiling(item.Measures.Metric.Amount.GetValueOrDefault());
+                    } else {
+                        var ingredient = new Ingredient() {
+                            IngredientId = item.Id,
+                            IngredientName = item.Name,
+                            Quantity = (int)Math.Ceiling(item.Measures.Metric.Amount.GetValueOrDefault()),
+                            Unit = item.Measures.Metric.UnitLong
+                        };
+                        ingredients.Add(ingredient);
+                    }
+                }
+            }
+
+            return ingredients;
         }
     }
 }

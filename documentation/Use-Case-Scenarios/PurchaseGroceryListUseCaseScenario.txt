@@ -1,19 +1,25 @@
 Purchase Grocery List Use Case Scenario
 
+Add to grocery list use case
+generate grocery list on plan and list page - on addition to plan
+
 Context - User has successfully logged in and navigated to the grocery list.
 
 PRIMARY FLOW
 1 - User selects view grocery list
-2 - User is shown a list of ingredients (currently not in pantry/insufficient amount) and measurements needed to make their planned meals
+2 - User is shown a list of ingredients and measurements needed to make their planned meals
 3 - User selects groceries that have been purchased.
 4 - User confirms purchase.
-5 - Pantry is updated
+5 - Grocery items are cleared and Pantry is updated
 
 Alternative Flow(s)
 
 USER CANCELS PURCHASE
 A4 - User cancels and no updates are made
 
+EDIT AMOUNT
+
 USER NAVIGATES AWAY FROM LIST
 A4 - User navigates to different view
 A5 - No updates are made
+

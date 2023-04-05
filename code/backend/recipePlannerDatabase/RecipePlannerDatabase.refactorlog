@@ -21,4 +21,67 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="ingredient_id" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="14642b22-11f9-45bd-b30e-b1c2b36b21fa" ChangeDateTime="02/21/2023 03:47:47">
+    <Property Name="ElementName" Value="[dbo].[cuisines].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[cuisines]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="cuisine" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="818bf127-b993-4a2b-8873-2956f2de9483" ChangeDateTime="02/21/2023 03:48:17">
+    <Property Name="ElementName" Value="[dbo].[diet].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[diet]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="diet" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="cc1527e2-4cc7-444d-9a8d-5a76a47ad65b" ChangeDateTime="02/21/2023 03:48:55">
+    <Property Name="ElementName" Value="[dbo].[meal_type].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[meal_type]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="meal_type" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="1f3acd33-3bed-40c6-b793-cd4f59868ff9" ChangeDateTime="03/01/2023 23:24:51">
+    <Property Name="ElementName" Value="[dbo].[meal_plan].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[meal_plan]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="meal_plan_id" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="5f515d7a-96c7-449a-b941-9248f8a238c1" ChangeDateTime="03/01/2023 23:30:05">
+    <Property Name="ElementName" Value="[dbo].[meal].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[meal]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="meal_plan_id" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="507bd106-1a68-4318-ba9f-957677369f5c" ChangeDateTime="03/03/2023 03:09:47">
+    <Property Name="ElementName" Value="[dbo].[recipe].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[recipe]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="recipe" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="344ea299-b476-4f5d-9002-5eefc67a4184" ChangeDateTime="03/03/2023 03:09:53">
+    <Property Name="ElementName" Value="[dbo].[recipe].[recipe]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[recipe]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="recipe_id" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="0f9be9eb-d03e-4eea-8d18-299e30caf657" ChangeDateTime="03/08/2023 23:52:58">
+    <Property Name="ElementName" Value="[dbo].[meal_plan].[meal_plan_date]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[meal_plan]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="[start_date]" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="8ff54c2f-627f-419d-a718-64a126830c3b" ChangeDateTime="03/29/2023 22:38:11">
+    <Property Name="ElementName" Value="[dbo].[shopping_list].[meal_plan_id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[shopping_list]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="[user_id]" />
+  </Operation>
 </Operations>

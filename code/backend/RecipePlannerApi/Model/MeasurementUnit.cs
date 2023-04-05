@@ -1,8 +1,9 @@
 ﻿namespace RecipePlannerApi.Model {
-    public enum AppUnits {
+    public enum AppUnit {
         NONE,
         MILLILITERS,
         GRAMS,
-        OUNCES
+        OUNCES,
+        FLUID_OUNCES
     }
 }

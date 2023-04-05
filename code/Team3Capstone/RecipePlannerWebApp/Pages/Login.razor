@@ -1,6 +1,7 @@
 ﻿@page "/"
 @using RecipePlannerApi.Model;
 @using RecipePlannerApi.Service;
+@using RecipePlannerApi.Dao;
 @using RecipePlannerWebApp.LocalServices;
 @inject NavigationManager Nav;
 @inject UserSessionData userData;
@@ -28,28 +29,35 @@
 @code
 {
     [Parameter]
-    public User? user { get; set; }
+    public User? user { get; set; } = new User();
 
     [Parameter]
     public bool ValidFields { get; set; }
 
     private string? LoginValidationResultMessage { get; set; }
+    private UserService service { get; set; } = new UserService(new UserDao(), new PantryDao());
 
+    /**
+     * Initializes the Login component
+     */
     protected override void OnInitialized()
     {
         Console.WriteLine("LOGIN -- Initializing...");
         this.ValidFields = false;
-        this.user = new User();
         userData.CurrentUser = new User();
     }
 
+    /**
+     * Handles user validation by performing some basic input validation
+     * before sending data to the user validation service.
+     */
     private void ValidateUser()
     {
 
         LoginValidationResultMessage = "";
         if (!String.IsNullOrEmpty(this.user?.Username) && !String.IsNullOrEmpty(this.user?.Password))
         {
-            int? result = UserService.ValidateUser(this.user);
+            int? result = this.service.ValidateUser(this.user.Username, this.user.Password);
             LoginValidationResultMessage = "";
             if (result != null)
             {
@@ -57,7 +65,7 @@
                 this.ValidFields = true;
                 this.user.Id = result ?? -1;
                 userData.CurrentUser = this.user;
-                Nav.NavigateTo("/recipes");
+                Nav.NavigateTo("/planner");
             }
             else
             {
@@ -71,6 +79,9 @@
         }
     }
 
+    /**
+     * Handles page navigation to the register page
+     */
     private void RegisterUser()
     {
         Nav.NavigateTo("/register");

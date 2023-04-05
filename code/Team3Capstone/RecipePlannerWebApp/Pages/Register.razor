@@ -2,7 +2,9 @@
 
 @using RecipePlannerApi.Model;
 @using RecipePlannerApi.Service;
+@using RecipePlannerApi.Dao;
 @inject NavigationManager Nav;
+@inject IJSRuntime JsRuntime;
 
 <link href="RecipePlannerWebApp.styles.css" rel="stylesheet">
 <PageTitle>foodie - register</PageTitle>
@@ -10,10 +12,12 @@
 <EditForm Model="@user" OnValidSubmit="@RegisterUser">
     <div id="registration-widget">
         <span class="header">Register for Foodie</span>
-
+        <button style="position:center" @onclick="goToLogin">&#8672 Back</button>
+        <br />
         <input id="usernameField" @bind="user.Username" placeholder="Enter Username" required />
 
         <input id="passwordField" @bind="user.Password" placeholder="Enter Password" required />
+        <input id="passwordReentryField" @bind="this.passwordReentry" placeholder="Re-enter Password" required />
 
         <input id="fnameField" @bind="user.FirstName" placeholder="Enter First Name" required />
 
@@ -21,21 +25,89 @@
 
         <input id="emailField" type="email" @bind="user.Email" placeholder="Enter Email Address" required />
 
-        <button type="submit" id="submitButton" style="position:center">Submit</button>
+        <button type="submit" id="submitButton" style="position:center">Submit</button>        
     </div>
 </EditForm>
 
 @code {
     [Parameter]
     public User user { get; set; } = new User();
+    public bool ValidFields { get; set; }
 
+    private string passwordReentry { get; set; } = "";
+    private UserService service { get; set; } = new UserService(new UserDao(), new PantryDao());
+
+    /**
+     * Handles page initialization of the Register component
+     */
     private void RegisterUser()
     {
-        
-        Console.WriteLine("REGISTER -- SUCCESS");
-        Console.WriteLine("REGISTER -- " + this.user);
-        var regResult = UserService.CreateUser(this.user);
-        Console.WriteLine("REGISTER -- REG_RESULT " + regResult);
+        this.ValidFields = false;
+        if (String.Equals(this.user.Password, this.passwordReentry))
+        {
+            try
+            {
+                var regResult = this.service.CreateUser(this.user);
+                Console.WriteLine("REGISTER -- REG_RESULT " + regResult);
+                this.ValidFields = true;
+                Nav.NavigateTo("/");
+            }
+            catch (System.Data.SqlClient.SqlException sqlEx)
+            {
+                this.alertUser("The username you entered is already in use.\nPlease enter a different username.");
+                this.clearUsername();
+                Console.WriteLine("\nSQL ERR -- ");
+                Console.WriteLine(sqlEx.Message);
+            }
+            catch (System.Exception exc)
+            {
+                this.alertUser("There was an issue processing your registration");
+                Console.WriteLine("\nERR -- ");
+                Console.WriteLine(exc.Message);
+            }
+            Console.WriteLine("REGISTER -- SUCCESS");
+            Console.WriteLine("REGISTER -- " + this.user.Username);
+
+        } else
+        {
+            this.alertUser("Password values do not match");
+            this.clearPasswordFields();
+        }
+    }
+
+    /**
+     * Alerts the user in the event that an error occurred and
+     * displays the given message.
+     * @param message - the error message to be displayed to 
+     *      the user.
+     */
+    private async void alertUser(string message)
+    {
+        await JsRuntime.InvokeVoidAsync("alert", message);
+    }
+
+    /**
+     * Clears the password data fields
+     */
+    private void clearPasswordFields()
+    {
+        this.user.Password = "";
+        this.passwordReentry = "";
+    }
+
+    /**
+     * Clears the username data field
+     */
+    private void clearUsername()
+    {
+        this.user.Username = "";
+    }
+
+    /**
+     * Handles page navigation back to the Login page
+     */
+    private void goToLogin()
+    {
         Nav.NavigateTo("/");
     }
 }

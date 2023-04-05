@@ -1,0 +1,4 @@
+﻿CREATE TABLE [dbo].[diet]
+(
+	[diet] NVARCHAR(30) NOT NULL PRIMARY KEY
+)

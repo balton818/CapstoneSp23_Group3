@@ -1,0 +1,71 @@
+﻿@using RecipePlannerApi.Model;
+@using RecipePlannerApi.Service;
+@using RecipePlannerApi.Dao;
+@using RecipePlannerWebApp.LocalServices;
+@inject NavigationManager Nav;
+@inject UserSessionData currentUser;
+@inject IJSRuntime JsRuntime;
+
+<div class="ingredient">
+    <label>&#8226 @Ingredient.IngredientName: @Ingredient.Quantity @Ingredient.UnitId.ToString()</label>
+    <input type="checkbox" @bind="this.isChecked" @oninput="triggerUpdate"/>
+    <input placeholder="Modify Quantity" @bind="@actualQuantity" id="quantity" @onfocusout="checkNewAmount"/>
+    <button @onclick="updateQuantity">Confirm</button>
+</div>
+
+@code {
+    [Parameter]
+    public ShoppingListIngredient Ingredient { get; set; }
+    [Parameter]
+    public Dictionary<ShoppingListIngredient, bool> SelectedIngredients { get; set; }
+
+    private ShoppingListService groceryService = new ShoppingListService(new ShoppingListDao());
+    private string actualQuantity = "";
+    private bool isChecked = false;
+
+    /**
+     * Initializes the GroceryItem component
+     */
+    protected override void OnInitialized()
+    {
+        this.isChecked = this.SelectedIngredients[this.Ingredient];
+        foreach (var selection in this.SelectedIngredients.Keys)
+        {
+            if (this.SelectedIngredients[selection] && selection.ShoppingListId == this.Ingredient.ShoppingListId)
+            {
+                this.isChecked = true;
+                break;
+            }
+        }
+    }
+
+    private void triggerUpdate()
+    {
+        this.isChecked = !this.isChecked;
+        Console.WriteLine("Update triggered for " + this.Ingredient.IngredientName + ": " + this.isChecked);
+        this.SelectedIngredients[this.Ingredient] = this.isChecked;
+    }
+
+    private async void checkNewAmount()
+    {
+        int realAmt;
+        if (!String.IsNullOrEmpty(this.actualQuantity) && !int.TryParse(this.actualQuantity, out realAmt) && this.isChecked)
+        {
+            this.actualQuantity = "";
+            this.isChecked = false;
+            await JsRuntime.InvokeAsync<object>("alert", "Please enter a valid number.");
+            return;
+        }
+    }
+
+    private void updateQuantity()
+    {
+        int newAmt;
+        if (!String.IsNullOrEmpty(this.actualQuantity) && int.TryParse(this.actualQuantity, out newAmt))
+        {
+            this.Ingredient.Quantity = newAmt;
+            this.groceryService.UpsertShoppingListIngredient(this.Ingredient);
+            Nav.NavigateTo("/groceries", true);
+        }
+    }
+}
