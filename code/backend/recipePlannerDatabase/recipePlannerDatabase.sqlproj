@@ -108,6 +108,7 @@
     <Build Include="dbo\Stored Procedures\Shopping List\get_shopping_list_ingredient.sql" />
     <Build Include="dbo\Stored Procedures\Shopping List\delete_shopping_list_ingredient.sql" />
     <Build Include="dbo\Stored Procedures\Shopping List\get_shopping_list.sql" />
+    <Build Include="dbo\Stored Procedures\Meal Plan\get_meal_plan_api_recipes.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="RecipePlannerDatabase.refactorlog" />
