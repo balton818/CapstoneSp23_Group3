@@ -37,9 +37,9 @@
                     Width="415"
                     Height="574"
                     Fill="#FF30323D" />
-                <Canvas Name="FooterTextBox">
+                <Canvas Name="footerTextBox">
                     <TextBlock
-                        Name="Footer"
+                        Name="footer"
                         Canvas.Left="9"
                         Canvas.Top="524"
                         FontFamily="Song Myung"
@@ -50,7 +50,7 @@
                 </Canvas>
                 <Canvas>
                     <Rectangle
-                        Name="Rectangle5"
+                        Name="rectangle5"
                         Canvas.Top="501"
                         Width="415"
                         Height="2"
@@ -62,17 +62,19 @@
                     <local:NavButton
                         x:Name="viewRecipeButton"
                         Canvas.Left="227"
-                        Canvas.Right="15"
                         Canvas.Top="416"
+                        Canvas.Right="15"
                         Width="171"
                         Height="66"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
                         Background="#FFD6CCC2"
                         Click="ViewDetail_Click"
                         Content="View Recipe Details"
-                        NavUri="/View/RecipeDetailPage.xaml"
                         FontFamily="Song Myung"
                         FontSize="18"
-                        ForceCursor="True" HorizontalAlignment="Left" VerticalAlignment="Top">
+                        ForceCursor="True"
+                        NavUri="/View/RecipeDetailPage.xaml">
                         <local:NavButton.Resources>
                             <Style TargetType="Border">
                                 <Setter Property="CornerRadius" Value="5" />
@@ -82,11 +84,11 @@
                     </local:NavButton>
 
                 </Canvas>
-                <Canvas Name="FoodieHeader">
+                <Canvas Name="foodieHeader">
 
-                    <Canvas Name="HeaderTitle">
+                    <Canvas Name="headerTitle">
                         <TextBlock
-                            Name="YourText"
+                            Name="yourText"
                             Canvas.Left="10"
                             Canvas.Top="28"
                             FontFamily="Song Myung"
@@ -107,7 +109,7 @@
                             </Rectangle.RenderTransform>
                         </Rectangle>
                         <Rectangle
-                            Name="Rectangle5_2"
+                            Name="rectangle52"
                             Canvas.Top="80"
                             Width="415"
                             Height="2"
@@ -122,13 +124,15 @@
                     Canvas.Top="416"
                     Width="171"
                     Height="66"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
                     Background="#FFD6CCC2"
                     Click="BrowseAllRecipes_OnClick"
                     Content="Browse All Recipes"
-                    NavUri="/View/BrowseRecipesPage.xaml"
                     FontFamily="Song Myung"
                     FontSize="18"
-                    ForceCursor="True" HorizontalAlignment="Left" VerticalAlignment="Top">
+                    ForceCursor="True"
+                    NavUri="/View/BrowseRecipesPage.xaml">
                     <local:NavButton.Resources>
                         <Style TargetType="{x:Type Border}">
                             <Setter Property="CornerRadius" Value="5" />
@@ -155,6 +159,13 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <local:NavMenu x:Name="navMenu" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="306,8,0,0" />
+        <local:NavMenu
+            x:Name="navMenu"
+            Grid.Row="0"
+            Width="162"
+            Margin="308,7,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Grid.ZIndex="1" />
     </Grid>
 </Page>

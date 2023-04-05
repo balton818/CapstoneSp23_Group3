@@ -1,0 +1,43 @@
+﻿.right .header {
+    font-size: 60pt;
+    font-family: jsMath-cmbx10;
+    width: 280px;
+    margin-left: 60px;
+    padding-top: 16px;
+    color: #30323d;
+}
+
+.split {
+    height: 100%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    overflow-x: hidden;
+    padding-top: 20px;
+}
+
+/* Control the right side */
+.right {
+    right: 0;
+    width: 75%;
+    background-color: #d6ccc2;
+}
+
+.controls {
+    margin-left: 60px;
+}
+
+.shopping-list {
+    overflow-y: auto;
+    margin-left: 60px;
+    height: 40%;
+    border-bottom: 2px solid black;
+}
+
+.new-ingredient {
+    margin-left: 60px;
+}
+
+.new-ingredient > * {
+    height: 30px;
+}

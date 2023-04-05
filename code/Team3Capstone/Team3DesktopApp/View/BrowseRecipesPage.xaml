@@ -125,78 +125,126 @@
                         <ControlTemplate.Triggers>
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding IsEditable, RelativeSource={RelativeSource AncestorType={x:Type ComboBox}}}" Value="true" />
-                                    <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="false" />
-                                    <Condition Binding="{Binding IsPressed, RelativeSource={RelativeSource Self}}" Value="false" />
-                                    <Condition Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}}" Value="true" />
+                                    <Condition
+                                        Binding="{Binding IsEditable, RelativeSource={RelativeSource AncestorType={x:Type ComboBox}}}"
+                                        Value="true" />
+                                    <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}"
+                                               Value="false" />
+                                    <Condition Binding="{Binding IsPressed, RelativeSource={RelativeSource Self}}"
+                                               Value="false" />
+                                    <Condition Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}}"
+                                               Value="true" />
                                 </MultiDataTrigger.Conditions>
-                                <Setter TargetName="templateRoot" Property="Background" Value="{StaticResource ComboBox.Static.Editable.Background}" />
-                                <Setter TargetName="templateRoot" Property="BorderBrush" Value="{StaticResource ComboBox.Static.Editable.Border}" />
-                                <Setter TargetName="splitBorder" Property="Background" Value="{StaticResource ComboBox.Static.Editable.Button.Background}" />
-                                <Setter TargetName="splitBorder" Property="BorderBrush" Value="{StaticResource ComboBox.Static.Editable.Button.Border}" />
+                                <Setter TargetName="templateRoot" Property="Background"
+                                        Value="{StaticResource ComboBox.Static.Editable.Background}" />
+                                <Setter TargetName="templateRoot" Property="BorderBrush"
+                                        Value="{StaticResource ComboBox.Static.Editable.Border}" />
+                                <Setter TargetName="splitBorder" Property="Background"
+                                        Value="{StaticResource ComboBox.Static.Editable.Button.Background}" />
+                                <Setter TargetName="splitBorder" Property="BorderBrush"
+                                        Value="{StaticResource ComboBox.Static.Editable.Button.Border}" />
                             </MultiDataTrigger>
                             <Trigger Property="IsMouseOver" Value="true">
-                                <Setter TargetName="arrow" Property="Fill" Value="{StaticResource ComboBox.MouseOver.Glyph}" />
+                                <Setter TargetName="arrow" Property="Fill"
+                                        Value="{StaticResource ComboBox.MouseOver.Glyph}" />
                             </Trigger>
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="true" />
-                                    <Condition Binding="{Binding IsEditable, RelativeSource={RelativeSource AncestorType={x:Type ComboBox}}}" Value="false" />
+                                    <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}"
+                                               Value="true" />
+                                    <Condition
+                                        Binding="{Binding IsEditable, RelativeSource={RelativeSource AncestorType={x:Type ComboBox}}}"
+                                        Value="false" />
                                 </MultiDataTrigger.Conditions>
-                                <Setter TargetName="templateRoot" Property="Background" Value="{StaticResource ComboBox.MouseOver.Background}" />
-                                <Setter TargetName="templateRoot" Property="BorderBrush" Value="{StaticResource ComboBox.MouseOver.Border}" />
+                                <Setter TargetName="templateRoot" Property="Background"
+                                        Value="{StaticResource ComboBox.MouseOver.Background}" />
+                                <Setter TargetName="templateRoot" Property="BorderBrush"
+                                        Value="{StaticResource ComboBox.MouseOver.Border}" />
                             </MultiDataTrigger>
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="true" />
-                                    <Condition Binding="{Binding IsEditable, RelativeSource={RelativeSource AncestorType={x:Type ComboBox}}}" Value="true" />
+                                    <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}"
+                                               Value="true" />
+                                    <Condition
+                                        Binding="{Binding IsEditable, RelativeSource={RelativeSource AncestorType={x:Type ComboBox}}}"
+                                        Value="true" />
                                 </MultiDataTrigger.Conditions>
-                                <Setter TargetName="templateRoot" Property="Background" Value="{StaticResource ComboBox.MouseOver.Editable.Background}" />
-                                <Setter TargetName="templateRoot" Property="BorderBrush" Value="{StaticResource ComboBox.MouseOver.Editable.Border}" />
-                                <Setter TargetName="splitBorder" Property="Background" Value="{StaticResource ComboBox.MouseOver.Editable.Button.Background}" />
-                                <Setter TargetName="splitBorder" Property="BorderBrush" Value="{StaticResource ComboBox.MouseOver.Editable.Button.Border}" />
+                                <Setter TargetName="templateRoot" Property="Background"
+                                        Value="{StaticResource ComboBox.MouseOver.Editable.Background}" />
+                                <Setter TargetName="templateRoot" Property="BorderBrush"
+                                        Value="{StaticResource ComboBox.MouseOver.Editable.Border}" />
+                                <Setter TargetName="splitBorder" Property="Background"
+                                        Value="{StaticResource ComboBox.MouseOver.Editable.Button.Background}" />
+                                <Setter TargetName="splitBorder" Property="BorderBrush"
+                                        Value="{StaticResource ComboBox.MouseOver.Editable.Button.Border}" />
                             </MultiDataTrigger>
                             <Trigger Property="IsPressed" Value="true">
-                                <Setter TargetName="arrow" Property="Fill" Value="{StaticResource ComboBox.Pressed.Glyph}" />
+                                <Setter TargetName="arrow" Property="Fill"
+                                        Value="{StaticResource ComboBox.Pressed.Glyph}" />
                             </Trigger>
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding IsPressed, RelativeSource={RelativeSource Self}}" Value="true" />
-                                    <Condition Binding="{Binding IsEditable, RelativeSource={RelativeSource AncestorType={x:Type ComboBox}}}" Value="false" />
+                                    <Condition Binding="{Binding IsPressed, RelativeSource={RelativeSource Self}}"
+                                               Value="true" />
+                                    <Condition
+                                        Binding="{Binding IsEditable, RelativeSource={RelativeSource AncestorType={x:Type ComboBox}}}"
+                                        Value="false" />
                                 </MultiDataTrigger.Conditions>
-                                <Setter TargetName="templateRoot" Property="Background" Value="{StaticResource ComboBox.Pressed.Background}" />
-                                <Setter TargetName="templateRoot" Property="BorderBrush" Value="{StaticResource ComboBox.Pressed.Border}" />
+                                <Setter TargetName="templateRoot" Property="Background"
+                                        Value="{StaticResource ComboBox.Pressed.Background}" />
+                                <Setter TargetName="templateRoot" Property="BorderBrush"
+                                        Value="{StaticResource ComboBox.Pressed.Border}" />
                             </MultiDataTrigger>
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding IsPressed, RelativeSource={RelativeSource Self}}" Value="true" />
-                                    <Condition Binding="{Binding IsEditable, RelativeSource={RelativeSource AncestorType={x:Type ComboBox}}}" Value="true" />
+                                    <Condition Binding="{Binding IsPressed, RelativeSource={RelativeSource Self}}"
+                                               Value="true" />
+                                    <Condition
+                                        Binding="{Binding IsEditable, RelativeSource={RelativeSource AncestorType={x:Type ComboBox}}}"
+                                        Value="true" />
                                 </MultiDataTrigger.Conditions>
-                                <Setter TargetName="templateRoot" Property="Background" Value="{StaticResource ComboBox.Pressed.Editable.Background}" />
-                                <Setter TargetName="templateRoot" Property="BorderBrush" Value="{StaticResource ComboBox.Pressed.Editable.Border}" />
-                                <Setter TargetName="splitBorder" Property="Background" Value="{StaticResource ComboBox.Pressed.Editable.Button.Background}" />
-                                <Setter TargetName="splitBorder" Property="BorderBrush" Value="{StaticResource ComboBox.Pressed.Editable.Button.Border}" />
+                                <Setter TargetName="templateRoot" Property="Background"
+                                        Value="{StaticResource ComboBox.Pressed.Editable.Background}" />
+                                <Setter TargetName="templateRoot" Property="BorderBrush"
+                                        Value="{StaticResource ComboBox.Pressed.Editable.Border}" />
+                                <Setter TargetName="splitBorder" Property="Background"
+                                        Value="{StaticResource ComboBox.Pressed.Editable.Button.Background}" />
+                                <Setter TargetName="splitBorder" Property="BorderBrush"
+                                        Value="{StaticResource ComboBox.Pressed.Editable.Button.Border}" />
                             </MultiDataTrigger>
                             <Trigger Property="IsEnabled" Value="false">
-                                <Setter TargetName="arrow" Property="Fill" Value="{StaticResource ComboBox.Disabled.Glyph}" />
+                                <Setter TargetName="arrow" Property="Fill"
+                                        Value="{StaticResource ComboBox.Disabled.Glyph}" />
                             </Trigger>
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}}" Value="false" />
-                                    <Condition Binding="{Binding IsEditable, RelativeSource={RelativeSource AncestorType={x:Type ComboBox}}}" Value="false" />
+                                    <Condition Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}}"
+                                               Value="false" />
+                                    <Condition
+                                        Binding="{Binding IsEditable, RelativeSource={RelativeSource AncestorType={x:Type ComboBox}}}"
+                                        Value="false" />
                                 </MultiDataTrigger.Conditions>
-                                <Setter TargetName="templateRoot" Property="Background" Value="{StaticResource ComboBox.Disabled.Background}" />
-                                <Setter TargetName="templateRoot" Property="BorderBrush" Value="{StaticResource ComboBox.Disabled.Border}" />
+                                <Setter TargetName="templateRoot" Property="Background"
+                                        Value="{StaticResource ComboBox.Disabled.Background}" />
+                                <Setter TargetName="templateRoot" Property="BorderBrush"
+                                        Value="{StaticResource ComboBox.Disabled.Border}" />
                             </MultiDataTrigger>
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}}" Value="false" />
-                                    <Condition Binding="{Binding IsEditable, RelativeSource={RelativeSource AncestorType={x:Type ComboBox}}}" Value="true" />
+                                    <Condition Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}}"
+                                               Value="false" />
+                                    <Condition
+                                        Binding="{Binding IsEditable, RelativeSource={RelativeSource AncestorType={x:Type ComboBox}}}"
+                                        Value="true" />
                                 </MultiDataTrigger.Conditions>
-                                <Setter TargetName="templateRoot" Property="Background" Value="{StaticResource ComboBox.Disabled.Editable.Background}" />
-                                <Setter TargetName="templateRoot" Property="BorderBrush" Value="{StaticResource ComboBox.Disabled.Editable.Border}" />
-                                <Setter TargetName="splitBorder" Property="Background" Value="{StaticResource ComboBox.Disabled.Editable.Button.Background}" />
-                                <Setter TargetName="splitBorder" Property="BorderBrush" Value="{StaticResource ComboBox.Disabled.Editable.Button.Border}" />
+                                <Setter TargetName="templateRoot" Property="Background"
+                                        Value="{StaticResource ComboBox.Disabled.Editable.Background}" />
+                                <Setter TargetName="templateRoot" Property="BorderBrush"
+                                        Value="{StaticResource ComboBox.Disabled.Editable.Border}" />
+                                <Setter TargetName="splitBorder" Property="Background"
+                                        Value="{StaticResource ComboBox.Disabled.Editable.Button.Background}" />
+                                <Setter TargetName="splitBorder" Property="BorderBrush"
+                                        Value="{StaticResource ComboBox.Disabled.Editable.Button.Border}" />
                             </MultiDataTrigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -207,7 +255,8 @@
             <Grid x:Name="templateRoot" SnapsToDevicePixels="true">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="0" MinWidth="{DynamicResource {x:Static SystemParameters.VerticalScrollBarWidthKey}}" />
+                    <ColumnDefinition Width="0"
+                                      MinWidth="{DynamicResource {x:Static SystemParameters.VerticalScrollBarWidthKey}}" />
                 </Grid.ColumnDefinitions>
                 <Popup
                     x:Name="PART_Popup"
@@ -292,8 +341,10 @@
                     <Setter Property="ScrollViewer.CanContentScroll" Value="false" />
                 </MultiTrigger>
                 <Trigger SourceName="DropDownScrollViewer" Property="ScrollViewer.CanContentScroll" Value="false">
-                    <Setter TargetName="opaqueRect" Property="Canvas.Top" Value="{Binding VerticalOffset, ElementName=DropDownScrollViewer}" />
-                    <Setter TargetName="opaqueRect" Property="Canvas.Left" Value="{Binding HorizontalOffset, ElementName=DropDownScrollViewer}" />
+                    <Setter TargetName="opaqueRect" Property="Canvas.Top"
+                            Value="{Binding VerticalOffset, ElementName=DropDownScrollViewer}" />
+                    <Setter TargetName="opaqueRect" Property="Canvas.Left"
+                            Value="{Binding HorizontalOffset, ElementName=DropDownScrollViewer}" />
                 </Trigger>
             </ControlTemplate.Triggers>
         </ControlTemplate>
@@ -301,7 +352,8 @@
             <Grid x:Name="templateRoot" SnapsToDevicePixels="true">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="0" MinWidth="{DynamicResource {x:Static SystemParameters.VerticalScrollBarWidthKey}}" />
+                    <ColumnDefinition Width="0"
+                                      MinWidth="{DynamicResource {x:Static SystemParameters.VerticalScrollBarWidthKey}}" />
                 </Grid.ColumnDefinitions>
                 <Popup
                     x:Name="PART_Popup"
@@ -380,8 +432,10 @@
                     <Setter Property="ScrollViewer.CanContentScroll" Value="false" />
                 </MultiTrigger>
                 <Trigger SourceName="DropDownScrollViewer" Property="ScrollViewer.CanContentScroll" Value="false">
-                    <Setter TargetName="opaqueRect" Property="Canvas.Top" Value="{Binding VerticalOffset, ElementName=DropDownScrollViewer}" />
-                    <Setter TargetName="opaqueRect" Property="Canvas.Left" Value="{Binding HorizontalOffset, ElementName=DropDownScrollViewer}" />
+                    <Setter TargetName="opaqueRect" Property="Canvas.Top"
+                            Value="{Binding VerticalOffset, ElementName=DropDownScrollViewer}" />
+                    <Setter TargetName="opaqueRect" Property="Canvas.Left"
+                            Value="{Binding HorizontalOffset, ElementName=DropDownScrollViewer}" />
                 </Trigger>
             </ControlTemplate.Triggers>
         </ControlTemplate>
@@ -407,10 +461,11 @@
             </Style.Triggers>
         </Style>
     </Page.Resources>
-    <Grid Margin="0,10,-11,-61">
+    <Grid Margin="0,10,-11,12">
         <Grid.RowDefinitions>
-            <RowDefinition Height="643*" />
-            <RowDefinition Height="129*" />
+            <RowDefinition Height="552*" />
+            <RowDefinition Height="13*" />
+            <RowDefinition Height="63*" />
         </Grid.RowDefinitions>
         <Grid.RenderTransform>
             <TransformGroup>
@@ -421,10 +476,7 @@
             </TransformGroup>
         </Grid.RenderTransform>
 
-        <Canvas
-            Name="svg810"
-            Width="415"
-            Height="574">
+        <Canvas Name="svg810" Margin="7,0,7,18">
             <Canvas.RenderTransform>
                 <TranslateTransform X="0" Y="0" />
             </Canvas.RenderTransform>
@@ -437,9 +489,9 @@
                     HorizontalAlignment="Center"
                     VerticalAlignment="Top"
                     Fill="#FF30323D" />
-                <Canvas Name="FooterTextBox">
+                <Canvas Name="footerTextBox">
                     <TextBlock
-                        Name="Footer"
+                        Name="footer"
                         Canvas.Left="7"
                         Canvas.Top="577"
                         FontFamily="Song Myung"
@@ -450,7 +502,7 @@
                 </Canvas>
                 <Canvas>
                     <Rectangle
-                        Name="Rectangle5"
+                        Name="rectangle5"
                         Canvas.Top="550"
                         Width="415"
                         Height="2"
@@ -497,11 +549,11 @@
 
                     </local:NavButton>
                 </Canvas>
-                <Canvas Name="FoodieHeader">
+                <Canvas Name="foodieHeader">
 
-                    <Canvas Name="HeaderTitle">
+                    <Canvas Name="headerTitle">
                         <TextBlock
-                            Name="YourText"
+                            Name="yourText"
                             Canvas.Left="10"
                             Canvas.Top="28"
                             FontFamily="Song Myung"
@@ -522,7 +574,7 @@
                             </Rectangle.RenderTransform>
                         </Rectangle>
                         <Rectangle
-                            Name="Rectangle5_2"
+                            Name="rectangle52"
                             Canvas.Top="80"
                             Width="415"
                             Height="2"
@@ -537,7 +589,7 @@
                     Width="102"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Top"
-                    Content="Search by Name"
+                    Content="Search Term"
                     Foreground="#e8c547" />
                 <local:NavButton
                     x:Name="searchButton"
@@ -562,8 +614,8 @@
                 </local:NavButton>
                 <local:NavButton
                     x:Name="prevPageButton"
-                    Canvas.Left="81"
-                    Canvas.Top="438"
+                    Canvas.Left="113"
+                    Canvas.Top="436"
                     Width="55"
                     Height="31"
                     HorizontalAlignment="Left"
@@ -581,27 +633,57 @@
                     </local:NavButton.Resources>
 
                 </local:NavButton>
+                <local:NavButton
+                    x:Name="filterResults"
+                    Canvas.Left="5"
+                    Canvas.Top="95"
+                    Width="146"
+                    Height="31"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Background="#FFD6CCC2"
+                    Click="ShowFilterResults_Click"
+                    Content="Filter Results"
+                    FontFamily="Song Myung"
+                    FontSize="18"
+                    ForceCursor="True">
+                    <local:NavButton.Resources>
+                        <Style TargetType="{x:Type Border}">
+                            <Setter Property="CornerRadius" Value="5" />
+                        </Style>
+                    </local:NavButton.Resources>
+
+                </local:NavButton>
                 <TextBlock
                     x:Name="pageLabel"
-                    Canvas.Left="147"
-                    Canvas.Top="445"
+                    Canvas.Left="179"
+                    Canvas.Top="443"
                     Width="69"
+                    Height="17"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Center"
                     FontFamily="Song Myung"
                     FontSize="17"
-                    Foreground="#FFE8C547" Height="17"><Span FontSize="14"><Run Text="1 of 20" /></Span></TextBlock>
+                    Foreground="#FFE8C547">
+                    <Span FontSize="14">
+                        <Run Text="1 of 20" />
+                    </Span>
+                </TextBlock>
                 <local:NavButton
                     x:Name="clearFilters"
+                    Canvas.Left="305"
+                    Canvas.Top="436"
                     Width="90"
                     Height="31"
-                    Visibility="Hidden"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
                     Background="#FFD6CCC2"
                     Click="ClearFilters_OnClick"
                     Content="Clear Filters"
                     FontFamily="Song Myung"
                     FontSize="15"
-                    ForceCursor="True" HorizontalAlignment="Left" Canvas.Left="305" Canvas.Top="436" VerticalAlignment="Center">
+                    ForceCursor="True"
+                    Visibility="Hidden">
                     <local:NavButton.Resources>
                         <Style TargetType="{x:Type Border}">
                             <Setter Property="CornerRadius" Value="5" />
@@ -632,7 +714,7 @@
             x:Name="nextPageButton"
             Width="55"
             Height="31"
-            Margin="213,440,0,0"
+            Margin="250,435,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Background="#FFD6CCC2"
@@ -648,59 +730,148 @@
             </local:NavButton.Resources>
 
         </local:NavButton>
-        <ComboBox
-            x:Name="dietCombobox"
-            Width="97"
-            Height="23"
-            Margin="147,109,0,0"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            Style="{DynamicResource ComboBoxStyle}" />
-        <ComboBox
-            x:Name="typeCombobox"
-            Width="95"
-            Height="23"
-            Margin="19,109,0,0"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            Style="{DynamicResource ComboBoxStyle}" />
-        <local:NavButton
-            x:Name="applyButton"
-            Width="95"
-            Height="33"
-            Margin="309,101,0,0"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            Background="#FFD6CCC2"
-            Click="ApplyButton_OnClick"
-            Content="Apply"
-            FontFamily="Song Myung"
-            FontSize="18"
-            ForceCursor="True">
-            <local:NavButton.Resources>
-                <Style TargetType="{x:Type Border}">
-                    <Setter Property="CornerRadius" Value="5" />
-                </Style>
-            </local:NavButton.Resources>
+        <Grid
+            x:Name="filterPanel"
+            Grid.Row="0"
+            Grid.RowSpan="3"
+            Margin="0,0,1,25"
+            Grid.ZIndex="2"
+            Visibility="Hidden">
+            <Grid.Background>
+                <SolidColorBrush Opacity="0.8" Color="#30323d" />
+            </Grid.Background>
+            <Label
+                Width="58"
+                Height="26"
+                Margin="5,8,0,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Content="Type"
+                Foreground="#e8c547" />
+            <Label
+                Width="58"
+                Height="26"
+                Margin="129,11,0,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Content="Diet"
+                Foreground="#e8c547" />
+            <Label
+                Width="58"
+                Height="26"
+                Margin="277,11,0,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Content="Cuisine"
+                Foreground="#e8c547" />
+            <ComboBox
+                x:Name="dietCombobox"
+                Width="97"
+                Height="23"
+                Margin="154,109,0,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Style="{DynamicResource ComboBoxStyle}"
+                Visibility="Hidden" />
+            <ComboBox
+                x:Name="typeCombobox"
+                Width="95"
+                Height="23"
+                Margin="19,109,0,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Style="{DynamicResource ComboBoxStyle}"
+                Visibility="Hidden" />
+            <ComboBox
+                x:Name="cuisineComboBox"
+                Width="95"
+                Height="23"
+                Margin="289,109,0,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Style="{DynamicResource ComboBoxStyle}"
+                Visibility="Hidden" />
+            <local:NavButton
+                x:Name="applyButton"
+                Width="121"
+                Height="33"
+                Margin="69,480,0,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Background="#FFD6CCC2"
+                Click="ApplyButton_OnClick"
+                Content="Apply"
+                FontFamily="Song Myung"
+                FontSize="18"
+                ForceCursor="True"
+                Grid.ZIndex="2">
+                <local:NavButton.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="5" />
+                    </Style>
+                </local:NavButton.Resources>
 
-        </local:NavButton>
-        <Label
-            Width="58"
-            Margin="18,84,0,0"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            Content="Type"
-            Foreground="#e8c547" />
-        <Label
-            Width="58"
-            Margin="148,86,0,0"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            Content="Diet"
-            Foreground="#e8c547" />
+            </local:NavButton>
+            <local:NavButton
+                x:Name="cancelButton"
+                Width="121"
+                Height="33"
+                Margin="218,480,0,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Background="#FFD6CCC2"
+                Click="CancelButton_OnClick"
+                Content="Cancel"
+                FontFamily="Song Myung"
+                FontSize="18"
+                ForceCursor="True"
+                Grid.ZIndex="2">
+                <local:NavButton.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="5" />
+                    </Style>
+                </local:NavButton.Resources>
+
+            </local:NavButton>
+            <ListBox
+                x:Name="typeList"
+                Margin="4,30,304,126"
+                Background="#30323d"
+                FontFamily="Song Myung"
+                FontSize="16"
+                Foreground="#FFE8C547"
+                ScrollViewer.CanContentScroll="False"
+                ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                SelectionMode="Multiple" />
+            <ListBox
+                x:Name="diestList"
+                Margin="129,33,160,127"
+                Background="#30323d"
+                FontFamily="Song Myung"
+                FontSize="16"
+                Foreground="#FFE8C547"
+                ScrollViewer.CanContentScroll="False"
+                ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                SelectionMode="Multiple" />
+            <ListBox
+                x:Name="cuisineList"
+                Margin="279,33,6,127"
+                Background="#30323d"
+                FontFamily="Song Myung"
+                FontSize="16"
+                Foreground="#FFE8C547"
+                ScrollViewer.CanContentScroll="False"
+                ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                SelectionMode="Multiple" />
+
+        </Grid>
+
         <local:NavMenu
             x:Name="navMenu"
             Width="162"
+            Height="239"
             Margin="308,7,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"

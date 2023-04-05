@@ -1,5 +1,6 @@
 ﻿@page "/recipe-details/{RecipeTitle}/{RecipeId}"
 @layout MainLayout
+@using RecipePlannerApi.Api.Interface;
 @using RecipePlannerApi.Service;
 @using RecipePlannerApi.Model;
 @using RecipePlannerApi.Dao;
@@ -11,10 +12,56 @@
 
 <div class="split right">
     <div class="header">
-        <span>recipes</span>
+        <span id="header">recipes</span>
         <hr style="height: 2px; opacity: 100%" />
     </div>
+    <div class="controls">
+        <button style="margin-left: 60px;" @onclick="goBack">&#8672 Back</button>
+        <button @onclick="@markAsComplete">Mark As Complete</button>
+        <button hidden="@hideButton" @onclick="@toggleAddMealControlsVisibility">Add to Meal Plan</button>
+    </div>
+    
+    @if (this.currentUserData.SelectedMeal is not null)
+    {
+        if (this.currentUserData.NewMeal)
+        {
+            <button style="margin-left: 60px" @onclick="addToMealPlan">Add to meal plan for @this.currentUserData.SelectedMeal?.MealType.ToString().ToLower()</button>
+        } 
+        else if (this.currentUserData.UpdateMeal)
+        {
+            <button style="margin-left: 60px" @onclick="updateMealPlan">Update meal plan for @this.currentUserData.SelectedMeal?.MealType.ToString().ToLower()</button>
+        }
+    }
+
     <div class="recipe-area">
+        <div hidden="@this.hideControls" class="controls">
+            <label for="days">Choose a week:</label>
+            <select name="days" id="days" @bind="@this.selectedWeek">
+                <option></option>
+                <option value="Week1">Week 1</option>
+                <option value="Week2">Week 2</option>
+            </select>
+
+            <label for="days">Choose a day:</label>
+            <select name="days" id="days" @bind="@this.selectedDay">
+                <option></option>
+                @foreach (DayOfWeek day in Enum.GetValues(typeof(System.DayOfWeek)))
+                {
+                    <option value="@day">@day</option>
+                }
+            </select>
+
+            <label for="days">Choose a meal:</label>
+            <select name="days" id="days" @bind="@this.selectedMeal">
+                <option></option>
+                @foreach (var meal in Enum.GetValues(typeof(MealType)))
+                {
+                    <option value="@meal">@meal</option>
+                }
+            </select>
+            <button @onclick="@addMealFromRecipeDetails">Add to Meal Plan</button>
+        </div>
+
         <h2 class="title" style="font-weight: bold">@RecipeTitle</h2>
         <br />
         <h3 style="text-decoration: underline">Ingredients:</h3>
@@ -33,28 +80,34 @@
             }
         </ol>
         <br />
-        <button @onclick="goBack">&#8672 Back</button>
     </div>
-
 </div>
 
 @code {
 
     [Parameter]
-    public string? RecipeId { get; set; }
+    public string RecipeId { get; set; }
+
     [Parameter]
-    public string? RecipeTitle { get; set; }
+    public string RecipeTitle { get; set; }
 
     private List<RecipePlannerApi.Model.Ingredient>? ingredients { get; set; } 
     private List<RecipePlannerApi.Model.RecipesStep>? steps { get; set; }
-    private RecipeService service { get; set; } = new RecipeService(new UserService(new UserDao(), new PantryDao()), new IngredientDao(), new RecipeApi(), new MeasurementService());
+    private RecipeService recipeService { get; set; } = new RecipeService(new UserService(new UserDao(), new PantryDao()), new IngredientDao(), new RecipeApi(new com.spoonacular.RecipesApi()), new MeasurementService(), new ShoppingListService(new ShoppingListDao()));
+    private MealPlanService mealPlanService { get; set; } = new MealPlanService(new MealPlanDao());
+    private ShoppingListService groceryService { get; set; } = new ShoppingListService(new ShoppingListDao());
+    private bool hideControls = true;
+    private bool hideButton = false;
+    private string selectedDay = "";
+    private string selectedWeek = "";
+    private string selectedMeal = "";
 
     /**
      * Handles initialization of the RecipeDetails component
      */
     protected override void OnInitialized()
     {
-        RecipeInformation info = this.service.GetRecipeInformation(Int32.Parse(this.RecipeId));
+        RecipeInformation info = this.recipeService.GetRecipeInformation(Int32.Parse(this.RecipeId));
         if (info != null)
         {
             this.ingredients = info?.Ingredients;
@@ -73,7 +126,12 @@
      */
     private void goBack()
     {
-        if (this.currentUserData.lastExplorePageRequest != null)
+        if (this.currentUserData.SelectedMeal != null && !this.currentUserData.NewMeal)
+        {
+            this.currentUserData.SelectedMeal = null;
+            Nav.NavigateTo("/planner");
+        }
+        else if (this.currentUserData.lastExplorePageRequest != null || this.currentUserData.NewMeal)
         {
             Nav.NavigateTo("/explore");
         }
@@ -83,16 +141,132 @@
         }
     }
 
-    //FUTUREPROOFING - DISREGARD
-    //<button @onclick="updateUsedIngredientQuantities">Mark as Complete</button>
-    //private void updateUsedIngredientQuantities()
-    //{
-    //    Console.WriteLine("RECIPEVIEW -- Completed recipe for " + this.RecipeName);
-    //    foreach (string ingredient in this.ingredients)
-    //    {
-    //        Console.WriteLine("RECIPEVIEW -- Updating quantity for " + ingredient);
-    //    }
-    //    //Call RPApi to update quantities of user's ingredients
-    //    Nav.NavigateTo("/recipes");
-    //}
+    private async void addMealFromRecipeDetails()
+    {
+        if (String.IsNullOrEmpty(this.selectedWeek) || String.IsNullOrEmpty(this.selectedDay) || String.IsNullOrEmpty(this.selectedMeal))
+        {
+            await JsRuntime.InvokeAsync<object>("alert", "Please select a week, day of the week, and a meal before attempting to add.");
+            return;
+        }
+
+        MealPlan currPlan = this.determineNecessaryMealPlan();
+        Console.WriteLine("-- Adding payload: " + this.selectedDay + " " + this.selectedWeek + " " + this.selectedMeal);
+        DayOfWeek day;
+        MealType mealType = (MealType)Enum.Parse(typeof(MealType), this.selectedMeal);
+        int mealId = -1;
+
+        bool hasMealPlanned = false;
+        if (Enum.TryParse<System.DayOfWeek>(this.selectedDay, out day)) 
+        {
+            foreach (var meal in currPlan?.meals[day])
+            {
+                if (meal.MealType.Equals(mealType))
+                {
+                    hasMealPlanned = true;
+                    mealId = (int)meal.MealId;
+                    break;
+                }
+            }
+        }
+
+        Meal newMeal = this.createNewMeal(mealType, day, currPlan, mealId);
+
+        bool confirmed = false;
+        if (hasMealPlanned)
+        {
+            confirmed = await JsRuntime.InvokeAsync<bool>("confirm", "You already have a recipe planned for the day and meal you selected.\nDo you wish to replace this recipe?");
+        } 
+        else
+        {
+            this.mealPlanService.AddMeal(newMeal);
+            await JsRuntime.InvokeAsync<object>("alert", "Added meal to plan.");
+            this.selectedDay = "";
+            this.selectedMeal = "";
+            this.selectedWeek = "";
+            this.toggleAddMealControlsVisibility();
+            StateHasChanged();
+        }
+
+        if (confirmed)
+        {
+            this.mealPlanService.UpdateMeal(newMeal);
+            await JsRuntime.InvokeAsync<object>("alert", "Updated meal plan.");
+            this.selectedDay = "";
+            this.selectedMeal = "";
+            this.selectedWeek = "";
+            this.toggleAddMealControlsVisibility();
+            StateHasChanged();
+        }
+    }
+
+    private Meal createNewMeal(MealType mealType, DayOfWeek day, MealPlan currPlan, int mealId)
+    {
+        RecipeInformation info = this.recipeService.GetRecipeInformation(Int32.Parse(this.RecipeId));
+        Recipe recipe = new Recipe() { Title = this.RecipeTitle, Image = info.Image, ApiId = Int32.Parse(this.RecipeId), ImageType = info.ImageType };
+        Meal newMeal = new Meal() { MealPlanId = (int)currPlan.MealPlanId, MealType = mealType, DayOfWeek = day, Recipe = recipe };
+        if (mealId >= 0)
+        {
+            newMeal.MealId = mealId;
+        }
+        return newMeal;
+    }
+
+    private MealPlan determineNecessaryMealPlan()
+    {
+        if (String.Equals(this.selectedWeek, "Week1"))
+        {
+            return this.mealPlanService.GetThisWeeksMealPlan(this.currentUserData.CurrentUser.Id);
+        }
+        else if (String.Equals(this.selectedWeek, "Week2"))
+        {
+            return this.mealPlanService.GetNextWeeksMealPlan(this.currentUserData.CurrentUser.Id);
+        }
+        return null;
+    }
+
+    private void addToMealPlan()
+    {
+        Meal newMeal = this.currentUserData.SelectedMeal;
+        RecipeInformation info = this.recipeService.GetRecipeInformation(Int32.Parse(this.RecipeId));
+        Recipe recipe = new Recipe() { Title = this.RecipeTitle, Image = info.Image, ApiId = Int32.Parse(this.RecipeId), ImageType = info.ImageType};
+
+        newMeal.Recipe = recipe;
+        Console.WriteLine("Adding meal to plan for " + this.currentUserData.SelectedMeal.MealType + " on " + this.currentUserData.SelectedMeal.DayOfWeek);
+        this.mealPlanService.AddMeal(newMeal);
+
+        this.currentUserData.SelectedMeal = null;
+        this.currentUserData.NewMeal = false;
+        this.currentUserData.UpdateMeal = false;
+        Nav.NavigateTo("/planner");
+    }
+
+    private void updateMealPlan()
+    {
+        Meal currMeal = this.currentUserData.SelectedMeal;
+        RecipeInformation info = this.recipeService.GetRecipeInformation(Int32.Parse(this.RecipeId));
+        Recipe recipe = new Recipe() { Title = this.RecipeTitle, Image = info.Image, ApiId = Int32.Parse(this.RecipeId), ImageType = info.ImageType };
+        currMeal.Recipe = recipe;
+
+        Console.WriteLine("Updating mealplan for " + this.currentUserData.SelectedMeal.MealType + " on " + this.currentUserData.SelectedMeal.DayOfWeek);
+        this.mealPlanService.UpdateMeal(currMeal);
+
+        this.currentUserData.SelectedMeal = null;
+        this.currentUserData.NewMeal = false;
+        this.currentUserData.UpdateMeal = false;
+        Nav.NavigateTo("/planner");
+    }
+
+    private void markAsComplete()
+    {
+        Console.WriteLine("RECIPEVIEW -- Completed recipe for " + this.RecipeTitle);
+        this.recipeService.UseIngredients(this.ingredients, this.currentUserData.CurrentUser.Id);
+        Nav.NavigateTo("/planner");
+    }
+
+    private void toggleAddMealControlsVisibility()
+    {
+        Console.WriteLine("Changing visibility.");
+        this.hideControls = !this.hideControls;
+        this.hideButton = !this.hideButton;
+    }
 }

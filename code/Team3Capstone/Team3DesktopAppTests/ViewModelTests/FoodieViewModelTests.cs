@@ -1,11 +1,8 @@
 ﻿using System.Net;
-using System.Windows.Controls;
-using System.Windows.Navigation;
 using Moq;
 using Moq.Protected;
-using Team3DesktopApp;
+using NuGet.Frameworks;
 using Team3DesktopApp.Model;
-using Team3DesktopApp.View;
 using Team3DesktopApp.ViewModel;
 
 namespace Team3DesktopAppTests.ViewModelTests;
@@ -155,15 +152,15 @@ public class FoodieViewModelTests
         var foodieViewModel = new FoodieViewModel();
         this.addRecipesForDetailNavTest(foodieViewModel);
         handlerMock.Protected().Setup<Task<HttpResponseMessage>>("SendAsync",
-                ItExpr.IsAny<HttpRequestMessage>(),
-                ItExpr.IsAny<CancellationToken>()).ReturnsAsync(
-                new HttpResponseMessage
-                {
-                    StatusCode = HttpStatusCode.OK,
-                    Content = new StringContent(
-                        "{'summary':'test', 'ingredients':[ {'name': 'oranges', 'quantity': 5},], 'steps':[{'stepNumber':1, 'instructions': 'Peel Orange'}] }")
-                })
-            .Verifiable();
+                       ItExpr.IsAny<HttpRequestMessage>(),
+                       ItExpr.IsAny<CancellationToken>()).ReturnsAsync(
+                       new HttpResponseMessage
+                       {
+                           StatusCode = HttpStatusCode.OK,
+                           Content = new StringContent(
+                               "{'summary':'test', 'ingredients':[ {'name': 'oranges', 'quantity': 5},], 'steps':[{'stepNumber':1, 'instructions': 'Peel Orange'}] }")
+                       })
+                   .Verifiable();
         foodieViewModel.ClientToSet = new HttpClient(handlerMock.Object)
         {
             BaseAddress = new Uri("http://test.com/")
@@ -173,7 +170,6 @@ public class FoodieViewModelTests
 
         Assert.AreEqual(1, result.Result.Ingredients.Count);
     }
-
 
     [TestMethod]
     public void TestRecipeDetailNavBrowse()
@@ -203,7 +199,6 @@ public class FoodieViewModelTests
 
     private void addRecipesForBrowseNavTest(FoodieViewModel foodieViewModel)
     {
-
         var handlerMock = new Mock<HttpMessageHandler>(MockBehavior.Strict);
         handlerMock.Protected().Setup<Task<HttpResponseMessage>>("SendAsync",
                        ItExpr.IsAny<HttpRequestMessage>(),
@@ -211,7 +206,8 @@ public class FoodieViewModelTests
                        new HttpResponseMessage
                        {
                            StatusCode = HttpStatusCode.OK,
-                           Content = new StringContent("{'recipes':[{ 'id': 634141, 'title': 'oranges', 'image': 'https://spoonacular.com/recipeImages/634141-312x231.jpg', 'imageType': 'jpg'}], 'page':0, 'totalNumberOfRecipes': 1 }")
+                           Content = new StringContent(
+                               "{'recipes':[{ 'apiid': 634141, 'title': 'oranges', 'image': 'https://spoonacular.com/recipeImages/634141-312x231.jpg', 'imageType': 'jpg'}], 'page':0, 'totalNumberOfRecipes': 1 }")
                        })
                    .Verifiable();
         foodieViewModel.ClientToSet = new HttpClient(handlerMock.Object)
@@ -232,7 +228,7 @@ public class FoodieViewModelTests
                        new HttpResponseMessage
                        {
                            StatusCode = HttpStatusCode.OK,
-                           Content = new StringContent("[{'id':1, 'title':'oranges', 'image': 1, 'imageType': 1 }]")
+                           Content = new StringContent("[{'apiid':1, 'title':'oranges', 'image': 1, 'imageType': 1 }]")
                        })
                    .Verifiable();
         foodieViewModel.ClientToSet = new HttpClient(handlerMock.Object)
@@ -268,7 +264,6 @@ public class FoodieViewModelTests
 
         Assert.AreEqual("Pasta", result.Result.IngredientName);
         Assert.AreEqual(5, result.Result.Quantity);
-
     }
 
     private void getPantryForTest(FoodieViewModel foodieViewModel)
@@ -297,35 +292,33 @@ public class FoodieViewModelTests
     [TestMethod]
     public void TestGetRecipeIngredients()
     {
-        List<string> ingredients = new List<string>();
-        FoodieViewModel foodieViewModel = new FoodieViewModel();
+        var ingredients = new List<string>();
+        var foodieViewModel = new FoodieViewModel();
         this.simulateNavForTest(foodieViewModel);
         ingredients.AddRange(foodieViewModel.GetRecipeIngredients());
         Assert.AreEqual(1, ingredients.Count);
-
     }
+
     [TestMethod]
     public void TestGetRecipeSteps()
     {
-        List<string> ingredients = new List<string>();
-        FoodieViewModel foodieViewModel = new FoodieViewModel();
+        var ingredients = new List<string>();
+        var foodieViewModel = new FoodieViewModel();
         this.simulateNavForTest(foodieViewModel);
         ingredients.AddRange(foodieViewModel.GetRecipeSteps());
         Assert.AreEqual(1, ingredients.Count);
         Assert.AreEqual("oranges", foodieViewModel.GetRecipeTitle());
-
     }
 
     [TestMethod]
     public void TestGetRecipeStepsMultiStep()
     {
-        List<string> ingredients = new List<string>();
-        FoodieViewModel foodieViewModel = new FoodieViewModel();
+        var ingredients = new List<string>();
+        var foodieViewModel = new FoodieViewModel();
         this.simulateNavForTestMultiStep(foodieViewModel);
         ingredients.AddRange(foodieViewModel.GetRecipeSteps());
         Assert.AreEqual(2, ingredients.Count);
         Assert.AreEqual("oranges", foodieViewModel.GetRecipeTitle());
-
     }
 
     private void simulateNavForTestMultiStep(FoodieViewModel foodieViewModel)
@@ -394,7 +387,6 @@ public class FoodieViewModelTests
         var result = foodieViewModel.RemoveIngredient("Pasta", 5);
 
         Assert.AreEqual(true, result.Result);
-
     }
 
     [TestMethod]
@@ -408,7 +400,8 @@ public class FoodieViewModelTests
                        new HttpResponseMessage
                        {
                            StatusCode = HttpStatusCode.OK,
-                           Content = new StringContent("{'recipes':[{ 'id': 634141, 'title': 'Pasta!', 'image': 'https://spoonacular.com/recipeImages/634141-312x231.jpg', 'imageType': 'jpg'}], 'page':0, 'totalNumberOfRecipes': 1 }")
+                           Content = new StringContent(
+                               "{'recipes':[{ 'id': 634141, 'title': 'Pasta!', 'image': 'https://spoonacular.com/recipeImages/634141-312x231.jpg', 'imageType': 'jpg'}], 'page':0, 'totalNumberOfRecipes': 1 }")
                        })
                    .Verifiable();
         foodieViewModel.ClientToSet = new HttpClient(handlerMock.Object)
@@ -437,7 +430,8 @@ public class FoodieViewModelTests
                        new HttpResponseMessage
                        {
                            StatusCode = HttpStatusCode.OK,
-                           Content = new StringContent("{'recipes':[{ 'id': 634141, 'title': 'Pasta!', 'image': 'https://spoonacular.com/recipeImages/634141-312x231.jpg', 'imageType': 'jpg'}], 'page':0, 'totalNumberOfRecipes': 5000 }")
+                           Content = new StringContent(
+                               "{'recipes':[{ 'id': 634141, 'title': 'Pasta!', 'image': 'https://spoonacular.com/recipeImages/634141-312x231.jpg', 'imageType': 'jpg'}], 'page':0, 'totalNumberOfRecipes': 5000 }")
                        })
                    .Verifiable();
         foodieViewModel.ClientToSet = new HttpClient(handlerMock.Object)
@@ -455,7 +449,6 @@ public class FoodieViewModelTests
         Assert.AreEqual("1 of 46", foodieViewModel.GetPageInfo());
         foodieViewModel.ResetBrowse();
         Assert.AreEqual("1 of 1", foodieViewModel.GetPageInfo());
-
     }
 
     [TestMethod]
@@ -469,7 +462,8 @@ public class FoodieViewModelTests
                        new HttpResponseMessage
                        {
                            StatusCode = HttpStatusCode.OK,
-                           Content = new StringContent("{'recipes':[{ 'id': 634141, 'title': 'Pasta!', 'image': 'https://spoonacular.com/recipeImages/634141-312x231.jpg', 'imageType': 'jpg'}], 'page':0, 'totalNumberOfRecipes': 0 }")
+                           Content = new StringContent(
+                               "{'recipes':[{ 'id': 634141, 'title': 'Pasta!', 'image': 'https://spoonacular.com/recipeImages/634141-312x231.jpg', 'imageType': 'jpg'}], 'page':0, 'totalNumberOfRecipes': 0 }")
                        })
                    .Verifiable();
         foodieViewModel.ClientToSet = new HttpClient(handlerMock.Object)
@@ -486,7 +480,6 @@ public class FoodieViewModelTests
         foodieViewModel.DecrementPage();
         Assert.AreEqual("1 of 1", foodieViewModel.GetPageInfo());
     }
-
 
     [TestMethod]
     public void TestGetRecipeTypes()
@@ -511,8 +504,8 @@ public class FoodieViewModelTests
         var result = foodieViewModel.GetRecipeTypes();
 
         Assert.AreEqual(2, result.Count);
+        foodieViewModel.ResetBrowse();
     }
-
 
     [TestMethod]
     public void TestGetDietTypes()
@@ -543,7 +536,7 @@ public class FoodieViewModelTests
     public void TestSetFilters()
     {
         var foodieViewModel = new FoodieViewModel();
-        foodieViewModel.SetFilters("breakfast", "vegan");
+        foodieViewModel.SetFilters("breakfast", "vegan", "");
 
         Assert.AreEqual("breakfast", foodieViewModel.GetFilters().Item1);
         Assert.AreEqual("vegan", foodieViewModel.GetFilters().Item2);
@@ -556,5 +549,177 @@ public class FoodieViewModelTests
         foodieViewModel.SetSearchName("Pasta");
         Assert.AreEqual("Pasta", foodieViewModel.GetSearchName());
     }
+
+    [TestMethod]
+    public void TestGetCuisines()
+    {
+        var handlerMock = new Mock<HttpMessageHandler>(MockBehavior.Strict);
+        var foodieViewModel = new FoodieViewModel();
+        handlerMock.Protected().Setup<Task<HttpResponseMessage>>("SendAsync",
+                       ItExpr.IsAny<HttpRequestMessage>(),
+                       ItExpr.IsAny<CancellationToken>()).ReturnsAsync(
+                       new HttpResponseMessage
+                       {
+                           StatusCode = HttpStatusCode.OK,
+                           Content = new StringContent(
+                               "['English']")
+                       })
+                   .Verifiable();
+        foodieViewModel.ClientToSet = new HttpClient(handlerMock.Object)
+        {
+            BaseAddress = new Uri("http://test.com/")
+        };
+        foodieViewModel.Userid = 1;
+        var result = foodieViewModel.GetCuisineTypes();
+
+        Assert.AreEqual(2, result.Count);
+    }
+
+    [TestMethod]
+    public void TestGetPlans()
+    {
+        var handlerMock = new Mock<HttpMessageHandler>(MockBehavior.Strict);
+        var foodieViewModel = new FoodieViewModel();
+        handlerMock.Protected().Setup<Task<HttpResponseMessage>>("SendAsync",
+                       ItExpr.IsAny<HttpRequestMessage>(),
+                       ItExpr.IsAny<CancellationToken>()).ReturnsAsync(
+                       new HttpResponseMessage
+                       {
+                           StatusCode = HttpStatusCode.OK,
+                           Content = new StringContent(
+                               "{'mealPlanId':9, 'page':0, 'mealPlanDate': '2023-03-12T00:00:00', 'userId':1, 'meals':{'Sunday':[{}]} }")
+                       })
+                   .Verifiable();
+        foodieViewModel.ClientToSet = new HttpClient(handlerMock.Object)
+        {
+            BaseAddress = new Uri("http://test.com/")
+        };
+        foodieViewModel.Userid = 1;
+        var result = foodieViewModel.GetPlans();
+
+        var test = foodieViewModel.GetMealPlan(true, DayOfWeek.Sunday);
+        var test2 = foodieViewModel.GetMealPlan(false, DayOfWeek.Sunday);
+        Assert.IsNotNull(test);
+        Assert.IsFalse(foodieViewModel.GetCurrentWeek());
+
+    }
+
+    private void getPlansForTesting(FoodieViewModel foodieViewModel)
+    {
+        var handlerMock = new Mock<HttpMessageHandler>(MockBehavior.Strict);
+        handlerMock.Protected().Setup<Task<HttpResponseMessage>>("SendAsync",
+                       ItExpr.IsAny<HttpRequestMessage>(),
+                       ItExpr.IsAny<CancellationToken>()).ReturnsAsync(
+                       new HttpResponseMessage
+                       {
+                           StatusCode = HttpStatusCode.OK,
+                           Content = new StringContent(
+                               "{'mealPlanId':9, 'page':0, 'mealPlanDate': '2023-03-12T00:00:00', 'userId':1, 'meals':{'Sunday':[{'mealId':9, 'date': '2023-03-12T00:00:00', 'dayOfWeek':0, 'mealType':0,'recipe':{'apiid':1, 'title':'Pasta!', 'image': 1, 'imageType': 1 }  }]} }")
+                       })
+                   .Verifiable();
+        foodieViewModel.ClientToSet = new HttpClient(handlerMock.Object)
+        {
+            BaseAddress = new Uri("http://test.com/")
+        };
+        foodieViewModel.Userid = 1;
+        var result = foodieViewModel.GetPlans();
+
+        var test = foodieViewModel.GetMealPlan(true, DayOfWeek.Sunday);
+        Tuple<DayOfWeek?, MealType?> planTypeAndDateToAdd = new Tuple<DayOfWeek?, MealType?>(DayOfWeek.Sunday, MealType.Breakfast);
+        foodieViewModel.PlanTypeAndDateToAdd = planTypeAndDateToAdd;
+        foodieViewModel.Userid = 1;
+    }
+
+    [TestMethod]
+    public void TestAddToPlan()
+    {
+        var handlerMock = new Mock<HttpMessageHandler>(MockBehavior.Strict);
+        var foodieViewModel = new FoodieViewModel();
+        foodieViewModel.GetPlanDate(true);
+        handlerMock.Protected().Setup<Task<HttpResponseMessage>>("SendAsync",
+                       ItExpr.IsAny<HttpRequestMessage>(),
+                       ItExpr.IsAny<CancellationToken>()).ReturnsAsync(
+                       new HttpResponseMessage
+                       {
+                           StatusCode = HttpStatusCode.OK,
+                           Content = new StringContent(
+                               "{'mealId':9, 'mealPlanId':0, 'date': '2023-03-12T00:00:00', 'dayOfWeek':0, 'mealType':0, 'recipe':{}")
+                       })
+                   .Verifiable();
+        foodieViewModel.ClientToSet = new HttpClient(handlerMock.Object)
+        {
+            BaseAddress = new Uri("http://test.com/")
+        };
+        this.simulateNavForTest(foodieViewModel);
+        this.getPlansForTesting(foodieViewModel);
+        Tuple<DayOfWeek?, MealType?> planTypeAndDateToAdd = new Tuple<DayOfWeek?, MealType?>(DayOfWeek.Sunday, MealType.Breakfast);
+        foodieViewModel.PlanTypeAndDateToAdd = planTypeAndDateToAdd;
+        foodieViewModel.Userid = 1;
+        foodieViewModel.AddToMealPlan(true);
+        foodieViewModel.AddToMealPlan(false);
+        Assert.IsTrue(foodieViewModel.GetMealPlan(true, DayOfWeek.Sunday).Count == 3);
+
+    }
+
+    [TestMethod]
+    public void TestRemoveFromPlan()
+    {
+        var handlerMock = new Mock<HttpMessageHandler>(MockBehavior.Strict);
+        var foodieViewModel = new FoodieViewModel();
+        handlerMock.Protected().Setup<Task<HttpResponseMessage>>("SendAsync",
+                       ItExpr.IsAny<HttpRequestMessage>(),
+                       ItExpr.IsAny<CancellationToken>()).ReturnsAsync(
+                       new HttpResponseMessage
+                       {
+                       })
+                   .Verifiable();
+        foodieViewModel.ClientToSet = new HttpClient(handlerMock.Object)
+        {
+            BaseAddress = new Uri("http://test.com/")
+        };
+        foodieViewModel.Userid = 1;
+        this.simulateNavForTest(foodieViewModel);
+        this.getPlansForTesting(foodieViewModel);
+        foodieViewModel.AddToMealPlan(false);
+        foodieViewModel.RemoveMealFromPlan("oranges", DayOfWeek.Sunday, MealType.Breakfast);
+        foodieViewModel.RemoveMealFromPlan("oranges", DayOfWeek.Sunday, MealType.Breakfast);
+        Assert.IsTrue(foodieViewModel.GetMealPlan(true, DayOfWeek.Sunday).Count == 3);
+
+        Assert.IsNotNull(foodieViewModel.GetPlanDate(true));
+        Assert.IsNotNull(foodieViewModel.GetPlanDate(false));
+    }
+
+    [TestMethod]
+    public void TestMealPlanContainsRecipe()
+    {
+        var foodieViewModel = new FoodieViewModel();
+        this.getPlansForTesting(foodieViewModel);
+        Assert.IsTrue(foodieViewModel.MealPlanContainsRecipe(MealType.Breakfast, DayOfWeek.Sunday, true));
+        Assert.IsTrue(foodieViewModel.MealPlanContainsRecipe(MealType.Breakfast, DayOfWeek.Sunday, false));
+    }
+
+    [TestMethod]
+    public void TestRecipeDetailNavPlan()
+    {
+        var foodieViewModel = new FoodieViewModel();
+        this.simulateNavForTest(foodieViewModel);
+        this.getPlansForTesting(foodieViewModel);
+        Assert.IsNotNull(foodieViewModel.RecipeDetailNavPlan(DayOfWeek.Sunday, MealType.Breakfast));
+        foodieViewModel.AddToMealPlan(false);
+        Assert.IsNotNull(foodieViewModel.RecipeDetailNavPlan(DayOfWeek.Sunday, MealType.Breakfast));
+    }
+    [TestMethod]
+    public void TestUpdatePlan()
+    {
+        var foodieViewModel = new FoodieViewModel();
+        this.simulateNavForTest(foodieViewModel);
+        this.getPlansForTesting(foodieViewModel);
+
+        foodieViewModel.UpdatePlan(true);
+        foodieViewModel.UpdatePlan(false);
+        Assert.IsTrue(foodieViewModel.GetMealPlan(true, DayOfWeek.Sunday).Count == 3);
+
+    }
+
     #endregion
 }

@@ -1,5 +1,6 @@
 ﻿@page "/recipes"
 @layout MainLayout
+@using RecipePlannerApi.Api.Interface;
 @using RecipePlannerApi.Service;
 @using RecipePlannerApi.Model;
 @using RecipePlannerApi.Api;
@@ -13,13 +14,13 @@
 <base href="~/" />
 <div class="split right">
     <div class="header">
-        <span>recipes</span>
+        <span id="header">recipes</span>
         <hr style="height: 2px; opacity: 100%" />
     </div>    
     <div class="recipe-list-area">
         @foreach (var recipe in recipeResults)
         {
-            <div class="recipe-result" @onclick="() => goToRecipe(recipe.Title, recipe.Id ?? -1)">
+            <div class="recipe-result" @onclick="() => goToRecipe(recipe.Title, recipe.ApiId ?? 0)">
                 <img src="@recipe.Image" asp-append-version="true" style="width: 125px; height: 125px;" />
                 @recipe.Title
              </div>
@@ -32,7 +33,7 @@
     private string[] mealTypeFilters { get; set; } = new[] { "", "appetizer", "beverage", "bread", "breakfast", "dessert",
         "drink", "fingerfood", "main course", "marinade", "salad", "sauce", "side dish", "snack", "soup" };
     private string mealTypeFilterSelection = "";
-    private RecipeService service { get; set; } = new RecipeService(new UserService(new UserDao(), new PantryDao()), new IngredientDao(), new RecipeApi(), new MeasurementService());
+    private RecipeService service { get; set; } = new RecipeService(new UserService(new UserDao(), new PantryDao()), new IngredientDao(), new RecipeApi(new com.spoonacular.RecipesApi()), new MeasurementService(), new ShoppingListService(new ShoppingListDao()));
 
     /**
      * Handles initialization of the Recipes component

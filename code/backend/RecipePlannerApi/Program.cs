@@ -1,8 +1,7 @@
-﻿using AutoMapper;
+﻿using com.spoonacular;
 using Org.OpenAPITools.Client;
 using RecipePlannerApi.Api;
 using RecipePlannerApi.Api.Interface;
-using RecipePlannerApi.Controllers;
 using RecipePlannerApi.Dao;
 using RecipePlannerApi.Dao.Interface;
 using RecipePlannerApi.Service;
@@ -24,16 +23,21 @@ namespace RecipePlannerApi
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            builder.Services.AddScoped<IRecipesApi, RecipesApi>();
 
             builder.Services.AddScoped<IUserDao, UserDao>();
             builder.Services.AddScoped<IPantryDao, PantryDao>();
             builder.Services.AddScoped<IIngredientDao, IngredientDao>();
             builder.Services.AddScoped<IAppDao, AppDao>();
+            builder.Services.AddScoped<IMealPlanDao, MealPlanDao>();
+            builder.Services.AddScoped<IShoppingListDao, ShoppingListDao>();
 
             builder.Services.AddScoped<IUserService, UserService>();
             builder.Services.AddScoped<IAppService, AppService>();
             builder.Services.AddScoped<IRecipeService, RecipeService>();
             builder.Services.AddScoped<IMeasurementService, MeasurementService>();
+            builder.Services.AddScoped<IMealPlanService, MealPlanService>();
+            builder.Services.AddScoped<IShoppingListService, ShoppingListService>();
 
             builder.Services.AddScoped<IRecipeApi, RecipeApi>();
 

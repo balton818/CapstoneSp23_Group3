@@ -5,6 +5,9 @@ using Team3DesktopApp.Dal;
 
 namespace Team3DesktopApp.ViewModel;
 
+/// <summary>
+///     login view model class serves as the view model for the login page
+/// </summary>
 public class LoginViewModel
 {
     #region Methods
@@ -12,6 +15,7 @@ public class LoginViewModel
     /// <summary>Verified the user login information and allows access to the app.</summary>
     /// <param name="userName">user name entered.</param>
     /// <param name="password">The password entered.</param>
+    /// <param name="client">client to connect to backend</param>
     /// <returns>
     ///     the user id if successful, -1 if not
     /// </returns>

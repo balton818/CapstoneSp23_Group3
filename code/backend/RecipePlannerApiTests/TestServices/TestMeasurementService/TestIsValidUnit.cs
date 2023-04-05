@@ -12,6 +12,24 @@ namespace RecipePlannerApiTests.TestServices.TestMeasurementService {
         }
 
         [Fact]
+        public void TestValidUnitPluralReturnsTrue() {
+            var service = new MeasurementService();
+
+            var value = service.IsValidUnit("cups");
+
+            Assert.True(value);
+        }
+
+        [Fact]
+        public void TestOuncesReturnsTrue() {
+            var service = new MeasurementService();
+
+            var value = service.IsValidUnit("ounces");
+
+            Assert.True(value);
+        }
+
+        [Fact]
         public void TestInvalidUnitReturnsFalse() {
             var service = new MeasurementService();
 

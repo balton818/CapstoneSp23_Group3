@@ -13,7 +13,7 @@
 <base href="~/" />
 <div class="split right">
     <div class="header">
-        <span>explore</span>
+        <span id="header">explore</span>
         <hr style="height: 2px; opacity: 100%" />
     </div>
     <div class="search-bar">
@@ -23,7 +23,7 @@
     <div id="filter-options">
         <div class="filter">
             <label for="filter-selector">Meal Type</label>
-            <select @bind="mealTypeFilterSelection" name="filter-selector" >
+            <select @bind="@mealTypeFilterSelections" name="filter-selector" size="4" multiple>
                 @foreach (var filter in this.mealTypeFilters)
                 {
                     <option>@filter</option>
@@ -32,7 +32,7 @@
         </div>
         <div class="filter">
             <label for="filter-selector2">Cuisine</label>
-            <select @bind="cuisineFilterSelection" name="filter-selector2">
+            <select @bind="@cuisineFilterSelections" name="filter-selector2" size="4" multiple>
                 @foreach (var filter in this.cuisineFilters)
                 {
                     <option>@filter</option>
@@ -41,7 +41,7 @@
         </div>
         <div class="filter">
             <label for="filter-selector3">Dietary Restriction</label>
-            <select @bind="dietaryRestrictionFilterSelection" name="filter-selector3">
+            <select @bind="@dietaryRestrictionFilterSelections" name="filter-selector3" size="4" multiple>
                 @foreach (var filter in this.dietaryRestrictionFilters)
                 {
                     <option>@filter</option>
@@ -54,7 +54,7 @@
         <label hidden="@resultsFound" style="font-weight: bold">No results found.</label>
         @foreach (var recipe in this.results)
         {
-            <div class="recipe-result" @onclick="() => goToRecipe(recipe.Title, recipe.Id ?? -1)">
+            <div class="recipe-result" @onclick="() => goToRecipe(recipe.Title, recipe.ApiId ?? 0)">
                 <img src="@recipe.Image" asp-append-version="true" style="width: 125px; height: 125px;" />
                 @recipe.Title
             </div>
@@ -83,6 +83,11 @@
     private string mealTypeFilterSelection = "";
     private string cuisineFilterSelection = "";
     private string dietaryRestrictionFilterSelection = "";
+
+    private string[] dietaryRestrictionFilterSelections = new[] { "" };
+    private string[] cuisineFilterSelections = new[] { "" };
+    private string[] mealTypeFilterSelections = new[] { "" };
+
     private string searchParam = "";
     private int pageNum = 1;
     private bool resultsFound;
@@ -90,7 +95,7 @@
     private bool hideNextPageButton;
 
     private List<Recipe> results = new List<Recipe>();
-    private RecipeService service { get; set; } = new RecipeService(new UserService(new UserDao(), new PantryDao()), new IngredientDao(), new RecipeApi(), new MeasurementService());
+    private RecipeService service { get; set; } = new RecipeService(new UserService(new UserDao(), new PantryDao()), new IngredientDao(), new RecipeApi(new com.spoonacular.RecipesApi()), new MeasurementService(), new ShoppingListService(new ShoppingListDao()));
 
     /**
      * Initializes the ExploreRecipes component
@@ -167,6 +172,13 @@
 
     private void applyFilters()
     {
+        string dietSelection = String.Join(", ", this.dietaryRestrictionFilterSelections);
+        this.dietaryRestrictionFilterSelection = dietSelection;
+        string cuisineSelection = String.Join(", ", this.cuisineFilterSelections);
+        this.cuisineFilterSelection = cuisineSelection;
+        string mealSelection = String.Join(", ", this.mealTypeFilterSelections);
+        this.mealTypeFilterSelection = mealSelection;
+
         this.pageNum = 1;
         this.browse();
     }

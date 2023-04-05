@@ -9,11 +9,12 @@ namespace RecipePlannerApiTests.TestControllers {
         [Fact]
         public void TestValidateUserBadRequest() {
             var userService = new Mock<IUserService>();
+            var shoppingService = new Mock<IShoppingListService>();
 
             userService.Setup(x => x.ValidateUser(It.IsAny<string>(), It.IsAny<string>()))
                 .Throws(new Exception());
 
-            var controller = new UserController(userService.Object);
+            var controller = new UserController(userService.Object, shoppingService.Object);
 
             var result = controller.ValidateUser("username", "password");
 
@@ -23,11 +24,12 @@ namespace RecipePlannerApiTests.TestControllers {
         [Fact]
         public void TestCreateUserBadRequest() {
             var userService = new Mock<IUserService>();
+            var shoppingService = new Mock<IShoppingListService>();
 
             userService.Setup(x => x.CreateUser(It.IsAny<User>()))
                 .Throws(new Exception());
 
-            var controller = new UserController(userService.Object);
+            var controller = new UserController(userService.Object, shoppingService.Object);
 
             var result = controller.CreateUser(new User());
 
@@ -37,11 +39,12 @@ namespace RecipePlannerApiTests.TestControllers {
         [Fact]
         public void TestGetUserPantryBadRequest() {
             var userService = new Mock<IUserService>();
+            var shoppingService = new Mock<IShoppingListService>();
 
             userService.Setup(x => x.GetUserPantry(It.IsAny<int>()))
                 .Throws(new Exception());
 
-            var controller = new UserController(userService.Object);
+            var controller = new UserController(userService.Object, shoppingService.Object);
 
             var result = controller.GetPantry(1);
 
@@ -51,11 +54,12 @@ namespace RecipePlannerApiTests.TestControllers {
         [Fact]
         public void TestAddPantryItemBadRequest() {
             var userService = new Mock<IUserService>();
+            var shoppingService = new Mock<IShoppingListService>();
 
             userService.Setup(x => x.AddPantryItem(It.IsAny<PantryItem>()))
                 .Throws(new Exception());
 
-            var controller = new UserController(userService.Object);
+            var controller = new UserController(userService.Object, shoppingService.Object);
 
             var result = controller.AddPantryItem(new PantryItem());
 
@@ -65,10 +69,11 @@ namespace RecipePlannerApiTests.TestControllers {
         [Fact]
         public void TestUpdatePantryItemBadRequest() {
             var userService = new Mock<IUserService>();
+            var shoppingService = new Mock<IShoppingListService>();
 
             userService.Setup(x => x.UpdatePantryItem(It.IsAny<PantryItem>()))
                 .Throws(new Exception());
-            var controller = new UserController(userService.Object);
+            var controller = new UserController(userService.Object, shoppingService.Object);
 
             var result = controller.UpdatePantryItem(new PantryItem());
 
@@ -78,11 +83,12 @@ namespace RecipePlannerApiTests.TestControllers {
         [Fact]
         public void TestRemovePantryItemBadRequest() {
             var userService = new Mock<IUserService>();
+            var shoppingService = new Mock<IShoppingListService>();
 
             userService.Setup(x => x.RemovePantryItem(It.IsAny<int>()))
                 .Throws(new Exception());
 
-            var controller = new UserController(userService.Object);
+            var controller = new UserController(userService.Object, shoppingService.Object);
 
             var result = controller.RemovePantryItem(1);
 

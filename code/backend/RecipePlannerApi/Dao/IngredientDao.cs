@@ -8,8 +8,10 @@ namespace RecipePlannerApi.Dao
     [ExcludeFromCodeCoverage]
     public class IngredientDao: Dao, IIngredientDao {
 
-        /// <summary>Searches the ingredient.</summary>
-        /// <param name="search">The search.</param>
+        /// <summary>
+        /// Searches the ingredients in the database based on search string.
+        /// </summary>
+        /// <param name="search">The search query.</param>
         /// <returns>List of matching ingredients</returns>
         public List<Ingredient> SearchIngredient(string search) {
             CommandUpdate cmd = c => {
@@ -17,7 +19,7 @@ namespace RecipePlannerApi.Dao
                 c.Parameters.AddWithValue("@search", search);
             };
 
-            return execute<List<Ingredient>>("search_ingredient", cmd).FirstOrDefault();
+            return execute<Ingredient>("search_ingredient", cmd);
         }
     }
 }

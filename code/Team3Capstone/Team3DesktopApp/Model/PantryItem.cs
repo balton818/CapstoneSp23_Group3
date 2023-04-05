@@ -1,7 +1,7 @@
 ﻿namespace Team3DesktopApp.Model;
 
 /// <summary>
-/// The pantry Item class which defines items in the user pantry IE what the user has on hand
+///     The pantry Item class which defines items in the user pantry IE what the user has on hand
 /// </summary>
 public class PantryItem
 {
@@ -29,7 +29,7 @@ public class PantryItem
     /// <value>
     ///     The name of the ingredient.
     /// </value>
-    public string IngredientName { get; set; }
+    public string? IngredientName { get; set; }
 
     /// <summary>
     ///     Gets or sets the quantity.
