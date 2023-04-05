@@ -54,6 +54,6 @@ namespace RecipePlannerApi.Service.Interface
         List<ShoppingListIngredient> AddRecipeIngredientsToShoppingList(List<Ingredient> ingredients, int userId);
         List<ShoppingListIngredient> AddRecipeIngredientsToShoppingList(List<int> recipeIds, int userId);
         List<PantryItem> UseIngredients(List<Ingredient> ingredients, int userId);
-        object BuyIngredients(List<ShoppingListIngredient> ingredients, int userId);
+        List<PantryItem> BuyIngredients(List<ShoppingListIngredient> ingredients, int userId);
     }
 }

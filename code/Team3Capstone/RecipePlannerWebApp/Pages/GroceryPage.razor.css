@@ -2,6 +2,7 @@
     font-size: 60pt;
     font-family: jsMath-cmbx10;
     width: 280px;
+    margin-left: 60px;
     padding-top: 16px;
     color: #30323d;
 }
@@ -22,11 +23,21 @@
     background-color: #d6ccc2;
 }
 
-/* If you want the content centered horizontally and vertically */
-.centered {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
+.controls {
+    margin-left: 60px;
+}
+
+.shopping-list {
+    overflow-y: auto;
+    margin-left: 60px;
+    height: 40%;
+    border-bottom: 2px solid black;
+}
+
+.new-ingredient {
+    margin-left: 60px;
+}
+
+.new-ingredient > * {
+    height: 30px;
 }

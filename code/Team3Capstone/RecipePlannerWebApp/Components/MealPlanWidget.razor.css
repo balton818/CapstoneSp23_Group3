@@ -1,9 +1,0 @@
-﻿.flags {
-    display: flex;
-    flex-direction: row;
-}
-
-.widget {
-    font-size: 25pt;
-    border: 2px solid black;
-}

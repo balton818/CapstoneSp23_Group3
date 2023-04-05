@@ -12,7 +12,8 @@
 <EditForm Model="@user" OnValidSubmit="@RegisterUser">
     <div id="registration-widget">
         <span class="header">Register for Foodie</span>
-
+        <button style="position:center" @onclick="goToLogin">&#8672 Back</button>
+        <br />
         <input id="usernameField" @bind="user.Username" placeholder="Enter Username" required />
 
         <input id="passwordField" @bind="user.Password" placeholder="Enter Password" required />
@@ -24,9 +25,7 @@
 
         <input id="emailField" type="email" @bind="user.Email" placeholder="Enter Email Address" required />
 
-        <button type="submit" id="submitButton" style="position:center">Submit</button>
-        <br />
-        <button style="position:center" @onclick="goToLogin">&#8672 Back</button>
+        <button type="submit" id="submitButton" style="position:center">Submit</button>        
     </div>
 </EditForm>
 
