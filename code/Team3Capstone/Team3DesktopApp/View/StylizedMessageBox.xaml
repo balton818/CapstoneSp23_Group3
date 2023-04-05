@@ -65,9 +65,11 @@
             </Grid>
             <Grid Background="#FF30323D" Height="36"  >
 
-                <Button x:Name="btnYes" Click="btnOk_Click" Content="Ok" HorizontalAlignment="Left" VerticalAlignment="Top" Background="#FFD6CCC2" Foreground="#FF30323D" FontFamily="Arial" FontWeight="Normal" Height="24" Width="74" Margin="184,0,0,0"/>
+                <Button x:Name="btnYes" Click="btnOk_Click" Content="Ok" HorizontalAlignment="Left" VerticalAlignment="Center" Background="#FFD6CCC2" Foreground="#FF30323D" FontFamily="Arial" FontWeight="Normal" Height="24" Width="74" Margin="185,0,0,0"/>
 
-                <Button x:Name="btnNo" Click="btnCancel_Click" Content="Cancel" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="286,-1,0,0" Background="#FFD6CCC2" Foreground="#FF30323D"  FontFamily="Arial" FontWeight="Normal" Height="24" Width="75"/>
+                <Button x:Name="btnNo" Click="btnCancel_Click" Content="Cancel" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="287,0,0,0" Background="#FFD6CCC2" Foreground="#FF30323D"  FontFamily="Arial" FontWeight="Normal" Height="24" Width="75"/>
+                <TextBox x:Name="quantityTextBox" Visibility="Hidden" Text="Quantity" Background="#FFD6CCC2" Foreground="#FF30323D" HorizontalAlignment="Left" Margin="18,0,0,0" TextWrapping="Wrap" VerticalAlignment="Center" Width="94" Height="24"/>
+                <Label x:Name="errorLabel" Visibility="Hidden" Content="Invalid Quantity Entered" Foreground="Red" FontSize="10" HorizontalAlignment="Left" Margin="168,-90,0,0" VerticalAlignment="Top" Height="21"/>
             </Grid>
         </StackPanel>
     </Grid>

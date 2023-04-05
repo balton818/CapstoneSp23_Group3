@@ -122,47 +122,44 @@ internal class GroceryListViewModel
 
     }
 
-    public Task<List<PantryItem>> BuyGroceryItems(List<Ingredient> ingredients, int userId, HttpClient client)
+    public Task<List<PantryItem>> BuyGroceryItems(Dictionary<string, int> ingredients, int userId, HttpClient client)
     {
         List<GroceryListItem> itemsToBuy = new List<GroceryListItem>();
+        GroceryListItem difference = new GroceryListItem();
         var connection = new HttpClientConnection();
-        foreach (var currentIngredient in ingredients)
-        {
-            if (this.getItem(currentIngredient.IngredientName) != null)
-            {
-                GroceryListItem itemToBuy = this.getItem(currentIngredient.IngredientName)!;
-                itemsToBuy.Add(itemToBuy);
-            }
-        }
-        var pantry = connection.BuyIngredientsFromList(itemsToBuy, userId, client);
-        return pantry;
-    }
-    public Task<List<PantryItem>> BuyGroceryItems(List<string> ingredients, int userId, HttpClient client)
-    {
-        List<GroceryListItem> itemsToBuy = new List<GroceryListItem>();
-        var connection = new HttpClientConnection();
-        foreach (var currentIngredient in ingredients)
+        foreach (var currentIngredient in ingredients.Keys)
         {
             if (this.getItem(currentIngredient) != null)
             {
                 GroceryListItem itemToBuy = this.getItem(currentIngredient)!;
+                if (ingredients[currentIngredient] < itemToBuy.Quantity)
+                {
+                    difference.IngredientName = itemToBuy.IngredientName;
+                    difference.Quantity = itemToBuy.Quantity - ingredients[currentIngredient];
+                    itemToBuy.Quantity = ingredients[currentIngredient];
+                    difference.UnitId = itemToBuy.UnitId;
+                    difference.UserId = itemToBuy.UserId;
+                }
+
                 itemsToBuy.Add(itemToBuy);
             }
         }
         var pantry = connection.BuyIngredientsFromList(itemsToBuy, userId, client);
+        if (difference.IngredientName != null)
+        {
+            connection.AddGroceryItem(difference, client);
+        }
         return pantry;
     }
     #endregion
 
-    public void RemoveIngredientsOnRemoveMeal(List<Ingredient> ingredients, HttpClient client)
+
+    public void ClearGroceryList(int userid, HttpClient clientToSet)
     {
-        foreach (var ingredient in ingredients)
+        this.GetGroceryList(userid, clientToSet);
+        foreach (var item in this.GroceryList)
         {
-            var groceryItem = this.getItem(ingredient.IngredientName);
-            if (groceryItem != null)
-            {
-                this.RemoveIngredient(groceryItem.IngredientName, groceryItem.Quantity, client);
-            }
+            this.RemoveIngredient(item.IngredientName, item.Quantity, clientToSet);
         }
     }
 }

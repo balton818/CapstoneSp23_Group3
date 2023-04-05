@@ -486,7 +486,6 @@ public class FoodieViewModel
     {
         this.mealPlanViewModel.AddToPlan(this.recipeDetailViewModel.CurrentRecipe!, this.PlanTypeAndDateToAdd!.Item1,
             this.PlanTypeAndDateToAdd.Item2, this.ClientToSet, current);
-        // await this.addNeededGroceriesToList();
     }
 
 
@@ -497,19 +496,9 @@ public class FoodieViewModel
     public async Task RemoveMealFromPlan(string? mealToRemove, DayOfWeek dayOfWeek, MealType mealType)
     {
         var recipe = this.mealPlanViewModel.GetRecipe(dayOfWeek, mealType);
-        var ingredients = this.getRecipeDetails((int)recipe.ApiId!);
-        await this.groceryListViewModel.BuyGroceryItems(ingredients.Ingredients!, this.Userid, this.ClientToSet);
-        var toRemove = this.pantryViewModel.GetIngredientsUsed(ingredients.Ingredients!);
-        await this.pantryViewModel.UseIngredients(toRemove, this.Userid, this.ClientToSet);
-        //this.groceryListViewModel.RemoveIngredientsOnRemoveMeal(ingredients.Ingredients!, this.ClientToSet);
         this.mealPlanViewModel.RemoveMealFromPlan(this.ClientToSet, mealToRemove, dayOfWeek, mealType);
     }
 
-    private RecipeInformation getRecipeDetails(int recipeId)
-    {
-        var connection = new HttpClientConnection();
-        return connection.GetRecipeDetail(recipeId, this.ClientToSet).Result;
-    }
     /// <summary>Gets the date range for the current week.</summary>
     /// <param name="currentWeek">if set to <c>true</c> [current week] false next week.</param>
     /// <returns>
@@ -577,7 +566,7 @@ public class FoodieViewModel
             this.ClientToSet);
     }
 
-    public void PurchaseIngredients(List<string> purchasedItems)
+    public void PurchaseIngredients(Dictionary<string, int> purchasedItems)
     {
 
         this.groceryListViewModel.BuyGroceryItems(purchasedItems, this.Userid, this.ClientToSet);
@@ -588,5 +577,10 @@ public class FoodieViewModel
         var connection = new HttpClientConnection();
         var toRemove = this.pantryViewModel.GetIngredientsUsed(this.recipeDetailViewModel.RecipeInfo!.Ingredients!);
         connection.UseIngredientsFromList(toRemove, Userid, this.ClientToSet);
+    }
+
+    public void ClearGroceryList()
+    {
+        this.groceryListViewModel.ClearGroceryList(this.Userid, this.ClientToSet);
     }
 }

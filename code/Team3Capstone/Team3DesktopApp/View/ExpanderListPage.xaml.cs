@@ -34,7 +34,6 @@ public partial class ExpanderListPage
     public ExpanderListPage(FoodieViewModel? viewModel, bool isPantry)
     {
         this.InitializeComponent();
-        //this.measurementCombo.SelectedIndex = 0;
         this.ViewModel = viewModel;
         this.IsGrocery = !isPantry;
         this.navMenu.FoodViewModel = this.ViewModel;
@@ -95,12 +94,14 @@ public partial class ExpanderListPage
             {
                 this.headerTitle.Text = "My Pantry";
                 this.purchaseSelectedButton.Visibility = Visibility.Hidden;
+                this.clearGroceryListButton.Visibility = Visibility.Hidden;
                 this.buildPantryExpanders(expanders);
             }
             else
             {
                 this.headerTitle.Text = "Grocery List";
                 this.purchaseSelectedButton.Visibility = Visibility.Visible;
+                this.clearGroceryListButton.Visibility = Visibility.Visible;
                 this.buildGroceryExpanders(expanders);
             }
 
@@ -138,13 +139,18 @@ public partial class ExpanderListPage
 
     private void PurchaseSelectedButton_OnClick(object sender, RoutedEventArgs e)
     {
-        List<string> purchasedItems = new List<string>();
+        Dictionary<string, int> purchasedItems = new Dictionary<string, int>();
         foreach (IngredientExpander expander in this.expanderListBox.Items)
         {
 
+
             if (expander.SelectedForPurchase)
             {
-                purchasedItems.Add(expander.IngredientName!);
+                var result = StylizedMessageBox.ShowBox("Confirm purchase of " + expander.IngredientName + "?", "Purchase Ingredient", expander.IngredientAmount);
+                if (result.Item1 == "1")
+                {
+                    purchasedItems.Add(expander.IngredientName!, int.Parse(result.Item2));
+                }
             }
         }
         this.ViewModel.PurchaseIngredients(purchasedItems);
@@ -158,6 +164,16 @@ public partial class ExpanderListPage
             var navigate = new PageNavigation(this.ViewModel);
             navigate.NavigateToPage(navUri, NavigationService);
         }
+    }
+
+    private void ClearGroceryListButton_OnClick(object sender, RoutedEventArgs e)
+    {
+        if (StylizedMessageBox.ShowBox("Are you Sure you want to Clear the Grocery List?", "Grocery List Clear") == "1")
+        {
+            this.ViewModel.ClearGroceryList();
+            this.navigateToPage("Grocery");
+        }
+
     }
 }
 

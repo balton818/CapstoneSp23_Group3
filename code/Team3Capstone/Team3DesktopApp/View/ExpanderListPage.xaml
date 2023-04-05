@@ -532,10 +532,25 @@
                     FontFamily="Song Myung"
                     FontSize="18"
                     ForceCursor="True"
-                    Visibility="Visible"
-                    Margin="117,470,108,86">
+                    Visibility="Visible" Canvas.Left="233" Canvas.Top="469">
                     <local:NavButton.Resources>
                         <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="5" />
+                        </Style>
+                    </local:NavButton.Resources>
+                </local:NavButton>
+                <local:NavButton
+                    x:Name="clearGroceryListButton"
+                    Background="#d6ccc2"
+                    Click="ClearGroceryListButton_OnClick"
+                    Content="Clear Grocery List"
+                    FontFamily="Song Myung"
+                    FontSize="18"
+                    ForceCursor="True"
+                    Visibility="Visible"
+                    Canvas.Left="31" Canvas.Top="468" HorizontalAlignment="Left" VerticalAlignment="Center">
+                    <local:NavButton.Resources>
+                        <Style TargetType="{x:Type Border}">
                             <Setter Property="CornerRadius" Value="5" />
                         </Style>
                     </local:NavButton.Resources>
