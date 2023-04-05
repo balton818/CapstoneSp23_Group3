@@ -1,6 +1,7 @@
 ﻿using RecipePlannerApi.Controllers.Requests;
 using RecipePlannerApi.Dao.Dto;
 using RecipePlannerApi.Dao.Interface;
+using RecipePlannerApi.Dao.Request;
 using RecipePlannerApi.Model;
 using System.Diagnostics.CodeAnalysis;
 
@@ -105,5 +106,19 @@ namespace RecipePlannerApi.Dao
 
             return new Meal(execute<MealDto>("update_meal", cmd).FirstOrDefault());
         }
+
+        /// <summary>
+        /// Retrevies recipes for meal plan.
+        /// </summary>
+        /// <param name="mealId">The meal identifier.</param>
+        public List<int> GetMealPlanRecipes(int mealPlanId) {
+            CommandUpdate cmd = c => {
+                c.CommandType = System.Data.CommandType.StoredProcedure;
+                c.Parameters.AddWithValue("@mealPlanId", mealPlanId);
+            };
+
+            return execute<IdDto>("get_meal_plan_api_recipes", cmd).Select(item => item.Id).ToList();
+        }
+
     }
 }

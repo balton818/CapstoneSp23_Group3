@@ -19,7 +19,7 @@ namespace RecipePlannerApi.Dao
                 c.Parameters.AddWithValue("@search", search);
             };
 
-            return execute<List<Ingredient>>("search_ingredient", cmd).FirstOrDefault();
+            return execute<Ingredient>("search_ingredient", cmd);
         }
     }
 }

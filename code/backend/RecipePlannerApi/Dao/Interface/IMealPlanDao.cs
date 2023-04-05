@@ -32,6 +32,8 @@ namespace RecipePlannerApi.Dao.Interface
         /// <param name="mealPlanId">The meal plan identifier.</param>
         /// <returns>The list of Meals.</returns>
         List<Meal> GetMealPlanMeals(int mealPlanId);
+        List<int> GetMealPlanRecipes(int mealPlanId);
+
         /// <summary>
         /// Removes the meal with the matching meal plan id.
         /// </summary>

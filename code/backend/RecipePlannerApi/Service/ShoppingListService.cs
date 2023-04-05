@@ -43,8 +43,6 @@ namespace RecipePlannerApi.Service
                 }
             }
 
-            toAddList = toAddList.Where(i => i.Quantity > 1).ToList();
-
             foreach(var ingredient in toAddList) {
                 this.UpsertShoppingListIngredient(ingredient);
             }
