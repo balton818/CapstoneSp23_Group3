@@ -175,10 +175,15 @@ namespace RecipePlannerApi.Service
                 return null;
             }
 
-            PantryItem pantryIngredient;
-            pantryIngredient = pantry.Find(i => ingredientId == i.IngredientId);
-            pantryIngredient ??= pantry.Find(i => ingredientName.ToLower().Contains(i.IngredientName.ToLower()));
-            pantryIngredient ??= pantry.Find(i => i.IngredientName.ToLower().Contains(ingredientName.ToLower()));
+            PantryItem pantryIngredient = null;
+            if(ingredientId != null) {
+                pantryIngredient = pantry.Find(i => ingredientId == i.IngredientId);
+            }
+
+            if (!string.IsNullOrEmpty(ingredientName)) {
+                pantryIngredient ??= pantry.Find(i => ingredientName.ToLower().Contains(i.IngredientName.ToLower()));
+                pantryIngredient ??= pantry.Find(i => i.IngredientName.ToLower().Contains(ingredientName.ToLower()));
+            }
 
             if (ingredientId != null && pantryIngredient != null) {
                 pantryIngredient.IngredientId = ingredientId;
@@ -291,7 +296,7 @@ namespace RecipePlannerApi.Service
             return this._userService.UpdatePantryItems(usedItems, userId);
         }
 
-        public object BuyIngredients(List<ShoppingListIngredient> ingredients, int userId) {
+        public List<PantryItem> BuyIngredients(List<ShoppingListIngredient> ingredients, int userId) {
             var pantry = this.GetUserPantry(userId);
 
             List<PantryItem> newPantryItems = new List<PantryItem>();
@@ -311,6 +316,7 @@ namespace RecipePlannerApi.Service
                     });
                 }
             }
+
 
             var newPantry = this._userService.UpdatePantryItems(newPantryItems, userId);
 
