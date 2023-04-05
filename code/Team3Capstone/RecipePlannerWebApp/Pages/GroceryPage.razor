@@ -109,15 +109,26 @@
         List<ShoppingListIngredient> ingredients = new List<ShoppingListIngredient>();
         foreach (var item in this.selectedIngredients.Keys)
         {
-            if (this.selectedIngredients[item])
+            if (this.selectedIngredients[item] && !ingredients.Contains(item))
             {
                 Console.WriteLine("Purchasing ingredient number " + item.IngredientName);
                 ingredients.Add(item);
             }
         }
-        this.recipeService.BuyIngredients(ingredients, this.currentUserData.CurrentUser.Id);
-        Console.WriteLine(" -- Done buying groceries");
-        Nav.NavigateTo("/groceries", true);
+        try
+        {
+            this.recipeService.BuyIngredients(ingredients, this.currentUserData.CurrentUser.Id);
+        }
+        catch (System.Data.SqlClient.SqlException sqlEx)
+        {
+            Console.WriteLine(" -- Err: " + sqlEx.Message + "\n" + sqlEx.StackTrace);
+        }
+        finally
+        {
+            this.currentUserData.userShoppingSelection.Clear();
+            Console.WriteLine(" -- Done buying groceries");
+            Nav.NavigateTo("/groceries", true);
+        }
     }
 
     private async void removeAllSelected()
@@ -136,6 +147,7 @@
                 }
             }
             this.groceryService.DeleteAllFromShoppingList(selectedIngredients);
+            this.currentUserData.userShoppingSelection.Clear();
             Nav.NavigateTo("/groceries", true);
         }
 
@@ -173,65 +185,20 @@
         if (confirm)
         {
             Console.WriteLine("-- CONFIRM");
-            List<RecipePlannerApi.Model.Ingredient> ingredients = this.getListOfIngredients();
-            List<ShoppingListIngredient> convertedIngredients = this.convertIngredients(ingredients);
-            foreach(var ingredient in convertedIngredients)
-            {
-                try
-                {
-                    this.groceryService.UpsertShoppingListIngredient(ingredient);
-                } catch (System.Data.SqlClient.SqlException sqlEx)
-                {
-                    Console.WriteLine(" -- SQL ERR: + " + sqlEx.Message + "\n" + sqlEx.StackTrace);
-                }
-            }
+            List<ShoppingListIngredient> ingredients = this.getListOfIngredients();
+            
             Nav.NavigateTo("/groceries", true);
         }
     }
 
-    private List<ShoppingListIngredient> convertIngredients(List<RecipePlannerApi.Model.Ingredient> ingredients)
+    private List<ShoppingListIngredient> getListOfIngredients()
     {
-        List<ShoppingListIngredient> convertedIngredients = new List<ShoppingListIngredient>();
-        foreach (var ingredient in ingredients)
-        {
-            ShoppingListIngredient newIngredient = new ShoppingListIngredient()
-                {
-                    IngredientName = this.newIngredientName.ToLower(),
-                    UserId = this.currentUserData.CurrentUser.Id,
-                    Quantity = ingredient.Quantity
-                };
-            AppUnit unit;
-            if (Enum.TryParse<AppUnit>(this.newIngredientUnit, out unit))
-            {
-                newIngredient.UnitId = unit;
-            }
-            convertedIngredients.Add(newIngredient);
-        }
-        return convertedIngredients;
-    }
-
-    private List<RecipePlannerApi.Model.Ingredient> getListOfIngredients()
-    {
-        List<RecipePlannerApi.Model.Ingredient> ingredientsMasterList = new List<RecipePlannerApi.Model.Ingredient>();
         MealPlan thisWeek = this.mealService.GetThisWeeksMealPlan(this.currentUserData.CurrentUser.Id);
-        foreach (var recipe in thisWeek.Recipes)
-        {
-            RecipeInformation info = this.recipeService.GetRecipeInformation(recipe);
-            foreach (var ingredient in info.Ingredients)
-            {
-                ingredientsMasterList.Add(ingredient);
-            }
-        }
-        thisWeek = this.mealService.GetNextWeeksMealPlan(this.currentUserData.CurrentUser.Id);
-        foreach (var recipe in thisWeek.Recipes)
-        {
-            RecipeInformation info = this.recipeService.GetRecipeInformation(recipe);
-            foreach (var ingredient in info.Ingredients)
-            {
-                ingredientsMasterList.Add(ingredient);
-            }
-        }
-        return ingredientsMasterList;
+        MealPlan nextWeek = this.mealService.GetNextWeeksMealPlan(this.currentUserData.CurrentUser.Id);
+        List<ShoppingListIngredient> convertedIngredients = new List<ShoppingListIngredient>();
+        convertedIngredients.AddRange(this.recipeService.AddRecipeIngredientsToShoppingList(thisWeek.Recipes, this.currentUserData.CurrentUser.Id));
+        convertedIngredients.AddRange(this.recipeService.AddRecipeIngredientsToShoppingList(nextWeek.Recipes, this.currentUserData.CurrentUser.Id));
+        return convertedIngredients;
     }
 
     private void selectAll(bool shouldCheck)
