@@ -39,8 +39,6 @@ public partial class AddToPlanPanel
         var day = this.parseDay();
         var current = this.parseCurrentWeek();
         var messageBoxText = "This recipe is already in your meal plan. Would you like to Overwrite it?";
-        var button = MessageBoxButton.YesNo;
-        var icon = MessageBoxImage.Warning;
         var caption = "Overwrite?";
         if (mealType == null || day == null)
         {

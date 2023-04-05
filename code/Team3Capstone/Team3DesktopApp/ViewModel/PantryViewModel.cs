@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Team3DesktopApp.Dal;
@@ -111,5 +112,23 @@ public class PantryViewModel
         return connection.RemovePantryItem(pantryItem, client);
     }
 
+    public async Task UseIngredients(List<PantryItem> ingredients, int userId, HttpClient client)
+    {
+        var connection = new HttpClientConnection();
+        await connection.UseIngredientsFromList(ingredients, userId, client);
+    }
+
     #endregion
+
+    public List<PantryItem> GetIngredientsUsed(List<Ingredient> ingredients)
+    {
+        var usedIngredients = new List<PantryItem>();
+        foreach (var ingredient in ingredients)
+        {
+            var pantryItem = this.getItem(ingredient.IngredientName);
+            usedIngredients.Add(pantryItem);
+        }
+
+        return usedIngredients;
+    }
 }

@@ -27,17 +27,16 @@
                     <Grid Width="363">
                         <CheckBox
                             x:Name="purchasedCheckBox"
-                            Height="16"
+                            Height="38"
                             Margin="0,0,300,0"
-                            VerticalAlignment="Center"
                             Background="#FFD6CCC2"
                             Content="Purchased"
                             FontSize="8"
                             DataContext="{Binding DataContext, RelativeSource={RelativeSource AncestorType={x:Type Expander}}}"
                             IsChecked="{Binding Path=SelectedForPurchase, Mode=TwoWay}"
                             Foreground="#FFE8C547"
-                            Visibility="{Binding Path=IsGrocery, Mode=TwoWay, Converter={StaticResource BoolToVis}}">
-                        </CheckBox>
+                            Visibility="{Binding Path=IsGrocery, Mode=TwoWay, Converter={StaticResource BoolToVis}}"
+                            VerticalAlignment="Center"/>
                         <TextBlock
                             x:Name="ingredientHeader"
                             Width="167"

@@ -39,7 +39,7 @@ public partial class FoundRecipePage
     {
         if (this.recipeListBox.SelectedItem == null)
         {
-            MessageBox.Show("Please select a recipe to view");
+            StylizedMessageBox.ShowBox("Please select a recipe to view", "No recipe selected");
             return;
         }
 

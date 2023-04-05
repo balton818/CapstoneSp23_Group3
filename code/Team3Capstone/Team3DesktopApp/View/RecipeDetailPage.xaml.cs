@@ -68,6 +68,11 @@ public partial class RecipeDetailPage
 
     private void mealPrepared_OnClick(object sender, RoutedEventArgs e)
     {
-        throw new System.NotImplementedException();
+        if (StylizedMessageBox.ShowBox(
+                "Are you sure you have prepared this meal? This will remove the ingredient quantities from your pantry.",
+                "Prepare Meal?") == "1")
+        {
+            this.ViewModel.PrepareMeal();
+        }
     }
 }

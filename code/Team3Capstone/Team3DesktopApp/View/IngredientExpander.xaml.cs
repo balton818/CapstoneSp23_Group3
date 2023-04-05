@@ -108,16 +108,16 @@ public partial class IngredientExpander
         }
     }
 
-    private void RemoveButton_OnClick(object sender, RoutedEventArgs e)
+    private async void RemoveButton_OnClick(object sender, RoutedEventArgs e)
     {
-        if (MessageBox.Show("Confirm removal of " + this.IngredientName + "?",
-                "Ingredient Removal",
-                MessageBoxButton.YesNo,
-                MessageBoxImage.Question) == MessageBoxResult.Yes)
+        if (StylizedMessageBox.ShowBox(
+                "Confirm removal of " + this.IngredientName + " ? ",
+                "Ingredient Removal") == "1")
         {
+
             if (this.ViewModel != null)
             {
-                this.ViewModel.RemoveIngredient(this.IngredientName, this.IngredientAmount, !this.IsGrocery);
+                await this.ViewModel.RemoveIngredient(this.IngredientName, this.IngredientAmount, !this.IsGrocery);
                 this.expanderNavigation();
             }
         }

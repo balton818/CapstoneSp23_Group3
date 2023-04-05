@@ -871,7 +871,7 @@
         <local:NavMenu
             x:Name="navMenu"
             Width="162"
-            Height="239"
+            Height="287"
             Margin="308,7,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"

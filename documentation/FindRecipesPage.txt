@@ -1,0 +1,18 @@
+Available Recipe Page Use Case Scenario
+
+Context - User has successfully logged in and has clicked the Find Recipes button.
+
+PRIMARY FLOW
+1 - User is shown qualifying (all ingredients in pantry) recipe titles.
+2 - User selects a recipe
+3 - Recipe details are displayed for the user.
+
+Alternative Flow(s)
+NO RECIPE SELECTED
+A2 - User selects Back
+A3 - User returns to main page
+
+EMPTY PANTRY
+A1 - User is informed that their pantry is empty and there are no recipes to show.
+A2 - User selects Back
+A3 - User returns to main page

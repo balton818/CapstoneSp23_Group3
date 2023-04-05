@@ -157,6 +157,10 @@ public partial class MealPlanPage
 
     private void addGroceriesNeeded(object sender, RoutedEventArgs e)
     {
-        throw new NotImplementedException();
+        if (StylizedMessageBox.ShowBox(
+                "Generating a grocery list more than once will add the same items to your grocery list. Continue?", " Ingredient Removal") == "1")
+        {
+            this.ViewModel.AddedNeededGroceries();
+        }
     }
 }

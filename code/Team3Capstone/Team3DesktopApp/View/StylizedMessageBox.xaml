@@ -7,7 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="StylizedMessageBox"
     Width="383"
-    Height="116"
+    Height="136"
     AllowsTransparency="True"
     Background="#FF30323D"
     BorderBrush="#FFE8C547"
@@ -38,10 +38,10 @@
         <StackPanel
             Name="stkpnlMessageBody"
             Height="Auto"
-            Margin="0,31,0,0"
+            Margin="0,26,0,0"
             Background="#FF30323D"
             DockPanel.Dock="Bottom">
-            <Grid Height="43" Background="#FF30323D">
+            <Grid Height="69" Background="#FF30323D">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
@@ -53,7 +53,7 @@
                     Name="messageContent"
                     Grid.Column="1"
                     Height="Auto"
-                    Margin="10,9,0,6"
+                    Margin="10,9,0,10"
                     Padding="5"
                     HorizontalAlignment="Left"
                     Background="#FF30323D"
@@ -63,11 +63,11 @@
                     Text="Test"
                     TextWrapping="Wrap" Width="371" />
             </Grid>
-            <Grid Background="#FF30323D" Margin="5,5,5,5" Height="33">
+            <Grid Background="#FF30323D" Height="36"  >
 
-                <Button Name="btnYes" Click="btnOk_Click" Content="Ok" HorizontalAlignment="Left" VerticalAlignment="Top" Background="#FFD6CCC2" Foreground="#FF30323D" FontFamily="Arial" FontWeight="Normal" Height="24" Width="74" Margin="186,-1,0,0"/>
+                <Button x:Name="btnYes" Click="btnOk_Click" Content="Ok" HorizontalAlignment="Left" VerticalAlignment="Top" Background="#FFD6CCC2" Foreground="#FF30323D" FontFamily="Arial" FontWeight="Normal" Height="24" Width="74" Margin="184,0,0,0"/>
 
-                <Button Name="btnNo" Click="btnCancel_Click" Content="Cancel" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="286,-1,0,0" Background="#FFD6CCC2" Foreground="#FF30323D"  FontFamily="Arial" FontWeight="Normal" Height="24" Width="75"/>
+                <Button x:Name="btnNo" Click="btnCancel_Click" Content="Cancel" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="286,-1,0,0" Background="#FFD6CCC2" Foreground="#FF30323D"  FontFamily="Arial" FontWeight="Normal" Height="24" Width="75"/>
             </Grid>
         </StackPanel>
     </Grid>

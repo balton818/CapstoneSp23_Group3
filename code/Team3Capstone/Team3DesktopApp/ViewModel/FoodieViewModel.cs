@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Windows.Media;
@@ -36,10 +37,6 @@ public class FoodieViewModel
     /// <summary>Gets or sets the userid.</summary>
     /// <value>The currently logged in users ID.</value>
     public int Userid { get; set; }
-
-    /// <summary>Gets or sets the pantry.</summary>
-    /// <value>The currently logged in user's pantry.</value>
-    public List<PantryItem>? Pantry { get; set; }
 
     /// <summary>Gets or sets the plan type and date to add.</summary>
     /// <value>The plan type and date to add.</value>
@@ -485,21 +482,34 @@ public class FoodieViewModel
 
     /// <summary>Adds recipe to meal plan.</summary>
     /// <param name="current">indicates if the current week is selected.</param>
-    public void AddToMealPlan(bool? current)
+    public async Task AddToMealPlan(bool? current)
     {
         this.mealPlanViewModel.AddToPlan(this.recipeDetailViewModel.CurrentRecipe!, this.PlanTypeAndDateToAdd!.Item1,
             this.PlanTypeAndDateToAdd.Item2, this.ClientToSet, current);
+        // await this.addNeededGroceriesToList();
     }
+
 
     /// <summary>Removes the meal from plan.</summary>
     /// <param name="mealToRemove">The name of the meal to remove.</param>
     /// <param name="dayOfWeek">The day of week.</param>
     /// <param name="mealType">Type of the meal.</param>
-    public void RemoveMealFromPlan(string? mealToRemove, DayOfWeek dayOfWeek, MealType mealType)
+    public async Task RemoveMealFromPlan(string? mealToRemove, DayOfWeek dayOfWeek, MealType mealType)
     {
+        var recipe = this.mealPlanViewModel.GetRecipe(dayOfWeek, mealType);
+        var ingredients = this.getRecipeDetails((int)recipe.ApiId!);
+        await this.groceryListViewModel.BuyGroceryItems(ingredients.Ingredients!, this.Userid, this.ClientToSet);
+        var toRemove = this.pantryViewModel.GetIngredientsUsed(ingredients.Ingredients!);
+        await this.pantryViewModel.UseIngredients(toRemove, this.Userid, this.ClientToSet);
+        //this.groceryListViewModel.RemoveIngredientsOnRemoveMeal(ingredients.Ingredients!, this.ClientToSet);
         this.mealPlanViewModel.RemoveMealFromPlan(this.ClientToSet, mealToRemove, dayOfWeek, mealType);
     }
 
+    private RecipeInformation getRecipeDetails(int recipeId)
+    {
+        var connection = new HttpClientConnection();
+        return connection.GetRecipeDetail(recipeId, this.ClientToSet).Result;
+    }
     /// <summary>Gets the date range for the current week.</summary>
     /// <param name="currentWeek">if set to <c>true</c> [current week] false next week.</param>
     /// <returns>
@@ -556,5 +566,27 @@ public class FoodieViewModel
 
         groceryList.AddRange((await this.groceryListViewModel.GetGroceryList(this.Userid, this.ClientToSet))!);
         return groceryList;
+    }
+
+    public async Task AddedNeededGroceries()
+    {
+        List<int> recipeIds = new List<int>();
+        recipeIds.AddRange(this.mealPlanViewModel.NextWeekPlan!.Recipes);
+        recipeIds.AddRange(this.mealPlanViewModel.FirstWeekPlan!.Recipes);
+        await this.groceryListViewModel.AddNeededGroceriesToList(recipeIds, this.Userid,
+            this.ClientToSet);
+    }
+
+    public void PurchaseIngredients(List<string> purchasedItems)
+    {
+
+        this.groceryListViewModel.BuyGroceryItems(purchasedItems, this.Userid, this.ClientToSet);
+    }
+
+    public void PrepareMeal()
+    {
+        var connection = new HttpClientConnection();
+        var toRemove = this.pantryViewModel.GetIngredientsUsed(this.recipeDetailViewModel.RecipeInfo!.Ingredients!);
+        connection.UseIngredientsFromList(toRemove, Userid, this.ClientToSet);
     }
 }

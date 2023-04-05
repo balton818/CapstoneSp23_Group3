@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Team3DesktopApp.Model;
@@ -566,6 +567,91 @@ public class HttpClientConnection
         }
 
         return Task.FromResult(false);
+    }
+
+    public Task<List<GroceryListItem>> AddToGroceryListByRecipeId(List<int> recipeIds, int userId, HttpClient client)
+    {
+        var query = new Uri("Recipe/add-to-shopping-list-by-recipe-ids?userId=" + userId, UriKind.Relative);
+        var json = JsonConvert.SerializeObject(recipeIds);
+        var data = new StringContent(json, Encoding.UTF8, "application/json");
+        var response = client.PostAsync(query, data);
+        Console.WriteLine(response);
+        if (response.Result.IsSuccessStatusCode)
+        {
+            var readTask = response.Result.Content.ReadAsStringAsync();
+            readTask.Wait();
+
+            var result = readTask.Result;
+            Console.WriteLine(result);
+            var groceryList = JsonConvert.DeserializeObject<List<GroceryListItem>>(result);
+            return Task.FromResult(groceryList)!;
+        }
+
+        return Task.FromResult<List<GroceryListItem>>(null);
+    }
+
+
+    public Task<List<GroceryListItem>> AddToGroceryListByIngredientIds(List<Ingredient> ingredients, int userId, HttpClient client)
+    {
+        var query = new Uri("Recipe/add-to-shopping-list-by-ingredients?userId=" + userId, UriKind.Relative);
+        var json = JsonConvert.SerializeObject(ingredients);
+        var data = new StringContent(json, Encoding.UTF8, "application/json");
+        var response = client.PostAsync(query, data);
+        Console.WriteLine(response);
+        if (response.Result.IsSuccessStatusCode)
+        {
+            var readTask = response.Result.Content.ReadAsStringAsync();
+            readTask.Wait();
+
+            var result = readTask.Result;
+            Console.WriteLine(result);
+            var groceryList = JsonConvert.DeserializeObject<List<GroceryListItem>>(result);
+            return Task.FromResult(groceryList)!;
+        }
+
+        return Task.FromResult<List<GroceryListItem>>(null);
+    }
+
+    public Task<List<PantryItem>> BuyIngredientsFromList(List<GroceryListItem> ingredients, int userId, HttpClient client)
+    {
+        var query = new Uri("Recipe/buy-ingredients?userId=" + userId, UriKind.Relative);
+        var json = JsonConvert.SerializeObject(ingredients);
+        var data = new StringContent(json, Encoding.UTF8, "application/json");
+        var response = client.PostAsync(query, data);
+        Console.WriteLine(response);
+        if (response.Result.IsSuccessStatusCode)
+        {
+            var readTask = response.Result.Content.ReadAsStringAsync();
+            readTask.Wait();
+
+            var result = readTask.Result;
+            Console.WriteLine(result);
+            var groceryList = JsonConvert.DeserializeObject<List<PantryItem>>(result);
+            return Task.FromResult(groceryList)!;
+        }
+
+        return Task.FromResult<List<PantryItem>>(null);
+    }
+
+    public Task<List<PantryItem>> UseIngredientsFromList(List<PantryItem> ingredients, int userId, HttpClient client)
+    {
+        var query = new Uri("Recipe/use-ingredients?userId=" + userId, UriKind.Relative);
+        var json = JsonConvert.SerializeObject(ingredients);
+        var data = new StringContent(json, Encoding.UTF8, "application/json");
+        var response = client.PostAsync(query, data);
+        Console.WriteLine(response);
+        if (response.Result.IsSuccessStatusCode)
+        {
+            var readTask = response.Result.Content.ReadAsStringAsync();
+            readTask.Wait();
+
+            var result = readTask.Result;
+            Console.WriteLine(result);
+            var groceryList = JsonConvert.DeserializeObject<List<PantryItem>>(result);
+            return Task.FromResult(groceryList)!;
+        }
+
+        return Task.FromResult<List<PantryItem>>(null);
     }
     #endregion
 }

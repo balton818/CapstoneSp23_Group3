@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Windows;
 using Team3DesktopApp.Model;
 using Team3DesktopApp.ViewModel;
@@ -33,6 +34,7 @@ public partial class ExpanderListPage
     public ExpanderListPage(FoodieViewModel? viewModel, bool isPantry)
     {
         this.InitializeComponent();
+        //this.measurementCombo.SelectedIndex = 0;
         this.ViewModel = viewModel;
         this.IsGrocery = !isPantry;
         this.navMenu.FoodViewModel = this.ViewModel;
@@ -52,7 +54,8 @@ public partial class ExpanderListPage
     /// <param name="e">The <see cref="RoutedEventArgs" /> instance containing the event data.</param>
     private async void AddIngredientButton_OnClick(object sender, RoutedEventArgs e)
     {
-        if (!string.IsNullOrEmpty(this.ingredientNameTextBox.Text) && !string.IsNullOrEmpty(this.quantityTextBox.Text))
+        if (!string.IsNullOrEmpty(this.ingredientNameTextBox.Text) &&
+            !string.IsNullOrEmpty(this.quantityTextBox.Text) && this.quantityTextBox.Text.All(Char.IsDigit))
         {
             if (StylizedMessageBox.ShowBox(
                     "Confirm addition of " + this.ingredientNameTextBox.Text + " " + this.quantityTextBox.Text + " " +
@@ -135,6 +138,26 @@ public partial class ExpanderListPage
 
     private void PurchaseSelectedButton_OnClick(object sender, RoutedEventArgs e)
     {
-        Console.WriteLine("TODO");
+        List<string> purchasedItems = new List<string>();
+        foreach (IngredientExpander expander in this.expanderListBox.Items)
+        {
+
+            if (expander.SelectedForPurchase)
+            {
+                purchasedItems.Add(expander.IngredientName!);
+            }
+        }
+        this.ViewModel.PurchaseIngredients(purchasedItems);
+        this.navigateToPage("Grocery");
+    }
+
+    private void navigateToPage(string navUri)
+    {
+        if (NavigationService != null)
+        {
+            var navigate = new PageNavigation(this.ViewModel);
+            navigate.NavigateToPage(navUri, NavigationService);
+        }
     }
 }
+

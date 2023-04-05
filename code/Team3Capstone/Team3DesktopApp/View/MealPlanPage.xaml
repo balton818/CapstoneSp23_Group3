@@ -189,6 +189,6 @@
             Margin="308,7,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Grid.ZIndex="1" Height="268" />
+            Grid.ZIndex="1" Height="280" />
     </Grid>
 </Page>

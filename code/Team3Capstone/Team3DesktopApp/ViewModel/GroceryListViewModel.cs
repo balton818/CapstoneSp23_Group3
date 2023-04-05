@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Windows.Media.TextFormatting;
 using Team3DesktopApp.Dal;
 using Team3DesktopApp.Model;
 
@@ -12,7 +13,7 @@ internal class GroceryListViewModel
 
     /// <summary>Gets or sets the pantry.</summary>
     /// <value>The pantry.</value>
-    public List<GroceryListItem>? GroceryList { get; set; }
+    public List<GroceryListItem>? GroceryList { get; set; } = new List<GroceryListItem>();
 
     #endregion
 
@@ -28,8 +29,7 @@ internal class GroceryListViewModel
     {
         this.GroceryList = new List<GroceryListItem>();
         var connection = new HttpClientConnection();
-        var retrieved = await connection.GetGroceryList(userId, client);
-        this.GroceryList.AddRange(retrieved);
+        this.GroceryList = await connection.GetGroceryList(userId, client);
         return this.GroceryList;
     }
 
@@ -76,12 +76,17 @@ internal class GroceryListViewModel
     {
         this.getItem(name);
         var groceryItem = this.getItem(name);
-        groceryItem.Quantity = quantity;
-        var connection = new HttpClientConnection();
-        return await connection.EditGroceryItem(groceryItem, client);
+        if (groceryItem != null)
+        {
+            groceryItem.Quantity = quantity;
+            var connection = new HttpClientConnection();
+            return await connection.EditGroceryItem(groceryItem, client);
+        }
+
+        return null!;
     }
 
-    private GroceryListItem getItem(string? name)
+    private GroceryListItem? getItem(string? name)
     {
         foreach (var item in this.GroceryList!)
         {
@@ -91,7 +96,7 @@ internal class GroceryListViewModel
             }
         }
 
-        return new GroceryListItem();
+        return null;
     }
 
     /// <summary>Removes the ingredient from the users grocery list.</summary>
@@ -109,5 +114,55 @@ internal class GroceryListViewModel
         return connection.RemoveGroceryItem(groceryItem, client);
     }
 
+    public async Task AddNeededGroceriesToList(List<int> recipeIds, int userId,
+        HttpClient client)
+    {
+        var connection = new HttpClientConnection();
+        this.GroceryList = await connection.AddToGroceryListByRecipeId(recipeIds, userId, client);
+
+    }
+
+    public Task<List<PantryItem>> BuyGroceryItems(List<Ingredient> ingredients, int userId, HttpClient client)
+    {
+        List<GroceryListItem> itemsToBuy = new List<GroceryListItem>();
+        var connection = new HttpClientConnection();
+        foreach (var currentIngredient in ingredients)
+        {
+            if (this.getItem(currentIngredient.IngredientName) != null)
+            {
+                GroceryListItem itemToBuy = this.getItem(currentIngredient.IngredientName)!;
+                itemsToBuy.Add(itemToBuy);
+            }
+        }
+        var pantry = connection.BuyIngredientsFromList(itemsToBuy, userId, client);
+        return pantry;
+    }
+    public Task<List<PantryItem>> BuyGroceryItems(List<string> ingredients, int userId, HttpClient client)
+    {
+        List<GroceryListItem> itemsToBuy = new List<GroceryListItem>();
+        var connection = new HttpClientConnection();
+        foreach (var currentIngredient in ingredients)
+        {
+            if (this.getItem(currentIngredient) != null)
+            {
+                GroceryListItem itemToBuy = this.getItem(currentIngredient)!;
+                itemsToBuy.Add(itemToBuy);
+            }
+        }
+        var pantry = connection.BuyIngredientsFromList(itemsToBuy, userId, client);
+        return pantry;
+    }
     #endregion
+
+    public void RemoveIngredientsOnRemoveMeal(List<Ingredient> ingredients, HttpClient client)
+    {
+        foreach (var ingredient in ingredients)
+        {
+            var groceryItem = this.getItem(ingredient.IngredientName);
+            if (groceryItem != null)
+            {
+                this.RemoveIngredient(groceryItem.IngredientName, groceryItem.Quantity, client);
+            }
+        }
+    }
 }
