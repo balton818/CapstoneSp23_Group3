@@ -62,6 +62,7 @@
     private List<ShoppingListIngredient> shoppingList = new List<ShoppingListIngredient>();
     private ShoppingListService groceryService = new ShoppingListService(new ShoppingListDao());
     private RecipeService recipeService { get; set; } = new RecipeService(new UserService(new UserDao(), new PantryDao()), new IngredientDao(), new RecipeApi(new com.spoonacular.RecipesApi()), new MeasurementService(), new ShoppingListService(new ShoppingListDao()));
+    private MealPlanService mealService { get; set; } = new MealPlanService(new MealPlanDao());
     private Dictionary<ShoppingListIngredient, bool> selectedIngredients;
     private bool hideButtons = false;
 
@@ -114,6 +115,9 @@
                 ingredients.Add(item);
             }
         }
+        this.recipeService.BuyIngredients(ingredients, this.currentUserData.CurrentUser.Id);
+        Console.WriteLine(" -- Done buying groceries");
+        Nav.NavigateTo("/groceries", true);
     }
 
     private async void removeAllSelected()
@@ -139,30 +143,28 @@
 
     private async void addNewIngredient()
     {
+        Console.WriteLine(" -- HIT");
         if (String.IsNullOrEmpty(this.newIngredientName) || String.IsNullOrEmpty(this.newIngredientAmount) || String.IsNullOrEmpty(this.newIngredientUnit))
         {
             await JsRuntime.InvokeAsync<object>("alert", "Please provide valid values for ingredient name, amount, and unit type.");
             return;
         }
 
-        if (this.selectedIngredients.Count != 0)
+        RecipePlannerApi.Model.ShoppingListIngredient newIngredient = new RecipePlannerApi.Model.ShoppingListIngredient() { IngredientName = this.newIngredientName.ToLower(), UserId = this.currentUserData.CurrentUser.Id };
+        int quantity;
+        AppUnit unit;
+        if (int.TryParse(this.newIngredientAmount, out quantity) && Enum.TryParse<AppUnit>(this.newIngredientUnit, out unit))
         {
-            RecipePlannerApi.Model.ShoppingListIngredient newIngredient = new RecipePlannerApi.Model.ShoppingListIngredient() { IngredientName = this.newIngredientName.ToLower(), UserId = this.currentUserData.CurrentUser.Id };
-            int quantity;
-            AppUnit unit;
-            if (int.TryParse(this.newIngredientAmount, out quantity) && Enum.TryParse<AppUnit>(this.newIngredientUnit, out unit))
-            {
-                newIngredient.Quantity = quantity;
-                newIngredient.UnitId = unit;
-            }
-            else
-            {
-                await JsRuntime.InvokeAsync<object>("alert", "Please enter a valid number in the \"Amount\" field");
-                return;
-            }
-            this.groceryService.UpsertShoppingListIngredient(newIngredient);
-            Nav.NavigateTo("/groceries", true);
+            newIngredient.Quantity = quantity;
+            newIngredient.UnitId = unit;
         }
+        else
+        {
+            await JsRuntime.InvokeAsync<object>("alert", "Please enter a valid number in the \"Amount\" field");
+            return;
+        }
+        this.groceryService.UpsertShoppingListIngredient(newIngredient);
+        Nav.NavigateTo("/groceries", true);
     }
 
     private async void generateMealPlanShoppingList()
@@ -171,7 +173,65 @@
         if (confirm)
         {
             Console.WriteLine("-- CONFIRM");
+            List<RecipePlannerApi.Model.Ingredient> ingredients = this.getListOfIngredients();
+            List<ShoppingListIngredient> convertedIngredients = this.convertIngredients(ingredients);
+            foreach(var ingredient in convertedIngredients)
+            {
+                try
+                {
+                    this.groceryService.UpsertShoppingListIngredient(ingredient);
+                } catch (System.Data.SqlClient.SqlException sqlEx)
+                {
+                    Console.WriteLine(" -- SQL ERR: + " + sqlEx.Message + "\n" + sqlEx.StackTrace);
+                }
+            }
+            Nav.NavigateTo("/groceries", true);
         }
+    }
+
+    private List<ShoppingListIngredient> convertIngredients(List<RecipePlannerApi.Model.Ingredient> ingredients)
+    {
+        List<ShoppingListIngredient> convertedIngredients = new List<ShoppingListIngredient>();
+        foreach (var ingredient in ingredients)
+        {
+            ShoppingListIngredient newIngredient = new ShoppingListIngredient()
+                {
+                    IngredientName = this.newIngredientName.ToLower(),
+                    UserId = this.currentUserData.CurrentUser.Id,
+                    Quantity = ingredient.Quantity
+                };
+            AppUnit unit;
+            if (Enum.TryParse<AppUnit>(this.newIngredientUnit, out unit))
+            {
+                newIngredient.UnitId = unit;
+            }
+            convertedIngredients.Add(newIngredient);
+        }
+        return convertedIngredients;
+    }
+
+    private List<RecipePlannerApi.Model.Ingredient> getListOfIngredients()
+    {
+        List<RecipePlannerApi.Model.Ingredient> ingredientsMasterList = new List<RecipePlannerApi.Model.Ingredient>();
+        MealPlan thisWeek = this.mealService.GetThisWeeksMealPlan(this.currentUserData.CurrentUser.Id);
+        foreach (var recipe in thisWeek.Recipes)
+        {
+            RecipeInformation info = this.recipeService.GetRecipeInformation(recipe);
+            foreach (var ingredient in info.Ingredients)
+            {
+                ingredientsMasterList.Add(ingredient);
+            }
+        }
+        thisWeek = this.mealService.GetNextWeeksMealPlan(this.currentUserData.CurrentUser.Id);
+        foreach (var recipe in thisWeek.Recipes)
+        {
+            RecipeInformation info = this.recipeService.GetRecipeInformation(recipe);
+            foreach (var ingredient in info.Ingredients)
+            {
+                ingredientsMasterList.Add(ingredient);
+            }
+        }
+        return ingredientsMasterList;
     }
 
     private void selectAll(bool shouldCheck)

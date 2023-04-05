@@ -80,9 +80,7 @@
             }
         </ol>
         <br />
-        
     </div>
-
 </div>
 
 @code {
@@ -265,8 +263,7 @@
     private void markAsComplete()
     {
         Console.WriteLine("RECIPEVIEW -- Completed recipe for " + this.RecipeTitle);
-
-        //Call RPApi to update quantities of user's ingredients
+        this.recipeService.UseIngredients(this.ingredients, this.currentUserData.CurrentUser.Id);
         Nav.NavigateTo("/recipes");
     }
 
