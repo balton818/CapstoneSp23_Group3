@@ -80,7 +80,7 @@ namespace RecipePlannerApi.Controllers
         }
 
         [HttpPost("get-shopping-list/{userId}")]
-        public ActionResult<List<PantryItem>> GetShoppingList(int userId) {
+        public ActionResult<List<ShoppingListIngredient>> GetShoppingList(int userId) {
             try {
                 return Ok(this._shoppingListService.GetShoppingList(userId));
             } catch (Exception e) {
@@ -91,7 +91,7 @@ namespace RecipePlannerApi.Controllers
         }
 
         [HttpPost("add-shopping-list-ingredient")]
-        public ActionResult<PantryItem> AddShoppingListIngredient(ShoppingListIngredient ingredient) {
+        public ActionResult<ShoppingListIngredient> AddShoppingListIngredient(ShoppingListIngredient ingredient) {
             try {
                 return Ok(this._shoppingListService.UpsertShoppingListIngredient(ingredient));
             } catch (Exception e) {
@@ -102,7 +102,7 @@ namespace RecipePlannerApi.Controllers
         }
 
         [HttpPost("update-shopping-list-ingredient")]
-        public ActionResult<PantryItem> UpdateShoppingListIngredient(ShoppingListIngredient ingredient) {
+        public ActionResult<ShoppingListIngredient> UpdateShoppingListIngredient(ShoppingListIngredient ingredient) {
             try {
                 return Ok(this._shoppingListService.UpsertShoppingListIngredient(ingredient));
             } catch (Exception e) {

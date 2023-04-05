@@ -55,6 +55,8 @@ namespace RecipePlannerApi.Service
                 mealPlan.meals.Add((DayOfWeek)day, dayMeals);
             }
 
+            mealPlan.Recipes = this.mealPlanDao.GetMealPlanRecipes(mealPlan.MealPlanId.Value);
+
             return mealPlan;
         }
         /// <summary>

@@ -23,5 +23,7 @@ namespace RecipePlannerApi.Model {
         /// </summary>
         /// <value>The meals.</value>
         public Dictionary<DayOfWeek, List<Meal>> meals { get; set; } = new Dictionary<DayOfWeek, List<Meal>>();
+
+        public List<int> Recipes { get; set; }
     }
 }

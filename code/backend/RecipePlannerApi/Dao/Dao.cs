@@ -29,7 +29,7 @@ namespace RecipePlannerApi.Dao {
                 config.CreateMap<IDataReader, Ingredient>();
                 config.CreateMap<IDataReader, StringDto>();
                 config.CreateMap<StringDto, string>();
-                config.CreateMap<IDataReader, MealPlan>().ForMember(mealPlan => mealPlan.meals, m => m.Ignore());
+                config.CreateMap<IDataReader, MealPlan>().ForMember(mealPlan => mealPlan.meals, m => m.Ignore()).ForMember(mealPlan => mealPlan.Recipes, m => m.Ignore());
                 config.CreateMap<IDataReader, MealDto>().ForMember(meal => meal.DayOfWeek, d => d.AddTransform(d => d - 1));
                 config.CreateMap<IDataReader, ShoppingListIngredient>();
             }).CreateMapper();
