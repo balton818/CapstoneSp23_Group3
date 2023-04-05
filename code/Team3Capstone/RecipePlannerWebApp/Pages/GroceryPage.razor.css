@@ -30,7 +30,7 @@
 .shopping-list {
     overflow-y: auto;
     margin-left: 60px;
-    height: 45%;
+    height: 40%;
     border-bottom: 2px solid black;
 }
 
