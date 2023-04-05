@@ -31,6 +31,16 @@ public partial class IngredientExpander
     /// <value>The current Page the expander exists on.</value>
     public Page? Current { get; set; }
 
+    /// <summary>Indicates if expander item is selected for purchase.</summary>
+    /// <value>
+    ///   <c>true</c> if [selected for purchase]; otherwise, <c>false</c>.</value>
+    public bool SelectedForPurchase { get; set; }
+
+    /// <summary>Indicates if expander contains grocery item or pantry item.</summary>
+    /// <value>
+    ///   <c>true</c> if this instance is grocery item; otherwise, <c>false</c>.</value>
+    public bool IsGrocery { get; set; }
+
     #endregion
 
     #region Constructors
@@ -38,15 +48,17 @@ public partial class IngredientExpander
     /// <summary>Initializes a new instance of the <see cref="IngredientExpander" /> class.</summary>
     /// <param name="name">The name of the ingredient.</param>
     /// <param name="amount">The amount of the ingredient.</param>
-    /// <param name="measure"> The unit of measure for the ingredient</param>
+    /// <param name="measure">The unit of measure for the ingredient</param>
     /// <param name="viewModel">The view model.</param>
-    public IngredientExpander(string? name, int amount, string measure, FoodieViewModel? viewModel)
+    /// <param name="isGrocery"> indicates if expander is for grocery item</param>
+    public IngredientExpander(string? name, int amount, string measure, FoodieViewModel? viewModel, bool isGrocery)
     {
         this.InitializeComponent();
         this.IngredientName = name;
         this.IngredientAmount = amount;
         this.IngredientUnit = measure;
         this.ViewModel = viewModel;
+        this.IsGrocery = isGrocery;
     }
 
     #endregion
@@ -57,12 +69,28 @@ public partial class IngredientExpander
     {
         this.IngredientAmount++;
         var foodieViewModel = this.ViewModel;
-        if (foodieViewModel != null)
+        if (foodieViewModel != null && !this.IsGrocery)
         {
-            await foodieViewModel.EditIngredient(this.IngredientName, this.IngredientAmount);
+            await foodieViewModel.EditPantryIngredient(this.IngredientName, this.IngredientAmount);
+        }
+        else
+        {
+            await foodieViewModel.EditGroceryIngredient(this.IngredientName, this.IngredientAmount);
         }
 
-        this.navigateToPage("View/PantryPage.xaml");
+        this.expanderNavigation();
+    }
+
+    private void expanderNavigation()
+    {
+        if (!this.IsGrocery)
+        {
+            this.navigateToPage("View/PantryPage.xaml");
+        }
+        else
+        {
+            this.navigateToPage("Grocery");
+        }
     }
 
     private async void MinusButton_OnClick(object sender, RoutedEventArgs e)
@@ -71,26 +99,29 @@ public partial class IngredientExpander
         {
             this.IngredientAmount--;
             var foodieViewModel = this.ViewModel;
-            if (foodieViewModel != null)
+            if (foodieViewModel != null && !this.IsGrocery)
             {
-                await foodieViewModel.EditIngredient(this.IngredientName, this.IngredientAmount);
+                await foodieViewModel.EditPantryIngredient(this.IngredientName, this.IngredientAmount);
+            }
+            else
+            {
+                await foodieViewModel.EditGroceryIngredient(this.IngredientName, this.IngredientAmount);
             }
 
-            this.navigateToPage("View/PantryPage.xaml");
+            this.expanderNavigation();
         }
     }
 
-    private void RemoveButton_OnClick(object sender, RoutedEventArgs e)
+    private async void RemoveButton_OnClick(object sender, RoutedEventArgs e)
     {
-        if (MessageBox.Show("Confirm removal of " + this.IngredientName + "?",
-                "Ingredient Removal",
-                MessageBoxButton.YesNo,
-                MessageBoxImage.Question) == MessageBoxResult.Yes)
+        if (StylizedMessageBox.ShowBox(
+                "Confirm removal of " + this.IngredientName + " ? ",
+                "Ingredient Removal") == "1")
         {
             if (this.ViewModel != null)
             {
-                this.ViewModel.RemoveIngredient(this.IngredientName, this.IngredientAmount);
-                this.navigateToPage("View/PantryPage.xaml");
+                await this.ViewModel.RemoveIngredient(this.IngredientName, this.IngredientAmount, !this.IsGrocery);
+                this.expanderNavigation();
             }
         }
     }

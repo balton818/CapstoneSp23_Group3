@@ -1,6 +1,6 @@
 View Grocery List Use Case Scenario
 
-Context - User has successfully logged in and has clicked the Plan Meals button.
+Context - User has successfully logged in and navigated to the grocery list.
 
 PRIMARY FLOW
 1 - User selects view grocery list

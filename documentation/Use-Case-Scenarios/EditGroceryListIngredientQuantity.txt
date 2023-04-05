@@ -1,0 +1,14 @@
+Edit Grocery List Ingredient Quantity Use Case Scenario (Mobile)
+
+Context - User has successfully logged in and navigated to Grocery List
+
+PRIMARY FLOW
+1 - Current Grocery List contents are displayed to user.
+2 - User selects ingredient 
+3 - User increases amount
+4 - Ingredient amount is increased and Grocery List is updated
+
+ALTERNATIVE FLOW
+A3 - User decreases amount
+A4 - Ingredient amount is decreased and Grocery List is updated
+

@@ -23,6 +23,7 @@ public class FoodieViewModel
     private readonly PantryViewModel pantryViewModel;
     private readonly BrowseRecipesViewModel browseRecipesViewModel;
     private readonly MealPlanViewModel mealPlanViewModel;
+    private readonly GroceryListViewModel groceryListViewModel;
 
     #endregion
 
@@ -35,10 +36,6 @@ public class FoodieViewModel
     /// <summary>Gets or sets the userid.</summary>
     /// <value>The currently logged in users ID.</value>
     public int Userid { get; set; }
-
-    /// <summary>Gets or sets the pantry.</summary>
-    /// <value>The currently logged in user's pantry.</value>
-    public List<PantryItem>? Pantry { get; set; }
 
     /// <summary>Gets or sets the plan type and date to add.</summary>
     /// <value>The plan type and date to add.</value>
@@ -58,6 +55,7 @@ public class FoodieViewModel
         this.pantryViewModel = new PantryViewModel();
         this.browseRecipesViewModel = new BrowseRecipesViewModel();
         this.mealPlanViewModel = new MealPlanViewModel();
+        this.groceryListViewModel = new GroceryListViewModel();
         this.ClientToSet = Client;
         this.mealPlanViewModel.GetMealPlans(this.Userid, this.ClientToSet).ConfigureAwait(true);
     }
@@ -133,9 +131,21 @@ public class FoodieViewModel
     /// <returns>
     ///     the added pantryItem or null if unsuccessful
     /// </returns>
-    public async Task<PantryItem> AddIngredient(string? name, int quantity, string unit)
+    public async Task<PantryItem> AddPantryIngredient(string? name, int quantity, string unit)
     {
         return await this.pantryViewModel.AddIngredient(this.Userid, name, quantity, this.ClientToSet, unit);
+    }
+
+    /// <summary>Adds an ingredient to the user's grocery list.</summary>
+    /// <param name="name">The name of the ingredient being added.</param>
+    /// <param name="quantity">The quantity being added</param>
+    /// <param name="unit">The unit of measurement for the quantity being added.</param>
+    /// <returns>
+    ///     the added pantryItem or null if unsuccessful
+    /// </returns>
+    public async Task<GroceryListItem> AddGroceryIngredient(string? name, int quantity, string unit)
+    {
+        return await this.groceryListViewModel.AddIngredient(this.Userid, name, quantity, this.ClientToSet, unit);
     }
 
     /// <summary>The logic to display the recipe details upon user navigation from the Found recipes page</summary>
@@ -198,9 +208,18 @@ public class FoodieViewModel
     /// <param name="ingredientName">Name of the ingredient.</param>
     /// <param name="ingredientAmount">The ingredient amount.</param>
     /// <returns> the edited item if successful null otherwise </returns>
-    public async Task<PantryItem> EditIngredient(string? ingredientName, int ingredientAmount)
+    public async Task<PantryItem> EditPantryIngredient(string? ingredientName, int ingredientAmount)
     {
         return await this.pantryViewModel.EditIngredientAmount(ingredientName, ingredientAmount, this.ClientToSet);
+    }
+
+    /// <summary>Edits the grocery ingredient in the users grocery list.</summary>
+    /// <param name="ingredientName">Name of the ingredient.</param>
+    /// <param name="ingredientAmount">The ingredient amount.</param>
+    /// <returns> the edited item if successful null otherwise </returns>
+    public async Task<GroceryListItem> EditGroceryIngredient(string? ingredientName, int ingredientAmount)
+    {
+        return await this.groceryListViewModel.EditIngredientAmount(ingredientName, ingredientAmount, this.ClientToSet);
     }
 
     /// <summary>Gets the recipe ingredients form the recipe information.</summary>
@@ -282,12 +301,16 @@ public class FoodieViewModel
     /// <summary>Removes an ingredient from a user's pantry.</summary>
     /// <param name="ingredientName">Name of the ingredient.</param>
     /// <param name="ingredientAmount">The ingredient amount.</param>
-    /// <returns>
-    ///     true if successful false otherwise
-    /// </returns>
-    public Task<bool> RemoveIngredient(string? ingredientName, int ingredientAmount)
+    /// <param name="isPantry"> indicates if the ingredient is a pantry item or grocery item</param>
+    /// <returns>true if successful false otherwise</returns>
+    public Task<bool> RemoveIngredient(string? ingredientName, int ingredientAmount, bool isPantry)
     {
-        return this.pantryViewModel.RemoveIngredient(ingredientName, ingredientAmount, this.ClientToSet);
+        if (isPantry)
+        {
+            return this.pantryViewModel.RemoveIngredient(ingredientName, ingredientAmount, this.ClientToSet);
+        }
+
+        return this.groceryListViewModel.RemoveIngredient(ingredientName, ingredientAmount, this.ClientToSet);
     }
 
     /// <summary>Gets a list of recipes agnostic of users pantry items.</summary>
@@ -514,6 +537,54 @@ public class FoodieViewModel
         cuisineTypes.AddRange(retrieved.Result);
         cuisineTypes.Add("");
         return cuisineTypes;
+    }
+
+    /// <summary>Gets the users grocery list.</summary>
+    /// <returns>
+    ///   a collection of groceryListItems to display to user
+    /// </returns>
+    public async Task<List<GroceryListItem>> GetGroceryList()
+    {
+        var groceryList = new List<GroceryListItem>();
+
+        groceryList.AddRange((await this.groceryListViewModel.GetGroceryList(this.Userid, this.ClientToSet))!);
+        return groceryList;
+    }
+
+    /// <summary>
+    /// Adds the needed ingredients to complete the users meal plan to the grocery list.
+    /// </summary>
+    public async Task AddedNeededGroceries()
+    {
+        var recipeIds = new List<int>();
+        recipeIds.AddRange(this.mealPlanViewModel.NextWeekPlan!.Recipes);
+        recipeIds.AddRange(this.mealPlanViewModel.FirstWeekPlan!.Recipes);
+        await this.groceryListViewModel.AddNeededGroceriesToList(recipeIds, this.Userid,
+            this.ClientToSet);
+    }
+
+    /// <summary>Purchases the ingredients the user has selected.</summary>
+    /// <param name="purchasedItems">The items the user has marked as purchased and their quantities.</param>
+    public void PurchaseIngredients(Dictionary<string, int> purchasedItems)
+    {
+        this.groceryListViewModel.BuyGroceryItems(purchasedItems, this.Userid, this.ClientToSet);
+    }
+
+    /// <summary>
+    /// Prepares the meal by adjusting the ingredients the user has in pantry.
+    /// Deducts the ingredient quantities required to complete the recipe selected
+    /// </summary>
+    public void PrepareMeal()
+    {
+        var connection = new HttpClientConnection();
+        var toRemove = this.pantryViewModel.GetIngredientsUsed(this.recipeDetailViewModel.RecipeInfo!.Ingredients!);
+        connection.UseIngredientsFromList(toRemove, this.Userid, this.ClientToSet);
+    }
+
+    /// <summary>Clears the users grocery list.</summary>
+    public async Task ClearGroceryList()
+    {
+        await this.groceryListViewModel.ClearGroceryList(this.Userid, this.ClientToSet);
     }
 
     #endregion

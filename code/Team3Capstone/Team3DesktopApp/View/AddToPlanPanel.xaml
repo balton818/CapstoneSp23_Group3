@@ -183,7 +183,8 @@
                         VerticalAlignment="Top"
                         Content="Current Week"
                         Foreground="#FFE8C547"
-                        GroupName="WeekGroup" />
+                        GroupName="WeekGroup"
+                        IsChecked="True" />
                     <RadioButton
                         x:Name="nextWeekButton"
                         Margin="113,18,0,0"

@@ -1,0 +1,13 @@
+Generate Grocery List Use Case Scenario
+
+Context - User has successfully logged in and navigated to the meal Plan.
+
+PRIMARY FLOW
+1 - User selects generate grocery list
+2 - User confirms to generate list from recipes planned
+3 - grocery list is updated with the needed ingredients
+
+Alternative Flow(s)
+
+USER CANCELS GENERATION
+A4 - User cancels and no updates are made

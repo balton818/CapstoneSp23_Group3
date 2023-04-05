@@ -18,6 +18,7 @@ public class PageNavigation
     private readonly string recipeDetailUri = "/View/RecipeDetailPage.xaml";
     private readonly string browseRecipesUri = "/View/BrowseRecipesPage.xaml";
     private readonly string mealPlanUri = "/View/MealPlanPage.xaml";
+    private readonly string groceryUri = "Grocery";
 
     #endregion
 
@@ -80,10 +81,17 @@ public class PageNavigation
             this.ViewModel.PlanTypeAndDateToAdd = null;
             navigationService.Navigate(mealPlanPage);
         }
+        else if (navUri.Equals(this.groceryUri) && this.ViewModel != null)
+        {
+            var groceryPage = new ExpanderListPage(this.ViewModel, false);
+
+            this.ViewModel.PlanTypeAndDateToAdd = null;
+
+            navigationService.Navigate(groceryPage);
+        }
         else if (this.ViewModel != null)
         {
-            var pantryPage = new PantryPage(this.ViewModel);
-
+            var pantryPage = new ExpanderListPage(this.ViewModel, true);
             this.ViewModel.PlanTypeAndDateToAdd = null;
 
             navigationService.Navigate(pantryPage);
