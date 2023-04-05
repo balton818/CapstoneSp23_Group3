@@ -132,6 +132,7 @@ public class GroceryListViewModel
         var itemsToBuy = new List<GroceryListItem>();
         var difference = new GroceryListItem();
         var connection = new HttpClientConnection();
+        var differences = new List<GroceryListItem>();
         foreach (var currentIngredient in ingredients.Keys)
         {
             if (this.getItem(currentIngredient) != null)
@@ -154,13 +155,18 @@ public class GroceryListViewModel
 
             if (difference.IngredientName != null && difference.Quantity > 0)
             {
-                connection.AddGroceryItem(difference, client);
+                differences.Add(difference);
             }
         }
 
         if (itemsToBuy.Count > 0)
         {
             connection.BuyIngredientsFromList(itemsToBuy, userId, client);
+        }
+
+        foreach (var item in differences)
+        {
+            connection.AddGroceryItem(item, client);
         }
     }
 
