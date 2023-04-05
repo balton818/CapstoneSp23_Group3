@@ -8,6 +8,7 @@
 @inject NavigationManager Nav;
 @using RecipePlannerWebApp.LocalServices;
 @inject UserSessionData currentUserData;
+@using RecipePlannerWebApp.Components;
 
 <PageTitle>foodie - groceries</PageTitle>
 <div class="split right">
@@ -17,21 +18,56 @@
     </div>
     <div class="controls">
         <button @onclick="goBack">&#8672 Back</button>
+        <button @onclick="generateMealPlanShoppingList">Add All Ingredients From Plan</button>
     </div>
     <div class="shopping-list">
-        <ul>
-        @foreach (ShoppingListIngredient item in this.shoppingList)
+        @if (this.shoppingList.Count == 0)
         {
-            <li>@item.IngredientName: @item.Quantity @item.UnitId.ToString()</li>
+            <br />
+            <h4 style="margin-left: 60px;">Looks like your shopping list is empty...</h4>
         }
-        </ul>
+        else
+        {
+            <br />
+            <h4 style="text-decoration: underline">Shopping List</h4>
+            @foreach (ShoppingListIngredient item in this.shoppingList)
+            {
+                <GroceryItem Ingredient="@item" SelectedIngredients="this.selectedIngredients"></GroceryItem>
+            }
+        }
     </div>
+    <label style="margin-left: 60px;">Add New Ingredient:</label>
+    <div class="new-ingredient">
+
+        <input type="text" placeholder="Name" @bind="newIngredientName" />
+        <input type="text" placeholder="Amount" @bind="newIngredientAmount" />
+        <select @bind="newIngredientUnit">
+            @foreach (var unit in Enum.GetValues(typeof(AppUnit)))
+            {
+                <option value="@unit">@unit</option>
+            }
+        </select>
+        <button type="submit" @onclick="addNewIngredient">Add to Shopping List</button>
+    </div>
+
+    <br />
+    <button disabled="@this.hideButtons" style="margin-left: 60px;" @onclick="() => {this.selectAll(true);}">Select All</button>
+    <button disabled="@this.hideButtons" style="margin-left: 60px;" @onclick="() => {this.selectAll(false);}">Unselect All</button>
+    <button disabled="@this.hideButtons" style="margin-left: 60px;" @onclick="buyGroceries">Purchase Selected Items</button>
+    <button disabled="@this.hideButtons" style="margin-left: 60px;" @onclick="removeAllSelected">Remove Selected Items</button>
 </div>
 
 
 @code {
     private List<ShoppingListIngredient> shoppingList = new List<ShoppingListIngredient>();
-    private ShoppingListService groceryService = new ShoppingListService(new UserDao(), new ShoppingListDao());
+    private ShoppingListService groceryService = new ShoppingListService(new ShoppingListDao());
+    private RecipeService recipeService { get; set; } = new RecipeService(new UserService(new UserDao(), new PantryDao()), new IngredientDao(), new RecipeApi(new com.spoonacular.RecipesApi()), new MeasurementService(), new ShoppingListService(new ShoppingListDao()));
+    private Dictionary<ShoppingListIngredient, bool> selectedIngredients;
+    private bool hideButtons = false;
+
+    private string newIngredientName = "";
+    private string newIngredientAmount = "";
+    private string newIngredientUnit = "";
 
     /**
      * Initializes the GroceryPage component
@@ -39,12 +75,20 @@
     protected override void OnInitialized()
     {
         Console.WriteLine("Grocery Page -- INITIALIZING");
-        this.shoppingList = groceryService.GetShoppingList(5);
+        this.shoppingList = groceryService.GetShoppingList(this.currentUserData.CurrentUser.Id);
         Console.WriteLine(" -- Ingredients:\n");
+        this.selectedIngredients = this.currentUserData.userShoppingSelection;
+
         foreach (var item in this.shoppingList)
         {
             Console.WriteLine(item.IngredientName + ": " + item.Quantity + " " + item.UnitId.ToString());
+            if (!this.selectedIngredients.ContainsKey(item))
+            {
+                this.selectedIngredients.Add(item, false);
+            }
         }
+        this.currentUserData.userShoppingSelection = this.selectedIngredients;
+        this.hideButtons = this.shoppingList.Count == 0;
     }
 
     /**
@@ -54,6 +98,88 @@
      */
     private void goBack()
     {
+        this.currentUserData.userShoppingSelection.Clear();
         Nav.NavigateTo("/planner");
+    }
+
+    private void buyGroceries()
+    {
+        Console.WriteLine("Buying groceries");
+        List<ShoppingListIngredient> ingredients = new List<ShoppingListIngredient>();
+        foreach (var item in this.selectedIngredients.Keys)
+        {
+            if (this.selectedIngredients[item])
+            {
+                Console.WriteLine("Purchasing ingredient number " + item.IngredientName);
+                ingredients.Add(item);
+            }
+        }
+    }
+
+    private async void removeAllSelected()
+    {
+        bool confirm = await JsRuntime.InvokeAsync<bool>("confirm", "Are you sure you wish to permanently remove these items from your list?");
+        if (confirm)
+        {
+            Console.WriteLine("Removing groceries");
+            List<ShoppingListIngredient> selectedIngredients = new List<ShoppingListIngredient>();
+            foreach (var item in this.selectedIngredients.Keys)
+            {
+                if (this.selectedIngredients[item])
+                {
+                    Console.WriteLine("Removing ingredient number " + item.IngredientName);
+                    selectedIngredients.Add(item);
+                }
+            }
+            this.groceryService.DeleteAllFromShoppingList(selectedIngredients);
+            Nav.NavigateTo("/groceries", true);
+        }
+
+    }
+
+    private async void addNewIngredient()
+    {
+        if (String.IsNullOrEmpty(this.newIngredientName) || String.IsNullOrEmpty(this.newIngredientAmount) || String.IsNullOrEmpty(this.newIngredientUnit))
+        {
+            await JsRuntime.InvokeAsync<object>("alert", "Please provide valid values for ingredient name, amount, and unit type.");
+            return;
+        }
+
+        if (this.selectedIngredients.Count != 0)
+        {
+            RecipePlannerApi.Model.ShoppingListIngredient newIngredient = new RecipePlannerApi.Model.ShoppingListIngredient() { IngredientName = this.newIngredientName.ToLower(), UserId = this.currentUserData.CurrentUser.Id };
+            int quantity;
+            AppUnit unit;
+            if (int.TryParse(this.newIngredientAmount, out quantity) && Enum.TryParse<AppUnit>(this.newIngredientUnit, out unit))
+            {
+                newIngredient.Quantity = quantity;
+                newIngredient.UnitId = unit;
+            }
+            else
+            {
+                await JsRuntime.InvokeAsync<object>("alert", "Please enter a valid number in the \"Amount\" field");
+                return;
+            }
+            this.groceryService.UpsertShoppingListIngredient(newIngredient);
+            Nav.NavigateTo("/groceries", true);
+        }
+    }
+
+    private async void generateMealPlanShoppingList()
+    {
+        bool confirm = await JsRuntime.InvokeAsync<bool>("confirm", "Are you sure you want to generate the entire list?\nThis may add duplicate entries to your list.");
+        if (confirm)
+        {
+            Console.WriteLine("-- CONFIRM");
+        }
+    }
+
+    private void selectAll(bool shouldCheck)
+    {
+        foreach (var selection in this.selectedIngredients.Keys)
+        {
+            this.selectedIngredients[selection] = shouldCheck;
+        }
+        Nav.NavigateTo("/groceries", true);
     }
 }

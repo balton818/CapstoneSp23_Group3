@@ -26,3 +26,18 @@
 .controls {
     margin-left: 60px;
 }
+
+.shopping-list {
+    overflow-y: auto;
+    margin-left: 60px;
+    height: 45%;
+    border-bottom: 2px solid black;
+}
+
+.new-ingredient {
+    margin-left: 60px;
+}
+
+.new-ingredient > * {
+    height: 30px;
+}

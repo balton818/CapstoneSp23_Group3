@@ -95,8 +95,9 @@
 
     private List<RecipePlannerApi.Model.Ingredient>? ingredients { get; set; } 
     private List<RecipePlannerApi.Model.RecipesStep>? steps { get; set; }
-    private RecipeService recipeService { get; set; } = new RecipeService(new UserService(new UserDao(), new PantryDao()), new IngredientDao(), new RecipeApi(new com.spoonacular.RecipesApi()), new MeasurementService());
+    private RecipeService recipeService { get; set; } = new RecipeService(new UserService(new UserDao(), new PantryDao()), new IngredientDao(), new RecipeApi(new com.spoonacular.RecipesApi()), new MeasurementService(), new ShoppingListService(new ShoppingListDao()));
     private MealPlanService mealPlanService { get; set; } = new MealPlanService(new MealPlanDao());
+    private ShoppingListService groceryService { get; set; } = new ShoppingListService(new ShoppingListDao());
     private bool hideControls = true;
     private bool hideButton = false;
     private string selectedDay = "";
@@ -180,6 +181,7 @@
         else
         {
             this.mealPlanService.AddMeal(newMeal);
+            this.addIngredientsToShoppingList();
             await JsRuntime.InvokeAsync<object>("alert", "Added meal to plan.");
             this.selectedDay = "";
             this.selectedMeal = "";
@@ -191,6 +193,7 @@
         if (confirmed)
         {
             this.mealPlanService.UpdateMeal(newMeal);
+            this.addIngredientsToShoppingList();
             await JsRuntime.InvokeAsync<object>("alert", "Updated meal plan.");
             this.selectedDay = "";
             this.selectedMeal = "";
@@ -233,6 +236,7 @@
 
         newMeal.Recipe = recipe;
         Console.WriteLine("Adding meal to plan for " + this.currentUserData.SelectedMeal.MealType + " on " + this.currentUserData.SelectedMeal.DayOfWeek);
+        this.addIngredientsToShoppingList();
         this.mealPlanService.AddMeal(newMeal);
 
         this.currentUserData.SelectedMeal = null;
@@ -249,6 +253,7 @@
         currMeal.Recipe = recipe;
 
         Console.WriteLine("Updating mealplan for " + this.currentUserData.SelectedMeal.MealType + " on " + this.currentUserData.SelectedMeal.DayOfWeek);
+        this.addIngredientsToShoppingList();
         this.mealPlanService.UpdateMeal(currMeal);
 
         this.currentUserData.SelectedMeal = null;
@@ -270,5 +275,10 @@
         Console.WriteLine("Changing visibility.");
         this.hideControls = !this.hideControls;
         this.hideButton = !this.hideButton;
+    }
+
+    private void addIngredientsToShoppingList()
+    {
+        this.recipeService.AddRecipeIngredientsToShoppingList(this.ingredients, this.currentUserData.CurrentUser.Id);
     }
 }
