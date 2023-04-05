@@ -1,4 +1,4 @@
-﻿using RecipePlannerApi.Controllers.Requests;
+using RecipePlannerApi.Controllers.Requests;
 using RecipePlannerApi.Dao.Interface;
 using RecipePlannerApi.Model;
 using RecipePlannerApi.Service.Interface;
@@ -200,6 +200,5 @@ namespace RecipePlannerApi.Service
                 throw new ArgumentException("title cannot be null or empty");
             }
         }
-
     }
 }

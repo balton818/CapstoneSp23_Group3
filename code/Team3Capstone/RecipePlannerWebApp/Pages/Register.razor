@@ -33,6 +33,7 @@
 @code {
     [Parameter]
     public User user { get; set; } = new User();
+    public bool ValidFields { get; set; }
 
     private string passwordReentry { get; set; } = "";
     private UserService service { get; set; } = new UserService(new UserDao(), new PantryDao());
@@ -41,13 +42,15 @@
      * Handles page initialization of the Register component
      */
     private void RegisterUser()
-    {       
+    {
+        this.ValidFields = false;
         if (String.Equals(this.user.Password, this.passwordReentry))
         {
             try
             {
                 var regResult = this.service.CreateUser(this.user);
                 Console.WriteLine("REGISTER -- REG_RESULT " + regResult);
+                this.ValidFields = true;
                 Nav.NavigateTo("/");
             }
             catch (System.Data.SqlClient.SqlException sqlEx)

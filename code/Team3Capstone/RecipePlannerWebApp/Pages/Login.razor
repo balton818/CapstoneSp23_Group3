@@ -29,7 +29,7 @@
 @code
 {
     [Parameter]
-    public User? user { get; set; }
+    public User? user { get; set; } = new User();
 
     [Parameter]
     public bool ValidFields { get; set; }
@@ -44,7 +44,6 @@
     {
         Console.WriteLine("LOGIN -- Initializing...");
         this.ValidFields = false;
-        this.user = new User();
         userData.CurrentUser = new User();
     }
 
@@ -66,7 +65,7 @@
                 this.ValidFields = true;
                 this.user.Id = result ?? -1;
                 userData.CurrentUser = this.user;
-                Nav.NavigateTo("/recipes");
+                Nav.NavigateTo("/planner");
             }
             else
             {

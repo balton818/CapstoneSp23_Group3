@@ -14,6 +14,17 @@
         <span>recipes</span>
         <hr style="height: 2px; opacity: 100%" />
     </div>
+    @if (this.currentUserData.SelectedMeal is not null)
+    {
+        if (this.currentUserData.NewMeal)
+        {
+            <button style="margin-left: 60px" @onclick="addToMealPlan">Add to meal plan for @this.currentUserData.SelectedMeal?.MealType.ToString().ToLower()</button>
+        } 
+        else if (this.currentUserData.UpdateMeal)
+        {
+            <button style="margin-left: 60px" @onclick="updateMealPlan">Update meal plan for @this.currentUserData.SelectedMeal?.MealType.ToString().ToLower()</button>
+        }
+    }
     <div class="recipe-area">
         <h2 class="title" style="font-weight: bold">@RecipeTitle</h2>
         <br />
@@ -47,14 +58,15 @@
 
     private List<RecipePlannerApi.Model.Ingredient>? ingredients { get; set; } 
     private List<RecipePlannerApi.Model.RecipesStep>? steps { get; set; }
-    private RecipeService service { get; set; } = new RecipeService(new UserService(new UserDao(), new PantryDao()), new IngredientDao(), new RecipeApi(), new MeasurementService());
+    private RecipeService recipeService { get; set; } = new RecipeService(new UserService(new UserDao(), new PantryDao()), new IngredientDao(), new RecipeApi(), new MeasurementService());
+    private MealPlanService mealPlanService { get; set; } = new MealPlanService(new MealPlanDao());
 
     /**
      * Handles initialization of the RecipeDetails component
      */
     protected override void OnInitialized()
     {
-        RecipeInformation info = this.service.GetRecipeInformation(Int32.Parse(this.RecipeId));
+        RecipeInformation info = this.recipeService.GetRecipeInformation(Int32.Parse(this.RecipeId));
         if (info != null)
         {
             this.ingredients = info?.Ingredients;
@@ -73,7 +85,12 @@
      */
     private void goBack()
     {
-        if (this.currentUserData.lastExplorePageRequest != null)
+        if (this.currentUserData.SelectedMeal != null && !this.currentUserData.NewMeal)
+        {
+            this.currentUserData.SelectedMeal = null;
+            Nav.NavigateTo("/planner");
+        }
+        else if (this.currentUserData.lastExplorePageRequest != null || this.currentUserData.NewMeal)
         {
             Nav.NavigateTo("/explore");
         }
@@ -81,6 +98,38 @@
         {
             Nav.NavigateTo("/recipes");
         }
+    }
+
+    private void addToMealPlan()
+    {
+        Meal newMeal = this.currentUserData.SelectedMeal;
+        RecipeInformation info = this.recipeService.GetRecipeInformation(Int32.Parse(this.RecipeId));
+        Recipe recipe = new Recipe() { Title = this.RecipeTitle, Image = info.Image, ApiId = Int32.Parse(this.RecipeId), ImageType = info.ImageType};
+        
+        newMeal.Recipe = recipe;
+        Console.WriteLine("Adding meal to plan for " + this.currentUserData.SelectedMeal.MealType + " on " + this.currentUserData.SelectedMeal.DayOfWeek);
+        this.mealPlanService.AddMeal(newMeal);
+
+        this.currentUserData.SelectedMeal = null;
+        this.currentUserData.NewMeal = false;
+        this.currentUserData.UpdateMeal = false;
+        Nav.NavigateTo("/planner");
+    }
+
+    private void updateMealPlan()
+    {
+        Meal currMeal = this.currentUserData.SelectedMeal;
+        RecipeInformation info = this.recipeService.GetRecipeInformation(Int32.Parse(this.RecipeId));
+        Recipe recipe = new Recipe() { Title = this.RecipeTitle, Image = info.Image, ApiId = Int32.Parse(this.RecipeId), ImageType = info.ImageType };
+        currMeal.Recipe = recipe;
+
+        Console.WriteLine("Updating mealplan for " + this.currentUserData.SelectedMeal.MealType + " on " + this.currentUserData.SelectedMeal.DayOfWeek);
+        this.mealPlanService.UpdateMeal(currMeal);
+    
+        this.currentUserData.SelectedMeal = null;
+        this.currentUserData.NewMeal = false;
+        this.currentUserData.UpdateMeal = false;
+        Nav.NavigateTo("/planner");
     }
 
     //FUTUREPROOFING - DISREGARD

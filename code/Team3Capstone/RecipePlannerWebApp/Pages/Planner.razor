@@ -1,0 +1,81 @@
+﻿@page "/planner"
+@layout MainLayout;
+@using RecipePlannerApi.Model;
+@using RecipePlannerApi.Service;
+@using RecipePlannerApi.Dao;
+@using RecipePlannerApi.Api;
+@using RecipePlannerApi.Api.Requests;
+@using RecipePlannerWebApp.LocalServices;
+@inject NavigationManager Nav;
+@inject UserSessionData currentUserData;
+
+<PageTitle>foodie - planner</PageTitle>
+<base href="~/" />
+<div class="split right">
+    <div class="header">
+        <span>planner</span>
+        <hr style="height: 2px; opacity: 100%" />
+    </div>
+    <div class="controls">
+        <InputRadioGroup @bind-Value="this.selectedWeek" class="controls">
+            <InputRadio TValue="UserSessionData.Weeks" Value="@UserSessionData.Weeks.WEEK1"></InputRadio>
+            <text>Week 1</text>
+            <InputRadio TValue="UserSessionData.Weeks" Value="@UserSessionData.Weeks.WEEK2"></InputRadio>
+            <text>Week 2</text>
+        </InputRadioGroup>
+        <button type="submit" @onclick="setPlanWeek">Show Plan</button>
+    </div>
+    <div class="main-area">
+        <span>Showing meal plan starting on @this.determineDateRange().</span>
+        @foreach (DayOfWeek day in Enum.GetValues(typeof(System.DayOfWeek)))
+        {
+            Console.WriteLine("-- Meals for " + day + ": " + this.plan.meals[day].Count);
+            <MealPlanWidget DayOfWeek="@day" MealPlan="this.plan"></MealPlanWidget>
+        }
+    </div>
+</div>
+
+@code {
+
+    private MealPlanService service = new MealPlanService(new MealPlanDao());
+    private MealPlan plan = new MealPlan();
+    private UserSessionData.Weeks selectedWeek { get; set; }
+
+    /**
+     * Initializes the Planner component
+     */
+    protected override void OnInitialized()
+    {
+        Console.WriteLine("PLANNER -- INITIALIZING");
+        this.selectedWeek = this.currentUserData.SelectedWeek;
+        this.showMealPlan();
+    }
+
+    private void showMealPlan()
+    {
+
+        if (selectedWeek == UserSessionData.Weeks.WEEK1)
+        {
+            Console.WriteLine("Showing meal plan for this week");
+            this.plan = service.GetThisWeeksMealPlan(this.currentUserData.CurrentUser.Id);
+        }
+        else
+        {
+            Console.WriteLine("Showing meal plan for next week");
+            this.plan = service.GetNextWeeksMealPlan(this.currentUserData.CurrentUser.Id);
+        }
+    }
+
+    private void setPlanWeek()
+    {
+        this.currentUserData.SelectedWeek = this.selectedWeek;
+        Nav.NavigateTo("/planner", true);
+    }
+
+    private string determineDateRange()
+    {
+        DateTime date = this.plan.MealPlanDate.Value;
+        string range = date.Month + "/" + date.Day + "/" + date.Year;
+        return range;
+    }
+}

@@ -107,7 +107,6 @@ namespace RecipePlannerApi.Dao
             return new Meal(execute<MealDto>("update_meal", cmd).FirstOrDefault());
         }
 
-
         /// <summary>
         /// Retrevies recipes for meal plan.
         /// </summary>
