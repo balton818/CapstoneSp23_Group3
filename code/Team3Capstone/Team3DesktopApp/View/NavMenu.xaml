@@ -142,7 +142,7 @@
 
             </local:NavButton>
             <local:NavButton
-                x:Name="GroceryListButton"
+                x:Name="groceryListButton"
                 Width="93"
                 Height="28"
                 HorizontalAlignment="Center"

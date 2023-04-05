@@ -135,11 +135,41 @@ public class FoodieViewModelTests
             BaseAddress = new Uri("http://test.com/")
         };
 
-        var result = foodieViewModel.AddIngredient("Pasta", 2, "g");
-        result = foodieViewModel.AddIngredient("Pasta", 2, "Ml");
-        result = foodieViewModel.AddIngredient("Pasta", 2, "Fluid_Ounces");
-        result = foodieViewModel.AddIngredient("Pasta", 2, "None");
-        result = foodieViewModel.AddIngredient("Pasta", 2, "Oz");
+        var result = foodieViewModel.AddPantryIngredient("Pasta", 2, "g");
+        result = foodieViewModel.AddPantryIngredient("Pasta", 2, "Ml");
+        result = foodieViewModel.AddPantryIngredient("Pasta", 2, "Fluid_Ounces");
+        result = foodieViewModel.AddPantryIngredient("Pasta", 2, "None");
+        result = foodieViewModel.AddPantryIngredient("Pasta", 2, "Oz");
+        Assert.AreEqual(UnitEnum.Ounces, result.Result.UnitId);
+
+        Assert.AreEqual("Pasta", result.Result.IngredientName);
+    }
+
+    [TestMethod]
+    public void TestAddGroceryItem()
+    {
+        var handlerMock = new Mock<HttpMessageHandler>(MockBehavior.Strict);
+        var foodieViewModel = new FoodieViewModel();
+        handlerMock.Protected().Setup<Task<HttpResponseMessage>>("SendAsync",
+                       ItExpr.IsAny<HttpRequestMessage>(),
+                       ItExpr.IsAny<CancellationToken>()).ReturnsAsync(
+                       new HttpResponseMessage
+                       {
+                           StatusCode = HttpStatusCode.OK,
+                           Content = new StringContent(
+                               "{'ShoppingListId':5,  'userId': 5,'ingredientName': 'Pasta','quantity': 2, 'unitId':3}")
+                       })
+                   .Verifiable();
+        foodieViewModel.ClientToSet = new HttpClient(handlerMock.Object)
+        {
+            BaseAddress = new Uri("http://test.com/")
+        };
+
+        var result = foodieViewModel.AddGroceryIngredient("Pasta", 2, "g");
+        result = foodieViewModel.AddGroceryIngredient("Pasta", 2, "Ml");
+        result = foodieViewModel.AddGroceryIngredient("Pasta", 2, "Fluid_Ounces");
+        result = foodieViewModel.AddGroceryIngredient("Pasta", 2, "None");
+        result = foodieViewModel.AddGroceryIngredient("Pasta", 2, "Oz");
         Assert.AreEqual(UnitEnum.Ounces, result.Result.UnitId);
 
         Assert.AreEqual("Pasta", result.Result.IngredientName);
@@ -260,7 +290,35 @@ public class FoodieViewModelTests
             BaseAddress = new Uri("http://test.com/")
         };
 
-        var result = foodieViewModel.EditIngredient("Pasta", 5);
+        var result = foodieViewModel.EditPantryIngredient("Pasta", 5);
+
+        Assert.AreEqual("Pasta", result.Result.IngredientName);
+        Assert.AreEqual(5, result.Result.Quantity);
+    }
+
+
+    [TestMethod]
+    public void TestEditGroceryItem()
+    {
+        var handlerMock = new Mock<HttpMessageHandler>(MockBehavior.Strict);
+        var foodieViewModel = new FoodieViewModel();
+        this.getGroceryForTest(foodieViewModel);
+        handlerMock.Protected().Setup<Task<HttpResponseMessage>>("SendAsync",
+                       ItExpr.IsAny<HttpRequestMessage>(),
+                       ItExpr.IsAny<CancellationToken>()).ReturnsAsync(
+                       new HttpResponseMessage
+                       {
+                           StatusCode = HttpStatusCode.OK,
+                           Content = new StringContent(
+                               "{'ShoppingListId':5,  'userId': 5,'ingredientName': 'Pasta','quantity': 5, 'Unit': 'Fluid_Ounces'}")
+                       })
+                   .Verifiable();
+        foodieViewModel.ClientToSet = new HttpClient(handlerMock.Object)
+        {
+            BaseAddress = new Uri("http://test.com/")
+        };
+
+        var result = foodieViewModel.EditGroceryIngredient("Pasta", 5);
 
         Assert.AreEqual("Pasta", result.Result.IngredientName);
         Assert.AreEqual(5, result.Result.Quantity);
@@ -285,6 +343,29 @@ public class FoodieViewModelTests
         };
         foodieViewModel.Userid = 1;
         var result = foodieViewModel.GetPantry();
+
+        Assert.AreEqual(1, result.Result.Count);
+    }
+
+    private void getGroceryForTest(FoodieViewModel foodieViewModel)
+    {
+        var handlerMock = new Mock<HttpMessageHandler>(MockBehavior.Strict);
+        handlerMock.Protected().Setup<Task<HttpResponseMessage>>("SendAsync",
+                       ItExpr.IsAny<HttpRequestMessage>(),
+                       ItExpr.IsAny<CancellationToken>()).ReturnsAsync(
+                       new HttpResponseMessage
+                       {
+                           StatusCode = HttpStatusCode.OK,
+                           Content = new StringContent(
+                               "[{'ShoppingListId':5, 'UserId':5, 'ingredientName': 'Pasta', 'quantity': 4, 'unit':'g'}]")
+                       })
+                   .Verifiable();
+        foodieViewModel.ClientToSet = new HttpClient(handlerMock.Object)
+        {
+            BaseAddress = new Uri("http://test.com/")
+        };
+        foodieViewModel.Userid = 1;
+        var result = foodieViewModel.GetGroceryList();
 
         Assert.AreEqual(1, result.Result.Count);
     }
@@ -384,7 +465,31 @@ public class FoodieViewModelTests
             BaseAddress = new Uri("http://test.com/")
         };
 
-        var result = foodieViewModel.RemoveIngredient("Pasta", 5);
+        var result = foodieViewModel.RemoveIngredient("Pasta", 5, true);
+
+        Assert.AreEqual(true, result.Result);
+    }
+    [TestMethod]
+    public void TestRemoveGroceryIngredient()
+    {
+        var handlerMock = new Mock<HttpMessageHandler>(MockBehavior.Strict);
+        var foodieViewModel = new FoodieViewModel();
+        this.getGroceryForTest(foodieViewModel);
+        handlerMock.Protected().Setup<Task<HttpResponseMessage>>("SendAsync",
+                       ItExpr.IsAny<HttpRequestMessage>(),
+                       ItExpr.IsAny<CancellationToken>()).ReturnsAsync(
+                       new HttpResponseMessage
+                       {
+                           StatusCode = HttpStatusCode.OK,
+                           Content = new StringContent("true")
+                       })
+                   .Verifiable();
+        foodieViewModel.ClientToSet = new HttpClient(handlerMock.Object)
+        {
+            BaseAddress = new Uri("http://test.com/")
+        };
+
+        var result = foodieViewModel.RemoveIngredient("Pasta", 5, false);
 
         Assert.AreEqual(true, result.Result);
     }
@@ -614,7 +719,7 @@ public class FoodieViewModelTests
                        {
                            StatusCode = HttpStatusCode.OK,
                            Content = new StringContent(
-                               "{'mealPlanId':9, 'page':0, 'mealPlanDate': '2023-03-12T00:00:00', 'userId':1, 'meals':{'Sunday':[{'mealId':9, 'date': '2023-03-12T00:00:00', 'dayOfWeek':0, 'mealType':0,'recipe':{'apiid':1, 'title':'Pasta!', 'image': 1, 'imageType': 1 }  }]} }")
+                               "{'recipes': [2], 'mealPlanId':9, 'page':0, 'mealPlanDate': '2023-03-12T00:00:00', 'userId':1, 'meals':{'Sunday':[{'mealId':9, 'date': '2023-03-12T00:00:00', 'dayOfWeek':0, 'mealType':0,'recipe':{'apiid':1, 'title':'Pasta!', 'image': 1, 'imageType': 1 }  }]} }")
                        })
                    .Verifiable();
         foodieViewModel.ClientToSet = new HttpClient(handlerMock.Object)
@@ -721,5 +826,110 @@ public class FoodieViewModelTests
 
     }
 
+    [TestMethod]
+    public void TestAddNeededGroceries()
+    {
+        var foodieViewModel = new FoodieViewModel();
+        this.getPlansForTesting(foodieViewModel);
+        var handlerMock = new Mock<HttpMessageHandler>(MockBehavior.Strict);
+        handlerMock.Protected().Setup<Task<HttpResponseMessage>>("SendAsync",
+                       ItExpr.IsAny<HttpRequestMessage>(),
+                       ItExpr.IsAny<CancellationToken>()).ReturnsAsync(
+                       new HttpResponseMessage
+                       {
+                           StatusCode = HttpStatusCode.OK,
+                           Content = new StringContent(
+                               "[{'ShoppingListId':1, 'UserId':1, 'ingredientName': 'string', 'quantity': 1 }]")
+                       })
+                   .Verifiable();
+        foodieViewModel.ClientToSet = new HttpClient(handlerMock.Object)
+        {
+            BaseAddress = new Uri("http://test.com/")
+        };
+        foodieViewModel.Userid = 1;
+        Task task = foodieViewModel.AddedNeededGroceries();
+        Assert.AreEqual(true, task.IsCompletedSuccessfully);
+    }
+
+    [TestMethod]
+    public void TestPurchaseIngredients()
+    {
+
+        var foodieViewModel = new FoodieViewModel();
+        var GroceryViewModel = new GroceryListViewModel();
+
+        Dictionary<string, int> testing = new Dictionary<string, int>();
+        this.getGroceryForTest(foodieViewModel);
+        testing.Add("Pasta", 2);
+        GroceryViewModel.GroceryList = new List<GroceryListItem>() { new GroceryListItem() { IngredientName = "Pasta", Quantity = 2, UnitId = 0 } };
+        var handlerMock = new Mock<HttpMessageHandler>(MockBehavior.Strict);
+        handlerMock.Protected().Setup<Task<HttpResponseMessage>>("SendAsync",
+                       ItExpr.IsAny<HttpRequestMessage>(),
+                       ItExpr.IsAny<CancellationToken>()).ReturnsAsync(
+                       new HttpResponseMessage
+                       {
+                           StatusCode = HttpStatusCode.OK,
+                           Content = new StringContent(
+                               "[{'pantryId':5, 'UserId':5, 'ingredientName': 'Pasta', 'quantity': 2, 'unit':'g'}]")
+                       })
+                   .Verifiable();
+        HttpClient Client = new HttpClient(handlerMock.Object)
+        {
+            BaseAddress = new Uri("http://test.com/")
+        };
+        GroceryViewModel.BuyGroceryItems(testing, 5, Client);
+
+    }
+
+    [TestMethod]
+    public void TestClearGroceryList()
+    {
+        var handlerMock = new Mock<HttpMessageHandler>(MockBehavior.Strict);
+        var foodieViewModel = new FoodieViewModel();
+        this.getGroceryForTest(foodieViewModel);
+        handlerMock.Protected().Setup<Task<HttpResponseMessage>>("SendAsync",
+                       ItExpr.IsAny<HttpRequestMessage>(),
+                       ItExpr.IsAny<CancellationToken>()).ReturnsAsync(
+                       new HttpResponseMessage
+                       {
+                           StatusCode = HttpStatusCode.OK,
+                           Content = new StringContent("true")
+                       })
+                   .Verifiable();
+        foodieViewModel.ClientToSet = new HttpClient(handlerMock.Object)
+        {
+            BaseAddress = new Uri("http://test.com/")
+        };
+        var task = foodieViewModel.ClearGroceryList();
+        Assert.AreEqual(true, task.IsCompletedSuccessfully);
+
+    }
+
+    [TestMethod]
+    public void TestGetIngredientsUsed()
+    {
+        var handlerMock = new Mock<HttpMessageHandler>(MockBehavior.Strict);
+        var foodieViewModel = new FoodieViewModel();
+        this.getPantryForTest(foodieViewModel);
+        this.addRecipesForDetailNavTest(foodieViewModel);
+        this.simulateNavForTestMultiStep(foodieViewModel);
+        handlerMock.Protected().Setup<Task<HttpResponseMessage>>("SendAsync",
+                       ItExpr.IsAny<HttpRequestMessage>(),
+                       ItExpr.IsAny<CancellationToken>()).ReturnsAsync(
+                       new HttpResponseMessage
+                       {
+                           StatusCode = HttpStatusCode.OK,
+                           Content = new StringContent(
+                               "[{'pantryId':1, 'UserId':1, 'ingredientName': 'orange', 'quantity': 1 }]")
+                       })
+                   .Verifiable();
+        foodieViewModel.ClientToSet = new HttpClient(handlerMock.Object)
+        {
+            BaseAddress = new Uri("http://test.com/")
+        };
+        foodieViewModel.PrepareMeal();
+
+
+    }
     #endregion
 }

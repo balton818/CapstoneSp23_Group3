@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Team3DesktopApp.Dal;
@@ -8,7 +7,7 @@ using Team3DesktopApp.Model;
 namespace Team3DesktopApp.ViewModel;
 
 /// <summary>
-///     the viewmodel for the pantrypage
+///     the viewmodel for the pantry page
 /// </summary>
 public class PantryViewModel
 {
@@ -112,14 +111,11 @@ public class PantryViewModel
         return connection.RemovePantryItem(pantryItem, client);
     }
 
-    public async Task UseIngredients(List<PantryItem> ingredients, int userId, HttpClient client)
-    {
-        var connection = new HttpClientConnection();
-        await connection.UseIngredientsFromList(ingredients, userId, client);
-    }
-
-    #endregion
-
+    /// <summary>Gets the ingredients used for the meal.</summary>
+    /// <param name="ingredients">The ingredients used for the prepared meal.</param>
+    /// <returns>
+    ///   a collection of Pantry items used in the prepared recipe
+    /// </returns>
     public List<PantryItem> GetIngredientsUsed(List<Ingredient> ingredients)
     {
         var usedIngredients = new List<PantryItem>();
@@ -131,4 +127,6 @@ public class PantryViewModel
 
         return usedIngredients;
     }
+
+    #endregion
 }

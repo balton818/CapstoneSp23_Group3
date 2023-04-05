@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Windows.Media;
@@ -302,22 +301,17 @@ public class FoodieViewModel
     /// <summary>Removes an ingredient from a user's pantry.</summary>
     /// <param name="ingredientName">Name of the ingredient.</param>
     /// <param name="ingredientAmount">The ingredient amount.</param>
-    /// <returns>
-    ///     true if successful false otherwise
-    /// </returns>
+    /// <param name="isPantry"> indicates if the ingredient is a pantry item or grocery item</param>
+    /// <returns>true if successful false otherwise</returns>
     public Task<bool> RemoveIngredient(string? ingredientName, int ingredientAmount, bool isPantry)
     {
         if (isPantry)
         {
             return this.pantryViewModel.RemoveIngredient(ingredientName, ingredientAmount, this.ClientToSet);
         }
-        else
-        {
-            return this.groceryListViewModel.RemoveIngredient(ingredientName, ingredientAmount, this.ClientToSet);
-        }
 
+        return this.groceryListViewModel.RemoveIngredient(ingredientName, ingredientAmount, this.ClientToSet);
     }
-
 
     /// <summary>Gets a list of recipes agnostic of users pantry items.</summary>
     /// <returns>
@@ -482,20 +476,18 @@ public class FoodieViewModel
 
     /// <summary>Adds recipe to meal plan.</summary>
     /// <param name="current">indicates if the current week is selected.</param>
-    public async Task AddToMealPlan(bool? current)
+    public void AddToMealPlan(bool? current)
     {
         this.mealPlanViewModel.AddToPlan(this.recipeDetailViewModel.CurrentRecipe!, this.PlanTypeAndDateToAdd!.Item1,
             this.PlanTypeAndDateToAdd.Item2, this.ClientToSet, current);
     }
 
-
     /// <summary>Removes the meal from plan.</summary>
     /// <param name="mealToRemove">The name of the meal to remove.</param>
     /// <param name="dayOfWeek">The day of week.</param>
     /// <param name="mealType">Type of the meal.</param>
-    public async Task RemoveMealFromPlan(string? mealToRemove, DayOfWeek dayOfWeek, MealType mealType)
+    public void RemoveMealFromPlan(string? mealToRemove, DayOfWeek dayOfWeek, MealType mealType)
     {
-        var recipe = this.mealPlanViewModel.GetRecipe(dayOfWeek, mealType);
         this.mealPlanViewModel.RemoveMealFromPlan(this.ClientToSet, mealToRemove, dayOfWeek, mealType);
     }
 
@@ -547,8 +539,10 @@ public class FoodieViewModel
         return cuisineTypes;
     }
 
-    #endregion
-
+    /// <summary>Gets the users grocery list.</summary>
+    /// <returns>
+    ///   a collection of groceryListItems to display to user
+    /// </returns>
     public async Task<List<GroceryListItem>> GetGroceryList()
     {
         var groceryList = new List<GroceryListItem>();
@@ -557,30 +551,41 @@ public class FoodieViewModel
         return groceryList;
     }
 
+    /// <summary>
+    /// Adds the needed ingredients to complete the users meal plan to the grocery list.
+    /// </summary>
     public async Task AddedNeededGroceries()
     {
-        List<int> recipeIds = new List<int>();
+        var recipeIds = new List<int>();
         recipeIds.AddRange(this.mealPlanViewModel.NextWeekPlan!.Recipes);
         recipeIds.AddRange(this.mealPlanViewModel.FirstWeekPlan!.Recipes);
         await this.groceryListViewModel.AddNeededGroceriesToList(recipeIds, this.Userid,
             this.ClientToSet);
     }
 
+    /// <summary>Purchases the ingredients the user has selected.</summary>
+    /// <param name="purchasedItems">The items the user has marked as purchased and their quantities.</param>
     public void PurchaseIngredients(Dictionary<string, int> purchasedItems)
     {
-
         this.groceryListViewModel.BuyGroceryItems(purchasedItems, this.Userid, this.ClientToSet);
     }
 
+    /// <summary>
+    /// Prepares the meal by adjusting the ingredients the user has in pantry.
+    /// Deducts the ingredient quantities required to complete the recipe selected
+    /// </summary>
     public void PrepareMeal()
     {
         var connection = new HttpClientConnection();
         var toRemove = this.pantryViewModel.GetIngredientsUsed(this.recipeDetailViewModel.RecipeInfo!.Ingredients!);
-        connection.UseIngredientsFromList(toRemove, Userid, this.ClientToSet);
+        connection.UseIngredientsFromList(toRemove, this.Userid, this.ClientToSet);
     }
 
-    public void ClearGroceryList()
+    /// <summary>Clears the users grocery list.</summary>
+    public async Task ClearGroceryList()
     {
-        this.groceryListViewModel.ClearGroceryList(this.Userid, this.ClientToSet);
+        await this.groceryListViewModel.ClearGroceryList(this.Userid, this.ClientToSet);
     }
+
+    #endregion
 }

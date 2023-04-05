@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Team3DesktopApp.Dal;
@@ -29,8 +28,6 @@ public class MealPlanViewModel
     /// </value>
     public bool CurrentWeek { get; set; } = true;
 
-    public List<Ingredient> IngredientsForPlan { get; set; }
-
     #endregion
 
     #region Methods
@@ -40,33 +37,12 @@ public class MealPlanViewModel
     /// <param name="client">The client to connect to the backend.</param>
     public async Task GetMealPlans(int userId, HttpClient client)
     {
-        this.IngredientsForPlan = new List<Ingredient>();
         var connection = new HttpClientConnection();
         this.FirstWeekPlan = await connection.GetPlan(userId, client, true);
         this.NextWeekPlan = await connection.GetPlan(userId, client, false);
-        //await this.collectIngredients(this.FirstWeekPlan!, client);
-        //await this.collectIngredients(this.NextWeekPlan!, client);
+
     }
 
-    private async Task collectIngredients(MealPlan mealPlan, HttpClient client)
-    {
-        if (mealPlan == null)
-        {
-            return;
-        }
-        foreach (List<Meal> current in mealPlan.Meals.Values)
-        {
-            foreach (Meal recipe in current)
-            {
-                if (recipe.Recipe != null)
-                {
-                    var connection = new HttpClientConnection();
-                    var details = await connection.GetRecipeDetail((int)recipe.Recipe.Id, client);
-                    this.IngredientsForPlan.AddRange(details.Ingredients);
-                }
-            }
-        }
-    }
     /// <summary>Gets the meal planned for the given day and week.</summary>
     /// <param name="day">The day.</param>
     /// <param name="currentWeek">if set to <c>true</c> [current week].</param>
@@ -121,7 +97,7 @@ public class MealPlanViewModel
     /// <summary>Updates the meal plan if a meal already exists for the spot the user is editing.</summary>
     /// <param name="recipe">The recipe to be added to the plan.</param>
     /// <param name="day">The day the recipe will be added to.</param>
-    /// <param name="type">The type the mealtype for the plan.</param>
+    /// <param name="type">The type the meal type for the plan.</param>
     /// <param name="client">The client to connect to the backed.</param>
     /// <param name="current">The current week, true if current, false if next.</param>
     public void UpdatePlan(Recipe recipe, DayOfWeek? day, MealType? type, HttpClient client, bool? current)
@@ -233,8 +209,7 @@ public class MealPlanViewModel
     /// </returns>
     public DateOnly GetDate(bool currentWeek)
     {
-        DateTime sundayDate;
-        sundayDate = DateTime.Now.Subtract(new TimeSpan((int)DateTime.Now.DayOfWeek, 0, 0, 0));
+        var sundayDate = DateTime.Now.Subtract(new TimeSpan((int)DateTime.Now.DayOfWeek, 0, 0, 0));
         if (currentWeek && this.FirstWeekPlan != null)
         {
             return DateOnly.FromDateTime(this.FirstWeekPlan.MealPlanDate);
@@ -277,5 +252,4 @@ public class MealPlanViewModel
     }
 
     #endregion
-
 }

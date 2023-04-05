@@ -1,7 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Windows;
 using System.Windows.Controls;
-using Castle.Components.DictionaryAdapter.Xml;
 using Team3DesktopApp.ViewModel;
 
 namespace Team3DesktopApp.View;
@@ -32,10 +31,15 @@ public partial class IngredientExpander
     /// <value>The current Page the expander exists on.</value>
     public Page? Current { get; set; }
 
+    /// <summary>Indicates if expander item is selected for purchase.</summary>
+    /// <value>
+    ///   <c>true</c> if [selected for purchase]; otherwise, <c>false</c>.</value>
     public bool SelectedForPurchase { get; set; }
 
+    /// <summary>Indicates if expander contains grocery item or pantry item.</summary>
+    /// <value>
+    ///   <c>true</c> if this instance is grocery item; otherwise, <c>false</c>.</value>
     public bool IsGrocery { get; set; }
-
 
     #endregion
 
@@ -44,8 +48,9 @@ public partial class IngredientExpander
     /// <summary>Initializes a new instance of the <see cref="IngredientExpander" /> class.</summary>
     /// <param name="name">The name of the ingredient.</param>
     /// <param name="amount">The amount of the ingredient.</param>
-    /// <param name="measure"> The unit of measure for the ingredient</param>
+    /// <param name="measure">The unit of measure for the ingredient</param>
     /// <param name="viewModel">The view model.</param>
+    /// <param name="isGrocery"> indicates if expander is for grocery item</param>
     public IngredientExpander(string? name, int amount, string measure, FoodieViewModel? viewModel, bool isGrocery)
     {
         this.InitializeComponent();
@@ -54,12 +59,12 @@ public partial class IngredientExpander
         this.IngredientUnit = measure;
         this.ViewModel = viewModel;
         this.IsGrocery = isGrocery;
-
     }
 
     #endregion
 
     #region Methods
+
     private async void PlusButton_OnClick(object sender, RoutedEventArgs e)
     {
         this.IngredientAmount++;
@@ -74,7 +79,6 @@ public partial class IngredientExpander
         }
 
         this.expanderNavigation();
-
     }
 
     private void expanderNavigation()
@@ -114,7 +118,6 @@ public partial class IngredientExpander
                 "Confirm removal of " + this.IngredientName + " ? ",
                 "Ingredient Removal") == "1")
         {
-
             if (this.ViewModel != null)
             {
                 await this.ViewModel.RemoveIngredient(this.IngredientName, this.IngredientAmount, !this.IsGrocery);

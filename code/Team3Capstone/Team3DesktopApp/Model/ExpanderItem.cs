@@ -1,5 +1,8 @@
 ﻿namespace Team3DesktopApp.Model;
 
+/// <summary>
+///   The expander item class, for models that can be stored in the ingredient expanders.
+/// </summary>
 public class ExpanderItem
 {
     /// <summary>

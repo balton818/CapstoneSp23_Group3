@@ -36,7 +36,7 @@
                             IsChecked="{Binding Path=SelectedForPurchase, Mode=TwoWay}"
                             Foreground="#FFE8C547"
                             Visibility="{Binding Path=IsGrocery, Mode=TwoWay, Converter={StaticResource BoolToVis}}"
-                            VerticalAlignment="Center"/>
+                            VerticalAlignment="Center" />
                         <TextBlock
                             x:Name="ingredientHeader"
                             Width="167"
@@ -48,7 +48,8 @@
                             TextWrapping="Wrap"
                             FontWeight="Bold"
                             Foreground="#FFE8C547"
-                            Text="{Binding IngredientName}" Height="23" FontStretch="Expanded" LineStackingStrategy="BlockLineHeight" />
+                            Text="{Binding IngredientName}" Height="52" FontStretch="Expanded"
+                            LineStackingStrategy="BlockLineHeight" LineHeight="30" />
                         <TextBlock
                             x:Name="ingredientAmount"
                             Margin="240,0,74,0"

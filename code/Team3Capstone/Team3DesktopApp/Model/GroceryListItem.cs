@@ -1,5 +1,8 @@
 ﻿namespace Team3DesktopApp.Model;
 
+/// <summary>
+///   the grocery list item class for use with the grocery list.
+/// </summary>
 public class GroceryListItem : ExpanderItem
 {
     /// <summary>

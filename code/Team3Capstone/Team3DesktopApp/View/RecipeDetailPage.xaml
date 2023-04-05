@@ -8,7 +8,7 @@
     Title="RecipeDetailPage"
     d:DesignHeight="650"
     mc:Ignorable="d" Width="407">
-    <Grid Margin="0,10,-12,-61" >
+    <Grid Margin="0,10,-12,-61">
         <Grid.RowDefinitions>
             <RowDefinition Height="643*" />
             <RowDefinition Height="129*" />
@@ -25,7 +25,7 @@
                     x:Key="Clip0872"
                     Rect="0, 0, 415, 574" />
             </Canvas.Resources>
-            <Canvas Name="mainCanvas"  Width ="422" Height="680" Clip="{StaticResource Clip0872}">
+            <Canvas Name="mainCanvas" Width="422" Height="680" Clip="{StaticResource Clip0872}">
                 <Rectangle
                     Name="rect1005"
                     Width="422"

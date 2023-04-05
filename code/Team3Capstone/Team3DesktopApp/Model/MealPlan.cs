@@ -10,7 +10,9 @@ public class MealPlan
 {
     #region Properties
 
-    public List<int> Recipes { get; set; }
+    /// <summary>Gets or sets the collection of recipe ids.</summary>
+    /// <value>The recipe ids in the meal plan</value>
+    public List<int> Recipes { get; set; } = null!;
 
     /// <summary>Gets or sets the meal plan id.</summary>
     /// <value>The meal plan id.</value>

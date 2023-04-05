@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Windows;
@@ -14,23 +13,31 @@ namespace Team3DesktopApp.View;
 [ExcludeFromCodeCoverage]
 public partial class ExpanderListPage
 {
+    #region Data members
+
+    private List<PantryItem> pantryList = null!;
+    private List<GroceryListItem> groceryList = null!;
+
+    #endregion
+
     #region Properties
 
     /// <summary>Gets or sets the view model.</summary>
     /// <value>The view model.</value>
     public FoodieViewModel? ViewModel { get; set; }
 
+    /// <summary>Gets or sets a value indicating whether this instance is a grocery list</summary>
+    /// <value>
+    ///   <c>true</c> if this instance is a grocery list; otherwise, <c>false</c>.</value>
     public bool IsGrocery { get; set; }
-
-    private List<PantryItem> pantryList;
-    private List<GroceryListItem> groceryList;
 
     #endregion
 
     #region Constructors
 
-    /// <summary>Initializes a new instance of the <see cref="PantryPage" /> class.</summary>
+    /// <summary>Initializes a new instance of the <see cref="ExpanderListPage" /> class.</summary>
     /// <param name="viewModel">The view model.</param>
+    /// <param name="isPantry"> indicates if this page is for a pantry or grocery list</param>
     public ExpanderListPage(FoodieViewModel? viewModel, bool isPantry)
     {
         this.InitializeComponent();
@@ -54,7 +61,7 @@ public partial class ExpanderListPage
     private async void AddIngredientButton_OnClick(object sender, RoutedEventArgs e)
     {
         if (!string.IsNullOrEmpty(this.ingredientNameTextBox.Text) &&
-            !string.IsNullOrEmpty(this.quantityTextBox.Text) && this.quantityTextBox.Text.All(Char.IsDigit))
+            !string.IsNullOrEmpty(this.quantityTextBox.Text) && this.quantityTextBox.Text.All(char.IsDigit))
         {
             if (StylizedMessageBox.ShowBox(
                     "Confirm addition of " + this.ingredientNameTextBox.Text + " " + this.quantityTextBox.Text + " " +
@@ -104,8 +111,6 @@ public partial class ExpanderListPage
                 this.clearGroceryListButton.Visibility = Visibility.Visible;
                 this.buildGroceryExpanders(expanders);
             }
-
-
         }
 
         this.expanderListBox.ItemsSource = expanders;
@@ -129,30 +134,30 @@ public partial class ExpanderListPage
         foreach (var current in this.pantryList)
         {
             var ingredientExpander = new IngredientExpander(current.IngredientName, current.Quantity,
-                current.UnitId.ToString(), this.ViewModel, false);
-            ingredientExpander.Current = this;
+                current.UnitId.ToString(), this.ViewModel, false)
+            {
+                Current = this
+            };
             expanders.Add(ingredientExpander);
         }
     }
 
-    #endregion
-
     private void PurchaseSelectedButton_OnClick(object sender, RoutedEventArgs e)
     {
-        Dictionary<string, int> purchasedItems = new Dictionary<string, int>();
+        var purchasedItems = new Dictionary<string, int>();
         foreach (IngredientExpander expander in this.expanderListBox.Items)
         {
-
-
             if (expander.SelectedForPurchase)
             {
-                var result = StylizedMessageBox.ShowBox("Confirm purchase of " + expander.IngredientName + "?", "Purchase Ingredient", expander.IngredientAmount);
+                var result = StylizedMessageBox.ShowBox("Confirm purchase of " + expander.IngredientName + "?",
+                    "Purchase Ingredient", expander.IngredientAmount);
                 if (result.Item1 == "1")
                 {
                     purchasedItems.Add(expander.IngredientName!, int.Parse(result.Item2));
                 }
             }
         }
+
         this.ViewModel.PurchaseIngredients(purchasedItems);
         this.navigateToPage("Grocery");
     }
@@ -173,7 +178,7 @@ public partial class ExpanderListPage
             this.ViewModel.ClearGroceryList();
             this.navigateToPage("Grocery");
         }
-
     }
-}
 
+    #endregion
+}

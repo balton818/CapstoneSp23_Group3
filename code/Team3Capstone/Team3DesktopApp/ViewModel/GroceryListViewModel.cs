@@ -1,19 +1,18 @@
 ﻿using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
-using System.Windows.Media.TextFormatting;
 using Team3DesktopApp.Dal;
 using Team3DesktopApp.Model;
 
 namespace Team3DesktopApp.ViewModel;
 
-internal class GroceryListViewModel
+public class GroceryListViewModel
 {
     #region Properties
 
     /// <summary>Gets or sets the pantry.</summary>
     /// <value>The pantry.</value>
-    public List<GroceryListItem>? GroceryList { get; set; } = new List<GroceryListItem>();
+    public List<GroceryListItem>? GroceryList { get; set; } = new();
 
     #endregion
 
@@ -119,19 +118,25 @@ internal class GroceryListViewModel
     {
         var connection = new HttpClientConnection();
         this.GroceryList = await connection.AddToGroceryListByRecipeId(recipeIds, userId, client);
-
     }
 
-    public Task<List<PantryItem>> BuyGroceryItems(Dictionary<string, int> ingredients, int userId, HttpClient client)
+    /// <summary>Buys the grocery items marked by the use and adds them to the pantry.</summary>
+    /// <param name="ingredients">The ingredients purchased.</param>
+    /// <param name="userId">The current users id.</param>
+    /// <param name="client">The client to connect to the backend.</param>
+    /// <returns>
+    ///   <br />
+    /// </returns>
+    public void BuyGroceryItems(Dictionary<string, int> ingredients, int userId, HttpClient client)
     {
-        List<GroceryListItem> itemsToBuy = new List<GroceryListItem>();
-        GroceryListItem difference = new GroceryListItem();
+        var itemsToBuy = new List<GroceryListItem>();
+        var difference = new GroceryListItem();
         var connection = new HttpClientConnection();
         foreach (var currentIngredient in ingredients.Keys)
         {
             if (this.getItem(currentIngredient) != null)
             {
-                GroceryListItem itemToBuy = this.getItem(currentIngredient)!;
+                var itemToBuy = this.getItem(currentIngredient)!;
                 if (ingredients[currentIngredient] < itemToBuy.Quantity)
                 {
                     difference.IngredientName = itemToBuy.IngredientName;
@@ -141,25 +146,43 @@ internal class GroceryListViewModel
                     difference.UserId = itemToBuy.UserId;
                 }
 
-                itemsToBuy.Add(itemToBuy);
+                if (itemToBuy.Quantity > 0)
+                {
+                    itemsToBuy.Add(itemToBuy);
+                }
+            }
+
+            if (difference.IngredientName != null && difference.Quantity > 0)
+            {
+                connection.AddGroceryItem(difference, client);
             }
         }
-        var pantry = connection.BuyIngredientsFromList(itemsToBuy, userId, client);
-        if (difference.IngredientName != null)
+
+        if (itemsToBuy.Count > 0)
         {
-            connection.AddGroceryItem(difference, client);
+            connection.BuyIngredientsFromList(itemsToBuy, userId, client);
         }
-        return pantry;
     }
-    #endregion
 
-
-    public void ClearGroceryList(int userid, HttpClient clientToSet)
+    /// <summary>Clears the current grocery list.</summary>
+    /// <param name="userid">The userid for the logged in user.</param>
+    /// <param name="clientToSet">The client to set to connect to the backend.</param>
+    public async Task ClearGroceryList(int userid, HttpClient clientToSet)
     {
-        this.GetGroceryList(userid, clientToSet);
-        foreach (var item in this.GroceryList)
+        if (this.GroceryList == null)
         {
-            this.RemoveIngredient(item.IngredientName, item.Quantity, clientToSet);
+            await this.GetGroceryList(userid, clientToSet);
+        }
+
+        var groceryListItems = this.GroceryList;
+        if (groceryListItems != null)
+        {
+            foreach (var item in groceryListItems)
+            {
+                await this.RemoveIngredient(item.IngredientName, item.Quantity, clientToSet);
+            }
         }
     }
+
+    #endregion
 }

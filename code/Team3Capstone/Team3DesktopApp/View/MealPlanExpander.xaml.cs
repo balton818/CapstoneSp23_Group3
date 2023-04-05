@@ -83,8 +83,7 @@ public partial class MealPlanExpander
 
     private void addMealClick(object sender, RoutedEventArgs e)
     {
-        var buttonPressed = sender as NavButton;
-        if (buttonPressed != null)
+        if (sender is NavButton buttonPressed)
         {
             this.checkMealTypeToAdd(buttonPressed);
 
@@ -228,5 +227,4 @@ public partial class MealPlanExpander
     }
 
     #endregion
-
 }

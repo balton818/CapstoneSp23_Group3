@@ -33,6 +33,5 @@ public class RecipeDetailViewModel
         this.RecipeInfo = await connection.GetRecipeDetail(recipeId, client);
     }
 
-
     #endregion
 }

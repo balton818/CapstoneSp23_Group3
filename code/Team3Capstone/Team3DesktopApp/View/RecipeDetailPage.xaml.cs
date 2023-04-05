@@ -64,8 +64,6 @@ public partial class RecipeDetailPage
         }
     }
 
-    #endregion
-
     private void mealPrepared_OnClick(object sender, RoutedEventArgs e)
     {
         if (StylizedMessageBox.ShowBox(
@@ -75,4 +73,6 @@ public partial class RecipeDetailPage
             this.ViewModel.PrepareMeal();
         }
     }
+
+    #endregion
 }

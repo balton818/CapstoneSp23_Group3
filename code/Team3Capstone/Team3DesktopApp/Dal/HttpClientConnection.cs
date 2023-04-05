@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Media;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Team3DesktopApp.Model;
@@ -158,7 +157,7 @@ public class HttpClientConnection
     /// <param name="userId">The user id of the logged in user.</param>
     /// <param name="client">The http connection client.</param>
     /// <returns>
-    ///     a list of recipes that the user isnt missing ingredients for
+    ///     a list of recipes that the user isn't missing ingredients for
     /// </returns>
     public Task<List<Recipe>> GetRecipes(int userId, HttpClient client)
     {
@@ -541,6 +540,7 @@ public class HttpClientConnection
 
         return Task.FromResult<GroceryListItem>(null!);
     }
+
     /// <summary>Removes the grocery item from the users grocery list in the database.</summary>
     /// <param name="toRemove">the grocery item to remove.</param>
     /// <param name="client">The client for connecting.</param>
@@ -569,6 +569,13 @@ public class HttpClientConnection
         return Task.FromResult(false);
     }
 
+    /// <summary>Adds ingredients to grocery list by recipe id.</summary>
+    /// <param name="recipeIds">The recipe ids for the recipes in the users meal plan.</param>
+    /// <param name="userId">The currently logged in user's id</param>
+    /// <param name="client">The client to connect to hte backend.</param>
+    /// <returns>
+    ///   The user's new grocery list made of items they need in their pantry to complete the planned recipes
+    /// </returns>
     public Task<List<GroceryListItem>> AddToGroceryListByRecipeId(List<int> recipeIds, int userId, HttpClient client)
     {
         var query = new Uri("Recipe/add-to-shopping-list-by-recipe-ids?userId=" + userId, UriKind.Relative);
@@ -590,29 +597,15 @@ public class HttpClientConnection
         return Task.FromResult<List<GroceryListItem>>(null);
     }
 
-
-    public Task<List<GroceryListItem>> AddToGroceryListByIngredientIds(List<Ingredient> ingredients, int userId, HttpClient client)
-    {
-        var query = new Uri("Recipe/add-to-shopping-list-by-ingredients?userId=" + userId, UriKind.Relative);
-        var json = JsonConvert.SerializeObject(ingredients);
-        var data = new StringContent(json, Encoding.UTF8, "application/json");
-        var response = client.PostAsync(query, data);
-        Console.WriteLine(response);
-        if (response.Result.IsSuccessStatusCode)
-        {
-            var readTask = response.Result.Content.ReadAsStringAsync();
-            readTask.Wait();
-
-            var result = readTask.Result;
-            Console.WriteLine(result);
-            var groceryList = JsonConvert.DeserializeObject<List<GroceryListItem>>(result);
-            return Task.FromResult(groceryList)!;
-        }
-
-        return Task.FromResult<List<GroceryListItem>>(null);
-    }
-
-    public Task<List<PantryItem>> BuyIngredientsFromList(List<GroceryListItem> ingredients, int userId, HttpClient client)
+    /// <summary>Buys the ingredients from the grocery list.</summary>
+    /// <param name="ingredients">The ingredients to be purchased.</param>
+    /// <param name="userId">The currently logged in user.</param>
+    /// <param name="client">The client to connect to the backend.</param>
+    /// <returns>
+    ///   the users new pantry which includes the purchased ingredients and their quantities
+    /// </returns>
+    public Task<List<PantryItem>> BuyIngredientsFromList(List<GroceryListItem> ingredients, int userId,
+        HttpClient client)
     {
         var query = new Uri("Recipe/buy-ingredients?userId=" + userId, UriKind.Relative);
         var json = JsonConvert.SerializeObject(ingredients);
@@ -633,6 +626,13 @@ public class HttpClientConnection
         return Task.FromResult<List<PantryItem>>(null);
     }
 
+    /// <summary>removes the ingredients from the users pantry for the meal that has been prepared.</summary>
+    /// <param name="ingredients">The ingredients that have been used.</param>
+    /// <param name="userId">The currently logged in user.</param>
+    /// <param name="client">The client to connect to the backend.</param>
+    /// <returns>
+    ///   the users new pantry collection
+    /// </returns>
     public Task<List<PantryItem>> UseIngredientsFromList(List<PantryItem> ingredients, int userId, HttpClient client)
     {
         var query = new Uri("Recipe/use-ingredients?userId=" + userId, UriKind.Relative);
@@ -653,5 +653,6 @@ public class HttpClientConnection
 
         return Task.FromResult<List<PantryItem>>(null);
     }
+
     #endregion
 }
