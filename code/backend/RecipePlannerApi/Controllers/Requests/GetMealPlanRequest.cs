@@ -1,4 +1,7 @@
-﻿namespace RecipePlannerApi.Controllers.Requests {
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace RecipePlannerApi.Controllers.Requests {
+    [ExcludeFromCodeCoverage]
     public class GetMealPlanRequest {
         /// <summary>
         /// Gets or sets the date.

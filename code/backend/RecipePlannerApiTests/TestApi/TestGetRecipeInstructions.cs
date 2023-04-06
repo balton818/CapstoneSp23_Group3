@@ -10,7 +10,10 @@ namespace RecipePlannerApiTests.TestApi {
             var api = new Mock<IRecipesApi>();
 
             api.Setup(x => x.GetAnalyzedRecipeInstructions(It.IsAny<int>(), It.IsAny<bool>()))
-                .Returns(new List<GetAnalyzedRecipeInstructions200ResponseParsedInstructionsInner>());
+                .Returns(new List<GetAnalyzedRecipeInstructions200ResponseParsedInstructionsInner>() {
+                    new GetAnalyzedRecipeInstructions200ResponseParsedInstructionsInner() { 
+                        Steps = new List<GetAnalyzedRecipeInstructions200ResponseParsedInstructionsInnerStepsInner>()
+                    }});
 
             var service = new RecipeApi(api.Object);
 

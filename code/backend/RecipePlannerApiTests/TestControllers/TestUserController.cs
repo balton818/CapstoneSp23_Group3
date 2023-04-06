@@ -95,5 +95,64 @@ namespace RecipePlannerApiTests.TestControllers {
             Assert.NotNull(result);
         }
 
+        [Fact]
+        public void TestGetShoppingList() {
+            var userService = new Mock<IUserService>();
+            var shoppingService = new Mock<IShoppingListService>();
+
+            shoppingService.Setup(x => x.GetShoppingList(It.IsAny<int>()))
+                .Returns(new List<ShoppingListIngredient>());
+
+            var controller = new UserController(userService.Object, shoppingService.Object);
+
+            var result = controller.GetShoppingList(1);
+
+            Assert.IsType<OkObjectResult>(result.Result);
+        }
+
+        [Fact]
+        public void TestAddShoppingListIngredient() {
+            var userService = new Mock<IUserService>();
+            var shoppingService = new Mock<IShoppingListService>();
+
+            shoppingService.Setup(x => x.UpsertShoppingListIngredient(It.IsAny<ShoppingListIngredient>()))
+                .Returns(new ShoppingListIngredient());
+
+            var controller = new UserController(userService.Object, shoppingService.Object);
+
+            var result = controller.AddShoppingListIngredient(new ShoppingListIngredient());
+
+            Assert.IsType<OkObjectResult>(result.Result);
+        }
+
+        [Fact]
+        public void TestUpdateShoppingListIngredient() {
+            var userService = new Mock<IUserService>();
+            var shoppingService = new Mock<IShoppingListService>();
+
+            shoppingService.Setup(x => x.UpsertShoppingListIngredient(It.IsAny<ShoppingListIngredient>()))
+                .Returns(new ShoppingListIngredient());
+
+            var controller = new UserController(userService.Object, shoppingService.Object);
+
+            var result = controller.UpdateShoppingListIngredient(new ShoppingListIngredient());
+
+            Assert.IsType<OkObjectResult>(result.Result);
+        }
+
+        [Fact]
+        public void TestRemoveShoppingListIngredient() {
+            var userService = new Mock<IUserService>();
+            var shoppingService = new Mock<IShoppingListService>();
+
+            shoppingService.Setup(x => x.DeleteShoppingListIngredient(It.IsAny<int>()));
+
+            var controller = new UserController(userService.Object, shoppingService.Object);
+
+            var result = controller.RemoveShoppingListIngredient(1);
+
+            Assert.NotNull(result);
+        }
+
     }
 }
