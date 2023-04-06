@@ -91,5 +91,61 @@ namespace RecipePlannerApiTests.TestControllers {
 
             Assert.IsType<OkObjectResult>(result.Result);
         }
+
+        [Fact]
+        public void TestAddRecipeIngredientsToShoppingListByIngredients() {
+            var recipeService = new Mock<IRecipeService>();
+
+            recipeService.Setup(x => x.AddRecipeIngredientsToShoppingList(It.IsAny<List<Ingredient>>(), It.IsAny<int>()))
+                            .Returns(new List<ShoppingListIngredient>());
+
+            var controller = new RecipeController(recipeService.Object);
+
+            var result = controller.AddRecipeIngredientsToShoppingList(new List<Ingredient>(), 1);
+
+            Assert.IsType<OkObjectResult>(result.Result);
+        }
+
+        [Fact]
+        public void TestAddRecipeIngredientsToShoppingListByRecipeIds() {
+            var recipeService = new Mock<IRecipeService>();
+
+            recipeService.Setup(x => x.AddRecipeIngredientsToShoppingList(It.IsAny<List<int>>(), It.IsAny<int>()))
+                            .Returns(new List<ShoppingListIngredient>());
+
+            var controller = new RecipeController(recipeService.Object);
+
+            var result = controller.AddRecipeIngredientsToShoppingList(new List<int>(), 1);
+
+            Assert.IsType<OkObjectResult>(result.Result);
+        }
+
+        [Fact]
+        public void TestUseIngredients() {
+            var recipeService = new Mock<IRecipeService>();
+
+            recipeService.Setup(x => x.UseIngredients(It.IsAny<List<Ingredient>>(), It.IsAny<int>()))
+                            .Returns(new List<PantryItem>());
+
+            var controller = new RecipeController(recipeService.Object);
+
+            var result = controller.UseIngredients(new List<Ingredient>(), 1);
+
+            Assert.IsType<OkObjectResult>(result.Result);
+        }
+
+        [Fact]
+        public void TestBuyIngredients() {
+            var recipeService = new Mock<IRecipeService>();
+
+            recipeService.Setup(x => x.BuyIngredients(It.IsAny<List<ShoppingListIngredient>>(), It.IsAny<int>()))
+                            .Returns(new List<PantryItem>());
+
+            var controller = new RecipeController(recipeService.Object);
+
+            var result = controller.BuyIngredients(new List<ShoppingListIngredient>(), 1);
+
+            Assert.IsType<OkObjectResult>(result.Result);
+        }
     }
 }
