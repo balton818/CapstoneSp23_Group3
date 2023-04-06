@@ -83,8 +83,7 @@ public partial class MealPlanExpander
 
     private void addMealClick(object sender, RoutedEventArgs e)
     {
-        var buttonPressed = sender as NavButton;
-        if (buttonPressed != null)
+        if (sender is NavButton buttonPressed)
         {
             this.checkMealTypeToAdd(buttonPressed);
 
@@ -196,11 +195,10 @@ public partial class MealPlanExpander
     private void removalRoutine(MealType type, string name)
     {
         var messageBoxText = "Confirm removal of " + type + " recipe?";
-        var button = MessageBoxButton.YesNo;
-        var icon = MessageBoxImage.Warning;
         var caption = "Remove?";
-        var result = MessageBox.Show(messageBoxText, caption, button, icon);
-        if (result == MessageBoxResult.Yes)
+        if (StylizedMessageBox.ShowBox(
+                messageBoxText,
+                caption) == "1")
         {
             this.ViewModel!.RemoveMealFromPlan(name, this.Date, type);
             this.navigateToPage("/View/MealPlanPage.xaml");

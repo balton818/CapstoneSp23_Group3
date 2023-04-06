@@ -178,11 +178,13 @@ namespace RecipePlannerApi.Service
             }
 
             PantryItem pantryIngredient = null;
-            if(ingredientId != null) {
+            if (ingredientId != null)
+            {
                 pantryIngredient = pantry.Find(i => ingredientId == i.IngredientId);
             }
 
-            if (!string.IsNullOrEmpty(ingredientName)) {
+            if (!string.IsNullOrEmpty(ingredientName))
+            {
                 pantryIngredient ??= pantry.Find(i => ingredientName.ToLower().Contains(i.IngredientName.ToLower()));
                 pantryIngredient ??= pantry.Find(i => i.IngredientName.ToLower().Contains(ingredientName.ToLower()));
             }
@@ -192,8 +194,6 @@ namespace RecipePlannerApi.Service
             }
             return pantryIngredient;
         }
-
-
 
         /// <summary>Gets the recipe information.</summary>
         /// <param name="recipeId">The recipe identifier for the api.</param>
@@ -270,8 +270,9 @@ namespace RecipePlannerApi.Service
             return this._userService.UpdatePantryItems(usedItems, userId);
         }
 
-        public List<PantryItem> BuyIngredients(List<ShoppingListIngredient> ingredients, int userId) {
-            var pantry = this.GetUserPantry(userId, false);
+        public List<PantryItem> BuyIngredients(List<ShoppingListIngredient> ingredients, int userId)
+        {
+            var pantry = this.GetUserPantry(userId);
 
             List<PantryItem> newPantryItems = new List<PantryItem>();
             foreach (var ingredient in ingredients) {

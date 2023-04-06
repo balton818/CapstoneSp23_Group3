@@ -1,0 +1,21 @@
+﻿.ingredient {
+    display: flex;
+    flex-direction: row;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+button {
+    right: 0;
+}
+
+label {
+    left: 0;
+    width: 50%;
+}
+
+#quantity {
+    width: 15%;
+    margin-left: 5px;
+    margin-right: 5px;
+}

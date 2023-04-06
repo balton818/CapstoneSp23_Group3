@@ -138,5 +138,29 @@ public partial class MealPlanPage
                                nextDate.Day;
     }
 
+    private void navigateToPage(string navUri)
+    {
+        if (NavigationService != null)
+        {
+            var navigate = new PageNavigation(this.ViewModel);
+            navigate.NavigateToPage(navUri, NavigationService);
+        }
+    }
+
     #endregion
+
+    private void groceryListClick(object sender, RoutedEventArgs e)
+    {
+        NavButton clicked = (NavButton)sender;
+        this.navigateToPage(clicked.NavUri);
+    }
+
+    private void addGroceriesNeeded(object sender, RoutedEventArgs e)
+    {
+        if (StylizedMessageBox.ShowBox(
+                "Generating a grocery list more than once will add the same items to your grocery list. Continue?", " Ingredient Removal") == "1")
+        {
+            this.ViewModel.AddedNeededGroceries();
+        }
+    }
 }

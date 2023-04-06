@@ -157,7 +157,7 @@ public class HttpClientConnection
     /// <param name="userId">The user id of the logged in user.</param>
     /// <param name="client">The http connection client.</param>
     /// <returns>
-    ///     a list of recipes that the user isnt missing ingredients for
+    ///     a list of recipes that the user isn't missing ingredients for
     /// </returns>
     public Task<List<Recipe>> GetRecipes(int userId, HttpClient client)
     {
@@ -455,6 +455,203 @@ public class HttpClientConnection
         }
 
         return Task.FromResult<List<string>>(null);
+    }
+
+    /// <summary>Gets the grocery list for the current user.</summary>
+    /// <param name="userId">The user identifier for the database.</param>
+    /// <param name="client">The client for the http connection.</param>
+    /// <returns>
+    ///     the users list of grocery items if successful null otherwise
+    /// </returns>
+    public Task<List<GroceryListItem>> GetGroceryList(int userId, HttpClient client)
+    {
+        var query = new Uri($"User/get-shopping-list/{userId}", UriKind.Relative);
+        Console.WriteLine(query);
+        var json = JsonConvert.SerializeObject(userId);
+        var data = new StringContent(json, Encoding.UTF8, "application/json");
+        var response = client.PostAsync(query, data);
+        Console.WriteLine(response);
+        if (response.Result.IsSuccessStatusCode)
+        {
+            var readTask = response.Result.Content.ReadAsStringAsync();
+            readTask.Wait();
+
+            var result = readTask.Result;
+            Console.WriteLine(result);
+            var groceryList = JsonConvert.DeserializeObject<List<GroceryListItem>>(result);
+            return Task.FromResult(groceryList)!;
+        }
+
+        return Task.FromResult<List<GroceryListItem>>(null!);
+    }
+
+    /// <summary>Adds the grocery item.</summary>
+    /// <param name="toAdd">The grocery item to add to the users pantry.</param>
+    /// <param name="client">The client used for the http connection.</param>
+    /// <returns>
+    ///     the added grocery item if successful, null otherwise
+    /// </returns>
+    public Task<GroceryListItem> AddGroceryItem(GroceryListItem toAdd, HttpClient client)
+    {
+        var query = new Uri("User/add-shopping-list-ingredient", UriKind.Relative);
+        var json = JsonConvert.SerializeObject(toAdd);
+
+        var data = new StringContent(json, Encoding.UTF8, "application/json");
+
+        var response = client.PostAsync(query, data);
+
+        Console.WriteLine(response.Result);
+        if (response.Result.IsSuccessStatusCode)
+        {
+            var readTask = response.Result.Content.ReadAsStringAsync();
+            readTask.Wait();
+
+            var result = readTask.Result;
+            return Task.FromResult(JsonConvert.DeserializeObject<GroceryListItem>(result))!;
+        }
+
+        return Task.FromResult<GroceryListItem>(null!);
+    }
+
+    /// <summary>Edits the grocery item.</summary>
+    /// <param name="toEdit">The grocery item being edited.</param>
+    /// <param name="client">The client to connect to the backend.</param>
+    /// <returns>
+    ///     the edited grocery item if successful, null otherwise
+    /// </returns>
+    public Task<GroceryListItem> EditGroceryItem(GroceryListItem toEdit, HttpClient client)
+    {
+        var query = new Uri("User/update-shopping-list-ingredient", UriKind.Relative);
+        var json = JsonConvert.SerializeObject(toEdit);
+
+        var data = new StringContent(json, Encoding.UTF8, "application/json");
+
+        var response = client.PostAsync(query, data);
+
+        Console.WriteLine(response.Result);
+        if (response.Result.IsSuccessStatusCode)
+        {
+            var readTask = response.Result.Content.ReadAsStringAsync();
+            readTask.Wait();
+
+            var result = readTask.Result;
+            return Task.FromResult(JsonConvert.DeserializeObject<GroceryListItem>(result))!;
+        }
+
+        return Task.FromResult<GroceryListItem>(null!);
+    }
+
+    /// <summary>Removes the grocery item from the users grocery list in the database.</summary>
+    /// <param name="toRemove">the grocery item to remove.</param>
+    /// <param name="client">The client for connecting.</param>
+    /// <returns>
+    ///     true if success false otherwise
+    /// </returns>
+    public Task<bool> RemoveGroceryItem(GroceryListItem toRemove, HttpClient client)
+    {
+        var groceryListId = toRemove.ShoppingListId;
+        var query = new Uri("User/remove-shopping-list-ingredient/" + groceryListId, UriKind.Relative);
+        var json = JsonConvert.SerializeObject(toRemove);
+
+        var data = new StringContent(json, Encoding.UTF8, "application/json");
+
+        var response = client.PostAsync(query, data);
+
+        Console.WriteLine(response.Result);
+        if (response.Result.IsSuccessStatusCode)
+        {
+            var readTask = response.Result.Content.ReadAsStringAsync();
+            readTask.Wait();
+
+            return Task.FromResult(true);
+        }
+
+        return Task.FromResult(false);
+    }
+
+    /// <summary>Adds ingredients to grocery list by recipe id.</summary>
+    /// <param name="recipeIds">The recipe ids for the recipes in the users meal plan.</param>
+    /// <param name="userId">The currently logged in user's id</param>
+    /// <param name="client">The client to connect to hte backend.</param>
+    /// <returns>
+    ///   The user's new grocery list made of items they need in their pantry to complete the planned recipes
+    /// </returns>
+    public Task<List<GroceryListItem>> AddToGroceryListByRecipeId(List<int> recipeIds, int userId, HttpClient client)
+    {
+        var query = new Uri("Recipe/add-to-shopping-list-by-recipe-ids?userId=" + userId, UriKind.Relative);
+        var json = JsonConvert.SerializeObject(recipeIds);
+        var data = new StringContent(json, Encoding.UTF8, "application/json");
+        var response = client.PostAsync(query, data);
+        Console.WriteLine(response);
+        if (response.Result.IsSuccessStatusCode)
+        {
+            var readTask = response.Result.Content.ReadAsStringAsync();
+            readTask.Wait();
+
+            var result = readTask.Result;
+            Console.WriteLine(result);
+            var groceryList = JsonConvert.DeserializeObject<List<GroceryListItem>>(result);
+            return Task.FromResult(groceryList)!;
+        }
+
+        return Task.FromResult<List<GroceryListItem>>(null);
+    }
+
+    /// <summary>Buys the ingredients from the grocery list.</summary>
+    /// <param name="ingredients">The ingredients to be purchased.</param>
+    /// <param name="userId">The currently logged in user.</param>
+    /// <param name="client">The client to connect to the backend.</param>
+    /// <returns>
+    ///   the users new pantry which includes the purchased ingredients and their quantities
+    /// </returns>
+    public Task<List<PantryItem>> BuyIngredientsFromList(List<GroceryListItem> ingredients, int userId,
+        HttpClient client)
+    {
+        var query = new Uri("Recipe/buy-ingredients?userId=" + userId, UriKind.Relative);
+        var json = JsonConvert.SerializeObject(ingredients);
+        var data = new StringContent(json, Encoding.UTF8, "application/json");
+        var response = client.PostAsync(query, data);
+        Console.WriteLine(response);
+        if (response.Result.IsSuccessStatusCode)
+        {
+            var readTask = response.Result.Content.ReadAsStringAsync();
+            readTask.Wait();
+
+            var result = readTask.Result;
+            Console.WriteLine(result);
+            var groceryList = JsonConvert.DeserializeObject<List<PantryItem>>(result);
+            return Task.FromResult(groceryList)!;
+        }
+
+        return Task.FromResult<List<PantryItem>>(null);
+    }
+
+    /// <summary>removes the ingredients from the users pantry for the meal that has been prepared.</summary>
+    /// <param name="ingredients">The ingredients that have been used.</param>
+    /// <param name="userId">The currently logged in user.</param>
+    /// <param name="client">The client to connect to the backend.</param>
+    /// <returns>
+    ///   the users new pantry collection
+    /// </returns>
+    public Task<List<PantryItem>> UseIngredientsFromList(List<PantryItem> ingredients, int userId, HttpClient client)
+    {
+        var query = new Uri("Recipe/use-ingredients?userId=" + userId, UriKind.Relative);
+        var json = JsonConvert.SerializeObject(ingredients);
+        var data = new StringContent(json, Encoding.UTF8, "application/json");
+        var response = client.PostAsync(query, data);
+        Console.WriteLine(response);
+        if (response.Result.IsSuccessStatusCode)
+        {
+            var readTask = response.Result.Content.ReadAsStringAsync();
+            readTask.Wait();
+
+            var result = readTask.Result;
+            Console.WriteLine(result);
+            var groceryList = JsonConvert.DeserializeObject<List<PantryItem>>(result);
+            return Task.FromResult(groceryList)!;
+        }
+
+        return Task.FromResult<List<PantryItem>>(null);
     }
 
     #endregion

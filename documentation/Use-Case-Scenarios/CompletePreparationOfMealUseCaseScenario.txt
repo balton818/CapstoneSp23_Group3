@@ -1,0 +1,22 @@
+Complete Preparation Of Meal
+
+Context - User has successfully logged in and navigated to the recipe details.
+
+PRIMARY FLOW
+1 - User selects recipe prepared.
+2 - User confirms the recipe has been prepared
+3 - Pantry updated based on ingredients used.
+
+Alternative Flow(s)
+
+USER DOESNT CONFIRM
+A2 - User selects cancel and is navigated back to meal plan.
+A3 - Nothing is updated
+
+USER SELECTS BACK
+A2 - User selects back
+A3 - nothing is updated
+
+USER NAVIGATES AWAY
+A2 - User navigates to another page via navigation menu
+A3 - Nothing is updated

@@ -17,14 +17,14 @@ public class NavButton : Button
     ///     The text property
     /// </summary>
     public static readonly DependencyProperty TextProperty =
-        DependencyProperty.Register("Text", typeof(string), typeof(NavButton), new PropertyMetadata(null));
+        DependencyProperty.Register(nameof(Text), typeof(string), typeof(NavButton), new PropertyMetadata(null));
 
     /// <summary>
     ///     The nav URI property
     ///     Storing this allows us to navigate to the page when the button is clicked
     /// </summary>
     public static readonly DependencyProperty NavUriProperty =
-        DependencyProperty.Register("NavUri", typeof(string), typeof(NavButton), new PropertyMetadata(null));
+        DependencyProperty.Register(nameof(NavUri), typeof(string), typeof(NavButton), new PropertyMetadata(null));
 
     #endregion
 

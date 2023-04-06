@@ -4,6 +4,7 @@
 @using RecipePlannerApi.Service;
 @using RecipePlannerApi.Dao;
 @using RecipePlannerWebApp.LocalServices;
+@using RecipePlannerWebApp.Components;
 @inject NavigationManager Nav;
 @inject UserSessionData currentUserData;
 @inject IJSRuntime JsRuntime;
@@ -14,7 +15,7 @@
 
 <div class="split right">
     <div class="header">
-        <span>pantry</span>
+        <span id="header">pantry</span>
         <hr style="height: 2px; opacity: 100%" />
     </div>
     <div class="new-ingredient">

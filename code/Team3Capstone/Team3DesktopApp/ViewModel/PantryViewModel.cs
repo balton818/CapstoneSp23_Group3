@@ -7,7 +7,7 @@ using Team3DesktopApp.Model;
 namespace Team3DesktopApp.ViewModel;
 
 /// <summary>
-///     the viewmodel for the pantrypage
+///     the viewmodel for the pantry page
 /// </summary>
 public class PantryViewModel
 {
@@ -109,6 +109,23 @@ public class PantryViewModel
         pantryItem.Quantity = quantity;
         var connection = new HttpClientConnection();
         return connection.RemovePantryItem(pantryItem, client);
+    }
+
+    /// <summary>Gets the ingredients used for the meal.</summary>
+    /// <param name="ingredients">The ingredients used for the prepared meal.</param>
+    /// <returns>
+    ///   a collection of Pantry items used in the prepared recipe
+    /// </returns>
+    public List<PantryItem> GetIngredientsUsed(List<Ingredient> ingredients)
+    {
+        var usedIngredients = new List<PantryItem>();
+        foreach (var ingredient in ingredients)
+        {
+            var pantryItem = this.getItem(ingredient.IngredientName);
+            usedIngredients.Add(pantryItem);
+        }
+
+        return usedIngredients;
     }
 
     #endregion
