@@ -5,10 +5,10 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:Team3DesktopApp.View"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    Width="186"
-    Height="239"
+    Width="171"
+    Height="266"
     mc:Ignorable="d">
-    <Grid Margin="0,0,44,0">
+    <Grid Margin="0,0,44,-14">
 
         <Button
             x:Name="navMenu"
@@ -35,7 +35,7 @@
             x:Name="navGrid"
 
             Background="#30323d"
-            Visibility="Hidden" Margin="0,55,10,0">
+            Visibility="Hidden" Margin="0,55,10,10">
 
             <local:NavButton
                 x:Name="pantryButton"
@@ -133,9 +133,30 @@
                 FontSize="18"
                 ForceCursor="True"
                 NavUri="/View/LoginPage.xaml"
-                UseLayoutRounding="False" Margin="0,139,0,0">
+                UseLayoutRounding="False" Margin="0,172,0,0">
                 <local:NavButton.Resources>
                     <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="5" />
+                    </Style>
+                </local:NavButton.Resources>
+
+            </local:NavButton>
+            <local:NavButton
+                x:Name="groceryListButton"
+                Width="93"
+                Height="28"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top"
+                Background="#FFD6CCC2"
+                Click="NavButton_Click"
+                Content="Grocery List"
+                FontFamily="Song Myung"
+                FontSize="16"
+                ForceCursor="True"
+                NavUri="Grocery"
+                UseLayoutRounding="False" Margin="0,139,0,0">
+                <local:NavButton.Resources>
+                    <Style TargetType="{x:Type Border}">
                         <Setter Property="CornerRadius" Value="5" />
                     </Style>
                 </local:NavButton.Resources>

@@ -39,18 +39,15 @@ public partial class AddToPlanPanel
         var day = this.parseDay();
         var current = this.parseCurrentWeek();
         var messageBoxText = "This recipe is already in your meal plan. Would you like to Overwrite it?";
-        var button = MessageBoxButton.YesNo;
-        var icon = MessageBoxImage.Warning;
         var caption = "Overwrite?";
-        MessageBoxResult result;
         if (mealType == null || day == null)
         {
-            MessageBox.Show("Please select a meal type, day, and week.");
+            StylizedMessageBox.ShowBox("Please select a meal type, day, and week.", "Incorrect Options");
         }
         else if (current != null && this.ViewModel!.MealPlanContainsRecipe(mealType.Value, day.Value, current.Value))
         {
-            result = MessageBox.Show(messageBoxText, caption, button, icon, MessageBoxResult.Yes);
-            if (result == MessageBoxResult.Yes)
+            var result = StylizedMessageBox.ShowBox(messageBoxText, caption);
+            if (result == "1")
             {
                 var typeAndDate = new Tuple<DayOfWeek?, MealType?>(day, mealType);
 

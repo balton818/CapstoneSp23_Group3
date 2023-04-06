@@ -40,6 +40,7 @@ public class MealPlanViewModel
         var connection = new HttpClientConnection();
         this.FirstWeekPlan = await connection.GetPlan(userId, client, true);
         this.NextWeekPlan = await connection.GetPlan(userId, client, false);
+
     }
 
     /// <summary>Gets the meal planned for the given day and week.</summary>
@@ -96,7 +97,7 @@ public class MealPlanViewModel
     /// <summary>Updates the meal plan if a meal already exists for the spot the user is editing.</summary>
     /// <param name="recipe">The recipe to be added to the plan.</param>
     /// <param name="day">The day the recipe will be added to.</param>
-    /// <param name="type">The type the mealtype for the plan.</param>
+    /// <param name="type">The type the meal type for the plan.</param>
     /// <param name="client">The client to connect to the backed.</param>
     /// <param name="current">The current week, true if current, false if next.</param>
     public void UpdatePlan(Recipe recipe, DayOfWeek? day, MealType? type, HttpClient client, bool? current)
@@ -208,8 +209,7 @@ public class MealPlanViewModel
     /// </returns>
     public DateOnly GetDate(bool currentWeek)
     {
-        DateTime sundayDate;
-        sundayDate = DateTime.Now.Subtract(new TimeSpan((int)DateTime.Now.DayOfWeek, 0, 0, 0));
+        var sundayDate = DateTime.Now.Subtract(new TimeSpan((int)DateTime.Now.DayOfWeek, 0, 0, 0));
         if (currentWeek && this.FirstWeekPlan != null)
         {
             return DateOnly.FromDateTime(this.FirstWeekPlan.MealPlanDate);

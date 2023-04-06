@@ -1,8 +1,10 @@
 ﻿using RecipePlannerApi.Dao.Interface;
 using RecipePlannerApi.Model;
+using System.Diagnostics.CodeAnalysis;
 
 namespace RecipePlannerApi.Dao
 {
+    [ExcludeFromCodeCoverage]
     public class ShoppingListDao : Dao, IShoppingListDao {
         public ShoppingListIngredient UpsertShoppingListIngredient(ShoppingListIngredient item) {
             CommandUpdate cmd = c => {

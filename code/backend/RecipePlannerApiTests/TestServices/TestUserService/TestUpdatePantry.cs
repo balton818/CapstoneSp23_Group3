@@ -92,5 +92,24 @@ namespace RecipePlannerApiTests.TestServices.TestUserService {
 
             Assert.Throws<ArgumentException>(() => userService.UpdatePantryItem(pantryItem));
         }
+
+        [Fact]
+        public void TestNullPantryId() {
+            var userDao = new Mock<IUserDao>();
+            var pantryDao = new Mock<IPantryDao>();
+            var pantryItem = new PantryItem {
+                IngredientId = null,
+                IngredientName = "The",
+                Quantity = 1,
+                PantryId = null,
+                UnitId = AppUnit.NONE,
+                UserId = 1
+            };
+
+            var userService = new UserService(userDao.Object, pantryDao.Object);
+
+
+            Assert.Throws<ArgumentException>(() => userService.UpdatePantryItem(pantryItem));
+        }
     }
 }

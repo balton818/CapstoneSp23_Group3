@@ -23,16 +23,6 @@ namespace RecipePlannerApi.Service
             return _shoppingListDao.GetShoppingList(userId);
         }
 
-        public List<ShoppingListIngredient> CompleteShoppingList(List<ShoppingListIngredient> list, int userId) {
-            foreach (ShoppingListIngredient ingredient in list) {
-                if (ingredient.ShoppingListId.HasValue) {
-                    _shoppingListDao.DeleteShoppingListIngredient(ingredient.ShoppingListId.Value);
-                }
-            }
-
-            return _shoppingListDao.GetShoppingList(userId);
-        }
-
         public List<ShoppingListIngredient> AddToShoppingList(List<ShoppingListIngredient> toAddList, int userId) {
             var shoppingList = this.GetShoppingList(userId);
             foreach (var ingredient in toAddList) {

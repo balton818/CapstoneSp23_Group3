@@ -28,5 +28,23 @@ namespace RecipePlannerApiTests.TestServices.TestMeasurementService {
 
             Assert.Null(amount);
         }
+
+        [Fact]
+        public void TestUnitDoesNotConvertToNone2() {
+            var service = new MeasurementService();
+
+            var amount = service.Convert(5, "pinch");
+
+            Assert.Null(amount);
+        }
+
+        [Fact]
+        public void TestPintsConvertsToMilliliters2() {
+            var service = new MeasurementService();
+
+            var amount = service.Convert(5, "pint");
+
+            Assert.Equal(2366, amount.Item1);
+        }
     }
 }

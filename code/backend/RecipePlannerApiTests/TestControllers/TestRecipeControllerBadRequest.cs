@@ -2,6 +2,7 @@
 using Moq;
 using RecipePlannerApi.Api.Requests;
 using RecipePlannerApi.Controllers;
+using RecipePlannerApi.Model;
 using RecipePlannerApi.Service.Interface;
 
 namespace RecipePlannerApiTests.TestControllers {
@@ -85,6 +86,62 @@ namespace RecipePlannerApiTests.TestControllers {
             var controller = new RecipeController(recipeService.Object);
 
             var result = controller.BrowseRecipes(new BrowseRecipeRequest());
+
+            Assert.IsType<BadRequestObjectResult>(result.Result);
+        }
+
+        [Fact]
+        public void TestAddRecipeIngredientsToShoppingListByIngredients() {
+            var recipeService = new Mock<IRecipeService>();
+
+            recipeService.Setup(x => x.AddRecipeIngredientsToShoppingList(It.IsAny<List<Ingredient>>(), It.IsAny<int>()))
+                            .Throws(new Exception());
+
+            var controller = new RecipeController(recipeService.Object);
+
+            var result = controller.AddRecipeIngredientsToShoppingList(new List<Ingredient>(), 1);
+
+            Assert.IsType<BadRequestObjectResult>(result.Result);
+        }
+
+        [Fact]
+        public void TestAddRecipeIngredientsToShoppingListByRecipeIds() {
+            var recipeService = new Mock<IRecipeService>();
+
+            recipeService.Setup(x => x.AddRecipeIngredientsToShoppingList(It.IsAny<List<int>>(), It.IsAny<int>()))
+                            .Throws(new Exception());
+
+            var controller = new RecipeController(recipeService.Object);
+
+            var result = controller.AddRecipeIngredientsToShoppingList(new List<int>(), 1);
+
+            Assert.IsType<BadRequestObjectResult>(result.Result);
+        }
+
+        [Fact]
+        public void TestUseIngredients() {
+            var recipeService = new Mock<IRecipeService>();
+
+            recipeService.Setup(x => x.UseIngredients(It.IsAny<List<Ingredient>>(), It.IsAny<int>()))
+                            .Throws(new Exception());
+
+            var controller = new RecipeController(recipeService.Object);
+
+            var result = controller.UseIngredients(new List<Ingredient>(), 1);
+
+            Assert.IsType<BadRequestObjectResult>(result.Result);
+        }
+
+        [Fact]
+        public void TestBuyIngredients() {
+            var recipeService = new Mock<IRecipeService>();
+
+            recipeService.Setup(x => x.BuyIngredients(It.IsAny<List<ShoppingListIngredient>>(), It.IsAny<int>()))
+                            .Throws(new Exception());
+
+            var controller = new RecipeController(recipeService.Object);
+
+            var result = controller.BuyIngredients(new List<ShoppingListIngredient>(), 1);
 
             Assert.IsType<BadRequestObjectResult>(result.Result);
         }

@@ -1,0 +1,14 @@
+Remove Grocery List Ingredient Use Case Scenario
+Context - User has successfully logged in and navigated to Grocery List from the Main Page
+
+PRIMARY FLOW
+1 - User selects ingredient.
+2 - User selects to remove ingredient.
+3 - User confirms removal.
+4 - grocery list is updated.
+
+ALTERNATE FLOW
+
+User doesnt confirm
+A3 - User selects cancel
+A4 - nothing is updated.

@@ -93,7 +93,7 @@ namespace RecipePlannerApi.Controllers
         }
 
         [HttpPost("use-ingredients")]
-        public ActionResult<List<ShoppingListIngredient>> UseIngredients(List<Ingredient> ingredients, int userId) {
+        public ActionResult<List<PantryItem>> UseIngredients(List<Ingredient> ingredients, int userId) {
             try {
                 return Ok(this._recipeService.UseIngredients(ingredients, userId));
             } catch (Exception e) {
@@ -102,7 +102,7 @@ namespace RecipePlannerApi.Controllers
         }
 
         [HttpPost("buy-ingredients")]
-        public ActionResult<List<ShoppingListIngredient>> BuyIngredients(List<ShoppingListIngredient> ingredients, int userId) {
+        public ActionResult<List<PantryItem>> BuyIngredients(List<ShoppingListIngredient> ingredients, int userId) {
             try {
                 return Ok(this._recipeService.BuyIngredients(ingredients, userId));
             } catch (Exception e) {

@@ -1,0 +1,15 @@
+Main Page User Case Scenario
+
+Context - User has successfully logged in.
+
+PRIMARY FLOW
+1 - Main page is displayed to user.
+2 - User can select find recipes or my pantry
+
+ALTERNATE FLOW
+LOGOUT
+A2 - User selects logout 
+A3 - User is shown login page.
+
+
+
