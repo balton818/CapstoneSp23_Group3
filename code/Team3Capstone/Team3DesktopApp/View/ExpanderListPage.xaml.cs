@@ -106,7 +106,7 @@ public partial class ExpanderListPage
             }
             else
             {
-                this.headerTitle.Text = "Grocery List";
+                this.headerTitle.Text = "Groceries";
                 this.purchaseSelectedButton.Visibility = Visibility.Visible;
                 this.clearGroceryListButton.Visibility = Visibility.Visible;
                 this.buildGroceryExpanders(expanders);

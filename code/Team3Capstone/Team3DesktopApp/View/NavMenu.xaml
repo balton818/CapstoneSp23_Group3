@@ -35,7 +35,7 @@
             x:Name="navGrid"
 
             Background="#30323d"
-            Visibility="Hidden" Margin="0,55,10,10">
+            Visibility="Visible" Margin="0,55,10,10">
 
             <local:NavButton
                 x:Name="pantryButton"
@@ -66,7 +66,7 @@
                 VerticalAlignment="Top"
                 Background="#FFD6CCC2"
                 Click="NavButton_Click"
-                Content="Browse"
+                Content="Explore"
                 FontFamily="Song Myung"
                 FontSize="18"
                 ForceCursor="True"
@@ -149,7 +149,7 @@
                 VerticalAlignment="Top"
                 Background="#FFD6CCC2"
                 Click="NavButton_Click"
-                Content="Grocery List"
+                Content="Groceries"
                 FontFamily="Song Myung"
                 FontSize="16"
                 ForceCursor="True"

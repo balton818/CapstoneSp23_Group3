@@ -633,7 +633,7 @@ public class HttpClientConnection
     /// <returns>
     ///   the users new pantry collection
     /// </returns>
-    public Task<List<PantryItem>> UseIngredientsFromList(List<PantryItem> ingredients, int userId, HttpClient client)
+    public Task<List<PantryItem>> UseIngredientsFromList(List<Ingredient> ingredients, int userId, HttpClient client)
     {
         var query = new Uri("Recipe/use-ingredients?userId=" + userId, UriKind.Relative);
         var json = JsonConvert.SerializeObject(ingredients);

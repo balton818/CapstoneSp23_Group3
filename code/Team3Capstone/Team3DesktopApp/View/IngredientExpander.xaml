@@ -50,15 +50,17 @@
                             Foreground="#FFE8C547"
                             Text="{Binding IngredientName}" Height="52" FontStretch="Expanded"
                             LineStackingStrategy="BlockLineHeight" LineHeight="30" />
-                        <TextBlock
+                        <TextBox
                             x:Name="ingredientAmount"
                             Margin="240,0,74,0"
                             DataContext="{Binding DataContext, RelativeSource={RelativeSource AncestorType={x:Type Expander}}}"
                             FontSize="15"
                             FontWeight="Bold"
+                            Background="#30323d"
+                            BorderBrush="#FFE8C547"
                             VerticalAlignment="Center"
                             Foreground="#FFE8C547"
-                            Text="{Binding IngredientAmount}" Height="19" />
+                            Text="{Binding IngredientAmount, Mode=TwoWay}" Height="19" />
                         <TextBlock
                             x:Name="UnitTextBox"
                             Width="74"
