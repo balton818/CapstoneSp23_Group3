@@ -272,7 +272,7 @@ namespace RecipePlannerApi.Service
 
         public List<PantryItem> BuyIngredients(List<ShoppingListIngredient> ingredients, int userId)
         {
-            var pantry = this.GetUserPantry(userId);
+            var pantry = this.GetUserPantry(userId, true);
 
             List<PantryItem> newPantryItems = new List<PantryItem>();
             foreach (var ingredient in ingredients) {
