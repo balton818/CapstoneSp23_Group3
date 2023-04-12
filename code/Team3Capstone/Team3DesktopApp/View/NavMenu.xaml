@@ -35,7 +35,7 @@
             x:Name="navGrid"
 
             Background="#30323d"
-            Visibility="Visible" Margin="0,55,10,10">
+            Visibility="Hidden" Margin="0,55,10,10">
 
             <local:NavButton
                 x:Name="pantryButton"
