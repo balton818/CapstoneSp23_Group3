@@ -13,11 +13,11 @@
 <PageTitle>foodie - groceries</PageTitle>
 <div class="split right">
     <div class="header">
-        <span>planner</span>
+        <span>groceries</span>
         <hr style="height: 2px; opacity: 100%" />
     </div>
     <div class="controls">
-        <button @onclick="goBack">&#8672 Back</button>
+        <button @onclick="goBack">&#8672 Back to Planner</button>
         <button @onclick="generateMealPlanShoppingList">Add All Ingredients From Plan</button>
     </div>
     <div class="shopping-list">
@@ -124,6 +124,8 @@
         catch (System.Data.SqlClient.SqlException sqlEx)
         {
             Console.WriteLine(" -- Err: " + sqlEx.Message + "\n" + sqlEx.StackTrace);
+            this.currentUserData.userShoppingSelection.Clear();
+            Nav.NavigateTo("/groceries", true);
         }
         catch (System.Exception ex)
         {

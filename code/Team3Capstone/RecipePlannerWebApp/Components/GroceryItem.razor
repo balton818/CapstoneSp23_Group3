@@ -10,7 +10,6 @@
     <label>&#8226 @Ingredient.IngredientName: @Ingredient.Quantity @Ingredient.UnitId.ToString()</label>
     <input type="checkbox" @bind="this.isChecked" @oninput="triggerUpdate"/>
     <input placeholder="Modify Quantity" @bind="@actualQuantity" id="quantity" @onfocusout="checkNewAmount"/>
-    <button @onclick="updateQuantity">Confirm</button>
 </div>
 
 @code {
@@ -49,12 +48,16 @@
     private async void checkNewAmount()
     {
         int realAmt;
-        if (!String.IsNullOrEmpty(this.actualQuantity) && !int.TryParse(this.actualQuantity, out realAmt) && this.isChecked)
+        if (!String.IsNullOrEmpty(this.actualQuantity) && !int.TryParse(this.actualQuantity, out realAmt))
         {
             this.actualQuantity = "";
             this.isChecked = false;
             await JsRuntime.InvokeAsync<object>("alert", "Please enter a valid number.");
             return;
+        }
+        else
+        {
+            this.updateQuantity();
         }
     }
 
