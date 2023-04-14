@@ -16,7 +16,7 @@
     [Parameter]
     public ShoppingListIngredient Ingredient { get; set; }
     [Parameter]
-    public Dictionary<ShoppingListIngredient, bool> SelectedIngredients { get; set; }
+    public Dictionary<int, bool> SelectedIngredientIds { get; set; }
 
     private ShoppingListService groceryService = new ShoppingListService(new ShoppingListDao());
     private string actualQuantity = "";
@@ -27,22 +27,27 @@
      */
     protected override void OnInitialized()
     {
-        this.isChecked = this.SelectedIngredients[this.Ingredient];
-        foreach (var selection in this.SelectedIngredients.Keys)
+        //this.isChecked = this.SelectedIngredients[this.Ingredient];
+        //foreach (var selection in this.SelectedIngredients.Keys)
+        //{
+        //    if (this.SelectedIngredients[selection] && selection.ShoppingListId == this.Ingredient.ShoppingListId)
+        //    {
+        //        this.isChecked = true;
+        //        break;
+        //    }
+        //}
+        if (this.Ingredient.IngredientId != null)
         {
-            if (this.SelectedIngredients[selection] && selection.ShoppingListId == this.Ingredient.ShoppingListId)
-            {
-                this.isChecked = true;
-                break;
-            }
+            this.isChecked = this.SelectedIngredientIds[(int)this.Ingredient.IngredientId];
         }
+        Console.WriteLine(" -- Grocery Item initialized: " + this.Ingredient.IngredientName + ", checked: " + this.isChecked);
     }
 
     private void triggerUpdate()
     {
         this.isChecked = !this.isChecked;
         Console.WriteLine("Update triggered for " + this.Ingredient.IngredientName + ": " + this.isChecked);
-        this.SelectedIngredients[this.Ingredient] = this.isChecked;
+        this.SelectedIngredientIds[(int)this.Ingredient.IngredientId] = this.isChecked;
     }
 
     private async void checkNewAmount()

@@ -260,7 +260,8 @@
     {
         Console.WriteLine("RECIPEVIEW -- Completed recipe for " + this.RecipeTitle);
         this.recipeService.UseIngredients(this.ingredients, this.currentUserData.CurrentUser.Id);
-        Nav.NavigateTo("/planner");
+        //TODO: Match desktop flow
+        Nav.NavigateTo("/recipes");
     }
 
     private void toggleAddMealControlsVisibility()

@@ -17,5 +17,6 @@ namespace RecipePlannerWebApp.LocalServices
         public Weeks SelectedWeek { get; set; } = Weeks.WEEK1;
         public enum Weeks { WEEK1, WEEK2 };
         public Dictionary<ShoppingListIngredient, bool> userShoppingSelection { get; set; } = new Dictionary<ShoppingListIngredient, bool>();
+        public Dictionary<int, bool> userSelectedIDs { get; set; } = new Dictionary<int, bool>();
     }
 }

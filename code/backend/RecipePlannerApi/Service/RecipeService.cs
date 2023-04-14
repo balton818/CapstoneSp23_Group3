@@ -279,7 +279,7 @@ namespace RecipePlannerApi.Service
                 var pantryItem = this.GetMatchingPantryItem(pantry, ingredient.IngredientId, ingredient.IngredientName);
                 if (pantryItem != null) {
                     pantryItem.Quantity += ingredient.Quantity;
-
+                    pantryItem.UserId = userId;
                     newPantryItems.Add(pantryItem);
                 } else {
                     newPantryItems.Add(new PantryItem {
