@@ -577,7 +577,7 @@ public class FoodieViewModel
     public void PrepareMeal()
     {
         var connection = new HttpClientConnection();
-        var toRemove = this.pantryViewModel.GetIngredientsUsed(this.recipeDetailViewModel.RecipeInfo!.Ingredients!);
+        var toRemove = this.recipeDetailViewModel.RecipeInfo!.Ingredients!;
         connection.UseIngredientsFromList(toRemove, this.Userid, this.ClientToSet);
     }
 

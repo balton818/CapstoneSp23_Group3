@@ -1,6 +1,10 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System.ComponentModel;
+using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using Team3DesktopApp.ViewModel;
 
 namespace Team3DesktopApp.View;
@@ -124,6 +128,38 @@ public partial class IngredientExpander
                 this.expanderNavigation();
             }
         }
+    }
+
+    private void quantity_TextChanged(object sender, EventArgs e)
+    {
+        var foodieViewModel = this.ViewModel;
+        TextBox quantity = (TextBox)sender;
+        int parsed;
+        bool isNumeric = int.TryParse(quantity.Text, out parsed);
+
+        if (!isNumeric)
+        {
+            StylizedMessageBox.ShowBox(
+                "Error, you have entered a non numeric quantity.",
+                "Error");
+            quantity.Background = Brushes.Red;
+        }
+        else
+        {
+            SolidColorBrush brush = new SolidColorBrush();
+            brush.Color = (Color)ColorConverter.ConvertFromString("#30323d");
+            quantity.Background = brush;
+            this.IngredientAmount = parsed;
+            if (foodieViewModel != null && !this.IsGrocery)
+            {
+                foodieViewModel.EditPantryIngredient(this.IngredientName, this.IngredientAmount);
+            }
+            else
+            {
+                foodieViewModel.EditGroceryIngredient(this.IngredientName, this.IngredientAmount);
+            }
+        }
+
     }
 
     private void navigateToPage(string navUri)
