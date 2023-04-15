@@ -17,7 +17,7 @@
     </div>
     <div class="controls">
         <button style="margin-left: 60px;" @onclick="goBack">&#8672 Back</button>
-        <button @onclick="@markAsComplete">Mark As Complete</button>
+        <button @onclick="@markAsComplete">Prepared</button>
         <button hidden="@hideButton" @onclick="@toggleAddMealControlsVisibility">Add to Meal Plan</button>
     </div>
     
@@ -260,7 +260,8 @@
     {
         Console.WriteLine("RECIPEVIEW -- Completed recipe for " + this.RecipeTitle);
         this.recipeService.UseIngredients(this.ingredients, this.currentUserData.CurrentUser.Id);
-        Nav.NavigateTo("/planner");
+        //TODO: Match desktop flow
+        Nav.NavigateTo("/recipes");
     }
 
     private void toggleAddMealControlsVisibility()

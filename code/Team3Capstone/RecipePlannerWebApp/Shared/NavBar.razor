@@ -30,6 +30,11 @@
                 <span class="nav-item" aria-hidden="true">planner</span>
             </NavLink>
         </div>
+        <div class="nav-item">
+            <NavLink href="groceries">
+                <span class="nav-item" aria-hidden="true">groceries</span>
+            </NavLink>
+        </div>
     </nav>
     <div class="bottom-centered footer" id="nav-menu">
         <button id="logout-button" @onclick="LogoutUser">Log Out</button>
@@ -134,8 +139,6 @@
 
     private void clearUserSessionData()
     {
-        this.currentUserData.CurrentUser = null;
-        this.currentUserData.CurrentRecipeTitle = null;
-        this.currentUserData.lastExplorePageRequest = null;
+        this.currentUserData = new UserSessionData();
     }
 }

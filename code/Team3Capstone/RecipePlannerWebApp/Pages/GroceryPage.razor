@@ -13,11 +13,11 @@
 <PageTitle>foodie - groceries</PageTitle>
 <div class="split right">
     <div class="header">
-        <span>planner</span>
+        <span>groceries</span>
         <hr style="height: 2px; opacity: 100%" />
     </div>
     <div class="controls">
-        <button @onclick="goBack">&#8672 Back</button>
+        <button @onclick="goBack">&#8672 Back to Planner</button>
         <button @onclick="generateMealPlanShoppingList">Add All Ingredients From Plan</button>
     </div>
     <div class="shopping-list">
@@ -31,7 +31,7 @@
             <h4 style="text-decoration: underline">Shopping List</h4>
             @foreach (ShoppingListIngredient item in this.shoppingList)
             {
-                <GroceryItem Ingredient="@item" SelectedIngredients="this.selectedIngredients"></GroceryItem>
+                <GroceryItem Ingredient="@item" SelectedIngredientIds="this.selectedIngredientIDs"></GroceryItem>
             }
         }
     </div>
@@ -63,6 +63,7 @@
     private RecipeService recipeService { get; set; } = new RecipeService(new UserService(new UserDao(), new PantryDao()), new IngredientDao(), new RecipeApi(new com.spoonacular.RecipesApi()), new MeasurementService(), new ShoppingListService(new ShoppingListDao()));
     private MealPlanService mealService { get; set; } = new MealPlanService(new MealPlanDao());
     private Dictionary<ShoppingListIngredient, bool> selectedIngredients;
+    private Dictionary<int, bool> selectedIngredientIDs;
     private bool hideButtons = false;
 
     private string newIngredientName = "";
@@ -77,14 +78,17 @@
         Console.WriteLine("Grocery Page -- INITIALIZING");
         this.shoppingList = groceryService.GetShoppingList(this.currentUserData.CurrentUser.Id);
         Console.WriteLine(" -- Ingredients:\n");
-        this.selectedIngredients = this.currentUserData.userShoppingSelection;
-
+        this.selectedIngredientIDs = this.currentUserData.userSelectedIDs;
         foreach (var item in this.shoppingList)
         {
             Console.WriteLine(item.IngredientName + ": " + item.Quantity + " " + item.UnitId.ToString());
-            if (!this.selectedIngredients.ContainsKey(item))
+            //if (!this.selectedIngredients.ContainsKey(item))
+            //{
+            //    this.selectedIngredients.Add(item, false);
+            //}
+            if (item.IngredientId != null && !this.selectedIngredientIDs.ContainsKey((int)item.IngredientId))
             {
-                this.selectedIngredients.Add(item, false);
+                this.selectedIngredientIDs.Add((int)item.IngredientId, false);
             }
         }
         this.hideButtons = this.shoppingList.Count == 0;
@@ -97,27 +101,19 @@
      */
     private void goBack()
     {
-        this.currentUserData.userShoppingSelection.Clear();
+        this.selectedIngredientIDs.Clear();
         Nav.NavigateTo("/planner");
     }
 
     private void buyGroceries()
     {
         Console.WriteLine("Buying groceries");
-        List<ShoppingListIngredient> ingredients = new List<ShoppingListIngredient>();
-        foreach (var item in this.selectedIngredients.Keys)
-        {
-            if (this.selectedIngredients[item] && !ingredients.Contains(item))
-            {
-                Console.WriteLine("Purchasing ingredient number " + item.IngredientName);
-                ingredients.Add(item);
-            }
-        }
+        List<ShoppingListIngredient> ingredients = this.getSelectedIngredients();
         try
         {
             this.recipeService.BuyIngredients(ingredients, this.currentUserData.CurrentUser.Id);
 
-            this.currentUserData.userShoppingSelection.Clear();
+            this.selectedIngredientIDs.Clear();
             Console.WriteLine(" -- Done buying groceries");
             Nav.NavigateTo("/groceries", true);
         }
@@ -137,19 +133,49 @@
         if (confirm)
         {
             Console.WriteLine("Removing groceries");
-            List<ShoppingListIngredient> selectedIngredients = new List<ShoppingListIngredient>();
-            foreach (var item in this.selectedIngredients.Keys)
-            {
-                if (this.selectedIngredients[item])
-                {
-                    Console.WriteLine("Removing ingredient number " + item.IngredientName);
-                    selectedIngredients.Add(item);
-                }
-            }
-            this.groceryService.DeleteAllFromShoppingList(selectedIngredients);
-            this.currentUserData.userShoppingSelection.Clear();
+            //List<ShoppingListIngredient> selection = new List<ShoppingListIngredient>();
+            //foreach (var item in this.selectedIngredients.Keys)
+            //{
+            //    if (this.selectedIngredients[item])
+            //    {
+            //        Console.WriteLine("Removing ingredient number " + item.IngredientName);
+            //        selectedIngredients.Add(item);
+            //    }
+            //}
+            List<ShoppingListIngredient> selection = this.getSelectedIngredients();
+            this.groceryService.DeleteAllFromShoppingList(selection);
+            this.selectedIngredientIDs.Clear();
             Nav.NavigateTo("/groceries", true);
         }
+    }
+
+    private List<int> getSelectedIngredientIDs()
+    {
+        List<int> selectedIDs = new List<int>();
+        foreach (var id in this.selectedIngredientIDs.Keys)
+        {
+            if (this.selectedIngredientIDs[id])
+            {
+                selectedIDs.Add(id);
+            }
+        }
+        return selectedIDs;
+    }
+
+    private List<ShoppingListIngredient> getSelectedIngredients()
+    {
+        List<ShoppingListIngredient> selection = new List<ShoppingListIngredient>();
+        foreach (var id in this.getSelectedIngredientIDs())
+        {
+            foreach (var ingredient in this.shoppingList)
+            {
+                if (ingredient.IngredientId == id)
+                {
+                    selection.Add(ingredient);
+                }
+            }
+        }
+        return selection;
     }
 
     private async void addNewIngredient()
@@ -202,9 +228,13 @@
 
     private void selectAll(bool shouldCheck)
     {
-        foreach (var selection in this.selectedIngredients.Keys)
+        //foreach (var selection in this.selectedIngredients.Keys)
+        //{
+        //    this.selectedIngredients[selection] = shouldCheck;
+        //}
+        foreach (var selection in this.selectedIngredientIDs.Keys)
         {
-            this.selectedIngredients[selection] = shouldCheck;
+            this.selectedIngredientIDs[selection] = shouldCheck;
         }
         Nav.NavigateTo("/groceries", true);
     }
