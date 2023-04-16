@@ -43,10 +43,12 @@ namespace RecipePlannerApi.Api
             var instructions = GetRecipeInstructions(recipeId);
             foreach (var item in info?.ExtendedIngredients)
             {
+                var name = item.Name?.Length > 40 ? item.Name[..40] : item.Name;
+
                 var ingredient = new Ingredient()
                 {
                     IngredientId = item.Id,
-                    IngredientName = item.Name,
+                    IngredientName = name,
                     Quantity = (int)Math.Ceiling(item.Amount.Value),
                     Unit = item.Unit
                 };
@@ -140,7 +142,7 @@ namespace RecipePlannerApi.Api
         ///   <para>The information for the recipe</para>
         /// </returns>
         public List<Ingredient> GetRecipeIngredientsBulk(List<int> recipeIds) {
-            var ids = String.Join(",", recipeIds);
+            var ids = string.Join(",", recipeIds);
             var bulkInfo = api.GetRecipeInformationBulk(ids, false);
 
             var ingredients = new List<Ingredient>();
@@ -150,9 +152,10 @@ namespace RecipePlannerApi.Api
                     if (existingIngredient != null) {
                         existingIngredient.Quantity += (int)Math.Ceiling(item.Measures.Metric.Amount.GetValueOrDefault());
                     } else {
+                        var name = item.Name?.Length > 40 ? item.Name[..40] : item.Name;
                         var ingredient = new Ingredient() {
                             IngredientId = item.Id,
-                            IngredientName = item.Name,
+                            IngredientName = name,
                             Quantity = (int)Math.Ceiling(item.Measures.Metric.Amount.GetValueOrDefault()),
                             Unit = item.Measures.Metric.UnitLong
                         };
