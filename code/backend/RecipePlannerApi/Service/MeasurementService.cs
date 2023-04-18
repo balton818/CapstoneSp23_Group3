@@ -92,6 +92,9 @@ namespace RecipePlannerApi.Service
         }
 
         private string FormatUnit(string unit) {
+            if (unit.Equals("c")) {
+                return "cup";
+            }
             unit = unit.ToLower();
             var isPlural = unit.Last().ToString().Equals("s");
             unit = isPlural ? unit[..^1] : unit;
