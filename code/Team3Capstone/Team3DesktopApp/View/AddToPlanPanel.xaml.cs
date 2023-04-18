@@ -59,17 +59,22 @@ public partial class AddToPlanPanel
         }
         else
         {
-            var typeAndDate = new Tuple<DayOfWeek?, MealType?>(day, mealType);
-
-            var foodieViewModel = this.ViewModel;
-            if (foodieViewModel != null)
+            if (StylizedMessageBox.ShowBox(
+                    "Are you sure you want to add this recipe to your plan?",
+                    "Plan Meal?") == "1")
             {
-                foodieViewModel.PlanTypeAndDateToAdd = typeAndDate;
-                foodieViewModel.AddToMealPlan(current);
-            }
+                var typeAndDate = new Tuple<DayOfWeek?, MealType?>(day, mealType);
 
-            var parentGrid = (Grid)Parent;
-            parentGrid.Visibility = Visibility.Hidden;
+                var foodieViewModel = this.ViewModel;
+                if (foodieViewModel != null)
+                {
+                    foodieViewModel.PlanTypeAndDateToAdd = typeAndDate;
+                    foodieViewModel.AddToMealPlan(current);
+                }
+
+                var parentGrid = (Grid)Parent;
+                parentGrid.Visibility = Visibility.Hidden;
+            }
         }
     }
 

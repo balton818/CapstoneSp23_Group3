@@ -79,11 +79,8 @@ namespace RecipePlannerApi.Service
             var recipes = new List<Recipe>();
 
             foreach (var item in searchResponse) {
-                if (item.MissedIngredientCount > 0 ) {
-                    continue;
-                }
-
-                if(!CheckIngredientAmounts(item.UsedIngredients, pantry)) {
+                var recipeIngredients = item.UsedIngredients.Concat(item.MissedIngredients).ToList();
+                if(!CheckIngredientAmounts(recipeIngredients, pantry)) {
                     continue;
                 }
 
@@ -272,14 +269,14 @@ namespace RecipePlannerApi.Service
 
         public List<PantryItem> BuyIngredients(List<ShoppingListIngredient> ingredients, int userId)
         {
-            var pantry = this.GetUserPantry(userId, true);
+            var pantry = this.GetUserPantry(userId, false);
 
             List<PantryItem> newPantryItems = new List<PantryItem>();
             foreach (var ingredient in ingredients) {
                 var pantryItem = this.GetMatchingPantryItem(pantry, ingredient.IngredientId, ingredient.IngredientName);
                 if (pantryItem != null) {
                     pantryItem.Quantity += ingredient.Quantity;
-
+                    pantryItem.UserId = userId;
                     newPantryItems.Add(pantryItem);
                 } else {
                     newPantryItems.Add(new PantryItem {

@@ -11,15 +11,15 @@ namespace RecipePlannerApi.Service
         /// The dictionary to convert AppUnit into UnitInfo
         /// </summary>
         public static readonly Dictionary<AppUnit, UnitInfo> AppUnitUnitInfo = new Dictionary<AppUnit, UnitInfo>() {
-            { AppUnit.MILLILITERS,  Quantity.GetUnitInfo(VolumeUnit.Milliliter) },
             { AppUnit.GRAMS,  Quantity.GetUnitInfo(MassUnit.Gram) },
+            { AppUnit.MILLILITERS,  Quantity.GetUnitInfo(VolumeUnit.Milliliter) },
             { AppUnit.OUNCES,  Quantity.GetUnitInfo(MassUnit.Ounce) },
             { AppUnit.FLUID_OUNCES, Quantity.GetUnitInfo(VolumeUnit.UsOunce)}
         };
 
         private static readonly Dictionary<AppUnit, QuantityInfo> AppUnitQuantity = new Dictionary<AppUnit, QuantityInfo>() {
-            { AppUnit.MILLILITERS,  Volume.Info },
             { AppUnit.GRAMS,  Mass.Info },
+            { AppUnit.MILLILITERS,  Volume.Info },
             { AppUnit.OUNCES,  Mass.Info },
             { AppUnit.FLUID_OUNCES, Volume.Info}
         };

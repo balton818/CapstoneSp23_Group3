@@ -63,6 +63,7 @@
     {
         Console.WriteLine("\nPANTRY -- Initializing...");
         Console.WriteLine("User #" + currentUserData.CurrentUser.Id + " just logged in.");
+        this.currentUserData.lastExplorePageRequest = null;
         this.ingredients = this.service.GetUserPantry(currentUserData.CurrentUser.Id);
     }
 

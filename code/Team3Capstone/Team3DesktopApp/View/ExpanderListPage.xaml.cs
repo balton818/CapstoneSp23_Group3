@@ -1,7 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 using Team3DesktopApp.Model;
 using Team3DesktopApp.ViewModel;
 
@@ -106,7 +109,7 @@ public partial class ExpanderListPage
             }
             else
             {
-                this.headerTitle.Text = "Grocery List";
+                this.headerTitle.Text = "Groceries";
                 this.purchaseSelectedButton.Visibility = Visibility.Visible;
                 this.clearGroceryListButton.Visibility = Visibility.Visible;
                 this.buildGroceryExpanders(expanders);
@@ -149,17 +152,16 @@ public partial class ExpanderListPage
         {
             if (expander.SelectedForPurchase)
             {
-                var result = StylizedMessageBox.ShowBox("Confirm purchase of " + expander.IngredientName + "?",
-                    "Purchase Ingredient", expander.IngredientAmount);
-                if (result.Item1 == "1")
-                {
-                    purchasedItems.Add(expander.IngredientName!, int.Parse(result.Item2));
-                }
+                purchasedItems.Add(expander.IngredientName!, expander.IngredientAmount);
             }
         }
-
-        this.ViewModel.PurchaseIngredients(purchasedItems);
-        this.navigateToPage("Grocery");
+        var result = StylizedMessageBox.ShowBox("Confirm purchase of selected groceries?",
+            "Purchase " + purchasedItems.Count + " Ingredients");
+        if (result == "1")
+        {
+            this.ViewModel.PurchaseIngredients(purchasedItems);
+            this.navigateToPage("Pantry");
+        }
     }
 
     private void navigateToPage(string navUri)
