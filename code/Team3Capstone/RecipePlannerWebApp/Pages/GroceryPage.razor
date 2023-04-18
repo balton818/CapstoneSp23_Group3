@@ -87,9 +87,9 @@
             //{
             //    this.selectedIngredients.Add(item, false);
             //}
-            if (item.IngredientId != null && !this.selectedIngredientIDs.ContainsKey((int)item.IngredientId))
+            if (item.ShoppingListId != null && !this.selectedIngredientIDs.ContainsKey((int)item.ShoppingListId))
             {
-                this.selectedIngredientIDs.Add((int)item.IngredientId, false);
+                this.selectedIngredientIDs.Add((int)item.ShoppingListId, false);
             }
         }
         this.hideButtons = this.shoppingList.Count == 0;
@@ -116,7 +116,7 @@
 
             this.selectedIngredientIDs.Clear();
             Console.WriteLine(" -- Done buying groceries");
-            Nav.NavigateTo("/groceries", true);
+            Nav.NavigateTo("/pantry");
         }
         catch (System.Data.SqlClient.SqlException sqlEx)
         {
@@ -134,15 +134,6 @@
         if (confirm)
         {
             Console.WriteLine("Removing groceries");
-            //List<ShoppingListIngredient> selection = new List<ShoppingListIngredient>();
-            //foreach (var item in this.selectedIngredients.Keys)
-            //{
-            //    if (this.selectedIngredients[item])
-            //    {
-            //        Console.WriteLine("Removing ingredient number " + item.IngredientName);
-            //        selectedIngredients.Add(item);
-            //    }
-            //}
             List<ShoppingListIngredient> selection = this.getSelectedIngredients();
             this.groceryService.DeleteAllFromShoppingList(selection);
             this.selectedIngredientIDs.Clear();
@@ -170,7 +161,7 @@
         {
             foreach (var ingredient in this.shoppingList)
             {
-                if (ingredient.IngredientId == id)
+                if (ingredient.ShoppingListId == id)
                 {
                     selection.Add(ingredient);
                 }
@@ -181,26 +172,32 @@
 
     private async void addNewIngredient()
     {
-        Console.WriteLine(" -- HIT");
-        if (String.IsNullOrEmpty(this.newIngredientName) || String.IsNullOrEmpty(this.newIngredientAmount) || String.IsNullOrEmpty(this.newIngredientUnit))
+        if (String.IsNullOrWhiteSpace(this.newIngredientName))
         {
-            await JsRuntime.InvokeAsync<object>("alert", "Please provide valid values for ingredient name, amount, and unit type.");
+            await JsRuntime.InvokeAsync<object>("alert", "Please enter a name for your ingredient.");
+            this.newIngredientName = "";
             return;
         }
 
-        RecipePlannerApi.Model.ShoppingListIngredient newIngredient = new RecipePlannerApi.Model.ShoppingListIngredient() { IngredientName = this.newIngredientName.ToLower(), UserId = this.currentUserData.CurrentUser.Id };
         int quantity;
-        AppUnit unit;
-        if (int.TryParse(this.newIngredientAmount, out quantity) && Enum.TryParse<AppUnit>(this.newIngredientUnit, out unit))
+        if (!Int32.TryParse(this.newIngredientAmount, out quantity))
         {
-            newIngredient.Quantity = quantity;
-            newIngredient.UnitId = unit;
-        }
-        else
-        {
-            await JsRuntime.InvokeAsync<object>("alert", "Please enter a valid number in the \"Amount\" field");
+            await JsRuntime.InvokeAsync<object>("alert", "Please enter a valid quantity.");
+            this.newIngredientAmount = "";
+            StateHasChanged();
             return;
         }
+
+        AppUnit unit;
+        if (!Enum.TryParse<AppUnit>(this.newIngredientUnit, out unit))
+        {
+            await JsRuntime.InvokeAsync<object>("alert", "Please enter a valid unit from the dropdown.");
+            return;
+        }
+        RecipePlannerApi.Model.ShoppingListIngredient newIngredient = new RecipePlannerApi.Model.ShoppingListIngredient() { IngredientName = this.newIngredientName.ToLower(), UserId = this.currentUserData.CurrentUser.Id };
+        newIngredient.Quantity = quantity;
+        newIngredient.UnitId = unit;
+
         this.groceryService.UpsertShoppingListIngredient(newIngredient);
         Nav.NavigateTo("/groceries", true);
     }

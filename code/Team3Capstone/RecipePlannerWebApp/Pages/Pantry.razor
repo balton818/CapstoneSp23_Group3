@@ -24,14 +24,13 @@
             <br />
             <input @bind="newIngredientName" placeholder="Enter Ingredient Name" required/>
             <input @bind="newIngredientQuantity" placeholder="Enter Quantity" required/>
-            <label class="unit-dropdown" for="ingredient-units" />
-            <select @bind="newIngredientUnit" name="ingredient-units" id="ingredient-units" selected="Select Unit">
+            <select @bind="newIngredientUnit" id="ingredient-units">
                 @foreach (var unit in Enum.GetValues(typeof(AppUnit))) 
                 {
                     <option >@unit</option>
                 }
             </select>
-            <button type="submit" id="add-ingredient" @onclick="addNewIngredient">Add to Pantry</button>
+            <button id="add-ingredient" @onclick="addNewIngredient">Add to Pantry</button>
         </form>
     </div>
     
@@ -71,21 +70,41 @@
      * Handles ingredient creation by sending user input to the
      * addPantryItem endpoint
      */
-    private void addNewIngredient()
+    private async void addNewIngredient()
     {
+        if(String.IsNullOrWhiteSpace(this.newIngredientName))
+        {
+            await JsRuntime.InvokeAsync<object>("alert", "Please enter a name for your ingredient.");
+            this.newIngredientName = "";
+            return;
+        }
+        int quantity;
+        if (!Int32.TryParse(this.newIngredientQuantity, out quantity))
+        {
+            await JsRuntime.InvokeAsync<object>("alert", "Please enter a valid quantity.");
+            this.newIngredientQuantity = "";
+            StateHasChanged();
+            return;
+        }
+        if (this.newIngredientUnit == null)
+        {
+            await JsRuntime.InvokeAsync<object>("alert", "Please enter a valid unit.");
+            return;
+        }
+
         try
         {
             PantryItem newItem = new PantryItem()
                 {
                     IngredientName = this.newIngredientName,
-                    Quantity = Int32.Parse(this.newIngredientQuantity),
+                    Quantity = quantity,
                     UserId = currentUserData.CurrentUser.Id,
                     UnitId = this.newIngredientUnit
                 };
             this.service.AddPantryItem(newItem);
         } catch (System.Exception exc)
         {
-            JsRuntime.InvokeVoidAsync("alert", "There was an error adding your new ingredient:\n" + exc.Message);
+            await JsRuntime.InvokeVoidAsync("alert", "There was an error adding your new ingredient:\n" + exc.Message);
         }
 
         Nav.NavigateTo("/pantry", true);

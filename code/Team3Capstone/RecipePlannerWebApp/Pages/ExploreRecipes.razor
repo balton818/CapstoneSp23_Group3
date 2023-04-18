@@ -48,7 +48,9 @@
                 }
             </select>
         </div>
-        <button type="submit" class="apply-filter-button" @onclick="applyFilters">Apply</button>
+        <button class="filter-button" @onclick="clearFilters">Clear</button>
+        <button type="submit" class="filter-button" @onclick="applyFilters">Apply</button>
+        
     </div>
     <div class="recipe-list-area">
         <label hidden="@resultsFound" style="font-weight: bold">No results found.</label>
@@ -181,6 +183,18 @@
 
         this.pageNum = 1;
         this.browse();
+    }
+
+    private void clearFilters()
+    {
+        this.mealTypeFilterSelection = "";
+        this.cuisineFilterSelection = "";
+        this.dietaryRestrictionFilterSelection = "";
+
+        this.dietaryRestrictionFilterSelections = new[] { "" };
+        this.cuisineFilterSelections = new[] { "" };
+        this.mealTypeFilterSelections = new[] { "" };
+        StateHasChanged();
     }
 
     /**
