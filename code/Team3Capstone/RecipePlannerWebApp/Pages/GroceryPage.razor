@@ -18,7 +18,7 @@
     </div>
     <div class="controls">
         <button @onclick="goBack">&#8672 Back to Planner</button>
-        <button @onclick="generateMealPlanShoppingList">Add All Ingredients From Plan</button>
+        <button @onclick="generateMealPlanShoppingList">Generate Grocery List</button>
     </div>
     <div class="shopping-list">
         @if (this.shoppingList.Count == 0)
@@ -76,6 +76,7 @@
     protected override void OnInitialized()
     {
         Console.WriteLine("Grocery Page -- INITIALIZING");
+        this.currentUserData.lastExplorePageRequest = null;
         this.shoppingList = groceryService.GetShoppingList(this.currentUserData.CurrentUser.Id);
         Console.WriteLine(" -- Ingredients:\n");
         this.selectedIngredientIDs = this.currentUserData.userSelectedIDs;

@@ -260,7 +260,6 @@
     {
         Console.WriteLine("RECIPEVIEW -- Completed recipe for " + this.RecipeTitle);
         this.recipeService.UseIngredients(this.ingredients, this.currentUserData.CurrentUser.Id);
-        //TODO: Match desktop flow
         Nav.NavigateTo("/recipes");
     }
 

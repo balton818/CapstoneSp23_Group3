@@ -139,6 +139,9 @@
 
     private void clearUserSessionData()
     {
-        this.currentUserData = new UserSessionData();
+        this.currentUserData.CurrentUser = null;
+        this.currentUserData.CurrentRecipeTitle = null;
+        this.currentUserData.lastExplorePageRequest = null;
+        this.currentUserData.SelectedWeek = UserSessionData.Weeks.WEEK1;
     }
 }

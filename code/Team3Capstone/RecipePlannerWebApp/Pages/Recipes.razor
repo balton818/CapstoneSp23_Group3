@@ -41,6 +41,7 @@
     protected override void OnInitialized()
     {
         Console.WriteLine("RECIPES -- Initializing...");
+        this.currentUser.lastExplorePageRequest = null;
         try
         {
             List<Recipe> recipes = this.service.GetRecipesByUserPantry(this.currentUser.CurrentUser.Id);

@@ -38,7 +38,7 @@
         //}
         if (this.Ingredient.IngredientId != null)
         {
-            this.isChecked = this.SelectedIngredientIds[(int)this.Ingredient.IngredientId];
+            this.isChecked = this.SelectedIngredientIds[(int)this.Ingredient.ShoppingListId];
         }
         Console.WriteLine(" -- Grocery Item initialized: " + this.Ingredient.IngredientName + ", checked: " + this.isChecked);
     }
@@ -47,7 +47,7 @@
     {
         this.isChecked = !this.isChecked;
         Console.WriteLine("Update triggered for " + this.Ingredient.IngredientName + ": " + this.isChecked);
-        this.SelectedIngredientIds[(int)this.Ingredient.IngredientId] = this.isChecked;
+        this.SelectedIngredientIds[(int)this.Ingredient.ShoppingListId] = this.isChecked;
     }
 
     private async void checkNewAmount()
