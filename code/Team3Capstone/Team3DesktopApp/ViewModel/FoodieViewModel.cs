@@ -166,6 +166,7 @@ public class FoodieViewModel
     /// </returns>
     public async Task<RecipeInformation> RecipeDetailNavBrowse(string? recipeName)
     {
+        this.foundRecipeViewModel.SelectedRecipeTitle = "";
         this.browseRecipesViewModel.SelectedRecipeTitle = recipeName;
         return await this.recipeInformation(recipeName, this.browseRecipesViewModel.Recipes);
     }
@@ -198,6 +199,7 @@ public class FoodieViewModel
         var recipe = this.mealPlanViewModel.GetRecipe(day, type);
         if (recipe.ApiId != null)
         {
+            this.foundRecipeViewModel.SelectedRecipeTitle = recipe.Title;
             await this.recipeDetailViewModel.RecipeDetailNav((int)recipe.ApiId, this.ClientToSet);
         }
 

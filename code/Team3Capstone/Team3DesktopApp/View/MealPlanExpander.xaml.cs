@@ -86,7 +86,7 @@ public partial class MealPlanExpander
         if (sender is NavButton buttonPressed)
         {
             this.checkMealTypeToAdd(buttonPressed);
-
+            this.ViewModel.ResetBrowse();
             this.navigateToPage(buttonPressed.NavUri);
         }
     }

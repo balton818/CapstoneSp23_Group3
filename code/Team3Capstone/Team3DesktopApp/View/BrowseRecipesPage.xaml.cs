@@ -26,6 +26,7 @@ public partial class BrowseRecipesPage
     public BrowseRecipesPage(FoodieViewModel? viewModel)
     {
         this.InitializeComponent();
+
         this.ViewModel = viewModel;
         this.navMenu.FoodViewModel = this.ViewModel;
         this.navMenu.Current = this;

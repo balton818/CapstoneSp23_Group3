@@ -650,6 +650,7 @@
             Foreground="#FFE8C547"
             ItemsSource="{Binding recipes}"
             ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding}" TextWrapping="Wrap" />

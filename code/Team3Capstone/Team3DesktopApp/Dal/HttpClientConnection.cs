@@ -30,7 +30,7 @@ public class HttpClientConnection
         Console.WriteLine(query);
         var response = await client.GetAsync(query);
         Console.WriteLine(response);
-        if (response.IsSuccessStatusCode)
+        if (response.IsSuccessStatusCode && !response.ReasonPhrase.Equals("No Content"))
         {
             var readTask = response.Content.ReadAsStringAsync();
             readTask.Wait();
