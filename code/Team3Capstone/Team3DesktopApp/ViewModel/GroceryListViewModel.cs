@@ -61,7 +61,7 @@ public class GroceryListViewModel
             case "Oz":
                 return UnitEnum.Ounces;
             case "Fluid Oz":
-                return UnitEnum.FluidOunces;
+                return UnitEnum.Fl_OZ;
             default:
                 return UnitEnum.None;
         }
@@ -130,33 +130,19 @@ public class GroceryListViewModel
     public void BuyGroceryItems(Dictionary<string, int> ingredients, int userId, HttpClient client)
     {
         var itemsToBuy = new List<GroceryListItem>();
-        var difference = new GroceryListItem();
         var connection = new HttpClientConnection();
-        var differences = new List<GroceryListItem>();
         foreach (var currentIngredient in ingredients.Keys)
         {
             if (this.getItem(currentIngredient) != null)
             {
                 var itemToBuy = this.getItem(currentIngredient)!;
-                if (ingredients[currentIngredient] < itemToBuy.Quantity)
-                {
-                    difference.IngredientName = itemToBuy.IngredientName;
-                    difference.Quantity = itemToBuy.Quantity - ingredients[currentIngredient];
-                    itemToBuy.Quantity = ingredients[currentIngredient];
-                    difference.UnitId = itemToBuy.UnitId;
-                    difference.UserId = itemToBuy.UserId;
-                }
 
-                if (itemToBuy.Quantity > 0)
+                if (itemToBuy.Quantity >= 0)
                 {
                     itemsToBuy.Add(itemToBuy);
                 }
             }
 
-            if (difference.IngredientName != null && difference.Quantity > 0)
-            {
-                differences.Add(difference);
-            }
         }
 
         if (itemsToBuy.Count > 0)
@@ -164,10 +150,6 @@ public class GroceryListViewModel
             connection.BuyIngredientsFromList(itemsToBuy, userId, client);
         }
 
-        foreach (var item in differences)
-        {
-            connection.AddGroceryItem(item, client);
-        }
     }
 
     /// <summary>Clears the current grocery list.</summary>

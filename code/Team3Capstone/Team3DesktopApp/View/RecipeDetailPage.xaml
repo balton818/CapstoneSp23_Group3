@@ -156,7 +156,7 @@
                         FontFamily="Song Myung"
                         FontSize="17"
                         Foreground="#FFE8C547">
-                        <Span FontSize="17">Legal Info</Span>
+                        <Span FontSize="17">Recipe Planner Irie/Alton/Wagner</Span>
                     </TextBlock>
                 </Canvas>
                 <Canvas Name="recipe">

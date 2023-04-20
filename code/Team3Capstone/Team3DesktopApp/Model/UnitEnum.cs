@@ -1,4 +1,6 @@
-﻿namespace Team3DesktopApp.Model;
+﻿using System;
+
+namespace Team3DesktopApp.Model;
 
 /// <summary>
 ///     Unit of measurements to use with Pantry items
@@ -18,5 +20,6 @@ public enum UnitEnum
     Ounces = 3,
 
     /// <summary>The fluid ounces</summary>
-    FluidOunces = 4
+    Fl_OZ = 4
+
 }
