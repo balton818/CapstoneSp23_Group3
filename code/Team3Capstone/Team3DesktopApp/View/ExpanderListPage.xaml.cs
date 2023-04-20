@@ -92,8 +92,6 @@ public partial class ExpanderListPage
                 this.buildView();
                 this.amountErrorText.Visibility = Visibility.Hidden;
                 this.nameErrorText.Visibility = Visibility.Hidden;
-                this.ingredientNameTextBox.Text = "";
-                this.quantityTextBox.Text = "";
             }
         }
         if (string.IsNullOrEmpty(this.ingredientNameTextBox.Text))
@@ -104,6 +102,8 @@ public partial class ExpanderListPage
         {
             this.amountErrorText.Visibility = Visibility.Visible;
         }
+        this.ingredientNameTextBox.Text = "";
+        this.quantityTextBox.Text = "";
     }
 
     private bool ingredientOnList()
@@ -122,6 +122,7 @@ public partial class ExpanderListPage
         {
             if (!this.IsGrocery)
             {
+                this.selectAllButton.Visibility = Visibility.Hidden;
                 this.headerTitle.Text = "My Pantry";
                 this.purchaseSelectedButton.Visibility = Visibility.Hidden;
                 this.clearGroceryListButton.Visibility = Visibility.Hidden;
@@ -129,6 +130,7 @@ public partial class ExpanderListPage
             }
             else
             {
+                this.selectAllButton.Visibility = Visibility.Visible;
                 this.headerTitle.Text = "Groceries";
                 this.purchaseSelectedButton.Visibility = Visibility.Visible;
                 this.clearGroceryListButton.Visibility = Visibility.Visible;
@@ -202,5 +204,16 @@ public partial class ExpanderListPage
         }
     }
 
+    private void SelectAllButton_OnClick(object sender, RoutedEventArgs e)
+    {
+        foreach (IngredientExpander expander in this.expanderListBox.Items)
+        {
+            expander.SelectedForPurchaseBox();
+
+        }
+    }
+
     #endregion
+
+
 }

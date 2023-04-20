@@ -6,8 +6,7 @@
     xmlns:local="clr-namespace:Team3DesktopApp.View"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     d:DesignHeight="100"
-    d:DesignWidth="400"
-    mc:Ignorable="d"
+    mc:Ignorable="d" Width="380"
     >
 
     <UserControl.Resources>
@@ -25,40 +24,43 @@
             <Expander.HeaderTemplate>
 
                 <DataTemplate DataType="local:IngredientExpander">
-                    <Grid Width="363">
+                    <Grid Width="357">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="362*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
                         <CheckBox
                             x:Name="purchasedCheckBox"
+                            Uid="purchasedCheckBox"
                             Height="18"
-                            Margin="0,0,295,0"
+                            Margin="0,7,287,7"
                             Background="#FFD6CCC2"
                             Content="Purchased"
                             FontSize="10"
                             DataContext="{Binding DataContext, RelativeSource={RelativeSource AncestorType={x:Type Expander}}}"
-                            IsChecked="{Binding Path=SelectedForPurchase, Mode=TwoWay}"
+                            IsChecked="{Binding Path=.SelectedForPurchase, Mode=TwoWay}"
                             Foreground="#FFE8C547"
-                            Visibility="{Binding Path=IsGrocery, Mode=TwoWay, Converter={StaticResource BoolToVis}}" VerticalAlignment="Center" />
+                            Visibility="{Binding Path=IsGrocery, Mode=TwoWay, Converter={StaticResource BoolToVis}}" />
                         <TextBlock
                             x:Name="ingredientHeader"
-                            Width="162"
-                            Margin="73,0,0,0"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Center"
+                            Width="125"
+                            MaxWidth="130"
+                            Margin="74,1,157,-1"
                             DataContext="{Binding DataContext, RelativeSource={RelativeSource AncestorType={x:Type Expander}}}"
                             FontSize="10"
                             TextWrapping="Wrap"
                             FontWeight="Bold"
                             Foreground="#FFE8C547"
-                            Text="{Binding IngredientName}" Height="32" FontStretch="Expanded"
+                            Text="{Binding IngredientName}" Height="32" 
                             LineStackingStrategy="BlockLineHeight" LineHeight="30" />
                         <TextBox
                             x:Name="ingredientAmount"
-                            Margin="240,0,86,0"
+                            Margin="216,6,109,6"
                             DataContext="{Binding DataContext, RelativeSource={RelativeSource AncestorType={x:Type Expander}}}"
                             FontSize="15"
                             FontWeight="Bold"
                             Background="#30323d"
                             BorderBrush="#FFE8C547"
-                            VerticalAlignment="Center"
                             Foreground="#FFE8C547"
                             Text="{Binding IngredientAmount, Mode=OneWay}" 
                             TextChanged="quantity_TextChanged" 
@@ -66,9 +68,9 @@
                             Height="20" />
                         <TextBlock
                             x:Name="UnitTextBox"
-                            Width="74"
-                            Height="23"
-                            Margin="289,0,0,0"
+                            Width="75"
+                            Height="24"
+                            Margin="271,0,0,0"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"
                             DataContext="{Binding DataContext, RelativeSource={RelativeSource AncestorType={x:Type Expander}}}"

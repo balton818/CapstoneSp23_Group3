@@ -462,10 +462,10 @@
 
                 <ListBox
                     x:Name="expanderListBox"
-                    Canvas.Left="4"
-                    Canvas.Top="92"
-                    Width="408"
-                    Height="292"
+                    Canvas.Left="3"
+                    Canvas.Top="89"
+                    Width="411"
+                    Height="269"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Center"
                     Background="#30323d"
@@ -473,11 +473,11 @@
                     FontFamily="Song Myung"
                     FontSize="36"
                     Foreground="#FFE8C547"
-                    SelectionMode="Single">
+                    SelectionMode="Single"
+                    ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                     <ListBox.ItemContainerStyle>
                         <Style TargetType="ListBoxItem">
                             <Setter Property="ClipToBounds" Value="True" />
-                            <Setter Property="MaxWidth" Value="402" />
                             <Setter Property="HorizontalContentAlignment" Value="Stretch" />
                             <Setter Property="VerticalContentAlignment" Value="Stretch" />
                         </Style>
@@ -576,6 +576,16 @@
                         </Style>
                     </local:NavButton.Resources>
                 </local:NavButton>
+                <Button
+                    x:Name="selectAllButton"
+                    Canvas.Left="325"
+                    Canvas.Top="375"
+                    Width="78"
+                    Height="23"
+                    Background="#D6CCC2"
+                    BorderBrush="#e8c547"
+                    Click="SelectAllButton_OnClick"
+                    Content="Select All" HorizontalAlignment="Left" VerticalAlignment="Top" />
             </Canvas>
             <local:NavMenu
                 x:Name="navMenu"
@@ -604,7 +614,7 @@
             Name="amountErrorText"
             Grid.Row="0"
             Width="126"
-            Margin="141,398,0,0"
+            Margin="141,402,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             FontSize="12"
@@ -616,7 +626,7 @@
             Name="nameErrorText"
             Grid.Row="0"
             Width="125"
-            Margin="15,394,0,0"
+            Margin="15,401,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             FontSize="12"
