@@ -15,6 +15,9 @@ public class Ingredient
     /// </value>
     public string IngredientName { get; set; }
 
+    /// <summary>Gets or sets the ingredient id.</summary>
+    /// <value>The ingredient id.</value>
+    public int IngredientId { get; set; }
 
     /// <summary>
     ///     Gets or sets the quantity of the ingredient.

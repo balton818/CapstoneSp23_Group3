@@ -505,7 +505,7 @@
                     FontFamily="Song Myung"
                     FontSize="17"
                     Foreground="#FFE8C547">
-                    <Span FontSize="17">Legal Info</Span>
+                    <Span FontSize="17">Recipe Planner Irie/Alton/Wagner</Span>
                 </TextBlock>
                 <TextBox
                     Name="ingredientNameTextBox"
@@ -598,20 +598,32 @@
             VerticalAlignment="Top"
             Foreground="#FFE8C547"
             TextWrapping="Wrap">
-            <Run Text="Amount" /><LineBreak /><Run />
+            <Run Text="Quantity" /><LineBreak /><Run />
         </TextBlock>
         <TextBlock
-            Name="errorText"
+            Name="amountErrorText"
             Grid.Row="0"
-            Width="178"
-            Margin="101,398,0,0"
+            Width="126"
+            Margin="141,398,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            FontSize="15"
+            FontSize="12"
             Foreground="#FFFA1010"
-            Text="Error Adding Item"
+            Text="Quantity Format Error"
             TextWrapping="Wrap"
-            Visibility="Hidden" />
+            Visibility="Hidden" Height="18" />
+        <TextBlock
+            Name="nameErrorText"
+            Grid.Row="0"
+            Width="125"
+            Margin="15,394,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            FontSize="12"
+            Foreground="#FFFA1010"
+            Text="Name Cant be empty"
+            TextWrapping="Wrap"
+            Visibility="Hidden" Height="22" />
         <TextBlock
             Height="21"
             Margin="253,413,0,0"
@@ -639,7 +651,7 @@
             <ComboBoxItem>Ml</ComboBoxItem>
             <ComboBoxItem>Oz</ComboBoxItem>
             <ComboBoxItem>g</ComboBoxItem>
-            <ComboBoxItem>Fluid Oz</ComboBoxItem>
+            <ComboBoxItem>Fl Oz</ComboBoxItem>
         </ComboBox>
 
 

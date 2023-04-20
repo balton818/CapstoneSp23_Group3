@@ -60,8 +60,9 @@
                             BorderBrush="#FFE8C547"
                             VerticalAlignment="Center"
                             Foreground="#FFE8C547"
-                            Text="{Binding IngredientAmount, Mode=TwoWay}" 
+                            Text="{Binding IngredientAmount, Mode=OneWay}" 
                             TextChanged="quantity_TextChanged" 
+                            ScrollViewer.VerticalScrollBarVisibility="Disabled"
                             Height="20" />
                         <TextBlock
                             x:Name="UnitTextBox"

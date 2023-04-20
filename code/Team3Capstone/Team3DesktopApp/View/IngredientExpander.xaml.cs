@@ -132,19 +132,20 @@ public partial class IngredientExpander
 
     private void quantity_TextChanged(object sender, EventArgs e)
     {
+        TextBox boxChanged = (TextBox)sender;
         var foodieViewModel = this.ViewModel;
         TextBox quantity = (TextBox)sender;
         int parsed;
         bool isNumeric = int.TryParse(quantity.Text, out parsed);
 
-        if (!isNumeric)
+        if (!isNumeric && quantity.Text != string.Empty)
         {
             StylizedMessageBox.ShowBox(
                 "Error, you have entered a non numeric quantity.",
                 "Error");
             quantity.Background = Brushes.Red;
         }
-        else
+        else if (boxChanged.IsFocused)
         {
             SolidColorBrush brush = new SolidColorBrush();
             brush.Color = (Color)ColorConverter.ConvertFromString("#30323d");

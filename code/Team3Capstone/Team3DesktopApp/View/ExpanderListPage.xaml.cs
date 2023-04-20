@@ -66,7 +66,13 @@ public partial class ExpanderListPage
         if (!string.IsNullOrEmpty(this.ingredientNameTextBox.Text) &&
             !string.IsNullOrEmpty(this.quantityTextBox.Text) && this.quantityTextBox.Text.All(char.IsDigit))
         {
-            if (StylizedMessageBox.ShowBox(
+            if (this.ingredientOnList())
+            {
+                StylizedMessageBox.ShowBox(
+                    this.ingredientNameTextBox.Text + " already on list edit the quantity that exists.",
+                    "Ingredient Addition");
+            }
+            else if (StylizedMessageBox.ShowBox(
                     "Confirm addition of " + this.ingredientNameTextBox.Text + " " + this.quantityTextBox.Text + " " +
                     this.measurementCombo.Text + "?",
                     "Ingredient Addition") == "1")
@@ -84,15 +90,29 @@ public partial class ExpanderListPage
                 }
 
                 this.buildView();
-                this.errorText.Visibility = Visibility.Hidden;
+                this.amountErrorText.Visibility = Visibility.Hidden;
+                this.nameErrorText.Visibility = Visibility.Hidden;
                 this.ingredientNameTextBox.Text = "";
                 this.quantityTextBox.Text = "";
             }
         }
-        else
+        if (string.IsNullOrEmpty(this.ingredientNameTextBox.Text))
         {
-            this.errorText.Visibility = Visibility.Visible;
+            this.nameErrorText.Visibility = Visibility.Visible;
         }
+        if (string.IsNullOrEmpty(this.quantityTextBox.Text) || !this.quantityTextBox.Text.All(char.IsDigit))
+        {
+            this.amountErrorText.Visibility = Visibility.Visible;
+        }
+    }
+
+    private bool ingredientOnList()
+    {
+        if (this.IsGrocery)
+        {
+            return this.groceryList.Any(ingredient => ingredient.IngredientName == this.ingredientNameTextBox.Text);
+        }
+        return this.pantryList.Any(ingredient => ingredient.IngredientName == this.ingredientNameTextBox.Text);
     }
 
     private void buildView()
