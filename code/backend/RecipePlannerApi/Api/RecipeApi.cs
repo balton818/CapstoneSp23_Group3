@@ -8,7 +8,7 @@ using RecipePlannerApi.Model;
 namespace RecipePlannerApi.Api
 {
     /// <summary>Wrapper class for the spoonacular api</summary>
-    public class RecipeApi: IRecipeApi
+    public class RecipeApi : IRecipeApi
     {
         private readonly IRecipesApi api;
 
@@ -55,7 +55,8 @@ namespace RecipePlannerApi.Api
                 ingredients.Add(ingredient);
             }
 
-            return new RecipeInformation {
+            return new RecipeInformation
+            {
                 Summary = info.Summary,
                 Ingredients = ingredients,
                 Steps = instructions,
@@ -95,8 +96,10 @@ namespace RecipePlannerApi.Api
         /// <returns>
         ///   <br />
         /// </returns>
-        public BrowseRecipeResponse BrowseRecipes(BrowseRecipeRequest request, string ingredients, int perPage) {
-            var searchRequest = new SearchRecipeRequest() {
+        public BrowseRecipeResponse BrowseRecipes(BrowseRecipeRequest request, string ingredients, int perPage)
+        {
+            var searchRequest = new SearchRecipeRequest()
+            {
                 query = request.Query,
                 cuisine = request.Cuisine,
                 diet = request.Diet,
@@ -111,8 +114,10 @@ namespace RecipePlannerApi.Api
             var response = api.SearchRecipes(searchRequest);
             var recipes = new List<Recipe>();
 
-            foreach (var item in response.Results) {
-                recipes.Add(new Recipe() {
+            foreach (var item in response.Results)
+            {
+                recipes.Add(new Recipe()
+                {
                     ApiId = item.Id,
                     Image = item.Image,
                     ImageType = item.ImageType,
@@ -120,7 +125,8 @@ namespace RecipePlannerApi.Api
                 });
             }
 
-            return new BrowseRecipeResponse() {
+            return new BrowseRecipeResponse()
+            {
                 recipes = recipes,
                 page = response.Offset / perPage,
                 totalNumberOfRecipes = response.TotalResults
@@ -130,7 +136,8 @@ namespace RecipePlannerApi.Api
         /// <summary>Converts measurement amounts with the Spoonacular api.</summary>
         /// <param name="request">The request to convert measurement amounts.</param>
         /// <returns>The conversion result if the is one</returns>
-        public decimal? ConvertAmount(ConvertAmountRequest request) {
+        public decimal? ConvertAmount(ConvertAmountRequest request)
+        {
             var response = this.api.ConvertAmounts(request.IngredientName, request.SourceAmount, request.SourceUnit, request.TargetUnit);
 
             return response.TargetAmount;
@@ -141,23 +148,30 @@ namespace RecipePlannerApi.Api
         /// <returns>
         ///   <para>The information for the recipe</para>
         /// </returns>
-        public List<Ingredient> GetRecipeIngredientsBulk(List<int> recipeIds) {
+        public List<Ingredient> GetRecipeIngredientsBulk(List<int> recipeIds)
+        {
             var ids = string.Join(",", recipeIds);
             var bulkInfo = api.GetRecipeInformationBulk(ids, false);
 
             var ingredients = new List<Ingredient>();
-            foreach(var info in bulkInfo) {
-                foreach (var item in info?.ExtendedIngredients) {
+            foreach (var info in bulkInfo)
+            {
+                foreach (var item in info?.ExtendedIngredients)
+                {
                     var existingIngredient = ingredients.Find(i => i.IngredientId == item.Id);
-                    if (existingIngredient != null) {
+                    if (existingIngredient != null)
+                    {
                         existingIngredient.Quantity += (int)Math.Ceiling(item.Measures.Metric.Amount.GetValueOrDefault());
-                    } else {
+                    }
+                    else
+                    {
                         var name = item.Name?.Length > 40 ? item.Name[..40] : item.Name;
-                        var ingredient = new Ingredient() {
+                        var ingredient = new Ingredient()
+                        {
                             IngredientId = item.Id,
                             IngredientName = name,
-                            Quantity = (int)Math.Ceiling(item.Measures.Metric.Amount.GetValueOrDefault()),
-                            Unit = item.Measures.Metric.UnitLong
+                            Quantity = (int)Math.Ceiling(item.Measures.Us.Amount.GetValueOrDefault()),
+                            Unit = item.Measures.Us.UnitLong
                         };
                         ingredients.Add(ingredient);
                     }
