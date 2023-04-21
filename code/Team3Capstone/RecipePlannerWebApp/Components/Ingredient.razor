@@ -12,7 +12,7 @@
     <span class="ingredient-label">@IngredientName</span>
     <div class="ingredient-body">
         <label>Quantity: @IngredientQuantity @IngredientUnit</label>
-        <input placeholder="Amount to add" @bind="NewIngredientQuantity" />
+        <input placeholder="New Amount" @bind="NewIngredientQuantity" />
         <button @onclick="@updateIngredientQuantity">Update</button>
         <button @onclick="@deleteIngredient">Delete from Pantry</button>
     </div>
