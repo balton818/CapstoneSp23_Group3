@@ -3,6 +3,9 @@
 @using RecipePlannerApi.Model;
 @using RecipePlannerApi.Service;
 @using RecipePlannerApi.Dao;
+@using RecipePlannerWebApp.LocalServices;
+@using System.Text.RegularExpressions;
+@inject UserSessionData currentUserData;
 @inject NavigationManager Nav;
 @inject IJSRuntime JsRuntime;
 
@@ -23,9 +26,9 @@
 
         <input id="lnameField" @bind="user.LastName" placeholder="Enter Last Name" required />
 
-        <input id="emailField" type="email" @bind="user.Email" placeholder="Enter Email Address" required />
+        <input id="emailField" type="email" @bind="user.Email" @onfocusout="validateEmail" placeholder="Enter Email Address" required/>
 
-        <button type="submit" id="submitButton" style="position:center">Submit</button>        
+        <button type="submit" id="submitButton" style="position:center">Submit</button>
     </div>
 </EditForm>
 
@@ -50,7 +53,9 @@
                 var regResult = this.service.CreateUser(this.user);
                 Console.WriteLine("REGISTER -- REG_RESULT " + regResult);
                 this.ValidFields = true;
-                Nav.NavigateTo("/");
+
+                this.currentUserData.CurrentUser = new User() { Id = (int)regResult };
+                Nav.NavigateTo("/planner");
             }
             catch (System.Data.SqlClient.SqlException sqlEx)
             {
@@ -68,7 +73,8 @@
             Console.WriteLine("REGISTER -- SUCCESS");
             Console.WriteLine("REGISTER -- " + this.user.Username);
 
-        } else
+        }
+        else
         {
             this.alertUser("Password values do not match");
             this.clearPasswordFields();
@@ -78,7 +84,7 @@
     /**
      * Alerts the user in the event that an error occurred and
      * displays the given message.
-     * @param message - the error message to be displayed to 
+     * @param message - the error message to be displayed to
      *      the user.
      */
     private async void alertUser(string message)
@@ -101,6 +107,18 @@
     private void clearUsername()
     {
         this.user.Username = "";
+    }
+
+    private async void validateEmail()
+    {
+        var pattern = new Regex("^\\w+@[a-zA-Z_]+?\\.[a-zA-Z]{2,3}$",
+            RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        if (!pattern.IsMatch(this.user.Email) && !String.IsNullOrEmpty(this.user.Email))
+        {
+            await JsRuntime.InvokeAsync<object>("alert", "Please enter a valid email.");
+            this.user.Email = "";
+            StateHasChanged();
+        }
     }
 
     /**
