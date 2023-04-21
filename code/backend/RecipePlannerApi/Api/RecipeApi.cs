@@ -183,8 +183,8 @@ public class RecipeApi : IRecipeApi
                     {
                         IngredientId = item.Id,
                         IngredientName = name,
-                        Quantity = (int)Math.Ceiling(item.Measures.Us.Amount.GetValueOrDefault()),
-                        Unit = item.Measures.Us.UnitLong
+                        Quantity = (int)Math.Ceiling(item.Amount.Value),
+                        Unit = item.Unit
                     };
                     ingredients.Add(ingredient);
                 }
