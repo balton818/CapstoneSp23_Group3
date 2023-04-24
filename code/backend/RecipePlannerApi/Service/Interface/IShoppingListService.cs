@@ -9,5 +9,6 @@ namespace RecipePlannerApi.Service.Interface
         List<ShoppingListIngredient> GetShoppingList(int userId);
         void DeleteAllFromShoppingList(List<ShoppingListIngredient> ingredients);
         ShoppingListIngredient UpsertShoppingListIngredient(ShoppingListIngredient ingredient);
+        List<ShoppingListIngredient> CompareLists(List<PantryItem> pantry, List<ShoppingListIngredient> shopping);
     }
 }
