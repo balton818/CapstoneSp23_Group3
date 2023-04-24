@@ -657,7 +657,7 @@
             RenderTransformOrigin="0.474,0.504"
             SelectedIndex="0"
             Style="{DynamicResource ComboBoxStyle}">
-            <ComboBoxItem>None</ComboBoxItem>
+            <ComboBoxItem>Count</ComboBoxItem>
             <ComboBoxItem>Ml</ComboBoxItem>
             <ComboBoxItem>Oz</ComboBoxItem>
             <ComboBoxItem>g</ComboBoxItem>
