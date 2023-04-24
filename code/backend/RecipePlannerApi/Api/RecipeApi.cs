@@ -171,10 +171,10 @@ public class RecipeApi : IRecipeApi
         {
             foreach (var item in info?.ExtendedIngredients)
             {
-                var existingIngredient = ingredients.Find(i => i.IngredientId == item.Id);
+                var existingIngredient = ingredients.Find(i => i.IngredientId == item.Id || i.IngredientName.Equals(item.Name));
                 if (existingIngredient != null)
                 {
-                    existingIngredient.Quantity += (int)Math.Ceiling(item.Measures.Metric.Amount.GetValueOrDefault());
+                    existingIngredient.Quantity += (int)Math.Ceiling(item.Amount.Value);
                 }
                 else
                 {
