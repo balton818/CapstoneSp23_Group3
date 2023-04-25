@@ -60,6 +60,10 @@ public partial class IngredientExpander
         this.InitializeComponent();
         this.IngredientName = name;
         this.IngredientAmount = amount;
+        if (measure.Equals("None"))
+        {
+            measure = "Count";
+        }
         this.IngredientUnit = measure;
         this.ViewModel = viewModel;
         this.IsGrocery = isGrocery;

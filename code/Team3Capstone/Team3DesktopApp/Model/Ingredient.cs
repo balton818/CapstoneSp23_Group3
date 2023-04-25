@@ -43,7 +43,15 @@ public class Ingredient
     {
         this.IngredientName = name;
         this.Quantity = quantity;
-        this.Unit = unit;
+        if (unit.Equals("None"))
+        {
+            this.Unit = "Count";
+        }
+        else
+        {
+            this.Unit = unit;
+        }
+
     }
 
     #endregion
