@@ -12,25 +12,23 @@
 <link href="RecipePlannerWebApp.styles.css" rel="stylesheet">
 <PageTitle>foodie - register</PageTitle>
 
-<EditForm Model="@user" OnValidSubmit="@RegisterUser">
-    <div id="registration-widget">
-        <span class="header">Register for Foodie</span>
-        <button style="position:center" @onclick="goToLogin">&#8672 Back</button>
-        <br />
-        <input id="usernameField" @bind="user.Username" placeholder="Enter Username" />
+<div id="registration-widget">
+    <span class="header">Register for Foodie</span>
+    <button style="position:center" @onclick="goToLogin">&#8672 Back</button>
+    <br />
+    <input id="usernameField" @bind="user.Username" placeholder="Enter Username" />
 
-        <input id="passwordField" @bind="user.Password" placeholder="Enter Password" />
-        <input id="passwordReentryField" @bind="this.passwordReentry" placeholder="Re-enter Password" />
+    <input id="passwordField" @bind="user.Password" placeholder="Enter Password" />
+    <input id="passwordReentryField" @bind="this.passwordReentry" placeholder="Re-enter Password" />
 
-        <input id="fnameField" @bind="user.FirstName" placeholder="Enter First Name" />
+    <input id="fnameField" @bind="user.FirstName" placeholder="Enter First Name" />
 
-        <input id="lnameField" @bind="user.LastName" placeholder="Enter Last Name" />
+    <input id="lnameField" @bind="user.LastName" placeholder="Enter Last Name" />
 
-        <input id="emailField" type="email" @bind="user.Email" placeholder="Enter Email Address" />
+    <input id="emailField" type="email" @bind="user.Email" placeholder="Enter Email Address" />
 
-        <button type="submit" id="submitButton" style="position:center">Submit</button>
-    </div>
-</EditForm>
+    <button type="submit" id="submitButton" style="position:center" @onclick="@RegisterUser">Submit</button>
+</div>
 
 @code {
     [Parameter]
