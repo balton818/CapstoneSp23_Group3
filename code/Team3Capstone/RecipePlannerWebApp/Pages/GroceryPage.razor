@@ -4,6 +4,7 @@
 @using RecipePlannerApi.Model;
 @using RecipePlannerApi.Dao;
 @using RecipePlannerApi.Api;
+@using System.Text.RegularExpressions;
 @inject IJSRuntime JsRuntime;
 @inject NavigationManager Nav;
 @using RecipePlannerWebApp.LocalServices;
@@ -39,11 +40,18 @@
     <div class="new-ingredient">
 
         <input type="text" placeholder="Name" @bind="newIngredientName" />
-        <input type="text" placeholder="Amount" @bind="newIngredientAmount" />
+        <input type="text" placeholder="Quantity" @bind="newIngredientQuantity" />
         <select @bind="newIngredientUnit">
             @foreach (var unit in Enum.GetValues(typeof(AppUnit)))
             {
-                <option value="@unit">@unit</option>
+                @if (unit.Equals(AppUnit.NONE))
+                {
+                    <option value="@unit">COUNT</option>
+                }
+                else
+                {
+                   <option value="@unit">@unit</option> 
+                }                
             }
         </select>
         <button type="submit" @onclick="addNewIngredient">Add to Shopping List</button>
@@ -67,7 +75,7 @@
     private bool hideButtons = false;
 
     private string newIngredientName = "";
-    private string newIngredientAmount = "";
+    private string newIngredientQuantity = "";
     private string newIngredientUnit = "";
 
     /**
@@ -172,19 +180,9 @@
 
     private async void addNewIngredient()
     {
-        if (String.IsNullOrWhiteSpace(this.newIngredientName))
+        bool validInput = this.validateInput();
+        if (!validInput)
         {
-            await JsRuntime.InvokeAsync<object>("alert", "Please enter a name for your ingredient.");
-            this.newIngredientName = "";
-            return;
-        }
-
-        int quantity;
-        if (!Int32.TryParse(this.newIngredientAmount, out quantity))
-        {
-            await JsRuntime.InvokeAsync<object>("alert", "Please enter a valid quantity.");
-            this.newIngredientAmount = "";
-            StateHasChanged();
             return;
         }
 
@@ -194,12 +192,57 @@
             await JsRuntime.InvokeAsync<object>("alert", "Please enter a valid unit from the dropdown.");
             return;
         }
-        RecipePlannerApi.Model.ShoppingListIngredient newIngredient = new RecipePlannerApi.Model.ShoppingListIngredient() { IngredientName = this.newIngredientName.ToLower(), UserId = this.currentUserData.CurrentUser.Id };
-        newIngredient.Quantity = quantity;
-        newIngredient.UnitId = unit;
 
-        this.groceryService.UpsertShoppingListIngredient(newIngredient);
-        Nav.NavigateTo("/groceries", true);
+        RecipePlannerApi.Model.ShoppingListIngredient newIngredient = new RecipePlannerApi.Model.ShoppingListIngredient() { IngredientName = this.newIngredientName.ToLower(), UserId = this.currentUserData.CurrentUser.Id };
+        newIngredient.Quantity = int.Parse(this.newIngredientQuantity);
+        newIngredient.UnitId = unit;
+        try
+        {
+            this.groceryService.UpsertShoppingListIngredient(newIngredient);
+            Nav.NavigateTo("/groceries", true);
+        }
+        catch (System.Data.SqlClient.SqlException sqlEx)
+        {
+            await JsRuntime.InvokeAsync<object>("alert", "The item you entered already exists in the shopping list.\nPlease either delete and re-add the item or increase the quantity.");
+            this.newIngredientQuantity = "";
+            this.newIngredientName = "";
+            this.newIngredientUnit = "";
+            StateHasChanged();
+        }
+        catch (System.Exception)
+        {
+            await JsRuntime.InvokeAsync<object>("alert", "There was an issue adding your item to the shopping list.");
+        }
+
+    }
+
+    private bool validateInput()
+    {
+        bool validInput = true;
+        if (String.IsNullOrWhiteSpace(this.newIngredientName))
+        {
+            JsRuntime.InvokeAsync<object>("alert", "Please enter a name for your ingredient.");
+            validInput = false;
+        }
+
+        var pattern = new Regex("[^\\d+]", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        if (String.IsNullOrEmpty(this.newIngredientQuantity))
+        {
+            JsRuntime.InvokeAsync<object>("alert", "Please enter a value for quantity.");
+            validInput = false;
+        }
+        else if (pattern.IsMatch(this.newIngredientQuantity))
+        {
+            JsRuntime.InvokeAsync<object>("alert", "Please enter a valid, numeric quantity.");
+            validInput = false;
+        }
+
+        if (String.IsNullOrEmpty(this.newIngredientUnit))
+        {
+            JsRuntime.InvokeAsync<object>("alert", "Please enter a valid unit.");
+            validInput = false;
+        }
+        return validInput;
     }
 
     private async void generateMealPlanShoppingList()

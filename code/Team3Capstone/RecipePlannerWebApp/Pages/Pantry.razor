@@ -5,6 +5,7 @@
 @using RecipePlannerApi.Dao;
 @using RecipePlannerWebApp.LocalServices;
 @using RecipePlannerWebApp.Components;
+@using System.Text.RegularExpressions;
 @inject NavigationManager Nav;
 @inject UserSessionData currentUserData;
 @inject IJSRuntime JsRuntime;
@@ -27,7 +28,14 @@
             <select @bind="newIngredientUnit" id="ingredient-units">
                 @foreach (var unit in Enum.GetValues(typeof(AppUnit))) 
                 {
-                    <option >@unit</option>
+                    @if (unit.Equals(AppUnit.NONE))
+                    {
+                        <option value=@unit>COUNT</option>
+                    }
+                    else
+                    {
+                        <option value=@unit>@unit</option>
+                    }
                 }
             </select>
             <button id="add-ingredient" @onclick="addNewIngredient">Add to Pantry</button>
@@ -72,32 +80,17 @@
      */
     private async void addNewIngredient()
     {
-        if(String.IsNullOrWhiteSpace(this.newIngredientName))
+        bool validFields = this.validateInput();
+        if (!validFields)
         {
-            await JsRuntime.InvokeAsync<object>("alert", "Please enter a name for your ingredient.");
-            this.newIngredientName = "";
             return;
         }
-        int quantity;
-        if (!Int32.TryParse(this.newIngredientQuantity, out quantity))
-        {
-            await JsRuntime.InvokeAsync<object>("alert", "Please enter a valid quantity.");
-            this.newIngredientQuantity = "";
-            StateHasChanged();
-            return;
-        }
-        if (this.newIngredientUnit == null)
-        {
-            await JsRuntime.InvokeAsync<object>("alert", "Please enter a valid unit.");
-            return;
-        }
-
         try
         {
             PantryItem newItem = new PantryItem()
                 {
                     IngredientName = this.newIngredientName,
-                    Quantity = quantity,
+                    Quantity = int.Parse(this.newIngredientQuantity),
                     UserId = currentUserData.CurrentUser.Id,
                     UnitId = this.newIngredientUnit
                 };
@@ -110,4 +103,32 @@
         Nav.NavigateTo("/pantry", true);
     }
 
+    private bool validateInput()
+    {
+        bool validInput = true;
+        if (String.IsNullOrWhiteSpace(this.newIngredientName))
+        {
+            JsRuntime.InvokeAsync<object>("alert", "Please enter a name for your ingredient.");
+            validInput = false;
+        }
+
+        var pattern = new Regex("[^\\d+]", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        if (String.IsNullOrEmpty(this.newIngredientQuantity))
+        {
+            JsRuntime.InvokeAsync<object>("alert", "Please enter a value for quantity.");
+            validInput = false;            
+        }
+        else if (pattern.IsMatch(this.newIngredientQuantity))
+        {
+            JsRuntime.InvokeAsync<object>("alert", "Please enter a valid, numeric quantity.");
+            validInput = false;
+        }
+
+        if (this.newIngredientUnit == null)
+        {
+            JsRuntime.InvokeAsync<object>("alert", "Please enter a valid unit.");
+            validInput = false;
+        }
+        return validInput;
+    }
 }

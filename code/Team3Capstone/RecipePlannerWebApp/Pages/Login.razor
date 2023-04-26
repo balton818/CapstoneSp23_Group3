@@ -5,31 +5,30 @@
 @using RecipePlannerWebApp.LocalServices;
 @inject NavigationManager Nav;
 @inject UserSessionData userData;
+@inject IJSRuntime JsRuntime;
 @layout LoginLayout;
 
 <PageTitle>foodie - login</PageTitle>
 
 <link href="RecipePlannerWebApp.styles.css" rel="stylesheet">
 
-<EditForm Model="@user" OnValidSubmit="@ValidateUser">
-    <div id="login-widget">
-        <span class="header">Login to Foodie</span>
+<div id="login-widget">
+    <span class="header">Login to Foodie</span>
        
-        <input id="usernameField" @bind="user.Username" placeholder="Enter username" required />
+    <input id="usernameField" @bind="user.Username" placeholder="Enter username"/>
       
-        <input id="passwordField" type="password" @bind="user.Password" placeholder="Enter password" required />
+    <input id="passwordField" type="password" @bind="user.Password" placeholder="Enter password"/>
        
-        <button type="submit" id="loginButton" style="position:center">Login</button>
-        <button type="submit" id="registerButton" style="position:center" @onclick="RegisterUser">Register</button>
+    <button type="submit" id="loginButton" style="position:center" @onclick="ValidateUser">Login</button>
+    <button type="submit" id="registerButton" style="position:center" @onclick="RegisterUser">Register</button>
         
-        <span id="loginResultMessage">@LoginValidationResultMessage</span>
-    </div>
-</EditForm>
+    <span id="loginResultMessage">@LoginValidationResultMessage</span>
+</div>
 
 @code
 {
     [Parameter]
-    public User? user { get; set; } = new User();
+    public User user { get; set; } = new User();
 
     [Parameter]
     public bool ValidFields { get; set; }
@@ -51,11 +50,12 @@
      * Handles user validation by performing some basic input validation
      * before sending data to the user validation service.
      */
-    private void ValidateUser()
+    private async void ValidateUser()
     {
-
         LoginValidationResultMessage = "";
-        if (!String.IsNullOrEmpty(this.user?.Username) && !String.IsNullOrEmpty(this.user?.Password))
+        bool validFields = this.checkFields();
+
+        if (validFields)
         {
             int? result = this.service.ValidateUser(this.user.Username, this.user.Password);
             LoginValidationResultMessage = "";
@@ -70,13 +70,25 @@
             else
             {
                 this.ValidFields = false;
-                LoginValidationResultMessage = "Invalid Credentials";
+                await JsRuntime.InvokeAsync<object>("alert", "The credentials you entered are invalid.");
             }
         }
-        else
+    }
+
+    private bool checkFields()
+    {
+        bool validInput = true;
+        if (String.IsNullOrEmpty(this.user.Username))
         {
-            LoginValidationResultMessage = "Please enter a username and password";
+            JsRuntime.InvokeAsync<object>("alert", "Please enter a username.");
+            validInput = false;
         }
+        if (String.IsNullOrEmpty(this.user.Password))
+        {
+            JsRuntime.InvokeAsync<object>("alert", "Please enter a password.");
+            validInput = false;
+        }
+        return validInput;
     }
 
     /**
