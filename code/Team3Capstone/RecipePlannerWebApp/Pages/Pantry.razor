@@ -27,7 +27,14 @@
             <select @bind="newIngredientUnit" id="ingredient-units">
                 @foreach (var unit in Enum.GetValues(typeof(AppUnit))) 
                 {
-                    <option >@unit</option>
+                    @if (unit.Equals(AppUnit.NONE))
+                    {
+                        <option>COUNT</option>
+                    }
+                    else
+                    {
+                        <option>@unit</option>
+                    }
                 }
             </select>
             <button id="add-ingredient" @onclick="addNewIngredient">Add to Pantry</button>

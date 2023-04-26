@@ -7,7 +7,14 @@
 @inject IJSRuntime JsRuntime;
 
 <div class="ingredient">
-    <label>&#8226 @Ingredient.IngredientName: @Ingredient.Quantity @Ingredient.UnitId.ToString()</label>
+    @if (@Ingredient.UnitId.Equals(AppUnit.NONE))
+    {
+        <label>&#8226 @Ingredient.IngredientName: @Ingredient.Quantity COUNT</label>
+    }
+    else
+    {
+        <label>&#8226 @Ingredient.IngredientName: @Ingredient.Quantity @Ingredient.UnitId.ToString()</label>
+    }
     <input type="checkbox" @bind="this.isChecked" @oninput="triggerUpdate"/>
     <input placeholder="Modify Quantity" @bind="@actualQuantity" id="quantity" @onfocusout="checkNewAmount"/>
 </div>

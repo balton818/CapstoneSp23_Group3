@@ -39,11 +39,18 @@
     <div class="new-ingredient">
 
         <input type="text" placeholder="Name" @bind="newIngredientName" />
-        <input type="text" placeholder="Amount" @bind="newIngredientAmount" />
+        <input type="text" placeholder="Quantity" @bind="newIngredientQuantity" />
         <select @bind="newIngredientUnit">
             @foreach (var unit in Enum.GetValues(typeof(AppUnit)))
             {
-                <option value="@unit">@unit</option>
+                @if (unit.Equals(AppUnit.NONE))
+                {
+                    <option value="@unit">COUNT</option>
+                }
+                else
+                {
+                   <option value="@unit">@unit</option> 
+                }                
             }
         </select>
         <button type="submit" @onclick="addNewIngredient">Add to Shopping List</button>
@@ -67,7 +74,7 @@
     private bool hideButtons = false;
 
     private string newIngredientName = "";
-    private string newIngredientAmount = "";
+    private string newIngredientQuantity = "";
     private string newIngredientUnit = "";
 
     /**
@@ -180,10 +187,10 @@
         }
 
         int quantity;
-        if (!Int32.TryParse(this.newIngredientAmount, out quantity))
+        if (!Int32.TryParse(this.newIngredientQuantity, out quantity))
         {
             await JsRuntime.InvokeAsync<object>("alert", "Please enter a valid quantity.");
-            this.newIngredientAmount = "";
+            this.newIngredientQuantity = "";
             StateHasChanged();
             return;
         }

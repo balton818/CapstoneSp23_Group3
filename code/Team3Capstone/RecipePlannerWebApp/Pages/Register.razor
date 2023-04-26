@@ -17,16 +17,16 @@
         <span class="header">Register for Foodie</span>
         <button style="position:center" @onclick="goToLogin">&#8672 Back</button>
         <br />
-        <input id="usernameField" @bind="user.Username" placeholder="Enter Username" required />
+        <input id="usernameField" @bind="user.Username" placeholder="Enter Username" />
 
-        <input id="passwordField" @bind="user.Password" placeholder="Enter Password" required />
-        <input id="passwordReentryField" @bind="this.passwordReentry" placeholder="Re-enter Password" required />
+        <input id="passwordField" @bind="user.Password" placeholder="Enter Password" />
+        <input id="passwordReentryField" @bind="this.passwordReentry" placeholder="Re-enter Password" />
 
-        <input id="fnameField" @bind="user.FirstName" placeholder="Enter First Name" required />
+        <input id="fnameField" @bind="user.FirstName" placeholder="Enter First Name" />
 
-        <input id="lnameField" @bind="user.LastName" placeholder="Enter Last Name" required />
+        <input id="lnameField" @bind="user.LastName" placeholder="Enter Last Name" />
 
-        <input id="emailField" type="email" @bind="user.Email" @onfocusout="validateEmail" placeholder="Enter Email Address" required/>
+        <input id="emailField" type="email" @bind="user.Email" placeholder="Enter Email Address" />
 
         <button type="submit" id="submitButton" style="position:center">Submit</button>
     </div>
@@ -46,39 +46,43 @@
     private void RegisterUser()
     {
         this.ValidFields = false;
-        if (String.Equals(this.user.Password, this.passwordReentry))
+        if (!this.validateFormFields())
         {
-            try
-            {
-                var regResult = this.service.CreateUser(this.user);
-                Console.WriteLine("REGISTER -- REG_RESULT " + regResult);
-                this.ValidFields = true;
-
-                this.currentUserData.CurrentUser = new User() { Id = (int)regResult };
-                Nav.NavigateTo("/planner");
-            }
-            catch (System.Data.SqlClient.SqlException sqlEx)
-            {
-                this.alertUser("The username you entered is already in use.\nPlease enter a different username.");
-                this.clearUsername();
-                Console.WriteLine("\nSQL ERR -- ");
-                Console.WriteLine(sqlEx.Message);
-            }
-            catch (System.Exception exc)
-            {
-                this.alertUser("There was an issue processing your registration");
-                Console.WriteLine("\nERR -- ");
-                Console.WriteLine(exc.Message);
-            }
-            Console.WriteLine("REGISTER -- SUCCESS");
-            Console.WriteLine("REGISTER -- " + this.user.Username);
-
+            StateHasChanged();
+            return;
         }
-        else
+        try
         {
-            this.alertUser("Password values do not match");
-            this.clearPasswordFields();
+            var regResult = this.service.CreateUser(this.user);
+            Console.WriteLine("REGISTER -- REG_RESULT " + regResult);
+            this.ValidFields = true;
+
+            this.currentUserData.CurrentUser = new User()
+                {
+                    Username = this.user.Username,
+                    Password = this.user.Password,
+                    Email = this.user.Email,
+                    FirstName = this.user.FirstName,
+                    LastName = this.user.LastName,
+                    Id = (int)regResult
+                };
+            Nav.NavigateTo("/planner");
         }
+        catch (System.Data.SqlClient.SqlException sqlEx)
+        {
+            this.alertUser("The username or email you entered is invalid.");
+            this.clearUsername();
+            Console.WriteLine("\nSQL ERR -- ");
+            Console.WriteLine(sqlEx.Message);
+        }
+        catch (System.Exception exc)
+        {
+            this.alertUser("There was an issue processing your registration.");
+            Console.WriteLine("\nERR -- ");
+            Console.WriteLine(exc.Message);
+        }
+        Console.WriteLine("REGISTER -- SUCCESS");
+        Console.WriteLine("REGISTER -- " + this.user.Username);
     }
 
     /**
@@ -109,16 +113,107 @@
         this.user.Username = "";
     }
 
-    private async void validateEmail()
+    private bool validateFormFields()
     {
+        bool validUsername = this.validateUserName();
+        bool validPassword = this.validatePasswords();
+        bool validFirstAndLastNames = this.validateFirstAndLastNames();
+        bool validEmail = this.validateEmail();
+
+        return validUsername && validPassword && validEmail && validFirstAndLastNames;
+    }
+
+    private bool validateEmail()
+    {
+        bool validInput = true;
         var pattern = new Regex("^\\w+@[a-zA-Z_]+?\\.[a-zA-Z]{2,3}$",
             RegexOptions.Compiled | RegexOptions.IgnoreCase);
-        if (!pattern.IsMatch(this.user.Email) && !String.IsNullOrEmpty(this.user.Email))
+        if (String.IsNullOrEmpty(this.user.Email))
         {
-            await JsRuntime.InvokeAsync<object>("alert", "Please enter a valid email.");
-            this.user.Email = "";
-            StateHasChanged();
+            JsRuntime.InvokeAsync<object>("alert", "Please enter a valid email.");
+            validInput = false;
         }
+        else if (!pattern.IsMatch(this.user.Email))
+        {
+            JsRuntime.InvokeAsync<object>("alert", "Please enter a valid email.");
+            this.user.Email = "";
+            validInput = false;
+        }
+        return validInput;
+    }
+
+    private bool validatePasswords()
+    {
+        bool validInput = true;
+        var pattern = new Regex(".{8,}", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+
+        if (String.IsNullOrEmpty(this.user.Password))
+        {
+            JsRuntime.InvokeAsync<object>("alert", "Please enter a password that contains at least 8 characters.");
+            validInput = false;
+        }
+        else if (!pattern.IsMatch(this.user.Password))
+        {
+            JsRuntime.InvokeAsync<object>("alert", "Please enter a password that contains at least 8 characters.");
+            validInput = false;
+        }
+
+        if (String.IsNullOrEmpty(this.passwordReentry) && !String.IsNullOrEmpty(this.user.Password))
+        {
+            JsRuntime.InvokeAsync<object>("alert", "Please re-enter the password.");
+            validInput = false;
+        }
+        else if (!String.Equals(this.user.Password, this.passwordReentry) && !String.IsNullOrEmpty(this.user.Password))
+        {
+            JsRuntime.InvokeAsync<object>("alert", "Password values do not match.");
+            validInput = false;
+        }
+        return validInput;
+    }
+
+    private bool validateUserName()
+    {
+        bool validInput = true;
+        var pattern = new Regex("\\w+", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        if (String.IsNullOrEmpty(this.user.Username))
+        {
+            JsRuntime.InvokeAsync<object>("alert", "Please enter a username.");
+            validInput = false;
+        }
+        else if (!pattern.IsMatch(this.user.Username))
+        {
+            JsRuntime.InvokeAsync<object>("alert", "The username you entered is invalid.\nPlease enter at least one letter or number.");
+            validInput = false;
+        }
+        return validInput;
+    }
+
+    private bool validateFirstAndLastNames()
+    {
+        bool validInput = true;
+        var pattern = new Regex("[^a-zA-z]+", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        if (String.IsNullOrEmpty(this.user.FirstName))
+        {
+            validInput = false;
+            JsRuntime.InvokeAsync<object>("alert", "Please enter a first name.");            
+        }
+        else if (pattern.IsMatch(this.user.FirstName))
+        {
+            validInput = false;
+            JsRuntime.InvokeAsync<object>("alert", "Please enter only letters for the first name.");
+        }
+
+        if (String.IsNullOrEmpty(this.user.LastName))
+        {
+            validInput = false;
+            JsRuntime.InvokeAsync<object>("alert", "Please enter a last name.");
+        }
+        else if (pattern.IsMatch(this.user.LastName))
+        {
+            validInput = false;
+            JsRuntime.InvokeAsync<object>("alert", "Please enter only letters for the last name.");
+        }
+        return validInput;
     }
 
     /**

@@ -11,7 +11,14 @@
 <div class="ingredient">
     <span class="ingredient-label">@IngredientName</span>
     <div class="ingredient-body">
-        <label>Quantity: @IngredientQuantity @IngredientUnit</label>
+        @if (this.IngredientUnit.Equals(AppUnit.NONE))
+        {
+            <label>Quantity: @IngredientQuantity COUNT</label>
+        }
+        else
+        {
+            <label>Quantity: @IngredientQuantity @IngredientUnit</label>
+        }
         <input placeholder="New Amount" @bind="NewIngredientQuantity" />
         <button @onclick="@updateIngredientQuantity">Update</button>
         <button @onclick="@deleteIngredient">Delete from Pantry</button>
