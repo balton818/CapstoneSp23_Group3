@@ -171,8 +171,7 @@ public partial class IngredientExpander
     public void SelectedForPurchaseBox()
     {
         this.SelectedForPurchase = true;
-        CheckBox checkBox = FindUid(this, "purchasedCheckBox") as CheckBox;
-        checkBox.IsChecked = true;
+        this.purchasedCheckBox.IsChecked = true;
     }
 
     private void navigateToPage(string navUri)
@@ -184,23 +183,7 @@ public partial class IngredientExpander
             navigate.NavigateToPage(navUri, currentNavigationService);
         }
     }
-    private UIElement FindUid(DependencyObject parent, string uid)
-    {
-        var count = VisualTreeHelper.GetChildrenCount(parent);
-        if (count == 0) return null;
 
-        for (int i = 0; i < count; i++)
-        {
-            var el = VisualTreeHelper.GetChild(parent, i) as UIElement;
-            if (el == null) continue;
-
-            if (el.Uid == uid) return el;
-
-            el = this.FindUid(el, uid);
-            if (el != null) return el;
-        }
-        return null;
-    }
 
     #endregion
 }

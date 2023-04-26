@@ -208,8 +208,8 @@ public partial class ExpanderListPage
     {
         foreach (IngredientExpander expander in this.expanderListBox.Items)
         {
-            expander.SelectedForPurchaseBox();
 
+            expander.SelectedForPurchaseBox();
         }
     }
 
