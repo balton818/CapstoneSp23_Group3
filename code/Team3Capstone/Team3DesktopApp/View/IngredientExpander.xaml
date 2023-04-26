@@ -21,15 +21,13 @@
             Background="#30323d"
             BorderBrush="#FFE8C547"
             IsExpanded="false">
-            <Expander.HeaderTemplate>
-
-                <DataTemplate DataType="local:IngredientExpander">
-                    <Grid Width="357">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="362*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <CheckBox
+            <Expander.Header>
+                <Grid Width="357">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="362*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <CheckBox
                             x:Name="purchasedCheckBox"
                             Uid="purchasedCheckBox"
                             Height="18"
@@ -41,7 +39,7 @@
                             IsChecked="{Binding Path=.SelectedForPurchase, Mode=TwoWay}"
                             Foreground="#FFE8C547"
                             Visibility="{Binding Path=IsGrocery, Mode=TwoWay, Converter={StaticResource BoolToVis}}" />
-                        <TextBlock
+                    <TextBlock
                             x:Name="ingredientHeader"
                             Width="125"
                             MaxWidth="130"
@@ -53,7 +51,7 @@
                             Foreground="#FFE8C547"
                             Text="{Binding IngredientName}" Height="32" 
                             LineStackingStrategy="BlockLineHeight" LineHeight="30" />
-                        <TextBox
+                    <TextBox
                             x:Name="ingredientAmount"
                             Margin="216,6,109,6"
                             DataContext="{Binding DataContext, RelativeSource={RelativeSource AncestorType={x:Type Expander}}}"
@@ -66,7 +64,7 @@
                             TextChanged="quantity_TextChanged" 
                             ScrollViewer.VerticalScrollBarVisibility="Disabled"
                             Height="20" />
-                        <TextBlock
+                    <TextBlock
                             x:Name="UnitTextBox"
                             Width="75"
                             Height="24"
@@ -78,9 +76,8 @@
                             FontWeight="Bold"
                             Foreground="#FFE8C547"
                             Text="{Binding IngredientUnit}" />
-                    </Grid>
-                </DataTemplate>
-            </Expander.HeaderTemplate>
+                </Grid>
+            </Expander.Header>
             <Grid>
                 <Button
                     x:Name="plusButton"
